@@ -2,14 +2,14 @@
 
 namespace Rocket
 {
-    class Sandbox : public Application
+    class SimpleSandbox : public Application
     {
     public:
-        Sandbox()
+        SimpleSandbox()
         {
 
         }
-        ~Sandbox()
+        ~SimpleSandbox()
         {
 
         }
@@ -17,6 +17,6 @@ namespace Rocket
 
     Application* CreateApplication()
     {
-        return static_cast<Application*>(new Sandbox);
+        return static_cast<Application*>(new SimpleSandbox);
     }
 }
