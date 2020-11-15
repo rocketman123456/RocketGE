@@ -2,7 +2,7 @@ cmake_minimum_required (VERSION 2.6)
 project( RocketGE )
 
 find_package(Threads REQUIRED)
-#find_package(spdlog REQUIRED)
+find_package(spdlog REQUIRED)
 find_package(yaml-cpp REQUIRED)
 find_package(glfw3 REQUIRED)
 
