@@ -25,4 +25,4 @@ include_directories(
 
 add_subdirectory( Thirdparty )
 add_subdirectory( GEBase )
-
+add_subdirectory( Sandbox )
