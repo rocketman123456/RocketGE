@@ -9,16 +9,16 @@ find_package(yaml-cpp REQUIRED)
 find_package(glfw3 REQUIRED)
 
 # spdlog library
-#find_package(spdlog REQUIRED)
-add_library(spdlog::spdlog STATIC IMPORTED)
-add_library(spdlog::spdlog_header_only INTERFACE IMPORTED)
+find_package(spdlog REQUIRED)
+#add_library(spdlog::spdlog STATIC IMPORTED)
+#add_library(spdlog::spdlog_header_only INTERFACE IMPORTED)
 
 include_directories(
     ${PROJECT_SOURCE_DIR}/Thirdparty/entt/include
     ${PROJECT_SOURCE_DIR}/Thirdparty/glad/include
     ${PROJECT_SOURCE_DIR}/Thirdparty/stb_image
     ${PROJECT_SOURCE_DIR}/Thirdparty/imgui
-    #${spdlog_INCLUDE_DIRS}
+    ${SPDLOG_INCLUDE_DIRS}
     ${YAML_CPP_INCLUDE_DIRS}
     ${glfw3_INCLUDE_DIRS}
 )
