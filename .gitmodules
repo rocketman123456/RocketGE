@@ -1,0 +1,9 @@
+[submodule "ThirdParty/yaml-cpp"]
+	path = ThirdParty/yaml-cpp
+	url = https://github.com/jbeder/yaml-cpp.git
+[submodule "ThirdParty/spdlog"]
+	path = ThirdParty/spdlog
+	url = https://github.com/gabime/spdlog.git
+[submodule "ThirdParty/imgui"]
+	path = ThirdParty/imgui
+	url = https://github.com/ocornut/imgui.git
