@@ -1,25 +1,17 @@
 cmake_minimum_required (VERSION 2.6)
 project( RocketGE )
 
+SET(CMAKE_BUILD_TYPE "Debug")
+#SET(CMAKE_BUILD_TYPE "Release")
+
 find_package(Threads REQUIRED)
-find_package(spdlog REQUIRED)
 find_package(yaml-cpp REQUIRED)
 find_package(glfw3 REQUIRED)
 
-# Create imported target spdlog::spdlog
+# spdlog library
+#find_package(spdlog REQUIRED)
 add_library(spdlog::spdlog STATIC IMPORTED)
-set_target_properties(spdlog::spdlog PROPERTIES
-    INTERFACE_COMPILE_DEFINITIONS "SPDLOG_COMPILED_LIB"
-    INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
-    INTERFACE_LINK_LIBRARIES "Threads::Threads"
-)
-
-# Create imported target spdlog::spdlog_header_only
 add_library(spdlog::spdlog_header_only INTERFACE IMPORTED)
-set_target_properties(spdlog::spdlog_header_only PROPERTIES
-    INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
-    INTERFACE_LINK_LIBRARIES "Threads::Threads"
-)
 
 include_directories(
     ${PROJECT_SOURCE_DIR}/Thirdparty/entt/include
@@ -32,5 +24,5 @@ include_directories(
 )
 
 add_subdirectory( Thirdparty )
-
+add_subdirectory( GEBase )
 
