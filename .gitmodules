@@ -1,12 +1,12 @@
 [submodule "ThirdParty/yaml-cpp"]
 	path = ThirdParty/yaml-cpp
-	url = https://github.com/jbeder/yaml-cpp.git
+	url = https://github.com/rocketman123456/yaml-cpp.git
 [submodule "ThirdParty/spdlog"]
 	path = ThirdParty/spdlog
-	url = https://github.com/gabime/spdlog.git
+	url = https://github.com/rocketman123456/spdlog.git
 [submodule "ThirdParty/imgui"]
 	path = ThirdParty/imgui
-	url = https://github.com/ocornut/imgui.git
+	url = https://github.com/rocketman123456/imgui.git
 [submodule "Thirdparty/glfw"]
 	path = Thirdparty/glfw
-	url = https://github.com/glfw/glfw.git
+	url = https://github.com/rocketman123456/glfw.git
