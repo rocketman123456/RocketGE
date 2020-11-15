@@ -1,22 +1,22 @@
-#include "GEBase.h"
+#include "Sandbox.h"
 
-class Sandbox : public Rocket::Application
+namespace Rocket
 {
-public:
-    Sandbox()
+    class Sandbox : public Application
     {
+    public:
+        Sandbox()
+        {
 
-    }
-    ~Sandbox()
+        }
+        ~Sandbox()
+        {
+
+        }
+    };
+
+    Application* CreateApplication()
     {
-
+        return static_cast<Application*>(new Sandbox);
     }
-};
-
-int main()
-{
-    Sandbox *sandbox = new Sandbox();
-    sandbox->Run();
-    delete sandbox;
-    return 0;
 }

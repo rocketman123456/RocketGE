@@ -10,4 +10,5 @@ namespace Rocket {
         void Run();
     };
 
+    Application* CreateApplication();
 }
