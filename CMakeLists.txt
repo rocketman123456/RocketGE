@@ -31,4 +31,6 @@ include_directories(
     ${glfw3_INCLUDE_DIRS}
 )
 
+add_subdirectory( Thirdparty )
+
 
