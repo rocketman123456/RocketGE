@@ -1,7 +1,5 @@
 #include "GEBase/Log.h"
 #include "GEBase/Application.h"
-#include "GEEvent/ApplicationEvent.h"
-#include "GEWindow/Window.h"
 
 namespace Rocket {
 
@@ -20,10 +18,10 @@ namespace Rocket {
         WindowResizeEvent resize(1280, 720);
         RK_TRACE(resize);
 
-        auto window = Window::Create();
+        m_Window = std::unique_ptr<Window>(Window::Create());
 
         while(true) {
-            window->OnUpdate();
+            m_Window->OnUpdate();
         }
 
         WindowCloseEvent close;

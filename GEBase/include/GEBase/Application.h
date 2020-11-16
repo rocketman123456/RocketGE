@@ -1,7 +1,8 @@
 #pragma once
 
 #include "Core.h"
-#include "GEEvent/Event.h"
+#include "GEEvent.h"
+#include "GEWindow.h"
 
 namespace Rocket {
 
@@ -11,6 +12,8 @@ namespace Rocket {
         virtual ~Application();
 
         void Run();
+    private:
+        std::unique_ptr<Window> m_Window;
     };
 
     Application* CreateApplication();
