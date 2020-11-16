@@ -1,4 +1,8 @@
 cmake_minimum_required (VERSION 2.6)
+
+set(VCPKG_ROOT "/usr/local/Cellar/vcpkg/2020.11-1/libexec/scripts/buildsystems/vcpkg.cmake" CACHE PATH "")
+set(CMAKE_TOOLCHAIN_FILE ${VCPKG_ROOT})
+
 project( RocketGE )
 
 message(STATUS "###################################")
@@ -35,7 +39,6 @@ endif (CMAKE_SYSTEM_NAME MATCHES "Linux")
 
 message(STATUS "###################################")
 
-# TODO: should use vcpkg in windows to manage these packages
 find_package(Threads REQUIRED)
 if(Threads_FOUND)
     message(STATUS "Threads FOUND")
@@ -67,6 +70,7 @@ include_directories(
 
 include_directories(
     ${PROJECT_SOURCE_DIR}/GEBase/include
+    ${PROJECT_SOURCE_DIR}/GEEvent/include
     ${PROJECT_SOURCE_DIR}/Sandbox/include
 )
 

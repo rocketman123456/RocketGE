@@ -3,3 +3,4 @@
 #include "GEBase/Application.h"
 #include "GEBase/EntryPoint.h"
 #include "GEBase/Log.h"
+#include "GEBase/Base.h"
