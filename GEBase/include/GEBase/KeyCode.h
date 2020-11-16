@@ -1,11 +1,10 @@
 #pragma once
 
-#include <cstdint>
+#include "GEBase/Core.h"
 
 namespace Rocket
 {
 	using KeyCode = uint16_t;
-	
 	namespace Key
 	{
 		enum : KeyCode

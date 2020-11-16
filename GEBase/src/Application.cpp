@@ -1,7 +1,6 @@
+#include "GEBase/Log.h"
 #include "GEBase/Application.h"
 #include "GEEvent/ApplicationEvent.h"
-#include "GEBase/Log.h"
-
 namespace Rocket {
 
     Application::Application() 

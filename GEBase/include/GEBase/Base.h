@@ -1,6 +1,6 @@
 #pragma once
 
-#include <memory>
+#include "GEBase/Core.h"
 
 #define RK_EXPAND_MACRO(x) x
 #define RK_STRINGIFY_MACRO(x) #x
