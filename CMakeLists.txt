@@ -3,7 +3,10 @@ cmake_minimum_required (VERSION 2.6)
 set(VCPKG_ROOT "/usr/local/Cellar/vcpkg/2020.11-1/libexec/scripts/buildsystems/vcpkg.cmake" CACHE PATH "")
 set(CMAKE_TOOLCHAIN_FILE ${VCPKG_ROOT})
 
+message(STATUS "###################################")
+
 project( RocketGE )
+message(STATUS "Project Name ${PROJECT_NAME}")
 
 message(STATUS "###################################")
 
@@ -24,15 +27,15 @@ message(STATUS "operation system is ${CMAKE_SYSTEM}")
 if (CMAKE_SYSTEM_NAME MATCHES "Linux")
     message(STATUS "current platform: Linux ")
     set(Linux 1)
+    add_definitions(-DPLATFORM_LINUX)
 elseif (CMAKE_SYSTEM_NAME MATCHES "Windows")
     message(STATUS "current platform: Windows")
     set(Windows 1)
-elseif (CMAKE_SYSTEM_NAME MATCHES "FreeBSD")
-    message(STATUS "current platform: FreeBSD")
-    set(FreeBSD 1)
+    add_definitions(-DPLATFORM_WINDOWS)
 elseif (CMAKE_SYSTEM_NAME MATCHES "Darwin")
     message(STATUS "current platform: Apple Darwin")
     set(Apple 1)
+    add_definitions(-DPLATFORM_APPLE)
 else ()
     message(STATUS "other platform: ${CMAKE_SYSTEM_NAME}")
 endif (CMAKE_SYSTEM_NAME MATCHES "Linux")
@@ -74,11 +77,27 @@ include_directories(
 )
 
 include_directories(
+    ${PROJECT_SOURCE_DIR}/GEEngine/include
     ${PROJECT_SOURCE_DIR}/GEBase/include
     ${PROJECT_SOURCE_DIR}/GEEvent/include
+    ${PROJECT_SOURCE_DIR}/GEWindow/include
     ${PROJECT_SOURCE_DIR}/Sandbox/include
 )
 
+if(Apple)
+    include_directories( ${PROJECT_SOURCE_DIR}/Platform/Apple/include )
+elseif(Linux)
+    include_directories( ${PROJECT_SOURCE_DIR}/Platform/Linux/include )
+elseif(Windows)
+    include_directories( ${PROJECT_SOURCE_DIR}/Platform/Windows/include )
+endif()
+
 add_subdirectory( Thirdparty )
+add_subdirectory( Platform )
+
+add_subdirectory( GEEngine )
 add_subdirectory( GEBase )
+add_subdirectory( GEEvent )
+add_subdirectory( GEWindow )
+
 add_subdirectory( Sandbox )

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GEBase/Core.h"
+#include "Core.h"
 
 #ifdef RK_ENABLE_ASSERTS
 	// Alteratively we could use the same "default" message for both "WITH_MSG" and "NO_MSG" and

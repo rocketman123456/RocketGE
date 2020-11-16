@@ -1,6 +1,8 @@
 #include "GEBase/Log.h"
 #include "GEBase/Application.h"
 #include "GEEvent/ApplicationEvent.h"
+#include "GEWindow/Window.h"
+
 namespace Rocket {
 
     Application::Application() 
@@ -18,8 +20,10 @@ namespace Rocket {
         WindowResizeEvent resize(1280, 720);
         RK_TRACE(resize);
 
-        while(true) {
+        auto window = Window::Create();
 
+        while(true) {
+            window->OnUpdate();
         }
 
         WindowCloseEvent close;

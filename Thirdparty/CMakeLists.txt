@@ -1,3 +1,5 @@
+message(STATUS "Add Module Thirdparty")
+message(STATUS "###################################")
 add_subdirectory( glad )
 add_subdirectory( imgui )
 add_subdirectory( stb_image )

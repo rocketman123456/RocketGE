@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GEBase/Core.h"
+#include "Core.h"
 
 namespace Rocket
 {
