@@ -4,6 +4,9 @@
             "name": "Mac",
             "includePath": [
                 "${workspaceFolder}/**",
+                "${workspaceFolder}/GEBase/include",
+                "${workspaceFolder}/GEEvent/include",
+                "${workspaceFolder}/Sandbox/include",
                 "/usr/local/include"
             ],
             "defines": [],
@@ -12,7 +15,7 @@
             ],
             "compilerPath": "/usr/local/opt/llvm/bin/clang",
             "cStandard": "c17",
-            "cppStandard": "c++14",
+            "cppStandard": "c++17",
             "intelliSenseMode": "clang-x64"
         }
     ],

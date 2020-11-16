@@ -3,6 +3,7 @@
 #include "GEBase/Base.h"
 
 #include <string>
+#include <sstream>
 #include <functional>
 
 namespace Rocket {

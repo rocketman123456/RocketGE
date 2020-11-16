@@ -8,7 +8,7 @@ project( RocketGE )
 message(STATUS "###################################")
 
 set(CMAKE_C_STANDARD 99)
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_BUILD_TYPE "Debug")
 #set(CMAKE_BUILD_TYPE "Release")
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -55,6 +55,10 @@ find_package(spdlog REQUIRED)
 if(spdlog_FOUND)
     message(STATUS "spdlog FOUND")
 endif()
+find_package(fmt CONFIG REQUIRED)
+if(fmt_FOUND)
+    message(STATUS "fmt FOUND")
+endif()
 
 message(STATUS "###################################")
 
@@ -66,6 +70,7 @@ include_directories(
     ${SPDLOG_INCLUDE_DIRS}
     ${YAML_CPP_INCLUDE_DIRS}
     ${GLFW3_INCLUDE_DIRS}
+    ${FMT_INCLUDE_DIRS}
 )
 
 include_directories(

@@ -4,3 +4,4 @@
 #include "GEBase/EntryPoint.h"
 #include "GEBase/Log.h"
 #include "GEBase/Base.h"
+#include "GEBase/KeyCode.h"
