@@ -5,7 +5,7 @@ namespace Rocket {
 
     Application::Application() 
     {
-
+        m_Window = std::unique_ptr<Window>(Window::Create());
     }
 
     Application::~Application() 
@@ -15,16 +15,9 @@ namespace Rocket {
 
     void Application::Run() 
     {
-        WindowResizeEvent resize(1280, 720);
-        RK_TRACE(resize);
-
-        m_Window = std::unique_ptr<Window>(Window::Create());
-
-        while(true) {
+        while(m_Running) 
+        {
             m_Window->OnUpdate();
         }
-
-        WindowCloseEvent close;
-        RK_TRACE(close);
     }
 }

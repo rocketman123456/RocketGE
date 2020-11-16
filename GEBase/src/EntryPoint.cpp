@@ -4,8 +4,7 @@
 int main(int argc, char **argv)
 {
     Rocket::Log::Init();
-    RK_CORE_INFO("Initialize Log");
-    RK_INFO("Initialize Client");
+    RK_CORE_WARN("Initialize Log");
     
     auto app = Rocket::CreateApplication();
     app->Run();
