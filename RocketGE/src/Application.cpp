@@ -1,4 +1,3 @@
-#include "GEBase/Log.h"
 #include "GEBase/Application.h"
 #include <glad/glad.h>
 

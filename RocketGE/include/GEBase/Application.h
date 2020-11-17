@@ -1,11 +1,10 @@
 #pragma once
 
-#include "Core.h"
+#include "GEBase.h"
 #include "GEEvent.h"
 #include "GEWindow.h"
 #include "GELayer.h"
 namespace Rocket {
-
     class Application {
     public:
         Application();

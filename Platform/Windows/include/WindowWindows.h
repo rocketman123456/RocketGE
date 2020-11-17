@@ -1,13 +1,11 @@
 #pragma once
 
-#include "Core.h"
-#include "GEBase/Base.h"
+#include "GEBase/Core.h"
 #include "GEWindow/Window.h"
 #include "GEEvent.h"
 
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
-#include <glad/glad.h>
 
 namespace Rocket {
 	class WindowWindows : public Window

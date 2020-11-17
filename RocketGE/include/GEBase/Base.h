@@ -14,5 +14,3 @@
 #include <map>
 #include <unordered_map>
 #include <unordered_set>
-
-//#include "GEBase/Log.h"

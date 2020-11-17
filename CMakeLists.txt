@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 2.6)
 
-set(VCPKG_ROOT "C:/dev/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE PATH "")
-#set(VCPKG_ROOT "/usr/local/Cellar/vcpkg/2020.11-1/libexec/scripts/buildsystems/vcpkg.cmake" CACHE PATH "")
+#set(VCPKG_ROOT "C:/dev/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE PATH "")
+set(VCPKG_ROOT "/usr/local/Cellar/vcpkg/2020.11-1/libexec/scripts/buildsystems/vcpkg.cmake")
 set(CMAKE_TOOLCHAIN_FILE ${VCPKG_ROOT})
 
 message(STATUS "###################################")
@@ -43,25 +43,31 @@ endif (CMAKE_SYSTEM_NAME MATCHES "Linux")
 message(STATUS "###################################")
 
 find_package(Threads REQUIRED)
-if(Threads_FOUND)
-    message(STATUS "Threads FOUND")
-endif()
-find_package(yaml-cpp REQUIRED)
+find_package(yaml-cpp CONFIG REQUIRED)
 if(yaml-cpp_FOUND)
-    message(STATUS "yaml-cpp FOUND")
+    message(STATUS "yaml-cpp library: ${yaml_cpp_INSTALL_PATH}")
+    message(STATUS "    version: ${yaml-cpp_VERSION}")
+    message(STATUS "    libraries: ${yaml_cpp_LIBS}")
+    message(STATUS "    include path: ${yaml_cpp_INCLUDE_DIRS}")
 endif()
-find_package(glfw3 REQUIRED)
+find_package(glfw3 CONFIG REQUIRED)
 if(glfw3_FOUND)
-    message(STATUS "glfw3 FOUND")
+    message(STATUS "glfw3 library: ${glfw3_INSTALL_PATH}")
+    message(STATUS "    version: ${glfw3_VERSION}")
+    message(STATUS "    libraries: ${glfw3_LIBS}")
+    message(STATUS "    include path: ${glfw3_INCLUDE_DIRS}")
 endif()
-find_package(spdlog REQUIRED)
+find_package(spdlog CONFIG REQUIRED)
 if(spdlog_FOUND)
-    message(STATUS "spdlog FOUND")
+    message(STATUS "spdlog library: ${spdlog_INSTALL_PATH}")
+    message(STATUS "    version: ${spdlog_VERSION}")
+    message(STATUS "    libraries: ${spdlog_LIBS}")
+    message(STATUS "    include path: ${spdlog_INCLUDE_DIRS}")
 endif()
-find_package(fmt CONFIG REQUIRED)
-if(fmt_FOUND)
-    message(STATUS "fmt FOUND")
-endif()
+#find_package(fmt CONFIG REQUIRED)
+#if(fmt_FOUND)
+#    message(STATUS "fmt FOUND")
+#endif()
 
 message(STATUS "###################################")
 
@@ -70,18 +76,15 @@ include_directories(
     ${PROJECT_SOURCE_DIR}/Thirdparty/glad/include
     ${PROJECT_SOURCE_DIR}/Thirdparty/stb_image
     ${PROJECT_SOURCE_DIR}/Thirdparty/imgui
-    ${SPDLOG_INCLUDE_DIRS}
-    ${YAML_CPP_INCLUDE_DIRS}
-    ${GLFW3_INCLUDE_DIRS}
-    ${FMT_INCLUDE_DIRS}
+    ${spdlog_INCLUDE_DIRS}
+    ${yaml_cpp_INCLUDE_DIRS}
+    ${glfw3_INCLUDE_DIRS}
+    ${Threads_INCLUDE_DIRS}
 )
 
 include_directories(
+    ${PROJECT_SOURCE_DIR}/RocketGE/include
     ${PROJECT_SOURCE_DIR}/GEEngine/include
-    ${PROJECT_SOURCE_DIR}/GEBase/include
-    ${PROJECT_SOURCE_DIR}/GEEvent/include
-    ${PROJECT_SOURCE_DIR}/GELayer/include
-    ${PROJECT_SOURCE_DIR}/GEWindow/include
     ${PROJECT_SOURCE_DIR}/Sandbox/include
 )
 
@@ -97,9 +100,6 @@ add_subdirectory( Thirdparty )
 add_subdirectory( Platform )
 
 add_subdirectory( GEEngine )
-add_subdirectory( GEBase )
-add_subdirectory( GEEvent )
-add_subdirectory( GELayer )
-add_subdirectory( GEWindow )
+add_subdirectory( RocketGE )
 
 add_subdirectory( Sandbox )

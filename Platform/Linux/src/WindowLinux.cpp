@@ -1,5 +1,5 @@
 #include "WindowLinux.h"
-#include "GEBase/Log.h"
+#include <glad/glad.h>
 
 namespace Rocket {
     static uint8_t s_GLFWWindowCount = 0;
@@ -45,7 +45,8 @@ namespace Rocket {
 		}
 
 		glfwMakeContextCurrent(m_Window);
-		gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+		RK_CORE_ASSERT(status, "Failed to Initialize GLAD");
 		
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);

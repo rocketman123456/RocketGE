@@ -5,6 +5,4 @@ add_library( Platform_Linux
 )
 target_link_libraries( Platform_Linux PRIVATE
     glfw glad
-    GEBase
-    GEEvent
 )

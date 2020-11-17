@@ -1,6 +1,20 @@
 #pragma once
 
-#include "Core.h"
+#include "GEBase/Base.h"
+
+#ifdef DEBUG
+	#if defined(PLATFORM_WINDOWS)
+		#define RK_DEBUGBREAK() __debugbreak()
+	#elif defined(PLATFORM_LINUX) || defined(PLATFORM_APPLE)
+		#include <signal.h>
+		#define RK_DEBUGBREAK() raise(SIGTRAP)
+	#else
+		#error "Platform doesn't support debugbreak yet!"
+	#endif
+	#define RK_ENABLE_ASSERTS
+#else
+	#define RK_DEBUGBREAK()
+#endif
 
 #define RK_EXPAND_MACRO(x) x
 #define RK_STRINGIFY_MACRO(x) #x
@@ -26,4 +40,6 @@ namespace Rocket {
 	}
 }
 
+#define RK_ENABLE_ASSERTS
 #include "GEBase/Assert.h"
+#include "GEBase/Log.h"

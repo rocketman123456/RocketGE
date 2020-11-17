@@ -1,9 +1,8 @@
 message(STATUS "Add Module GEEngine")
 message(STATUS "###################################")
 add_library( GEEngine
-    src/Core.cpp
+    src/Engine.cpp
 )
-#target_link_libraries( GEEngine PRIVATE
-#    spdlog::spdlog_header_only
-#    fmt::fmt-header-only
-#)
+target_link_libraries( GEEngine
+    RocketGE
+)

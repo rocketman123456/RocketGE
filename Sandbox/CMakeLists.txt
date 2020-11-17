@@ -5,8 +5,4 @@ add_executable( SandboxApp
 )
 target_link_libraries( SandboxApp PRIVATE
     GEEngine
-    GEBase
-    GEWindow
-    GEEvent
-    GELayer
 )
