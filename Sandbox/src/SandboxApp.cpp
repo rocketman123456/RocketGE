@@ -7,7 +7,7 @@ namespace Rocket
     public:
         SimpleSandbox()
         {
-
+            PushLayer(new ExampleLayer());
         }
         ~SimpleSandbox()
         {
