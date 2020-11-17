@@ -8,6 +8,6 @@ add_library( GEBase
 target_link_libraries( GEBase PRIVATE
     spdlog::spdlog
     spdlog::spdlog_header_only
-    #fmt::fmt-header-only
     ${Threads_LIBS}
+    GELayer
 )

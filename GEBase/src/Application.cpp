@@ -7,6 +7,8 @@ namespace Rocket {
 
     Application::Application() 
     {
+        RK_CORE_ASSERT(!s_Instance, "Application already exists!");
+		s_Instance = this;
         m_Window = std::unique_ptr<Window>(Window::Create());
         m_Window->SetEventCallback(RK_BIND_EVENT_FN(Application::OnEvent));
     }
@@ -22,6 +24,13 @@ namespace Rocket {
         EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<WindowCloseEvent>(RK_BIND_EVENT_FN(Application::OnWindowClose));
 		dispatcher.Dispatch<WindowResizeEvent>(RK_BIND_EVENT_FN(Application::OnWindowResize));
+
+        for (auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); ++it)
+		{
+			if (e.Handled) 
+				break;
+			(*it)->OnEvent(e);
+		}
     }
 
     void Application::Close()

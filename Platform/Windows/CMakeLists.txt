@@ -6,4 +6,5 @@ add_library( Platform_Windows
 target_link_libraries( Platform_Windows PRIVATE
     glfw glad
     GEBase
+    GEEvent
 )

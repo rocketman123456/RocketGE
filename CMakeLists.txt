@@ -80,6 +80,7 @@ include_directories(
     ${PROJECT_SOURCE_DIR}/GEEngine/include
     ${PROJECT_SOURCE_DIR}/GEBase/include
     ${PROJECT_SOURCE_DIR}/GEEvent/include
+    ${PROJECT_SOURCE_DIR}/GELayer/include
     ${PROJECT_SOURCE_DIR}/GEWindow/include
     ${PROJECT_SOURCE_DIR}/Sandbox/include
 )
@@ -98,6 +99,7 @@ add_subdirectory( Platform )
 add_subdirectory( GEEngine )
 add_subdirectory( GEBase )
 add_subdirectory( GEEvent )
+add_subdirectory( GELayer )
 add_subdirectory( GEWindow )
 
 add_subdirectory( Sandbox )

@@ -6,4 +6,5 @@ add_library( Platform_Apple
 target_link_libraries( Platform_Apple PRIVATE
     glfw glad
     GEBase
+    GEEvent
 )

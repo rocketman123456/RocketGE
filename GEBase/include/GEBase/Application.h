@@ -3,7 +3,7 @@
 #include "Core.h"
 #include "GEEvent.h"
 #include "GEWindow.h"
-
+#include "GELayer.h"
 namespace Rocket {
 
     class Application {
@@ -22,8 +22,10 @@ namespace Rocket {
 		bool OnWindowResize(WindowResizeEvent& e);
     private:
         std::unique_ptr<Window> m_Window;
+        LayerStack m_LayerStack;
         bool m_Running = true;
         bool m_Minimized = false;
+        float m_LastFrameTime = 0.0f;
     private:
         static Application* s_Instance;
     };
