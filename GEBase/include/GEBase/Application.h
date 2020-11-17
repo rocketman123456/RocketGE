@@ -14,6 +14,9 @@ namespace Rocket {
         void OnEvent(Event& e);
         void Close();
 
+        void PushLayer(Layer* layer);
+		void PushOverlay(Layer* layer);
+
         void Run();
 
         static Application& Get() { return *s_Instance; }
