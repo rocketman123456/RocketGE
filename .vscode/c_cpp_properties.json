@@ -4,6 +4,7 @@
             "name": "Mac",
             "includePath": [
                 "${workspaceFolder}/**",
+                "${workspaceFolder}/GEEngine/include",
                 "${workspaceFolder}/GEBase/include",
                 "${workspaceFolder}/GEEvent/include",
                 "${workspaceFolder}/Sandbox/include",
