@@ -1,4 +1,4 @@
-#include "GEBase/Application.h"
+#include "GEApplication/Application.h"
 #include <glad/glad.h>
 
 namespace Rocket {

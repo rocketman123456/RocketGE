@@ -1,5 +1,4 @@
 #include "GEBase/EntryPoint.h"
-#include "GEBase/Application.h"
 
 int main(int argc, char **argv)
 {
