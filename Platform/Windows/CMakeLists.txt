@@ -3,6 +3,7 @@ message(STATUS "###################################")
 add_library( Platform_Windows
     src/WindowWindows.cpp
 )
-target_link_libraries( Platform_Apple
+target_link_libraries( Platform_Windows PRIVATE
     glfw glad
+    GEBase
 )

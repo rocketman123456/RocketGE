@@ -5,8 +5,9 @@ add_library( GEBase
     src/EntryPoint.cpp
     src/Log.cpp
 )
-target_link_libraries( GEBase 
+target_link_libraries( GEBase PRIVATE
+    spdlog::spdlog
     spdlog::spdlog_header_only
-    fmt::fmt-header-only
+    #fmt::fmt-header-only
     ${Threads_LIBS}
 )
