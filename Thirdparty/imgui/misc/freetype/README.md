@@ -8,7 +8,7 @@ Build font atlases using FreeType instead of stb_truetype (which is the default 
 1. Get latest FreeType binaries or build yourself (under Windows you may use vcpkg with `vcpkg install freetype`, `vcpkg integrate install`).
 2. Add imgui_freetype.h/cpp alongside your imgui sources.
 3. Include imgui_freetype.h after imgui.h.
-4. Call `ImGuiFreeType::BuildFontAtlas()` *BEFORE* calling `ImFontAtlas::GetTexDataAsRGBA32()` or `ImFontAtlas::Build()` (so normal Build() won't be called):
+4. Call `ImGuiFreeType::BuildFontAtlas()` _BEFORE_ calling `ImFontAtlas::GetTexDataAsRGBA32()` or `ImFontAtlas::Build()` (so normal Build() won't be called):
 
 ```cpp
 // See ImGuiFreeType::RasterizationFlags
@@ -25,6 +25,7 @@ For correct results you need to be using sRGB and convert to linear space in the
 The default Dear ImGui styles will be impacted by this change (alpha values will need tweaking).
 
 ### Test code Usage
+
 ```cpp
 #include "misc/freetype/imgui_freetype.h"
 #include "misc/freetype/imgui_freetype.cpp"
@@ -53,6 +54,7 @@ while (true)
 ```
 
 ### Test code
+
 ```cpp
 #include "misc/freetype/imgui_freetype.h"
 #include "misc/freetype/imgui_freetype.cpp"
@@ -128,5 +130,5 @@ struct FreeTypeTest
 ```
 
 ### Known issues
-- `cfg.OversampleH`, `OversampleV` are ignored (but perhaps not so necessary with this rasterizer).
 
+- `cfg.OversampleH`, `OversampleV` are ignored (but perhaps not so necessary with this rasterizer).

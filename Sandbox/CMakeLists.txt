@@ -8,7 +8,7 @@ target_link_libraries( SandboxApp PRIVATE
     RocketGE
 )
 target_link_libraries( SandboxApp PRIVATE
-     ${Threads_LIBS}
+    ${Threads_LIBS}
     spdlog::spdlog
     spdlog::spdlog_header_only
     imgui

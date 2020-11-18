@@ -7,11 +7,12 @@
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
-namespace Rocket {
+namespace Rocket
+{
 	class WindowWindows : public Window
 	{
 	public:
-		WindowWindows(const WindowProps& props);
+		WindowWindows(const WindowProps &props);
 		virtual ~WindowWindows();
 
 		void OnUpdate() override;
@@ -20,16 +21,18 @@ namespace Rocket {
 		unsigned int GetHeight() const override { return m_Data.Height; }
 
 		// Window attributes
-		void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }
+		void SetEventCallback(const EventCallbackFn &callback) override { m_Data.EventCallback = callback; }
 		void SetVSync(bool enabled) override;
 		bool IsVSync() const override;
 
-		virtual void* GetNativeWindow() const override { return m_Window; }
+		virtual void *GetNativeWindow() const override { return m_Window; }
+
 	private:
-		virtual void Init(const WindowProps& props);
+		virtual void Init(const WindowProps &props);
 		virtual void Shutdown();
+
 	private:
-		GLFWwindow* m_Window;
+		GLFWwindow *m_Window;
 
 		struct WindowData
 		{
@@ -43,4 +46,4 @@ namespace Rocket {
 		WindowData m_Data;
 	};
 
-}
+} // namespace Rocket

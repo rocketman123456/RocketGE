@@ -16,9 +16,9 @@ namespace Rocket
             //RK_INFO("ExampleLayer Update");
         }
 
-        void OnEvent(Event& event) override
+        void OnEvent(Event &event) override
         {
             RK_TRACE(event);
         }
     };
-}
+} // namespace Rocket

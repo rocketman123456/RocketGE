@@ -29,17 +29,17 @@
 #include <IwGx.h>
 
 // Data
-static double       g_Time = 0.0f;
-static bool         g_MousePressed[3] = { false, false, false };
-static CIwTexture*  g_FontTexture = NULL;
-static char*        g_ClipboardText = NULL;
-static bool         g_osdKeyboardEnabled = false;
+static double g_Time = 0.0f;
+static bool g_MousePressed[3] = {false, false, false};
+static CIwTexture *g_FontTexture = NULL;
+static char *g_ClipboardText = NULL;
+static bool g_osdKeyboardEnabled = false;
 
 // use this setting to scale the interface - e.g. on device you could use 2 or 3 scale factor
-static ImVec2       g_RenderScale = ImVec2(1.0f, 1.0f);
+static ImVec2 g_RenderScale = ImVec2(1.0f, 1.0f);
 
 // Render function.
-void ImGui_Marmalade_RenderDrawData(ImDrawData* draw_data)
+void ImGui_Marmalade_RenderDrawData(ImDrawData *draw_data)
 {
     // Avoid rendering when minimized
     if (draw_data->DisplaySize.x <= 0.0f || draw_data->DisplaySize.y <= 0.0f)
@@ -48,12 +48,12 @@ void ImGui_Marmalade_RenderDrawData(ImDrawData* draw_data)
     // Render command lists
     for (int n = 0; n < draw_data->CmdListsCount; n++)
     {
-        const ImDrawList* cmd_list = draw_data->CmdLists[n];
-        const ImDrawIdx* idx_buffer = cmd_list->IdxBuffer.Data;
+        const ImDrawList *cmd_list = draw_data->CmdLists[n];
+        const ImDrawIdx *idx_buffer = cmd_list->IdxBuffer.Data;
         const int nVert = cmd_list->VtxBuffer.Size;
-        CIwFVec2* pVertStream = IW_GX_ALLOC(CIwFVec2, nVert);
-        CIwFVec2* pUVStream = IW_GX_ALLOC(CIwFVec2, nVert);
-        CIwColour* pColStream = IW_GX_ALLOC(CIwColour, nVert);
+        CIwFVec2 *pVertStream = IW_GX_ALLOC(CIwFVec2, nVert);
+        CIwFVec2 *pUVStream = IW_GX_ALLOC(CIwFVec2, nVert);
+        CIwColour *pColStream = IW_GX_ALLOC(CIwColour, nVert);
 
         for (int i = 0; i < nVert; i++)
         {
@@ -72,7 +72,7 @@ void ImGui_Marmalade_RenderDrawData(ImDrawData* draw_data)
 
         for (int cmd_i = 0; cmd_i < cmd_list->CmdBuffer.Size; cmd_i++)
         {
-            const ImDrawCmd* pcmd = &cmd_list->CmdBuffer[cmd_i];
+            const ImDrawCmd *pcmd = &cmd_list->CmdBuffer[cmd_i];
             if (pcmd->UserCallback)
             {
                 pcmd->UserCallback(cmd_list, pcmd);
@@ -80,16 +80,16 @@ void ImGui_Marmalade_RenderDrawData(ImDrawData* draw_data)
             else
             {
                 // FIXME: Not honoring ClipRect fields.
-                CIwMaterial* pCurrentMaterial = IW_GX_ALLOC_MATERIAL();
+                CIwMaterial *pCurrentMaterial = IW_GX_ALLOC_MATERIAL();
                 pCurrentMaterial->SetShadeMode(CIwMaterial::SHADE_FLAT);
                 pCurrentMaterial->SetCullMode(CIwMaterial::CULL_NONE);
                 pCurrentMaterial->SetFiltering(false);
                 pCurrentMaterial->SetAlphaMode(CIwMaterial::ALPHA_BLEND);
                 pCurrentMaterial->SetDepthWriteMode(CIwMaterial::DEPTH_WRITE_NORMAL);
                 pCurrentMaterial->SetAlphaTestMode(CIwMaterial::ALPHATEST_DISABLED);
-                pCurrentMaterial->SetTexture((CIwTexture*)pcmd->TextureId);
+                pCurrentMaterial->SetTexture((CIwTexture *)pcmd->TextureId);
                 IwGxSetMaterial(pCurrentMaterial);
-                IwGxDrawPrims(IW_GX_TRI_LIST, (uint16*)idx_buffer, pcmd->ElemCount);
+                IwGxDrawPrims(IW_GX_TRI_LIST, (uint16 *)idx_buffer, pcmd->ElemCount);
             }
             idx_buffer += pcmd->ElemCount;
         }
@@ -99,7 +99,7 @@ void ImGui_Marmalade_RenderDrawData(ImDrawData* draw_data)
     // TODO: restore modified state (i.e. mvp matrix)
 }
 
-static const char* ImGui_Marmalade_GetClipboardText(void* /*user_data*/)
+static const char *ImGui_Marmalade_GetClipboardText(void * /*user_data*/)
 {
     if (!s3eClipboardAvailable())
         return NULL;
@@ -116,18 +116,18 @@ static const char* ImGui_Marmalade_GetClipboardText(void* /*user_data*/)
     return g_ClipboardText;
 }
 
-static void ImGui_Marmalade_SetClipboardText(void* /*user_data*/, const char* text)
+static void ImGui_Marmalade_SetClipboardText(void * /*user_data*/, const char *text)
 {
     if (s3eClipboardAvailable())
         s3eClipboardSetText(text);
 }
 
-int32 ImGui_Marmalade_PointerButtonEventCallback(void* system_data, void* user_data)
+int32 ImGui_Marmalade_PointerButtonEventCallback(void *system_data, void *user_data)
 {
     // pEvent->m_Button is of type s3ePointerButton and indicates which mouse
     // button was pressed.  For touchscreen this should always have the value
     // S3E_POINTER_BUTTON_SELECT
-    s3ePointerEvent* pEvent = (s3ePointerEvent*)system_data;
+    s3ePointerEvent *pEvent = (s3ePointerEvent *)system_data;
 
     if (pEvent->m_Pressed == 1)
     {
@@ -146,10 +146,10 @@ int32 ImGui_Marmalade_PointerButtonEventCallback(void* system_data, void* user_d
     return 0;
 }
 
-int32 ImGui_Marmalade_KeyCallback(void* system_data, void* user_data)
+int32 ImGui_Marmalade_KeyCallback(void *system_data, void *user_data)
 {
-    ImGuiIO& io = ImGui::GetIO();
-    s3eKeyboardEvent* e = (s3eKeyboardEvent*)system_data;
+    ImGuiIO &io = ImGui::GetIO();
+    s3eKeyboardEvent *e = (s3eKeyboardEvent *)system_data;
     if (e->m_Pressed == 1)
         io.KeysDown[e->m_Key] = true;
     if (e->m_Pressed == 0)
@@ -163,10 +163,10 @@ int32 ImGui_Marmalade_KeyCallback(void* system_data, void* user_data)
     return 0;
 }
 
-int32 ImGui_Marmalade_CharCallback(void* system_data, void* user_data)
+int32 ImGui_Marmalade_CharCallback(void *system_data, void *user_data)
 {
-    ImGuiIO& io = ImGui::GetIO();
-    s3eKeyboardCharEvent* e = (s3eKeyboardCharEvent*)system_data;
+    ImGuiIO &io = ImGui::GetIO();
+    s3eKeyboardCharEvent *e = (s3eKeyboardCharEvent *)system_data;
     io.AddInputCharacter((unsigned int)e->m_Char);
 
     return 0;
@@ -175,19 +175,19 @@ int32 ImGui_Marmalade_CharCallback(void* system_data, void* user_data)
 bool ImGui_Marmalade_CreateDeviceObjects()
 {
     // Build texture atlas
-    ImGuiIO& io = ImGui::GetIO();
-    unsigned char* pixels;
+    ImGuiIO &io = ImGui::GetIO();
+    unsigned char *pixels;
     int width, height;
     io.Fonts->GetTexDataAsRGBA32(&pixels, &width, &height);
 
     // Upload texture to graphics system
     g_FontTexture = new CIwTexture();
     g_FontTexture->SetModifiable(true);
-    CIwImage& image = g_FontTexture->GetImage();
+    CIwImage &image = g_FontTexture->GetImage();
     image.SetFormat(CIwImage::ARGB_8888);
     image.SetWidth(width);
     image.SetHeight(height);
-    image.SetBuffers();                                    // allocates and own buffers
+    image.SetBuffers(); // allocates and own buffers
     image.ReadTexels(pixels);
     g_FontTexture->SetMipMapping(false);
     g_FontTexture->SetFiltering(false);
@@ -199,7 +199,7 @@ bool ImGui_Marmalade_CreateDeviceObjects()
     return true;
 }
 
-void    ImGui_Marmalade_InvalidateDeviceObjects()
+void ImGui_Marmalade_InvalidateDeviceObjects()
 {
     if (g_ClipboardText)
     {
@@ -215,12 +215,12 @@ void    ImGui_Marmalade_InvalidateDeviceObjects()
     }
 }
 
-bool    ImGui_Marmalade_Init(bool install_callbacks)
+bool ImGui_Marmalade_Init(bool install_callbacks)
 {
-    ImGuiIO& io = ImGui::GetIO();
+    ImGuiIO &io = ImGui::GetIO();
     io.BackendPlatformName = io.BackendRendererName = "imgui_impl_marmalade";
 
-    io.KeyMap[ImGuiKey_Tab] = s3eKeyTab;                     // Keyboard mapping. ImGui will use those indices to peek into the io.KeysDown[] array.
+    io.KeyMap[ImGuiKey_Tab] = s3eKeyTab; // Keyboard mapping. ImGui will use those indices to peek into the io.KeysDown[] array.
     io.KeyMap[ImGuiKey_LeftArrow] = s3eKeyLeft;
     io.KeyMap[ImGuiKey_RightArrow] = s3eKeyRight;
     io.KeyMap[ImGuiKey_UpArrow] = s3eKeyUp;
@@ -266,7 +266,7 @@ void ImGui_Marmalade_NewFrame()
     if (!g_FontTexture)
         ImGui_Marmalade_CreateDeviceObjects();
 
-    ImGuiIO& io = ImGui::GetIO();
+    ImGuiIO &io = ImGui::GetIO();
 
     // Setup display size (every frame to accommodate for window resizing)
     int w = IwGxGetScreenWidth(), h = IwGxGetScreenHeight();
@@ -286,7 +286,7 @@ void ImGui_Marmalade_NewFrame()
 
     for (int i = 0; i < 3; i++)
     {
-        io.MouseDown[i] = g_MousePressed[i] || s3ePointerGetState((s3ePointerButton)i) != S3E_POINTER_STATE_UP;    // If a mouse press event came, always pass it as "mouse held this frame", so we don't miss click-release events that are shorter than 1 frame.
+        io.MouseDown[i] = g_MousePressed[i] || s3ePointerGetState((s3ePointerButton)i) != S3E_POINTER_STATE_UP; // If a mouse press event came, always pass it as "mouse held this frame", so we don't miss click-release events that are shorter than 1 frame.
         g_MousePressed[i] = false;
     }
 
@@ -300,7 +300,7 @@ void ImGui_Marmalade_NewFrame()
         if (!g_osdKeyboardEnabled)
         {
             g_osdKeyboardEnabled = true;
-            s3eKeyboardSetInt(S3E_KEYBOARD_GET_CHAR, 1);    // show OSD keyboard
+            s3eKeyboardSetInt(S3E_KEYBOARD_GET_CHAR, 1); // show OSD keyboard
         }
     }
     else
@@ -309,7 +309,7 @@ void ImGui_Marmalade_NewFrame()
         if (g_osdKeyboardEnabled)
         {
             g_osdKeyboardEnabled = false;
-            s3eKeyboardSetInt(S3E_KEYBOARD_GET_CHAR, 0);    // hide OSD keyboard
+            s3eKeyboardSetInt(S3E_KEYBOARD_GET_CHAR, 0); // hide OSD keyboard
         }
     }
 }
