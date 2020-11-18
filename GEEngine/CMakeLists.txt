@@ -3,6 +3,6 @@ message(STATUS "###################################")
 add_library( GEEngine
     src/Engine.cpp
 )
-target_link_libraries( GEEngine
-    RocketGE
+target_link_libraries( GEEngine PRIVATE
+    spdlog::spdlog_header_only
 )

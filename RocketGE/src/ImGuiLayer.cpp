@@ -40,6 +40,7 @@ namespace Rocket {
 
 		std::string ttf_path = std::filesystem::current_path().generic_string() + "/Sandbox/assets/fonts/Cousine-Regular.ttf";
 		std::string ttf_default = std::filesystem::current_path().generic_string() + "/Sandbox/assets/fonts/Karla-Regular.ttf";
+		RK_INFO(ttf_path);
 		io.Fonts->AddFontFromFileTTF(ttf_path.c_str(), 18.0f);
 		io.FontDefault = io.Fonts->AddFontFromFileTTF(ttf_default.c_str(), 18.0f);
 
