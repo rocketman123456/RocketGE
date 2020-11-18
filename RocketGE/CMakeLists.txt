@@ -14,6 +14,7 @@ target_link_libraries( RocketGE PRIVATE
     ${Threads_LIBS}
     spdlog::spdlog
     spdlog::spdlog_header_only
+    imgui
 )
 if(Apple)
     target_link_libraries(RocketGE PRIVATE Platform_Apple)

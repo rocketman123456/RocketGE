@@ -1,7 +1,12 @@
 cmake_minimum_required (VERSION 2.6)
 
-#set(VCPKG_ROOT "C:/dev/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE PATH "")
-set(VCPKG_ROOT "/usr/local/Cellar/vcpkg/2020.11-1/libexec/scripts/buildsystems/vcpkg.cmake")
+if (CMAKE_SYSTEM_NAME MATCHES "Linux")
+    set(VCPKG_ROOT "/usr/local/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE PATH "")
+elseif (CMAKE_SYSTEM_NAME MATCHES "Windows")
+    set(VCPKG_ROOT "C:/dev/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE PATH "")
+elseif (CMAKE_SYSTEM_NAME MATCHES "Darwin")
+    set(VCPKG_ROOT "/usr/local/Cellar/vcpkg/2020.11-1/libexec/scripts/buildsystems/vcpkg.cmake" CACHE PATH "")
+endif ()
 set(CMAKE_TOOLCHAIN_FILE ${VCPKG_ROOT})
 
 message(STATUS "###################################")
@@ -38,7 +43,7 @@ elseif (CMAKE_SYSTEM_NAME MATCHES "Darwin")
     add_definitions(-DPLATFORM_APPLE)
 else ()
     message(STATUS "other platform: ${CMAKE_SYSTEM_NAME}")
-endif (CMAKE_SYSTEM_NAME MATCHES "Linux")
+endif ()
 
 message(STATUS "###################################")
 
@@ -49,25 +54,27 @@ if(yaml-cpp_FOUND)
     message(STATUS "    version: ${yaml-cpp_VERSION}")
     message(STATUS "    libraries: ${yaml_cpp_LIBS}")
     message(STATUS "    include path: ${yaml_cpp_INCLUDE_DIRS}")
-endif()
+endif(yaml-cpp_FOUND)
 find_package(glfw3 CONFIG REQUIRED)
 if(glfw3_FOUND)
     message(STATUS "glfw3 library: ${glfw3_INSTALL_PATH}")
     message(STATUS "    version: ${glfw3_VERSION}")
     message(STATUS "    libraries: ${glfw3_LIBS}")
     message(STATUS "    include path: ${glfw3_INCLUDE_DIRS}")
-endif()
+endif(glfw3_FOUND)
 find_package(spdlog CONFIG REQUIRED)
 if(spdlog_FOUND)
     message(STATUS "spdlog library: ${spdlog_INSTALL_PATH}")
     message(STATUS "    version: ${spdlog_VERSION}")
     message(STATUS "    libraries: ${spdlog_LIBS}")
     message(STATUS "    include path: ${spdlog_INCLUDE_DIRS}")
-endif()
-#find_package(fmt CONFIG REQUIRED)
-#if(fmt_FOUND)
-#    message(STATUS "fmt FOUND")
-#endif()
+endif(spdlog_FOUND)
+
+message(STATUS "###################################")
+
+message(STATUS "Render API Set to OpenGL")
+set(OpenGL 1)
+add_definitions(-DRK_OPENGL)
 
 message(STATUS "###################################")
 
@@ -83,10 +90,18 @@ include_directories(
 )
 
 include_directories(
-    ${PROJECT_SOURCE_DIR}/RocketGE/include
     ${PROJECT_SOURCE_DIR}/GEEngine/include
+    ${PROJECT_SOURCE_DIR}/RocketGE/include
     ${PROJECT_SOURCE_DIR}/Sandbox/include
 )
+
+if(OpenGL)
+    include_directories(${PROJECT_SOURCE_DIR}/GERender/OpenGL/include)
+elseif(Vulkan)
+    include_directories(${PROJECT_SOURCE_DIR}/GERender/Vulkan/include)
+elseif(Metal)
+    include_directories(${PROJECT_SOURCE_DIR}/GERender/Metal/include)
+endif()
 
 if(Apple)
     include_directories( ${PROJECT_SOURCE_DIR}/Platform/Apple/include )
@@ -100,6 +115,7 @@ add_subdirectory( Thirdparty )
 add_subdirectory( Platform )
 
 add_subdirectory( GEEngine )
+add_subdirectory( GERender )
 add_subdirectory( RocketGE )
 
 add_subdirectory( Sandbox )

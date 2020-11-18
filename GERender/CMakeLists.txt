@@ -1,0 +1,10 @@
+message(STATUS "Add Module GERender")
+message(STATUS "###################################")
+
+#if(OpenGL)
+#    add_library(OpenGL )
+#elseif(Vulkan)
+#    add_library(Vulkan )
+#elseif(Metal)
+#    add_library(Metal )
+#endif()

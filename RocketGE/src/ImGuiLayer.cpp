@@ -4,7 +4,15 @@
 #include "GEApplication.h"
 
 #include <imgui.h>
+#ifdef RK_OPENGL
 #include <backends/imgui_impl_opengl3.h>
+#endif
+#ifdef RK_VULKAN
+#include "backends/imgui_impl_vulkan.h"
+#endif
+#ifdef RK_METAL
+#include "backends/imgui_impl_metal.h"
+#endif
 #include <backends/imgui_impl_glfw.h>
 
 #include <glfw/glfw3.h>
@@ -20,16 +28,23 @@ namespace Rocket {
         // Setup Dear ImGui context
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
-		ImGuiIO& io = ImGui::GetIO(); (void)io;
+		ImGuiIO& io = ImGui::GetIO();
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
-		//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 		//io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
 		//io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
 		//io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoTaskBarIcons;
 		//io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoMerge;
+		io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
+		io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
 
-		io.Fonts->AddFontFromFileTTF("assets/fonts/opensans/OpenSans-Bold.ttf", 18.0f);
-		io.FontDefault = io.Fonts->AddFontFromFileTTF("assets/fonts/opensans/OpenSans-Regular.ttf", 18.0f);
+		std::string ttf_path = std::filesystem::current_path().generic_string() + "/Sandbox/assets/fonts/Cousine-Regular.ttf";
+		std::string ttf_default = std::filesystem::current_path().generic_string() + "/Sandbox/assets/fonts/Karla-Regular.ttf";
+		io.Fonts->AddFontFromFileTTF(ttf_path.c_str(), 18.0f);
+		io.FontDefault = io.Fonts->AddFontFromFileTTF(ttf_default.c_str(), 18.0f);
+
+		io.DisplaySize.x = 800;
+		io.DisplaySize.y = 600;
 
 		// Setup Dear ImGui style
 		ImGui::StyleColorsDark();
@@ -62,7 +77,19 @@ namespace Rocket {
 
     void ImGuiLayer::OnUpdate(Timestep ts)
     {
-        
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui::NewFrame();
+
+		auto time = (float)glfwGetTime();
+		ImGuiIO& io = ImGui::GetIO();
+		io.DeltaTime = m_Time > 0.0 ? (time - m_Time) : (1.0f / 60.0f);
+		m_Time = time;
+
+		static bool show = true;
+		ImGui::ShowDemoWindow(&show);
+
+        ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     }
 
     void ImGuiLayer::OnEvent(Event& e)
