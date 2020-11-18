@@ -11,15 +11,5 @@ add_library( RocketGE
     src/Window.cpp
 )
 target_link_libraries( RocketGE PRIVATE
-    #${Threads_LIBS}
-    #spdlog::spdlog
-    spdlog::spdlog_header_only
-    #imgui
+    glfw
 )
-if(Apple)
-    target_link_libraries(RocketGE PRIVATE Platform_Apple)
-elseif(Linux)
-    target_link_libraries(RocketGE PRIVATE Platform_Linux)
-elseif(Windows)
-    target_link_libraries(RocketGE PRIVATE Platform_Windows)
-endif()

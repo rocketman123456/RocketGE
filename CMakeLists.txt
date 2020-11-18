@@ -11,6 +11,7 @@ set(CMAKE_TOOLCHAIN_FILE ${VCPKG_ROOT})
 
 message(STATUS "###################################")
 
+message(STATUS "CMAKE_TOOLCHAIN_FILE ${CMAKE_TOOLCHAIN_FILE}")
 project( RocketGE )
 message(STATUS "Project Name ${PROJECT_NAME}")
 
@@ -49,26 +50,7 @@ message(STATUS "###################################")
 
 find_package(Threads REQUIRED)
 find_package(yaml-cpp CONFIG REQUIRED)
-if(yaml-cpp_FOUND)
-    message(STATUS "yaml-cpp library: ${yaml_cpp_INSTALL_PATH}")
-    message(STATUS "    version: ${yaml-cpp_VERSION}")
-    message(STATUS "    libraries: ${yaml_cpp_LIBS}")
-    message(STATUS "    include path: ${yaml_cpp_INCLUDE_DIRS}")
-endif(yaml-cpp_FOUND)
 find_package(glfw3 CONFIG REQUIRED)
-if(glfw3_FOUND)
-    message(STATUS "glfw3 library: ${glfw3_INSTALL_PATH}")
-    message(STATUS "    version: ${glfw3_VERSION}")
-    message(STATUS "    libraries: ${glfw3_LIBS}")
-    message(STATUS "    include path: ${glfw3_INCLUDE_DIRS}")
-endif(glfw3_FOUND)
-find_package(spdlog CONFIG REQUIRED)
-if(spdlog_FOUND)
-    message(STATUS "spdlog library: ${spdlog_INSTALL_PATH}")
-    message(STATUS "    version: ${spdlog_VERSION}")
-    message(STATUS "    libraries: ${spdlog_LIBS}")
-    message(STATUS "    include path: ${spdlog_INCLUDE_DIRS}")
-endif(spdlog_FOUND)
 
 message(STATUS "###################################")
 
@@ -78,20 +60,23 @@ add_definitions(-DRK_OPENGL)
 
 message(STATUS "###################################")
 
+#include_directories(
+    #${yaml_cpp_INCLUDE_DIRS}
+    #${glfw3_INCLUDE_DIRS}
+    #${Threads_INCLUDE_DIRS}
+#)
+
 include_directories(
     ${PROJECT_SOURCE_DIR}/Thirdparty/entt/include
     ${PROJECT_SOURCE_DIR}/Thirdparty/glad/include
+    ${PROJECT_SOURCE_DIR}/Thirdparty/spdlog/include
     ${PROJECT_SOURCE_DIR}/Thirdparty/stb_image
     ${PROJECT_SOURCE_DIR}/Thirdparty/imgui
-    ${spdlog_INCLUDE_DIRS}
-    ${yaml_cpp_INCLUDE_DIRS}
-    ${glfw3_INCLUDE_DIRS}
-    ${Threads_INCLUDE_DIRS}
 )
 
 include_directories(
-    ${PROJECT_SOURCE_DIR}/GEEngine/include
     ${PROJECT_SOURCE_DIR}/RocketGE/include
+    ${PROJECT_SOURCE_DIR}/GEEngine/include
     ${PROJECT_SOURCE_DIR}/Sandbox/include
 )
 

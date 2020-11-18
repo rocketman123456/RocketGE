@@ -7,9 +7,14 @@ target_link_libraries( SandboxApp PRIVATE
     GEEngine
     RocketGE
 )
+if(Apple)
+    target_link_libraries(SandboxApp PRIVATE Platform_Apple)
+elseif(Linux)
+    target_link_libraries(SandboxApp PRIVATE Platform_Linux)
+elseif(Windows)
+    target_link_libraries(SandboxApp PRIVATE Platform_Windows)
+endif()
 target_link_libraries( SandboxApp PRIVATE
     ${Threads_LIBS}
-    spdlog::spdlog
-    spdlog::spdlog_header_only
-    imgui
+    spdlog imgui glad glfw yaml-cpp
 )
