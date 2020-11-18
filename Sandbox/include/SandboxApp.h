@@ -13,7 +13,7 @@ namespace Rocket
 
         void OnUpdate(Timestep ts) override
         {
-            RK_INFO("ExampleLayer Update");
+            //RK_INFO("ExampleLayer Update");
         }
 
         void OnEvent(Event& event) override

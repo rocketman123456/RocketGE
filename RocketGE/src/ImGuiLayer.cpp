@@ -35,16 +35,16 @@ namespace Rocket {
 		//io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
 		//io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoTaskBarIcons;
 		//io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoMerge;
-		io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
-		io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
+		//io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
+		//io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
 
 		std::string ttf_path = std::filesystem::current_path().generic_string() + "/Sandbox/assets/fonts/Cousine-Regular.ttf";
 		std::string ttf_default = std::filesystem::current_path().generic_string() + "/Sandbox/assets/fonts/Karla-Regular.ttf";
 		io.Fonts->AddFontFromFileTTF(ttf_path.c_str(), 18.0f);
 		io.FontDefault = io.Fonts->AddFontFromFileTTF(ttf_default.c_str(), 18.0f);
 
-		io.DisplaySize.x = 800;
-		io.DisplaySize.y = 600;
+		Application& app = Application::Get();
+		io.DisplaySize = ImVec2(app.GetWindow().GetWidth(), app.GetWindow().GetHeight());
 
 		// Setup Dear ImGui style
 		ImGui::StyleColorsDark();
@@ -60,7 +60,6 @@ namespace Rocket {
 
 		//SetDarkThemeColors();
 
-		Application& app = Application::Get();
 		GLFWwindow* window = static_cast<GLFWwindow*>(app.GetWindow().GetNativeWindow());
 
 		// Setup Platform/Renderer bindings

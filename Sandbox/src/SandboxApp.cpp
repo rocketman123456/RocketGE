@@ -8,7 +8,7 @@ namespace Rocket
         SimpleSandbox()
         {
             PushLayer(new ExampleLayer());
-            PushLayer(new ImGuiLayer());
+            PushOverlay(new ImGuiLayer());
         }
         ~SimpleSandbox()
         {
