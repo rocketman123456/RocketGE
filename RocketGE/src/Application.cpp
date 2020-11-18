@@ -55,12 +55,13 @@ namespace Rocket
         RK_INFO("Start Application Run Loop");
         while (m_Running)
         {
+            int display_w, display_h;
             glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
 
             for (Layer *layer : m_LayerStack)
             {
-                layer->OnUpdate(Timestep(0.1));
+                layer->OnUpdate(Timestep(0.03));
             }
 
             m_Window->OnUpdate();
@@ -83,7 +84,6 @@ namespace Rocket
         }
 
         m_Minimized = false;
-
         return false;
     }
 } // namespace Rocket

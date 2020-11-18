@@ -60,12 +60,6 @@ add_definitions(-DRK_OPENGL)
 
 message(STATUS "###################################")
 
-#include_directories(
-    #${yaml_cpp_INCLUDE_DIRS}
-    #${glfw3_INCLUDE_DIRS}
-    #${Threads_INCLUDE_DIRS}
-#)
-
 include_directories(
     ${PROJECT_SOURCE_DIR}/Thirdparty/entt/include
     ${PROJECT_SOURCE_DIR}/Thirdparty/glad/include
