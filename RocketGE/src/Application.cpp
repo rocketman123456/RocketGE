@@ -20,7 +20,7 @@ namespace Rocket
 
     void Application::OnEvent(Event &e)
     {
-        RK_CORE_TRACE(e);
+        //RK_CORE_TRACE(e);
         EventDispatcher dispatcher(e);
         dispatcher.Dispatch<WindowCloseEvent>(RK_BIND_EVENT_FN(Application::OnWindowClose));
         dispatcher.Dispatch<WindowResizeEvent>(RK_BIND_EVENT_FN(Application::OnWindowResize));
@@ -55,7 +55,6 @@ namespace Rocket
         RK_INFO("Start Application Run Loop");
         while (m_Running)
         {
-            int display_w, display_h;
             glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
 

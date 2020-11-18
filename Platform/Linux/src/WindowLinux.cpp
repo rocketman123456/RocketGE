@@ -62,6 +62,14 @@ namespace Rocket {
 			data.EventCallback(event);
 		});
 
+		glfwSetWindowContentScaleCallback(m_Window, [](GLFWwindow* window, float xscale, float yscale){
+			RK_INFO("glfwSetWindowContentScaleCallback");
+		});
+
+		glfwSetFramebufferSizeCallback(m_Window, [](GLFWwindow* window, int width, int height){
+			RK_INFO("glfwSetFramebufferSizeCallback");
+		});
+
 		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window)
 		{
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);

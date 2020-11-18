@@ -18,7 +18,7 @@ namespace Rocket
 
         void OnEvent(Event &event) override
         {
-            RK_TRACE(event);
+            //RK_TRACE(event);
         }
     };
 } // namespace Rocket

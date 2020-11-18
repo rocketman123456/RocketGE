@@ -43,29 +43,6 @@ namespace Rocket
 		io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
 		io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
 
-		// TEMPORARY: should eventually use Hazel key codes
-		//io.KeyMap[ImGuiKey_Tab] = GLFW_KEY_TAB;
-		//io.KeyMap[ImGuiKey_LeftArrow] = GLFW_KEY_LEFT;
-		//io.KeyMap[ImGuiKey_RightArrow] = GLFW_KEY_RIGHT;
-		//io.KeyMap[ImGuiKey_UpArrow] = GLFW_KEY_UP;
-		//io.KeyMap[ImGuiKey_DownArrow] = GLFW_KEY_DOWN;
-		//io.KeyMap[ImGuiKey_PageUp] = GLFW_KEY_PAGE_UP;
-		//io.KeyMap[ImGuiKey_PageDown] = GLFW_KEY_PAGE_DOWN;
-		//io.KeyMap[ImGuiKey_Home] = GLFW_KEY_HOME;
-		//io.KeyMap[ImGuiKey_End] = GLFW_KEY_END;
-		//io.KeyMap[ImGuiKey_Insert] = GLFW_KEY_INSERT;
-		//io.KeyMap[ImGuiKey_Delete] = GLFW_KEY_DELETE;
-		//io.KeyMap[ImGuiKey_Backspace] = GLFW_KEY_BACKSPACE;
-		//io.KeyMap[ImGuiKey_Space] = GLFW_KEY_SPACE;
-		//io.KeyMap[ImGuiKey_Enter] = GLFW_KEY_ENTER;
-		//io.KeyMap[ImGuiKey_Escape] = GLFW_KEY_ESCAPE;
-		//io.KeyMap[ImGuiKey_A] = GLFW_KEY_A;
-		//io.KeyMap[ImGuiKey_C] = GLFW_KEY_C;
-		//io.KeyMap[ImGuiKey_V] = GLFW_KEY_V;
-		//io.KeyMap[ImGuiKey_X] = GLFW_KEY_X;
-		//io.KeyMap[ImGuiKey_Y] = GLFW_KEY_Y;
-		//io.KeyMap[ImGuiKey_Z] = GLFW_KEY_Z;
-
 		std::string ttf_path = std::filesystem::current_path().generic_string() + "/Sandbox/assets/fonts/opensans/OpenSans-Bold.ttf";
 		std::string ttf_default = std::filesystem::current_path().generic_string() + "/Sandbox/assets/fonts/opensans/OpenSans-Regular.ttf";
 		io.Fonts->AddFontFromFileTTF(ttf_path.c_str(), 18.0f);
@@ -82,7 +59,7 @@ namespace Rocket
 		ImGuiStyle &style = ImGui::GetStyle();
 
 		// Setup Platform/Renderer bindings
-		ImGui_ImplGlfw_InitForOpenGL(window, true);
+		ImGui_ImplGlfw_InitForOpenGL(window, false);
 		ImGui_ImplOpenGL3_Init("#version 330");
 	}
 
@@ -97,8 +74,6 @@ namespace Rocket
 	{
 
 		ImGuiIO& io = ImGui::GetIO();
-		//Application& app = Application::Get();
-		//io.DisplaySize = ImVec2(app.GetWindow().GetWidth(), app.GetWindow().GetHeight());
 		
 		auto time = (float)glfwGetTime();
 		io.DeltaTime = m_Time > 0.0 ? (time - m_Time) : (1.0f / 60.0f);
@@ -198,10 +173,12 @@ namespace Rocket
 
 	bool ImGuiLayer::OnKeyTypedEvent(KeyTypedEvent& e)
 	{
+		RK_TRACE(e);
 		ImGuiIO& io = ImGui::GetIO();
 		int keycode = e.GetKeyCode();
-		if (keycode > 0 && keycode < 0x10000)
+		if (keycode > 0 && keycode < 0x10000) {
 			io.AddInputCharacter((unsigned short)keycode);
+		}
 
 		return false;
 	}
