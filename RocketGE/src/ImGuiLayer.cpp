@@ -73,11 +73,9 @@ namespace Rocket
 
 		Application &app = Application::Get();
 		GLFWwindow *window = static_cast<GLFWwindow *>(app.GetWindow().GetNativeWindow());
-		int display_w, display_h;
 		float xscale, yscale;
-        glfwGetFramebufferSize(window, &display_w, &display_h);
 		glfwGetWindowContentScale(window, &xscale, &yscale);
-		io.DisplaySize = ImVec2(display_w, display_h);
+		io.DisplaySize = ImVec2(app.GetWindow().GetWidth(), app.GetWindow().GetHeight());
 		io.DisplayFramebufferScale = ImVec2(xscale, yscale);
 
 		// When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
@@ -210,16 +208,13 @@ namespace Rocket
 
 	bool ImGuiLayer::OnWindowResizeEvent(WindowResizeEvent& e)
 	{
-		int display_w, display_h;
-		float xscale, yscale;
-
 		ImGuiIO& io = ImGui::GetIO();
 		Application &app = Application::Get();
 		GLFWwindow *window = static_cast<GLFWwindow *>(app.GetWindow().GetNativeWindow());
 		
-        glfwGetFramebufferSize(window, &display_w, &display_h);
+		float xscale, yscale;
 		glfwGetWindowContentScale(window, &xscale, &yscale);
-		io.DisplaySize = ImVec2(display_w, display_h);
+		io.DisplaySize = ImVec2(e.GetWidth(), e.GetHeight());
 		io.DisplayFramebufferScale = ImVec2(xscale, yscale);
 		glViewport(0, 0, e.GetWidth(), e.GetHeight());
 
