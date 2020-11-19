@@ -13,7 +13,6 @@ namespace Rocket
 
         void OnUpdate(Timestep ts) override
         {
-            //RK_INFO("ExampleLayer Update");
             if(Input::IsKeyPressed(Key::Tab))
             {
                 RK_INFO("Tab Key Pressed");
@@ -22,7 +21,10 @@ namespace Rocket
 
         void OnEvent(Event &event) override
         {
-            //RK_TRACE(event);
+            if(event.GetEventType() == EventType::KeyPressed)
+            {
+                RK_TRACE("KeyCode {0} Key Pressed", static_cast<KeyEvent&>(event).GetKeyCode());
+            }
         }
     };
 } // namespace Rocket
