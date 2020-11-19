@@ -25,10 +25,10 @@ namespace Rocket
             {
                 RK_TRACE("KeyCode {0} Key Pressed", static_cast<KeyEvent&>(event).GetKeyCode());
             }
-            else if(event.GetEventType() == EventType::MouseMoved)
-            {
-                RK_TRACE("Mouse Pos: {0}, {1}", Input::GetMouseX(), Input::GetMouseY());
-            }
+            //else if(event.GetEventType() == EventType::MouseMoved)
+            //{
+            //    RK_TRACE("Mouse Pos: {0}, {1}", Input::GetMouseX(), Input::GetMouseY());
+            //}
         }
     };
 } // namespace Rocket

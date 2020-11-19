@@ -4,6 +4,7 @@
 #include "GEEvent.h"
 #include "GEWindow.h"
 #include "GELayer.h"
+
 namespace Rocket {
     class Application {
     public:
@@ -25,6 +26,7 @@ namespace Rocket {
 		bool OnWindowResize(WindowResizeEvent& e);
     private:
         std::unique_ptr<Window> m_Window;
+        GuiLayer* m_GuiLayer;
         LayerStack m_LayerStack;
         bool m_Running = true;
         bool m_Minimized = false;
