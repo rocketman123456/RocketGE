@@ -7,14 +7,14 @@ namespace Rocket
     class ImGuiLayer : public GuiLayer
     {
     public:
-        ImGuiLayer();
+        ImGuiLayer() : GuiLayer("ImGuiLayer") {}
         virtual ~ImGuiLayer() = default;
 
         virtual void OnAttach() override;
 		virtual void OnDetach() override;
         virtual void OnUpdate(Timestep ts) override;
 		virtual void OnEvent(Event& event) override;
-		virtual void OnImGuiRender() override;
+		virtual void OnGuiRender() override;
 
         void Begin();
         void End();

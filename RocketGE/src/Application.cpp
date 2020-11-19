@@ -65,6 +65,14 @@ namespace Rocket
                 layer->OnUpdate(Timestep(0.03));
             }
 
+            for (Layer* layer : m_LayerStack)
+            {
+                if (dynamic_cast<GuiLayer*>(layer))
+                {
+                    static_cast<GuiLayer*>(layer)->OnGuiRender();
+                }
+            }
+
             m_Window->OnUpdate();
         }
         RK_INFO("End Application Run Loop");

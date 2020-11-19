@@ -3,6 +3,7 @@
 
 // Implemented features:
 //  [X] Renderer: User texture binding. Use 'GLuint' OpenGL texture identifier as void*/ImTextureID. Read the FAQ about ImTextureID!
+//  [X] Renderer: Multi-viewport support. Enable with 'io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable'.
 
 // You can copy and use unmodified imgui_impl_* files in your project. See examples/ folder for examples of using this.
 // If you are new to Dear ImGui, read documentation from the docs/ folder + read the top of imgui.cpp.
@@ -18,6 +19,7 @@
 
 // CHANGELOG
 // (minor and older changes stripped away, please see git history for details)
+//  2020-XX-XX: Platform: Added support for multiple windows via the ImGuiPlatformIO interface.
 //  2020-01-23: OpenGL: Explicitly backup, setup and restore GL_TEXTURE_ENV to increase compatibility with legacy OpenGL applications.
 //  2019-04-30: OpenGL: Added support for special ImDrawCallback_ResetRenderState callback to reset render state.
 //  2019-02-11: OpenGL: Projecting clipping rectangles correctly using draw_data->FramebufferScale to allow multi-viewports for retina display.
@@ -33,17 +35,17 @@
 #include "imgui.h"
 #include "imgui_impl_opengl2.h"
 #if defined(_MSC_VER) && _MSC_VER <= 1500 // MSVC 2008 or earlier
-#include <stddef.h>                       // intptr_t
+#include <stddef.h>     // intptr_t
 #else
-#include <stdint.h> // intptr_t
+#include <stdint.h>     // intptr_t
 #endif
 
 // Include OpenGL header (without an OpenGL loader) requires a bit of fiddling
 #if defined(_WIN32) && !defined(APIENTRY)
-#define APIENTRY __stdcall // It is customary to use APIENTRY for OpenGL function pointer declarations on all platforms.  Additionally, the Windows OpenGL header needs APIENTRY.
+#define APIENTRY __stdcall                  // It is customary to use APIENTRY for OpenGL function pointer declarations on all platforms.  Additionally, the Windows OpenGL header needs APIENTRY.
 #endif
 #if defined(_WIN32) && !defined(WINGDIAPI)
-#define WINGDIAPI __declspec(dllimport) // Some Windows OpenGL headers need this
+#define WINGDIAPI __declspec(dllimport)     // Some Windows OpenGL headers need this
 #endif
 #if defined(__APPLE__)
 #define GL_SILENCE_DEPRECATION
@@ -53,29 +55,38 @@
 #endif
 
 // OpenGL Data
-static GLuint g_FontTexture = 0;
+static GLuint       g_FontTexture = 0;
+
+// Forward Declarations
+static void ImGui_ImplOpenGL2_InitPlatformInterface();
+static void ImGui_ImplOpenGL2_ShutdownPlatformInterface();
 
 // Functions
-bool ImGui_ImplOpenGL2_Init()
+bool    ImGui_ImplOpenGL2_Init()
 {
     // Setup backend capabilities flags
-    ImGuiIO &io = ImGui::GetIO();
+    ImGuiIO& io = ImGui::GetIO();
     io.BackendRendererName = "imgui_impl_opengl2";
+    io.BackendFlags |= ImGuiBackendFlags_RendererHasViewports;    // We can create multi-viewports on the Renderer side (optional)
+
+    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+        ImGui_ImplOpenGL2_InitPlatformInterface();
     return true;
 }
 
-void ImGui_ImplOpenGL2_Shutdown()
+void    ImGui_ImplOpenGL2_Shutdown()
 {
+    ImGui_ImplOpenGL2_ShutdownPlatformInterface();
     ImGui_ImplOpenGL2_DestroyDeviceObjects();
 }
 
-void ImGui_ImplOpenGL2_NewFrame()
+void    ImGui_ImplOpenGL2_NewFrame()
 {
     if (!g_FontTexture)
         ImGui_ImplOpenGL2_CreateDeviceObjects();
 }
 
-static void ImGui_ImplOpenGL2_SetupRenderState(ImDrawData *draw_data, int fb_width, int fb_height)
+static void ImGui_ImplOpenGL2_SetupRenderState(ImDrawData* draw_data, int fb_width, int fb_height)
 {
     // Setup render state: alpha-blending enabled, no face culling, no depth testing, scissor enabled, vertex/texcoord/color pointers, polygon fill.
     glEnable(GL_BLEND);
@@ -115,7 +126,7 @@ static void ImGui_ImplOpenGL2_SetupRenderState(ImDrawData *draw_data, int fb_wid
 // OpenGL2 Render function.
 // Note that this implementation is little overcomplicated because we are saving/setting up/restoring every OpenGL state explicitly.
 // This is in order to be able to run within an OpenGL engine that doesn't do so.
-void ImGui_ImplOpenGL2_RenderDrawData(ImDrawData *draw_data)
+void ImGui_ImplOpenGL2_RenderDrawData(ImDrawData* draw_data)
 {
     // Avoid rendering when minimized, scale coordinates for retina displays (screen coordinates != framebuffer coordinates)
     int fb_width = (int)(draw_data->DisplaySize.x * draw_data->FramebufferScale.x);
@@ -124,16 +135,11 @@ void ImGui_ImplOpenGL2_RenderDrawData(ImDrawData *draw_data)
         return;
 
     // Backup GL state
-    GLint last_texture;
-    glGetIntegerv(GL_TEXTURE_BINDING_2D, &last_texture);
-    GLint last_polygon_mode[2];
-    glGetIntegerv(GL_POLYGON_MODE, last_polygon_mode);
-    GLint last_viewport[4];
-    glGetIntegerv(GL_VIEWPORT, last_viewport);
-    GLint last_scissor_box[4];
-    glGetIntegerv(GL_SCISSOR_BOX, last_scissor_box);
-    GLint last_tex_env_mode;
-    glGetTexEnviv(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, &last_tex_env_mode);
+    GLint last_texture; glGetIntegerv(GL_TEXTURE_BINDING_2D, &last_texture);
+    GLint last_polygon_mode[2]; glGetIntegerv(GL_POLYGON_MODE, last_polygon_mode);
+    GLint last_viewport[4]; glGetIntegerv(GL_VIEWPORT, last_viewport);
+    GLint last_scissor_box[4]; glGetIntegerv(GL_SCISSOR_BOX, last_scissor_box);
+    GLint last_tex_env_mode; glGetTexEnviv(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, &last_tex_env_mode);
     glPushAttrib(GL_ENABLE_BIT | GL_COLOR_BUFFER_BIT | GL_TRANSFORM_BIT);
 
     // Setup desired GL state
@@ -146,16 +152,16 @@ void ImGui_ImplOpenGL2_RenderDrawData(ImDrawData *draw_data)
     // Render command lists
     for (int n = 0; n < draw_data->CmdListsCount; n++)
     {
-        const ImDrawList *cmd_list = draw_data->CmdLists[n];
-        const ImDrawVert *vtx_buffer = cmd_list->VtxBuffer.Data;
-        const ImDrawIdx *idx_buffer = cmd_list->IdxBuffer.Data;
-        glVertexPointer(2, GL_FLOAT, sizeof(ImDrawVert), (const GLvoid *)((const char *)vtx_buffer + IM_OFFSETOF(ImDrawVert, pos)));
-        glTexCoordPointer(2, GL_FLOAT, sizeof(ImDrawVert), (const GLvoid *)((const char *)vtx_buffer + IM_OFFSETOF(ImDrawVert, uv)));
-        glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(ImDrawVert), (const GLvoid *)((const char *)vtx_buffer + IM_OFFSETOF(ImDrawVert, col)));
+        const ImDrawList* cmd_list = draw_data->CmdLists[n];
+        const ImDrawVert* vtx_buffer = cmd_list->VtxBuffer.Data;
+        const ImDrawIdx* idx_buffer = cmd_list->IdxBuffer.Data;
+        glVertexPointer(2, GL_FLOAT, sizeof(ImDrawVert), (const GLvoid*)((const char*)vtx_buffer + IM_OFFSETOF(ImDrawVert, pos)));
+        glTexCoordPointer(2, GL_FLOAT, sizeof(ImDrawVert), (const GLvoid*)((const char*)vtx_buffer + IM_OFFSETOF(ImDrawVert, uv)));
+        glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(ImDrawVert), (const GLvoid*)((const char*)vtx_buffer + IM_OFFSETOF(ImDrawVert, col)));
 
         for (int cmd_i = 0; cmd_i < cmd_list->CmdBuffer.Size; cmd_i++)
         {
-            const ImDrawCmd *pcmd = &cmd_list->CmdBuffer[cmd_i];
+            const ImDrawCmd* pcmd = &cmd_list->CmdBuffer[cmd_i];
             if (pcmd->UserCallback)
             {
                 // User callback, registered via ImDrawList::AddCallback()
@@ -198,8 +204,7 @@ void ImGui_ImplOpenGL2_RenderDrawData(ImDrawData *draw_data)
     glMatrixMode(GL_PROJECTION);
     glPopMatrix();
     glPopAttrib();
-    glPolygonMode(GL_FRONT, (GLenum)last_polygon_mode[0]);
-    glPolygonMode(GL_BACK, (GLenum)last_polygon_mode[1]);
+    glPolygonMode(GL_FRONT, (GLenum)last_polygon_mode[0]); glPolygonMode(GL_BACK, (GLenum)last_polygon_mode[1]);
     glViewport(last_viewport[0], last_viewport[1], (GLsizei)last_viewport[2], (GLsizei)last_viewport[3]);
     glScissor(last_scissor_box[0], last_scissor_box[1], (GLsizei)last_scissor_box[2], (GLsizei)last_scissor_box[3]);
     glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, last_tex_env_mode);
@@ -208,10 +213,10 @@ void ImGui_ImplOpenGL2_RenderDrawData(ImDrawData *draw_data)
 bool ImGui_ImplOpenGL2_CreateFontsTexture()
 {
     // Build texture atlas
-    ImGuiIO &io = ImGui::GetIO();
-    unsigned char *pixels;
+    ImGuiIO& io = ImGui::GetIO();
+    unsigned char* pixels;
     int width, height;
-    io.Fonts->GetTexDataAsRGBA32(&pixels, &width, &height); // Load as RGBA 32-bit (75% of the memory is wasted, but default font is so small) because it is more likely to be compatible with user's existing shaders. If your ImTextureId represent a higher-level concept than just a GL texture id, consider calling GetTexDataAsAlpha8() instead to save on GPU memory.
+    io.Fonts->GetTexDataAsRGBA32(&pixels, &width, &height);   // Load as RGBA 32-bit (75% of the memory is wasted, but default font is so small) because it is more likely to be compatible with user's existing shaders. If your ImTextureId represent a higher-level concept than just a GL texture id, consider calling GetTexDataAsAlpha8() instead to save on GPU memory.
 
     // Upload texture to graphics system
     GLint last_texture;
@@ -236,19 +241,47 @@ void ImGui_ImplOpenGL2_DestroyFontsTexture()
 {
     if (g_FontTexture)
     {
-        ImGuiIO &io = ImGui::GetIO();
+        ImGuiIO& io = ImGui::GetIO();
         glDeleteTextures(1, &g_FontTexture);
         io.Fonts->TexID = 0;
         g_FontTexture = 0;
     }
 }
 
-bool ImGui_ImplOpenGL2_CreateDeviceObjects()
+bool    ImGui_ImplOpenGL2_CreateDeviceObjects()
 {
     return ImGui_ImplOpenGL2_CreateFontsTexture();
 }
 
-void ImGui_ImplOpenGL2_DestroyDeviceObjects()
+void    ImGui_ImplOpenGL2_DestroyDeviceObjects()
 {
     ImGui_ImplOpenGL2_DestroyFontsTexture();
+}
+
+//--------------------------------------------------------------------------------------------------------
+// MULTI-VIEWPORT / PLATFORM INTERFACE SUPPORT
+// This is an _advanced_ and _optional_ feature, allowing the backend to create and handle multiple viewports simultaneously.
+// If you are new to dear imgui or creating a new binding for dear imgui, it is recommended that you completely ignore this section first..
+//--------------------------------------------------------------------------------------------------------
+
+static void ImGui_ImplOpenGL2_RenderWindow(ImGuiViewport* viewport, void*)
+{
+    if (!(viewport->Flags & ImGuiViewportFlags_NoRendererClear))
+    {
+        ImVec4 clear_color = ImVec4(0.0f, 0.0f, 0.0f, 1.0f);
+        glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
+        glClear(GL_COLOR_BUFFER_BIT);
+    }
+    ImGui_ImplOpenGL2_RenderDrawData(viewport->DrawData);
+}
+
+static void ImGui_ImplOpenGL2_InitPlatformInterface()
+{
+    ImGuiPlatformIO& platform_io = ImGui::GetPlatformIO();
+    platform_io.Renderer_RenderWindow = ImGui_ImplOpenGL2_RenderWindow;
+}
+
+static void ImGui_ImplOpenGL2_ShutdownPlatformInterface()
+{
+    ImGui::DestroyPlatformWindows();
 }

@@ -8,6 +8,6 @@ namespace Rocket {
         GuiLayer(const std::string& name = "GuiLayer") : Layer(name) {}
         virtual ~GuiLayer() = default;
 
-        virtual void OnImGuiRender() {}
+        virtual void OnGuiRender() {}
     };
 }
