@@ -1,10 +1,10 @@
 #pragma once
 
-#include "GELayer/Layer.h"
+#include "GELayer/GuiLayer.h"
 
 namespace Rocket
 {
-    class ImGuiLayer : public Layer
+    class ImGuiLayer : public GuiLayer
     {
     public:
         ImGuiLayer();
@@ -14,7 +14,7 @@ namespace Rocket
 		virtual void OnDetach() override;
         virtual void OnUpdate(Timestep ts) override;
 		virtual void OnEvent(Event& event) override;
-		virtual void OnImGuiRender() {}
+		virtual void OnImGuiRender() override;
 
         void Begin();
         void End();

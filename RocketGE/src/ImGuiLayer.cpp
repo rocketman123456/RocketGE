@@ -19,7 +19,7 @@
 
 namespace Rocket
 {
-	ImGuiLayer::ImGuiLayer() : Layer("ImGuiLayer")
+	ImGuiLayer::ImGuiLayer() : GuiLayer("ImGuiLayer")
 	{
 	}
 
@@ -70,23 +70,10 @@ namespace Rocket
 	}
 
 	void ImGuiLayer::OnUpdate(Timestep ts)
-	{
-
-		ImGuiIO& io = ImGui::GetIO();
-		
-		auto time = (float)glfwGetTime();
-		io.DeltaTime = m_Time > 0.0 ? (time - m_Time) : (1.0f / 60.0f);
-		m_Time = time;
-		
-		ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-		ImGui::NewFrame();
-
-		static bool show = true;
-		ImGui::ShowDemoWindow(&show);
-
-		ImGui::Render();
-		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+	{	
+		Begin();
+		OnImGuiRender();
+		End();
 	}
 
 	void ImGuiLayer::OnEvent(Event &e)
@@ -101,10 +88,27 @@ namespace Rocket
 
 	void ImGuiLayer::Begin()
 	{
+		ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
 	}
 
 	void ImGuiLayer::End()
 	{
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+	}
+
+	void ImGuiLayer::OnImGuiRender()
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		
+		auto time = (float)glfwGetTime();
+		io.DeltaTime = m_Time > 0.0 ? (time - m_Time) : (1.0f / 60.0f);
+		m_Time = time;
+		
+		static bool show = true;
+		ImGui::ShowDemoWindow(&show);
 	}
 
 	void ImGuiLayer::SetDarkThemeColors()
