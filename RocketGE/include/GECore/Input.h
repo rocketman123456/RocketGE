@@ -10,11 +10,11 @@ namespace Rocket {
 	class Input
 	{
 	public:
-		inline static bool IsKeyPressed(KeyCode key);
-		inline static bool IsMouseButtonPressed(MouseCode button);
-		inline static glm::vec2 GetMousePosition();
-		inline static Eigen::Vector2f GetMousePositionEigen();
-		inline static float GetMouseX();
-		inline static float GetMouseY();
+		static bool IsKeyPressed(const KeyCode key);
+		static bool IsMouseButtonPressed(const MouseCode button);
+		static glm::vec2 GetMousePosition();
+		static Eigen::Vector2f GetMousePositionEigen();
+		static float GetMouseX();
+		static float GetMouseY();
 	};
 }

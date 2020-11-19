@@ -17,4 +17,5 @@ endif()
 target_link_libraries( SandboxApp PRIVATE
     ${Threads_LIBS}
     spdlog imgui glad glfw yaml-cpp
+    glm Eigen3::Eigen
 )

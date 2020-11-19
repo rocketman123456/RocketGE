@@ -1,14 +1,15 @@
 #pragma once
 
-#include "Core.h"
+#include "GECore/Basic.h"
 
 namespace Rocket
 {
-	using MouseCode = uint16_t;
+	using MouseCode = int32_t;
 	namespace Mouse
 	{
 		enum : MouseCode
 		{
+			Unknown				   = -1,
 			// From glfw3.h
 			Button0                = 0,
 			Button1                = 1,

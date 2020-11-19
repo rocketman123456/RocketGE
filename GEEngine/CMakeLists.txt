@@ -3,3 +3,6 @@ message(STATUS "###################################")
 add_library( GEEngine
     src/Engine.cpp
 )
+target_link_libraries( GEEngine
+    glm Eigen3::Eigen
+)

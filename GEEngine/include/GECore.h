@@ -4,3 +4,4 @@
 #include "GECore/KeyCode.h"
 #include "GECore/MouseCode.h"
 #include "GECore/EntryPoint.h"
+#include "GECore/Input.h"

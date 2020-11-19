@@ -1,14 +1,15 @@
 #pragma once
 
-#include "Core.h"
+#include "GECore/Basic.h"
 
 namespace Rocket
 {
-	using KeyCode = uint16_t;
+	using KeyCode = int32_t;
 	namespace Key
 	{
 		enum : KeyCode
 		{
+			Unknown				= -1,
 			// From glfw3.h
 			Space               = 32,
 			Apostrophe          = 39, /* ' */

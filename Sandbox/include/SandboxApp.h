@@ -14,6 +14,10 @@ namespace Rocket
         void OnUpdate(Timestep ts) override
         {
             //RK_INFO("ExampleLayer Update");
+            if(Input::IsKeyPressed(Key::Tab))
+            {
+                RK_INFO("Tab Key Pressed");
+            }
         }
 
         void OnEvent(Event &event) override
