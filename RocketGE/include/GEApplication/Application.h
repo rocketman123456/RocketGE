@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GEBase.h"
+#include "GECore.h"
 #include "GEEvent.h"
 #include "GEWindow.h"
 #include "GELayer.h"

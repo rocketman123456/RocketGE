@@ -11,5 +11,5 @@ add_library( RocketGE
     src/Window.cpp
 )
 target_link_libraries( RocketGE PRIVATE
-    glfw
+    glfw glm Eigen3::Eigen
 )

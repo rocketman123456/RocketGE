@@ -1,4 +1,4 @@
 #pragma once
 
-#include "GEBase/Core.h"
+#include "GECore/Core.h"
 #include "GEApplication/Application.h"

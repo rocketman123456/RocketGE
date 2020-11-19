@@ -5,16 +5,15 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/GEEngine/include",
-                "${workspaceFolder}/GEBase/include",
-                "${workspaceFolder}/GEEvent/include",
+                "${workspaceFolder}/RocketGE/include",
                 "${workspaceFolder}/Sandbox/include",
-                "/usr/local/include"
+                //"/usr/local/include"
             ],
             "defines": [],
             "macFrameworkPath": [
-                "/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks"
+                //"/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks"
             ],
-            "compilerPath": "/usr/local/opt/llvm/bin/clang",
+            //"compilerPath": "/usr/local/opt/llvm/bin/clang",
             "cStandard": "c17",
             "cppStandard": "c++17",
             "intelliSenseMode": "clang-x64",

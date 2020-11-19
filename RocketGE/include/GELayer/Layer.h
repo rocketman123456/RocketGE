@@ -1,8 +1,8 @@
 #pragma once
 
 #include "GEEvent.h"
-#include "GEBase/Core.h"
-#include "GEBase/Timestep.h"
+#include "GECore/Core.h"
+#include "GECore/Timestep.h"
 
 namespace Rocket {
     class Layer

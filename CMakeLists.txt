@@ -51,6 +51,8 @@ message(STATUS "###################################")
 find_package(Threads REQUIRED)
 find_package(yaml-cpp CONFIG REQUIRED)
 find_package(glfw3 CONFIG REQUIRED)
+find_package(Eigen3 CONFIG REQUIRED)
+find_package(glm CONFIG REQUIRED)
 
 message(STATUS "###################################")
 

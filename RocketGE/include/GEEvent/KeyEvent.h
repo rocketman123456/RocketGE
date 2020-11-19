@@ -1,7 +1,7 @@
 #pragma once
 
 #include "GEEvent/Event.h"
-#include "GEBase/KeyCode.h"
+#include "GECore/KeyCode.h"
 
 namespace Rocket {
     class KeyEvent : public Event

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "GEEvent.h"
-#include "GEBase/Core.h"
+#include "GECore/Core.h"
 #include "GELayer/Layer.h"
 
 namespace Rocket {

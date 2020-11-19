@@ -1,7 +1,7 @@
 #pragma once
 
 #include "GEEvent/Event.h"
-#include "GEBase/MouseCode.h"
+#include "GECore/MouseCode.h"
 
 namespace Rocket {
     class MouseMovedEvent : public Event

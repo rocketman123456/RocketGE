@@ -1,4 +1,4 @@
-#include "GEBase/EntryPoint.h"
+#include "GECore/EntryPoint.h"
 
 int main(int argc, char **argv)
 {
