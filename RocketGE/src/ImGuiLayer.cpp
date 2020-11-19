@@ -19,7 +19,6 @@
 
 namespace Rocket
 {
-
 	ImGuiLayer::ImGuiLayer() : Layer("ImGuiLayer")
 	{
 	}
