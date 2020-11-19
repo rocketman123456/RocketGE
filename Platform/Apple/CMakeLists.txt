@@ -5,5 +5,5 @@ add_library( Platform_Apple
     src/InputApple.cpp
 )
 target_link_libraries( Platform_Apple PRIVATE
-    glfw
+    glfw Eigen3::Eigen
 )

@@ -5,5 +5,5 @@ add_library( Platform_Windows
     src/InputWindows.cpp
 )
 target_link_libraries( Platform_Windows PRIVATE
-    glfw
+    glfw Eigen3::Eigen
 )

@@ -5,5 +5,5 @@ add_library( Platform_Linux
     src/InputLinux.cpp
 )
 target_link_libraries( Platform_Linux PRIVATE
-    glfw
+    glfw Eigen3::Eigen
 )

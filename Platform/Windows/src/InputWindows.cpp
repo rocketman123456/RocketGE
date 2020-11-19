@@ -26,7 +26,7 @@ namespace Rocket {
 		return { (float)xpos, (float)ypos };
 	}
 
-	Eigen::Vector2f GetMousePositionEigen()
+	Eigen::Vector2f Input::GetMousePositionEigen()
 	{
 		auto* window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
 		double xpos, ypos;
@@ -37,11 +37,11 @@ namespace Rocket {
 
 	float Input::GetMouseX()
 	{
-		return GetMousePosition().x;
+		return GetMousePositionEigen()[0];
 	}
 
 	float Input::GetMouseY()
 	{
-		return GetMousePosition().y;
+		return GetMousePositionEigen()[1];
 	}
 }
