@@ -34,3 +34,5 @@
 # ignore dir
 .DS_Store
 build/
+out/
+.vs/
