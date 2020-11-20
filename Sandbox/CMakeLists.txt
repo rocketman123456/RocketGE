@@ -15,7 +15,6 @@ elseif(Windows)
     target_link_libraries(SandboxApp PRIVATE Platform_Windows)
 endif()
 target_link_libraries( SandboxApp PRIVATE
-    ${Threads_LIBS}
+    ${Threads_LIBS} Eigen3::Eigen
     spdlog imgui glad glfw yaml-cpp
-    glm Eigen3::Eigen
 )

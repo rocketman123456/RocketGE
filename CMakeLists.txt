@@ -1,11 +1,11 @@
 cmake_minimum_required (VERSION 2.6)
 
 if (CMAKE_SYSTEM_NAME MATCHES "Linux")
-    set(VCPKG_ROOT "/usr/local/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE PATH "")
+    set(VCPKG_ROOT "/usr/local/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "Vcpkg toolchain file")
 elseif (CMAKE_SYSTEM_NAME MATCHES "Windows")
     set(VCPKG_ROOT "C:/dev/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE PATH "")
 elseif (CMAKE_SYSTEM_NAME MATCHES "Darwin")
-    set(VCPKG_ROOT "/usr/local/Cellar/vcpkg/2020.11-1/libexec/scripts/buildsystems/vcpkg.cmake" CACHE PATH "")
+    set(VCPKG_ROOT "/Users/developer/Program/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "Vcpkg toolchain file")
 endif ()
 set(CMAKE_TOOLCHAIN_FILE ${VCPKG_ROOT})
 
@@ -52,7 +52,6 @@ find_package(Threads REQUIRED)
 find_package(yaml-cpp CONFIG REQUIRED)
 find_package(glfw3 CONFIG REQUIRED)
 find_package(Eigen3 CONFIG REQUIRED)
-find_package(glm CONFIG REQUIRED)
 
 message(STATUS "###################################")
 
@@ -68,6 +67,7 @@ include_directories(
     ${PROJECT_SOURCE_DIR}/Thirdparty/spdlog/include
     ${PROJECT_SOURCE_DIR}/Thirdparty/stb_image
     ${PROJECT_SOURCE_DIR}/Thirdparty/imgui
+    ${PROJECT_SOURCE_DIR}/Thirdparty/glm
 )
 
 include_directories(
