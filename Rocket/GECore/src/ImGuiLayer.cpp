@@ -113,10 +113,8 @@ namespace Rocket
 
 	void ImGuiLayer::OnGuiRender()
 	{
-		Begin();
 		static bool show = true;
 		ImGui::ShowDemoWindow(&show);
-		End();
 	}
 
 	void ImGuiLayer::SetDarkThemeColors()

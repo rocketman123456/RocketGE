@@ -65,6 +65,7 @@ namespace Rocket
                 layer->OnUpdate(Timestep(0.03));
             }
 
+            m_GuiLayer->Begin();
             for (Layer* layer : m_LayerStack)
             {
                 if (dynamic_cast<GuiLayer*>(layer))
@@ -72,6 +73,7 @@ namespace Rocket
                     static_cast<GuiLayer*>(layer)->OnGuiRender();
                 }
             }
+            m_GuiLayer->End();
 
             m_Window->OnUpdate();
         }

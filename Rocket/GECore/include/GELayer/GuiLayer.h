@@ -9,5 +9,7 @@ namespace Rocket {
         virtual ~GuiLayer() = default;
 
         virtual void OnGuiRender() {}
+        virtual void Begin() {}
+        virtual void End() {}
     };
 }

@@ -16,8 +16,8 @@ namespace Rocket
 		virtual void OnEvent(Event& event) override;
 		virtual void OnGuiRender() override;
 
-        void Begin();
-        void End();
+        virtual void Begin() override;
+        virtual void End() override;
 
         void SetDarkThemeColors();
         void BlockEvents(bool block) { m_BlockEvents = block; }

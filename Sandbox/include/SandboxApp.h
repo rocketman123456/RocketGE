@@ -4,12 +4,14 @@
 #include "GEEvent.h"
 #include "GELayer.h"
 
+#include <imgui.h>
+
 namespace Rocket
 {
-    class ExampleLayer : public Layer
+    class ExampleLayer : public GuiLayer
     {
     public:
-        ExampleLayer() : Layer("ExampleLayer") {}
+        ExampleLayer() : GuiLayer("ExampleLayer") {}
 
         void OnUpdate(Timestep ts) override
         {
@@ -17,6 +19,13 @@ namespace Rocket
             {
                 RK_INFO("Tab Key Pressed");
             }
+        }
+
+        void OnGuiRender() override
+        {
+            ImGui::Begin("Example");
+            ImGui::Text("Hello Example!");
+            ImGui::End();
         }
 
         void OnEvent(Event &event) override
