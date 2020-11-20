@@ -15,11 +15,13 @@ message(STATUS "CMAKE_TOOLCHAIN_FILE ${CMAKE_TOOLCHAIN_FILE}")
 project( RocketGE )
 message(STATUS "Project Name ${PROJECT_NAME}")
 
+set(RENDER_API "OpenGL")
+set(CMAKE_BUILD_TYPE "Debug")
+
 message(STATUS "###################################")
 
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_BUILD_TYPE "Debug")
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     add_definitions(-DDEBUG)
 elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
@@ -55,9 +57,17 @@ find_package(Eigen3 CONFIG REQUIRED)
 
 message(STATUS "###################################")
 
-message(STATUS "Render API Set to OpenGL")
-set(OpenGL 1)
-add_definitions(-DRK_OPENGL)
+message(STATUS "Render API Set to ${RENDER_API}")
+if (RENDER_API MATCHES "OpenGL")
+    set(OpenGL 1)
+    add_definitions(-DRK_OPENGL)
+elseif (RENDER_API MATCHES "Vulkan")
+    set(Vulkan 1)
+    add_definitions(-DRK_VULKAN)
+elseif (RENDER_API MATCHES "Metal")
+    set(Metal 1)
+    add_definitions(-DRK_METAL)
+endif()
 
 message(STATUS "###################################")
 

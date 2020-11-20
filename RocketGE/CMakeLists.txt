@@ -1,4 +1,4 @@
-message(STATUS "Add Module GEBase")
+message(STATUS "Add Module RocketGE")
 message(STATUS "###################################")
 add_library( RocketGE
     src/Application.cpp
