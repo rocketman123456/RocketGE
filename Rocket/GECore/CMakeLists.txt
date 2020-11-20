@@ -1,6 +1,6 @@
-message(STATUS "Add Module RocketGE")
+message(STATUS "Add Module GECore")
 message(STATUS "###################################")
-add_library( RocketGE
+add_library( GECore
     src/Application.cpp
     src/EntryPoint.cpp
     src/ImGuiBuild.cpp
@@ -10,6 +10,6 @@ add_library( RocketGE
     src/Log.cpp
     src/Window.cpp
 )
-target_link_libraries( RocketGE PRIVATE
+target_link_libraries( GECore PRIVATE
     glfw Eigen3::Eigen
 )

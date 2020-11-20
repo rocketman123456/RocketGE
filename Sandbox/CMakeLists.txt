@@ -5,8 +5,9 @@ add_executable( SandboxApp
 )
 target_link_libraries( SandboxApp PRIVATE
     GEEngine
-    RocketGE
+    GECore
 )
+
 if(Apple)
     target_link_libraries(SandboxApp PRIVATE Platform_Apple)
 elseif(Linux)
@@ -14,6 +15,15 @@ elseif(Linux)
 elseif(Windows)
     target_link_libraries(SandboxApp PRIVATE Platform_Windows)
 endif()
+
+if(OpenGL)
+    target_link_libraries(SandboxApp PRIVATE Render_OpenGL)
+elseif(Vulkan)
+    target_link_libraries(SandboxApp PRIVATE Render_Vulkan)
+elseif(Metal)
+    target_link_libraries(SandboxApp PRIVATE Render_Metal)
+endif()
+
 target_link_libraries( SandboxApp PRIVATE
     ${Threads_LIBS} Eigen3::Eigen
     spdlog imgui glad glfw yaml-cpp

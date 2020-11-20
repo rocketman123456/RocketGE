@@ -1,0 +1,10 @@
+message(STATUS "Add Module GERender")
+message(STATUS "###################################")
+
+if(OpenGL)
+    add_subdirectory(OpenGL)
+elseif(Vulkan)
+    add_subdirectory(Vulkan)
+elseif(Metal)
+    add_subdirectory(Metal)
+endif()

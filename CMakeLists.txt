@@ -55,8 +55,6 @@ find_package(yaml-cpp CONFIG REQUIRED)
 find_package(glfw3 CONFIG REQUIRED)
 find_package(Eigen3 CONFIG REQUIRED)
 
-message(STATUS "###################################")
-
 message(STATUS "Render API Set to ${RENDER_API}")
 if (RENDER_API MATCHES "OpenGL")
     set(OpenGL 1)
@@ -81,32 +79,27 @@ include_directories(
 )
 
 include_directories(
-    ${PROJECT_SOURCE_DIR}/RocketGE/include
-    ${PROJECT_SOURCE_DIR}/GEEngine/include
+    ${PROJECT_SOURCE_DIR}/Rocket/GECore/include
+    ${PROJECT_SOURCE_DIR}/Rocket/GEEngine/include
     ${PROJECT_SOURCE_DIR}/Sandbox/include
 )
 
 if(OpenGL)
-    include_directories(${PROJECT_SOURCE_DIR}/GERender/OpenGL/include)
+    include_directories(${PROJECT_SOURCE_DIR}/Rocket/GERender/OpenGL/include)
 elseif(Vulkan)
-    include_directories(${PROJECT_SOURCE_DIR}/GERender/Vulkan/include)
+    include_directories(${PROJECT_SOURCE_DIR}/Rocket/GERender/Vulkan/include)
 elseif(Metal)
-    include_directories(${PROJECT_SOURCE_DIR}/GERender/Metal/include)
+    include_directories(${PROJECT_SOURCE_DIR}/Rocket/GERender/Metal/include)
 endif()
 
 if(Apple)
-    include_directories( ${PROJECT_SOURCE_DIR}/Platform/Apple/include )
+    include_directories( ${PROJECT_SOURCE_DIR}/Rocket/Platform/Apple/include )
 elseif(Linux)
-    include_directories( ${PROJECT_SOURCE_DIR}/Platform/Linux/include )
+    include_directories( ${PROJECT_SOURCE_DIR}/Rocket/Platform/Linux/include )
 elseif(Windows)
-    include_directories( ${PROJECT_SOURCE_DIR}/Platform/Windows/include )
+    include_directories( ${PROJECT_SOURCE_DIR}/Rocket/Platform/Windows/include )
 endif()
 
 add_subdirectory( Thirdparty )
-add_subdirectory( Platform )
-
-add_subdirectory( GEEngine )
-add_subdirectory( GERender )
-add_subdirectory( RocketGE )
-
+add_subdirectory( Rocket )
 add_subdirectory( Sandbox )
