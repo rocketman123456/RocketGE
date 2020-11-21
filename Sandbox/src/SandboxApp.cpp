@@ -1,5 +1,5 @@
 #include "SandboxApp.h"
-
+#include "GECore/Core.h"
 namespace Rocket
 {
     class SimpleSandbox : public Application

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "GECore/Core.h"
 #include "GELayer/GuiLayer.h"
 
 namespace Rocket
