@@ -1,5 +1,6 @@
 #pragma once
 
+#include "RKConfig.h"
 #include "GECore/Basic.h"
 
 #ifdef DEBUG
@@ -55,4 +56,3 @@ namespace Rocket {
 #define RK_ENABLE_ASSERTS
 #include "GECore/Assert.h"
 #include "GECore/Log.h"
-#include "RKConfig.h"

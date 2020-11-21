@@ -15,10 +15,6 @@ namespace Rocket
 
         void OnUpdate(Timestep ts) override
         {
-            if(Input::IsKeyPressed(Key::Tab))
-            {
-                RK_INFO("Tab Key Pressed");
-            }
         }
 
         void OnGuiRender() override
