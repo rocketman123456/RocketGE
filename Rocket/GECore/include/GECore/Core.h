@@ -25,6 +25,7 @@
 namespace Rocket {
 	template<typename T>
 	using Scope = std::unique_ptr<T>;
+
 	template<typename T, typename ... Args>
 	constexpr Scope<T> CreateScope(Args&& ... args)
 	{
@@ -33,6 +34,7 @@ namespace Rocket {
 
 	template<typename T>
 	using Ref = std::shared_ptr<T>;
+	
 	template<typename T, typename ... Args>
 	constexpr Ref<T> CreateRef(Args&& ... args)
 	{
@@ -43,3 +45,4 @@ namespace Rocket {
 #define RK_ENABLE_ASSERTS
 #include "GECore/Assert.h"
 #include "GECore/Log.h"
+#include "RKConfig.h"

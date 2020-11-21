@@ -38,8 +38,8 @@ namespace Rocket
 		//io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
 		//io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
 
-		std::string ttf_path = std::filesystem::current_path().generic_string() + "/Sandbox/assets/fonts/opensans/OpenSans-Bold.ttf";
-		std::string ttf_default = std::filesystem::current_path().generic_string() + "/Sandbox/assets/fonts/opensans/OpenSans-Regular.ttf";
+		std::string ttf_path = std::string(PROJECT_SOURCE_DIR) + "/Sandbox/assets/fonts/opensans/OpenSans-Bold.ttf";
+		std::string ttf_default = std::string(PROJECT_SOURCE_DIR) + "/Sandbox/assets/fonts/opensans/OpenSans-Regular.ttf";
 		io.Fonts->AddFontFromFileTTF(ttf_path.c_str(), 18.0f);
 		io.FontDefault = io.Fonts->AddFontFromFileTTF(ttf_default.c_str(), 18.0f);
 

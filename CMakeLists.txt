@@ -5,16 +5,11 @@ if (CMAKE_SYSTEM_NAME MATCHES "Linux")
 elseif (CMAKE_SYSTEM_NAME MATCHES "Windows")
     set(VCPKG_ROOT "C:/dev/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE PATH "")
 elseif (CMAKE_SYSTEM_NAME MATCHES "Darwin")
-    set(VCPKG_ROOT "/Users/developer/Program/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "Vcpkg toolchain file")
+    set(VCPKG_ROOT "/Users/developer/Program/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE PATH "")
 endif ()
 set(CMAKE_TOOLCHAIN_FILE ${VCPKG_ROOT})
 
-message(STATUS "###################################")
-
-message(STATUS "CMAKE_TOOLCHAIN_FILE ${CMAKE_TOOLCHAIN_FILE}")
-project( RocketGE )
-message(STATUS "Project Name ${PROJECT_NAME}")
-
+#### Main Project Config ###############################################################
 set(RENDER_API "OpenGL")
 set(CMAKE_BUILD_TYPE "Debug")
 
@@ -23,11 +18,22 @@ message(STATUS "###################################")
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_CXX_STANDARD 17)
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-    add_definitions(-DDEBUG)
+add_definitions(-DDEBUG)
 elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
-    add_definitions(-DRELEASE)
+add_definitions(-DRELEASE)
 endif()
 message(STATUS "Build System Set to ${CMAKE_BUILD_TYPE}")
+
+message(STATUS "###################################")
+
+message(STATUS "CMAKE_TOOLCHAIN_FILE ${CMAKE_TOOLCHAIN_FILE}")
+project( RocketGE )
+message(STATUS "Project Name ${PROJECT_NAME}")
+
+configure_file (
+    "${PROJECT_SOURCE_DIR}/RKConfig.h.in"
+    "${PROJECT_SOURCE_DIR}/Rocket/GECore/include/RKConfig.h"
+)
 
 message(STATUS "###################################")
 
@@ -80,7 +86,6 @@ include_directories(
 
 include_directories(
     ${PROJECT_SOURCE_DIR}/Rocket/GECore/include
-    ${PROJECT_SOURCE_DIR}/Rocket/GEEngine/include
     ${PROJECT_SOURCE_DIR}/Sandbox/include
 )
 
