@@ -89,6 +89,8 @@ include_directories(
     ${PROJECT_SOURCE_DIR}/Thirdparty/stb_image
     ${PROJECT_SOURCE_DIR}/Thirdparty/imgui
     ${PROJECT_SOURCE_DIR}/Thirdparty/glm
+    ${EIGEN3_INCLUDE_DIRS}
+    ${EIGEN3_INCLUDE_DIRS}/unsupported
 )
 
 include_directories(

@@ -33,6 +33,7 @@ namespace Rocket
         m_GuiLayer = new ImGuiLayer();
         PushOverlay(m_GuiLayer);
 
+        //Shader::Create("Simple Shader", vertexShaderSource, fragmentShaderSource);
         m_SimpleShader.reset(new OpenGLShader("Simple Shader", vertexShaderSource, fragmentShaderSource));
 
         float vertices[3 * 3] = {
