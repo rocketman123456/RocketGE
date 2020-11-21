@@ -3,15 +3,15 @@
 
 #include <imgui.h>
 #ifdef RK_OPENGL
-#include <backends/imgui_impl_opengl3.h>
+#include <examples/imgui_impl_opengl3.h>
 #endif
 #ifdef RK_VULKAN
-#include "backends/imgui_impl_vulkan.h"
+#include "examples/imgui_impl_vulkan.h"
 #endif
 #ifdef RK_METAL
-#include "backends/imgui_impl_metal.h"
+#include "examples/imgui_impl_metal.h"
 #endif
-#include <backends/imgui_impl_glfw.h>
+#include <examples/imgui_impl_glfw.h>
 
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>

@@ -20,8 +20,10 @@
 	#define GLFW_INCLUDE_NONE
 #elif defined(RK_VULKAN)
 	#define GLFW_INCLUDE_NONE
+	#define GLFW_INCLUDE_VULKAN
 #elif defined(RK_METAL)
 	#define GLFW_INCLUDE_NONE
+	#define GLFW_EXPOSE_NATIVE_COCOA
 #endif
 
 #define RK_EXPAND_MACRO(x) x
