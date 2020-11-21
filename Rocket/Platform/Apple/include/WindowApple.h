@@ -1,11 +1,11 @@
 #pragma once
 
 #include "GECore/Core.h"
-#include "GEWindow/Window.h"
+#include "GEWindow.h"
 #include "GEEvent.h"
+#include "GERender/GraphicsContext.h"
 
-#define GLFW_INCLUDE_NONE
-#include <GLFW/glfw3.h>
+struct GLFWwindow;
 
 namespace Rocket
 {
@@ -32,8 +32,6 @@ namespace Rocket
 		virtual void Shutdown();
 
 	private:
-		GLFWwindow *m_Window;
-
 		struct WindowData
 		{
 			std::string Title;
@@ -44,6 +42,8 @@ namespace Rocket
 		};
 
 		WindowData m_Data;
+		GLFWwindow *m_Window;
+		GraphicsContext *m_Context;
 	};
 
 } // namespace Rocket

@@ -1,5 +1,7 @@
 #include "WindowLinux.h"
 #include <glad/glad.h>
+#define GLFW_INCLUDE_NONE
+#include <GLFW/glfw3.h>
 
 namespace Rocket {
     static uint8_t s_GLFWWindowCount = 0;

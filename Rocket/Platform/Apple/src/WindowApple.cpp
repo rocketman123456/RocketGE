@@ -1,5 +1,15 @@
 #include "WindowApple.h"
 #include <glad/glad.h>
+#include <GLFW/glfw3.h>
+#ifdef RK_OPENGL
+#include "GERender/OpenGLContext.h"
+#endif
+#ifdef RK_VULKAN
+#include "GERender/VulkanContext.h"
+#endif
+#ifdef RK_METAL
+#include "GERender/MetalContext.h"
+#endif
 
 namespace Rocket
 {
@@ -47,9 +57,8 @@ namespace Rocket
 			++s_GLFWWindowCount;
 		}
 
-		glfwMakeContextCurrent(m_Window);
-		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-		RK_CORE_ASSERT(status, "Failed to Initialize GLAD");
+		m_Context = new OpenGLContext(m_Window);
+		m_Context->Init();
 
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
@@ -83,20 +92,17 @@ namespace Rocket
 
 			switch (action)
 			{
-			case GLFW_PRESS:
-			{
+			case GLFW_PRESS: {
 				KeyPressedEvent event(key, 0);
 				data.EventCallback(event);
 				break;
 			}
-			case GLFW_RELEASE:
-			{
+			case GLFW_RELEASE: {
 				KeyReleasedEvent event(key);
 				data.EventCallback(event);
 				break;
 			}
-			case GLFW_REPEAT:
-			{
+			case GLFW_REPEAT: {
 				KeyPressedEvent event(key, 1);
 				data.EventCallback(event);
 				break;
@@ -116,14 +122,12 @@ namespace Rocket
 
 			switch (action)
 			{
-			case GLFW_PRESS:
-			{
+			case GLFW_PRESS: {
 				MouseButtonPressedEvent event(button);
 				data.EventCallback(event);
 				break;
 			}
-			case GLFW_RELEASE:
-			{
+			case GLFW_RELEASE: {
 				MouseButtonReleasedEvent event(button);
 				data.EventCallback(event);
 				break;
@@ -159,8 +163,8 @@ namespace Rocket
 
 	void WindowApple::OnUpdate()
 	{
-		glfwSwapBuffers(m_Window);
 		glfwPollEvents();
+		m_Context->SwapBuffers();
 	}
 
 	void WindowApple::SetVSync(bool enabled)

@@ -16,6 +16,14 @@
 	#define RK_DEBUGBREAK()
 #endif
 
+#if defined(RK_OPENGL)
+	#define GLFW_INCLUDE_NONE
+#elif defined(RK_VULKAN)
+	#define GLFW_INCLUDE_NONE
+#elif defined(RK_METAL)
+	#define GLFW_INCLUDE_NONE
+#endif
+
 #define RK_EXPAND_MACRO(x) x
 #define RK_STRINGIFY_MACRO(x) #x
 

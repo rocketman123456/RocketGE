@@ -4,8 +4,7 @@
 #include "GEWindow/Window.h"
 #include "GEEvent.h"
 
-#define GLFW_INCLUDE_NONE
-#include <GLFW/glfw3.h>
+struct GLFWwindow;
 
 namespace Rocket
 {

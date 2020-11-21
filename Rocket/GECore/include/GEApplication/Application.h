@@ -31,6 +31,11 @@ namespace Rocket {
         bool m_Running = true;
         bool m_Minimized = false;
         float m_LastFrameTime = 0.0f;
+
+        unsigned int m_VertexArray, m_VertexBuffer, m_IndexBuffer;
+        int vertexShader;
+        int fragmentShader;
+        int shaderProgram;
     private:
         static Application* s_Instance;
     };
