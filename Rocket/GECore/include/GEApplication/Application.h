@@ -4,6 +4,7 @@
 #include "GEEvent.h"
 #include "GEWindow.h"
 #include "GELayer.h"
+#include "GERender.h"
 
 namespace Rocket {
     class Application {
@@ -33,9 +34,7 @@ namespace Rocket {
         float m_LastFrameTime = 0.0f;
 
         unsigned int m_VertexArray, m_VertexBuffer, m_IndexBuffer;
-        int vertexShader;
-        int fragmentShader;
-        int shaderProgram;
+        std::unique_ptr<Shader> m_SimpleShader;
     private:
         static Application* s_Instance;
     };

@@ -1,5 +1,6 @@
 #pragma once
 #include "GERender/Shader.h"
+#include <glad/glad.h>
 
 namespace Rocket {
     class OpenGLShader : public Shader
