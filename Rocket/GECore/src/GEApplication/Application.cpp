@@ -39,8 +39,7 @@ namespace Rocket
         if (!success)
         {
             glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-            std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n"
-                      << infoLog << std::endl;
+            RK_CORE_ERROR("ERROR::SHADER::VERTEX::COMPILATION_FAILED\n{0}", infoLog);
         }
         // fragment shader
         fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
@@ -51,8 +50,7 @@ namespace Rocket
         if (!success)
         {
             glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
-            std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n"
-                      << infoLog << std::endl;
+            RK_CORE_ERROR("ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n{0}", infoLog);
         }
         // link shaders
         shaderProgram = glCreateProgram();
@@ -64,8 +62,7 @@ namespace Rocket
         if (!success)
         {
             glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-            std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n"
-                      << infoLog << std::endl;
+            RK_CORE_ERROR("ERROR::SHADER::PROGRAM::LINKING_FAILED\n{0}", infoLog);
         }
         glDeleteShader(vertexShader);
         glDeleteShader(fragmentShader);

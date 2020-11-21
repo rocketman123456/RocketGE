@@ -3,13 +3,15 @@ message(STATUS "###################################")
 add_library( GECore
     src/GEApplication/Application.cpp
     src/GECore/EntryPoint.cpp
-    src/GERender/GraphicsContext.cpp
+    src/GECore/Log.cpp
     src/GELayer/ImGuiBuild.cpp
     src/GELayer/ImGuiLayer.cpp
     src/GELayer/Layer.cpp
     src/GELayer/LayerStack.cpp
-    src/GECore/Log.cpp
     src/GEWindow/Window.cpp
+    src/GERender/GraphicsContext.cpp
+    src/GERender/Shader.cpp
+    src/GERender/RenderAPI.cpp
     src/Engine.cpp
 )
 target_link_libraries( GECore PRIVATE

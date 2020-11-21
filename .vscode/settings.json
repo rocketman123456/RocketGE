@@ -1,5 +1,8 @@
 {
     "cmake.configureSettings": {
         "CMAKE_TOOLCHAIN_FILE": "/Users/developer/Program/vcpkg/scripts/buildsystems/vcpkg.cmake"
+    },
+    "files.associations": {
+        "unordered_map": "cpp"
     }
 }
