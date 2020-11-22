@@ -1,12 +1,10 @@
 #include "GEWindow/Window.h"
 
-#ifdef PLATFORM_WINDOWS
+#if defined(PLATFORM_WINDOWS)
 #include "WindowWindows.h"
-#endif
-#ifdef PLATFORM_APPLE
+#elif defined(PLATFORM_APPLE)
 #include "WindowApple.h"
-#endif
-#ifdef PLATFORM_LINUX
+#elif definedPLATFORM_LINUX)
 #include "WindowLinux.h"
 #endif
 

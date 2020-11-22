@@ -2,7 +2,6 @@
 
 #include <glad/glad.h>
 #include <glm/gtc/type_ptr.hpp>
-//#include <Eigen/OpenGLSupport>
 
 namespace Rocket {
     static GLenum ShaderTypeFromString(const std::string& type)
@@ -293,13 +292,18 @@ namespace Rocket {
 
 	void OpenGLShader::UploadUniformMat3Eigen(const std::string& name, const Eigen::Matrix3f& matrix)
 	{
+		//float arr[3][3] = { 0 };
+		//Eigen::Map<Eigen::Matrix3f>(&arr[0][0], 3, 3) = matrix;
 		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+		//glUniformMatrix3fv(location, 1, GL_FALSE, &arr[0][0]);
 		glUniformMatrix3fv(location, 1, GL_FALSE, matrix.data());
 	}
 	void OpenGLShader::UploadUniformMat4Eigen(const std::string& name, const Eigen::Matrix4f& matrix)
 	{
-		Eigen::Map<Eigen::Matrix4f> copy(nullptr);
+		//float arr[4][4] = {0};
+		//Eigen::Map<Eigen::Matrix4f>(&arr[0][0], 4, 4) = matrix;
 		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
-		glUniformMatrix4fv(location, 1, GL_FALSE, matrix.data());
+		//glUniformMatrix4fv(location, 1, GL_FALSE, &arr[0][0]);
+		glUniformMatrix3fv(location, 1, GL_FALSE, matrix.data());
 	}
 }

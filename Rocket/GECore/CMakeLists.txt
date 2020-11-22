@@ -12,6 +12,7 @@ add_library( GECore
     src/GERender/GraphicsContext.cpp
     src/GERender/Shader.cpp
     src/GERender/RenderAPI.cpp
+    "src/GERender/Buffer.cpp"
     src/Engine.cpp
 )
 target_link_libraries( GECore PRIVATE
