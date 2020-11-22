@@ -33,11 +33,12 @@ namespace Rocket
         //Shader::Create("Simple Shader", vertexShaderSource, fragmentShaderSource);
         m_SimpleShader.reset(new OpenGLShader("Simple Shader", vertexShaderSource, fragmentShaderSource));
 
-        float vertices[3 * 3] = {
+        float vertices[] = {
             -0.5f, -0.5f, 0.0f,
-            0.5f, -0.5f, 0.0f,
-            0.0f, 0.5f, 0.0f};
-        unsigned int indices[3] = {0, 1, 2};
+             0.5f, -0.5f, 0.0f,
+             0.0f,  0.5f, 0.0f
+        };
+        uint32_t indices[] = {0, 1, 2};
 
         m_VertexArray = VertexArray::Create();
         m_VertexArray->Bind();
@@ -48,14 +49,8 @@ namespace Rocket
         });
         m_VertexArray->AddVertexBuffer(vertexBuffer);
 
-        auto indexBuffer = IndexBuffer::Create(indices, sizeof(indices) / sizeof(unsigned int));
+        auto indexBuffer = IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t));
         m_VertexArray->SetIndexBuffer(indexBuffer);
-
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
-        glEnableVertexAttribArray(0);
-
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        glBindVertexArray(0);
 
         m_GuiLayer = new ImGuiLayer();
         PushOverlay(m_GuiLayer);
@@ -63,6 +58,7 @@ namespace Rocket
 
     Application::~Application()
     {
+        RK_CORE_INFO("Exit Application");
     }
 
     void Application::OnEvent(Event &e)
