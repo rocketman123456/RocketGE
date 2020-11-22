@@ -7,6 +7,7 @@
 #include "GERender.h"
 
 #include "GERender/Buffer.h"
+#include "GERender/VertexArray.h"
 
 namespace Rocket {
     class Application {
@@ -36,9 +37,7 @@ namespace Rocket {
         float m_LastFrameTime = 0.0f;
 
         std::unique_ptr<Shader> m_SimpleShader;
-        unsigned int m_VertexArray;
-        Ref<VertexBuffer> m_VertexBuffer;
-        Ref<IndexBuffer> m_IndexBuffer;
+        Ref<VertexArray> m_VertexArray;
     private:
         static Application* s_Instance;
     };

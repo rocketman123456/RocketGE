@@ -3,10 +3,10 @@
 
 std::string vertexShaderSource = R"(
 #version 330 core
-layout (location = 0) in vec3 aPos;
+layout (location = 0) in vec3 a_Position;
 void main()
 {
-    gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);
+    gl_Position = vec4(a_Position.x, a_Position.y, a_Position.z, 1.0);
 }
 )";
 std::string fragmentShaderSource = R"(
@@ -39,15 +39,17 @@ namespace Rocket
             0.0f, 0.5f, 0.0f};
         unsigned int indices[3] = {0, 1, 2};
 
-        //glCreateVertexArrays(1, &m_VertexArray);
-        glGenVertexArrays(1, &m_VertexArray);
-        glBindVertexArray(m_VertexArray);
+        m_VertexArray = VertexArray::Create();
+        m_VertexArray->Bind();
 
-        m_VertexBuffer = VertexBuffer::Create(vertices, sizeof(vertices));
-        m_VertexBuffer->Bind();
+        auto vertexBuffer = VertexBuffer::Create(vertices, sizeof(vertices));
+        vertexBuffer->SetLayout({
+            { Rocket::ShaderDataType::Float3, "a_Position" }
+        });
+        m_VertexArray->AddVertexBuffer(vertexBuffer);
 
-        m_IndexBuffer = IndexBuffer::Create(indices, sizeof(indices) / sizeof(unsigned int));
-        m_IndexBuffer->Bind();
+        auto indexBuffer = IndexBuffer::Create(indices, sizeof(indices) / sizeof(unsigned int));
+        m_VertexArray->SetIndexBuffer(indexBuffer);
 
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
         glEnableVertexAttribArray(0);
@@ -104,8 +106,10 @@ namespace Rocket
             glClear(GL_COLOR_BUFFER_BIT);
 
             m_SimpleShader->Bind();
-            glBindVertexArray(m_VertexArray);
-            glDrawElements(GL_TRIANGLES, m_IndexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
+            m_VertexArray->Bind();
+            glDrawElements(GL_TRIANGLES, m_VertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+            //m_SimpleShader->Unbind();
+            //m_VertexArray->Unbind();
 
             for (Layer *layer : m_LayerStack)
             {
