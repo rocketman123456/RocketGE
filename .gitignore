@@ -31,8 +31,13 @@
 *.out
 *.app
 
-# ignore dir
+# ignore files
 .DS_Store
+imgui.ini
+Rocket/GECore/include/RKConfig.h
+
+# ignore dir
+.vs/
+.VSCodeCounter/
 build/
 out/
-.vs/
