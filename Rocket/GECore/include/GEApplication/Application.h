@@ -6,6 +6,8 @@
 #include "GELayer.h"
 #include "GERender.h"
 
+#include "GERender/Buffer.h"
+
 namespace Rocket {
     class Application {
     public:
@@ -33,8 +35,10 @@ namespace Rocket {
         bool m_Minimized = false;
         float m_LastFrameTime = 0.0f;
 
-        unsigned int m_VertexArray, m_VertexBuffer, m_IndexBuffer;
         std::unique_ptr<Shader> m_SimpleShader;
+        unsigned int m_VertexArray;
+        Ref<VertexBuffer> m_VertexBuffer;
+        Ref<IndexBuffer> m_IndexBuffer;
     private:
         static Application* s_Instance;
     };

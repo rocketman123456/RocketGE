@@ -24,19 +24,21 @@ namespace Rocket
 		// Setup Dear ImGui context
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
-		ImGui::StyleColorsDark();
-		//ImGui::StyleColorsClassic();
+		if (1) {
+			ImGui::StyleColorsDark();
+		}
+		else {
+			ImGui::StyleColorsClassic();
+		}
 		//SetDarkThemeColors();
 
 		ImGuiIO &io = ImGui::GetIO(); (void)io;
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
-		//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;  // Enable Gamepad Controls
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;  // Enable Gamepad Controls
 		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
 		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
 		//io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoTaskBarIcons;
 		//io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoMerge;
-		//io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
-		//io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
 
 		std::string ttf_path = ProjectSourceDir + "/Sandbox/assets/fonts/opensans/OpenSans-Bold.ttf";
 		std::string ttf_default = ProjectSourceDir + "/Sandbox/assets/fonts/opensans/OpenSans-Regular.ttf";
@@ -60,7 +62,7 @@ namespace Rocket
 
 		// Setup Platform/Renderer bindings
 		ImGui_ImplGlfw_InitForOpenGL(window, true);
-		ImGui_ImplOpenGL3_Init("#version 450");
+		ImGui_ImplOpenGL3_Init("#version 330");
 	}
 
 	void ImGuiLayer::OnDetach()

@@ -30,9 +30,6 @@ namespace Rocket
         m_Window = std::unique_ptr<Window>(Window::Create(WindowProps("Rocket Engine", 1280, 720)));
         m_Window->SetEventCallback(RK_BIND_EVENT_FN(Application::OnEvent));
 
-        m_GuiLayer = new ImGuiLayer();
-        PushOverlay(m_GuiLayer);
-
         //Shader::Create("Simple Shader", vertexShaderSource, fragmentShaderSource);
         m_SimpleShader.reset(new OpenGLShader("Simple Shader", vertexShaderSource, fragmentShaderSource));
 
@@ -42,23 +39,24 @@ namespace Rocket
             0.0f, 0.5f, 0.0f};
         unsigned int indices[3] = {0, 1, 2};
 
+        //glCreateVertexArrays(1, &m_VertexArray);
         glGenVertexArrays(1, &m_VertexArray);
-        glGenBuffers(1, &m_VertexBuffer);
-        glGenBuffers(1, &m_IndexBuffer);
-
         glBindVertexArray(m_VertexArray);
 
-        glBindBuffer(GL_ARRAY_BUFFER, m_VertexBuffer);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+        m_VertexBuffer = VertexBuffer::Create(vertices, sizeof(vertices));
+        m_VertexBuffer->Bind();
 
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndexBuffer);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+        m_IndexBuffer = IndexBuffer::Create(indices, sizeof(indices) / sizeof(unsigned int));
+        m_IndexBuffer->Bind();
 
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
         glEnableVertexAttribArray(0);
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
+
+        m_GuiLayer = new ImGuiLayer();
+        PushOverlay(m_GuiLayer);
     }
 
     Application::~Application()
@@ -107,7 +105,7 @@ namespace Rocket
 
             m_SimpleShader->Bind();
             glBindVertexArray(m_VertexArray);
-            glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
+            glDrawElements(GL_TRIANGLES, m_IndexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
 
             for (Layer *layer : m_LayerStack)
             {

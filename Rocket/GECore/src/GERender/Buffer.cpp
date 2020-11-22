@@ -1,14 +1,11 @@
 #include "GERender/Buffer.h"
 #include "GERender/RenderAPI.h"
 #if defined(RK_OPENGL)
-#include "GERender/OpenGLVertexBuffer.h"
-#include "GERender/OpenGLIndexBuffer.h"
+#include "GERender/OpenGLBuffer.h"
 #elif defined(RK_VULKAN)
-#include "GERender/VulkanVertexBuffer.h"
-#include "GERender/VulkanIndexBuffer.h"
+#include "GERender/VulkanBuffer.h"
 #elif defined(RK_METAL)
-#include "GERender/MetalVertexBuffer.h"
-#include "GERender/MetalIndexBuffer.h"
+#include "GERender/MetalBuffer.h"
 #endif
 
 namespace Rocket {

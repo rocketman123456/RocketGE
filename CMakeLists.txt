@@ -8,25 +8,15 @@ elseif (CMAKE_SYSTEM_NAME MATCHES "Darwin")
     set(VCPKG_ROOT "/Users/developer/Program/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE PATH "")
 endif ()
 set(CMAKE_TOOLCHAIN_FILE ${VCPKG_ROOT})
-#SET(CMAKE_C_COMPILER /usr/bin/clang)
-#SET(CMAKE_CXX_COMPILER /usr/bin/clang++)
 
 #### Main Project Config ############################
 set(RENDER_API "OpenGL")
 set(CMAKE_BUILD_TYPE "Debug")
 
-message(STATUS "###################################")
-
 set(CMAKE_C_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_C_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_STANDARD 17)
-if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-add_definitions(-DDEBUG)
-elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
-add_definitions(-DRELEASE)
-endif()
-message(STATUS "Build System Set to ${CMAKE_BUILD_TYPE}")
 
 message(STATUS "###################################")
 
@@ -40,6 +30,13 @@ configure_file (
 )
 
 message(STATUS "###################################")
+
+if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+    add_definitions(-DDEBUG)
+elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
+    add_definitions(-DRELEASE)
+endif()
+message(STATUS "Build System Set to ${CMAKE_BUILD_TYPE}")
 
 message(STATUS "operation system is ${CMAKE_SYSTEM}")
 if (CMAKE_SYSTEM_NAME MATCHES "Linux")
