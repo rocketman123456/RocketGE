@@ -4,6 +4,7 @@
 #include <string>
 #include <unordered_map>
 #include <glm/glm.hpp>
+#include <Eigen/Eigen>
 
 namespace Rocket {
 	class Shader
