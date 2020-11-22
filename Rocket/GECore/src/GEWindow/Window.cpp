@@ -4,7 +4,7 @@
 #include "WindowWindows.h"
 #elif defined(PLATFORM_APPLE)
 #include "WindowApple.h"
-#elif definedPLATFORM_LINUX)
+#elif defined(PLATFORM_LINUX)
 #include "WindowLinux.h"
 #endif
 
