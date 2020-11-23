@@ -1,5 +1,5 @@
 #include "GERender/VertexArray.h"
-#include "GERender/RenderAPI.h"
+#include "GERender/Renderer.h"
 #if defined(RK_OPENGL)
 #include "GERender/OpenGLVertexArray.h"
 #elif defined(RK_VULKAN)
@@ -11,7 +11,7 @@
 namespace Rocket {
 	Ref<VertexArray> VertexArray::Create()
 	{
-		switch (RenderAPI::GetAPI())
+		switch (Renderer::GetAPI())
 		{
 		case RenderAPI::API::None:    RK_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
 		case RenderAPI::API::OpenGL:  return CreateRef<OpenGLVertexArray>();

@@ -3,7 +3,6 @@
 #include "GECore/Basic.h"
 
 #include "RKConfig.h"
-#include <string>
 const std::string ProjectSourceDir = PROJECT_SOURCE_DIR;
 const std::string RenderAPI = RENDER_API;
 

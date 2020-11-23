@@ -1,5 +1,5 @@
 #include "GERender/GraphicsContext.h"
-#include "GERender/RenderAPI.h"
+#include "GERender/Renderer.h"
 #if defined(RK_OPENGL)
 #include "GERender/OpenGLContext.h"
 #elif defined(RK_VULKAN)
@@ -11,7 +11,7 @@
 namespace Rocket {
 	Scope<GraphicsContext> GraphicsContext::Create(void* window)
 	{
-		switch (RenderAPI::GetAPI())
+		switch (Renderer::GetAPI())
 		{
 			case RenderAPI::API::None:    RK_CORE_ASSERT(false, "RenderAPI::None is currently not supported!"); return nullptr;
 #if defined(RK_OPENGL)

@@ -1,5 +1,5 @@
 #include "GERender/Shader.h"
-#include "GERender/RenderAPI.h"
+#include "GERender/Renderer.h"
 #if defined(RK_OPENGL)
 #include "GERender/OpenGLShader.h"
 #elif defined(RK_VULKAN)
@@ -12,7 +12,7 @@ namespace Rocket {
 
 	Ref<Shader> Shader::Create(const std::string& filepath)
 	{
-		switch (RenderAPI::GetAPI())
+		switch (Renderer::GetAPI())
 		{
 			case RenderAPI::API::None:    RK_CORE_ASSERT(false, "RenderAPI::None is currently not supported!"); return nullptr;
 #if defined(RK_OPENGL)
@@ -30,7 +30,7 @@ namespace Rocket {
 
 	Ref<Shader> Shader::Create(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc)
 	{
-		switch (RenderAPI::GetAPI())
+		switch (Renderer::GetAPI())
 		{
 			case RenderAPI::API::None:    RK_CORE_ASSERT(false, "RenderAPI::None is currently not supported!"); return nullptr;
 #if defined(RK_OPENGL)

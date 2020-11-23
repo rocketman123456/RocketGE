@@ -1,5 +1,5 @@
 #include "GERender/Buffer.h"
-#include "GERender/RenderAPI.h"
+#include "GERender/Renderer.h"
 #if defined(RK_OPENGL)
 #include "GERender/OpenGLBuffer.h"
 #elif defined(RK_VULKAN)
@@ -11,7 +11,7 @@
 namespace Rocket {
 	Ref<VertexBuffer> VertexBuffer::Create(uint32_t size)
 	{
-		switch (RenderAPI::GetAPI())
+		switch (Renderer::GetAPI())
 		{
 		case RenderAPI::API::None:    RK_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
 #if defined(RK_OPENGL)
@@ -29,7 +29,7 @@ namespace Rocket {
 
 	Ref<VertexBuffer> VertexBuffer::Create(float* vertices, uint32_t size)
 	{
-		switch (RenderAPI::GetAPI())
+		switch (Renderer::GetAPI())
 		{
 		case RenderAPI::API::None:    RK_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
 #if defined(RK_OPENGL)
@@ -47,7 +47,7 @@ namespace Rocket {
 
 	Ref<IndexBuffer> IndexBuffer::Create(uint32_t* indices, uint32_t size)
 	{
-		switch (RenderAPI::GetAPI())
+		switch (Renderer::GetAPI())
 		{
 		case RenderAPI::API::None:    RK_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
 #if defined(RK_OPENGL)

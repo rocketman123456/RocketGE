@@ -9,10 +9,11 @@ add_library( GECore
     src/GELayer/Layer.cpp
     src/GELayer/LayerStack.cpp
     src/GEWindow/Window.cpp
-    src/GERender/GraphicsContext.cpp
-    src/GERender/Shader.cpp
-    src/GERender/RenderAPI.cpp
     src/GERender/Buffer.cpp
+    src/GERender/GraphicsContext.cpp
+    src/GERender/RenderAPI.cpp
+    src/GERender/Renderer.cpp
+    src/GERender/Shader.cpp
     src/GERender/VertexArray.cpp
     src/Engine.cpp
 )

@@ -7,5 +7,7 @@ namespace Rocket {
     RenderAPI::API RenderAPI::s_API = RenderAPI::API::Vulkan;
 #elif defined(RK_METAL)
     RenderAPI::API RenderAPI::s_API = RenderAPI::API::Metal;
+#else
+    RenderAPI::API RenderAPI::s_API = RenderAPI::API::None;
 #endif
 }
