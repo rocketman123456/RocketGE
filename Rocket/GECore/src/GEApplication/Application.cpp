@@ -3,7 +3,7 @@
 #include <glad/glad.h>
 
 std::string vertexShaderSource = R"(
-#version 330 core
+#version 450 core
 layout (location = 0) in vec3 a_Position;
 void main()
 {
@@ -11,7 +11,7 @@ void main()
 }
 )";
 std::string fragmentShaderSource = R"(
-#version 330 core
+#version 450 core
 out vec4 FragColor;
 void main()
 {
@@ -32,7 +32,6 @@ namespace Rocket
         m_Window->SetEventCallback(RK_BIND_EVENT_FN(Application::OnEvent));
 
         Renderer::Init();
-        m_SimpleShader = Shader::Create("Simple Shader", vertexShaderSource, fragmentShaderSource);
 
         float vertices[] = {
             -0.5f, -0.5f, 0.0f,
@@ -52,6 +51,8 @@ namespace Rocket
 
         auto indexBuffer = IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t));
         m_VertexArray->SetIndexBuffer(indexBuffer);
+
+        m_SimpleShader = Shader::Create("Simple Shader", vertexShaderSource, fragmentShaderSource);
 
         m_GuiLayer = new ImGuiLayer();
         PushOverlay(m_GuiLayer);
@@ -100,7 +101,7 @@ namespace Rocket
         while (m_Running)
         {
             glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-            glClear(GL_COLOR_BUFFER_BIT);
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
             Renderer::Submit(m_SimpleShader, m_VertexArray);
 
