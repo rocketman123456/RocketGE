@@ -24,13 +24,13 @@ namespace Rocket {
 }
 
 #ifdef DEBUG
-#define RK_CORE_FATAL(...)  ::Rocket::Log::GetCoreLogger()->fatal(__VA_ARGS__)
+#define RK_CORE_CRITICAL(...)  ::Rocket::Log::GetCoreLogger()->critical(__VA_ARGS__)
 #define RK_CORE_ERROR(...)  ::Rocket::Log::GetCoreLogger()->error(__VA_ARGS__)
 #define RK_CORE_WARN(...)   ::Rocket::Log::GetCoreLogger()->warn(__VA_ARGS__)
 #define RK_CORE_INFO(...)   ::Rocket::Log::GetCoreLogger()->info(__VA_ARGS__)
 #define RK_CORE_TRACE(...)  ::Rocket::Log::GetCoreLogger()->trace(__VA_ARGS__)
 
-#define RK_FATAL(...)    ::Rocket::Log::GetClientLogger()->fatal(__VA_ARGS__)
+#define RK_CRITICAL(...)    ::Rocket::Log::GetClientLogger()->critical(__VA_ARGS__)
 #define RK_ERROR(...)    ::Rocket::Log::GetClientLogger()->error(__VA_ARGS__)
 #define RK_WARN(...)     ::Rocket::Log::GetClientLogger()->warn(__VA_ARGS__)
 #define RK_INFO(...)     ::Rocket::Log::GetClientLogger()->info(__VA_ARGS__)

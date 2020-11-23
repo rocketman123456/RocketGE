@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 2.6)
 
 if (CMAKE_SYSTEM_NAME MATCHES "Linux")
-    set(VCPKG_ROOT "/usr/local/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "Vcpkg toolchain file")
+    set(VCPKG_ROOT "/usr/local/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE PATH "")
 elseif (CMAKE_SYSTEM_NAME MATCHES "Windows")
     set(VCPKG_ROOT "D:/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE PATH "")
 elseif (CMAKE_SYSTEM_NAME MATCHES "Darwin")
@@ -20,8 +20,8 @@ set(CMAKE_CXX_STANDARD 17)
 
 message(STATUS "###################################")
 
-message(STATUS "CMAKE_TOOLCHAIN_FILE ${CMAKE_TOOLCHAIN_FILE}")
 project( RocketGE )
+message(STATUS "CMAKE_TOOLCHAIN_FILE ${CMAKE_TOOLCHAIN_FILE}")
 message(STATUS "Project Name ${PROJECT_NAME}")
 
 configure_file (

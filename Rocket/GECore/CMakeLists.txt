@@ -13,6 +13,7 @@ add_library( GECore
     src/GERender/GraphicsContext.cpp
     src/GERender/RenderAPI.cpp
     src/GERender/Renderer.cpp
+    src/GERender/RenderCommand.cpp
     src/GERender/Shader.cpp
     src/GERender/VertexArray.cpp
     src/Engine.cpp

@@ -1,4 +1,5 @@
 #include "GEApplication/Application.h"
+#include "GERender/Renderer.h"
 #include <glad/glad.h>
 
 std::string vertexShaderSource = R"(
@@ -30,8 +31,8 @@ namespace Rocket
         m_Window = std::unique_ptr<Window>(Window::Create(WindowProps("Rocket Engine", 1280, 720)));
         m_Window->SetEventCallback(RK_BIND_EVENT_FN(Application::OnEvent));
 
-        //Shader::Create("Simple Shader", vertexShaderSource, fragmentShaderSource);
-        m_SimpleShader.reset(new OpenGLShader("Simple Shader", vertexShaderSource, fragmentShaderSource));
+        Renderer::Init();
+        m_SimpleShader = Shader::Create("Simple Shader", vertexShaderSource, fragmentShaderSource);
 
         float vertices[] = {
             -0.5f, -0.5f, 0.0f,
@@ -101,11 +102,7 @@ namespace Rocket
             glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
 
-            m_SimpleShader->Bind();
-            m_VertexArray->Bind();
-            glDrawElements(GL_TRIANGLES, m_VertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
-            //m_SimpleShader->Unbind();
-            //m_VertexArray->Unbind();
+            Renderer::Submit(m_SimpleShader, m_VertexArray);
 
             for (Layer *layer : m_LayerStack)
             {
@@ -142,6 +139,7 @@ namespace Rocket
         }
 
         m_Minimized = false;
+        Renderer::OnWindowResize(e.GetWidth(), e.GetHeight());
         return false;
     }
-} // namespace Rocket
+}

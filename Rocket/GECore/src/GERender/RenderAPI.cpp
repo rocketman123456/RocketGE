@@ -1,4 +1,11 @@
 #include "GERender/RenderAPI.h"
+#if defined(RK_OPENGL)
+#include "GERender/OpenGLRenderAPI.h"
+#elif defined(RK_VULKAN)
+#include "GERender/VulkanRenderAPI.h"
+#elif defined(RK_METAL)
+#include "GERender/MetalRenderAPI.h"
+#endif
 
 namespace Rocket {
 #if defined(RK_OPENGL)
@@ -10,4 +17,16 @@ namespace Rocket {
 #else
     RenderAPI::API RenderAPI::s_API = RenderAPI::API::None;
 #endif
+
+	Scope<RenderAPI> RenderAPI::Create()
+	{
+		switch (s_API)
+		{
+		case RenderAPI::API::None:    RK_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
+		case RenderAPI::API::OpenGL:  return CreateScope<OpenGLRenderAPI>();
+		}
+
+		RK_CORE_ASSERT(false, "Unknown RendererAPI!");
+		return nullptr;
+	}
 }

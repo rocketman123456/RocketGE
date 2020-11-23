@@ -36,7 +36,7 @@ namespace Rocket {
         bool m_Minimized = false;
         float m_LastFrameTime = 0.0f;
 
-        std::unique_ptr<Shader> m_SimpleShader;
+        Ref<Shader> m_SimpleShader;
         Ref<VertexArray> m_VertexArray;
     private:
         static Application* s_Instance;

@@ -1,4 +1,5 @@
 #include "GERender/Renderer.h"
+#include "GERender/RenderCommand.h"
 
 namespace Rocket
 {
@@ -6,7 +7,7 @@ namespace Rocket
 
 	void Renderer::Init()
 	{
-		//RenderCommand::Init();
+		RenderCommand::Init();
 		//Renderer2D::Init();
 	}
 
@@ -17,7 +18,7 @@ namespace Rocket
 
 	void Renderer::OnWindowResize(uint32_t width, uint32_t height)
 	{
-		//RenderCommand::SetViewport(0, 0, width, height);
+		RenderCommand::SetViewport(0, 0, width, height);
 	}
 
     void Renderer::BeginScene()
@@ -36,10 +37,10 @@ namespace Rocket
 	void Renderer::Submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray, const glm::mat4& transform)
 	{
 		shader->Bind();
-		shader->SetMat4("u_ViewProjection", s_SceneData->ViewProjectionMatrix);
-		shader->SetMat4("u_Transform", transform);
+		//shader->SetMat4("u_ViewProjection", s_SceneData->ViewProjectionMatrix);
+		//shader->SetMat4("u_Transform", transform);
 
 		vertexArray->Bind();
-		//RenderCommand::DrawIndexed(vertexArray);
+		RenderCommand::DrawIndexed(vertexArray);
 	}
 }
