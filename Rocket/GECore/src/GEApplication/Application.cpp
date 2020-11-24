@@ -3,7 +3,7 @@
 #include <glad/glad.h>
 
 std::string vertexShaderSource = R"(
-#version 450 core
+#version 330 core
 layout (location = 0) in vec3 a_Position;
 void main()
 {
@@ -11,7 +11,7 @@ void main()
 }
 )";
 std::string fragmentShaderSource = R"(
-#version 450 core
+#version 330 core
 out vec4 FragColor;
 void main()
 {
@@ -100,10 +100,9 @@ namespace Rocket
         RK_INFO("Start Application Run Loop");
         while (m_Running)
         {
-            glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+            Renderer::BeginScene();
             Renderer::Submit(m_SimpleShader, m_VertexArray);
+            Renderer::EndScene();
 
             for (Layer *layer : m_LayerStack)
             {

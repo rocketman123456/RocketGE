@@ -36,13 +36,13 @@ namespace Rocket {
 #define RK_INFO(...)     ::Rocket::Log::GetClientLogger()->info(__VA_ARGS__)
 #define RK_TRACE(...)    ::Rocket::Log::GetClientLogger()->trace(__VA_ARGS__)
 #else
-#define RK_CORE_FATAL(...)
+#define RK_CORE_CRITICAL(...)
 #define RK_CORE_ERROR(...)
 #define RK_CORE_WARN(...) 
 #define RK_CORE_INFO(...) 
 #define RK_CORE_TRACE(...)
 
-#define RK_FATAL(...)
+#define RK_CRITICAL(...)
 #define RK_ERROR(...)
 #define RK_WARN(...) 
 #define RK_INFO(...) 

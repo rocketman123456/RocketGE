@@ -23,6 +23,8 @@ namespace Rocket
 
     void Renderer::BeginScene()
 	{
+		RenderCommand::SetClearColor({0.2f, 0.3f, 0.3f, 1.0f});
+		RenderCommand::Clear();
 	}
 
     //void Renderer::BeginScene(OrthographicCamera& camera)
