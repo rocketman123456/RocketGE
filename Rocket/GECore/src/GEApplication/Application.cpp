@@ -3,7 +3,7 @@
 #include <glad/glad.h>
 
 std::string vertexShaderSource = R"(
-#version 330 core
+#version 410 core
 layout (location = 0) in vec3 a_Position;
 void main()
 {
@@ -11,7 +11,7 @@ void main()
 }
 )";
 std::string fragmentShaderSource = R"(
-#version 330 core
+#version 410 core
 out vec4 FragColor;
 void main()
 {

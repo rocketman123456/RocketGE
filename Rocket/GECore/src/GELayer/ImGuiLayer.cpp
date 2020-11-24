@@ -62,7 +62,7 @@ namespace Rocket
 
 		// Setup Platform/Renderer bindings
 		ImGui_ImplGlfw_InitForOpenGL(window, true);
-		ImGui_ImplOpenGL3_Init("#version 330");
+		ImGui_ImplOpenGL3_Init("#version 410");
 	}
 
 	void ImGuiLayer::OnDetach()
