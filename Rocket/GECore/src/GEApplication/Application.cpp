@@ -1,6 +1,5 @@
 #include "GEApplication/Application.h"
 #include "GERender/Renderer.h"
-#include <glad/glad.h>
 
 std::string vertexShaderSource = R"(
 #version 410 core
@@ -11,6 +10,22 @@ void main()
 }
 )";
 std::string fragmentShaderSource = R"(
+#version 410 core
+out vec4 FragColor;
+void main()
+{
+    FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);
+}
+)";
+std::string vertexShaderSource1 = R"(
+#version 410 core
+layout (location = 0) in vec3 a_Position;
+void main()
+{
+    gl_Position = vec4(a_Position.x, a_Position.y, a_Position.z, 1.0);
+}
+)";
+std::string fragmentShaderSource1 = R"(
 #version 410 core
 out vec4 FragColor;
 void main()
@@ -53,6 +68,7 @@ namespace Rocket
         m_VertexArray->SetIndexBuffer(indexBuffer);
 
         m_SimpleShader = Shader::Create("Simple Shader", vertexShaderSource, fragmentShaderSource);
+        m_BasicShader = Shader::Create("Basic Shader", vertexShaderSource, fragmentShaderSource);
 
         m_GuiLayer = new ImGuiLayer();
         PushOverlay(m_GuiLayer);
