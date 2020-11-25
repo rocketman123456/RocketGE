@@ -4,6 +4,7 @@ add_library( GECore
     src/GEApplication/Application.cpp
     src/GECore/EntryPoint.cpp
     src/GECore/Log.cpp
+    src/GECore/GLFWInput.cpp
     src/GELayer/ImGuiBuild.cpp
     src/GELayer/ImGuiLayer.cpp
     src/GELayer/Layer.cpp
@@ -17,8 +18,8 @@ add_library( GECore
     src/GERender/Shader.cpp
     src/GERender/VertexArray.cpp
     src/GERender/OrthographicCamera.cpp
-    #"src/GERender/Camera.cpp"
-    "src/GERender/PerspectiveCamera.cpp"
+    #src/GERender/Camera.cpp
+    src/GERender/PerspectiveCamera.cpp
     src/Engine.cpp
 )
 target_link_libraries( GECore PRIVATE

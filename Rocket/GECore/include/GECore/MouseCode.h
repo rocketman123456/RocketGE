@@ -6,6 +6,9 @@ namespace Rocket
 {
 	// TODO: add keycode convert between different platform
 	using MouseCode = int32_t;
+	static MouseCode GLFWToRK_Mouse(MouseCode key) { return key; }
+	static MouseCode RKToGLFW_Mouse(MouseCode key) { return key; }
+
 	namespace Mouse
 	{
 		enum : MouseCode

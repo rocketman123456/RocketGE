@@ -116,7 +116,7 @@ namespace Rocket
 	void ImGuiLayer::OnGuiRender()
 	{
 		static bool show = true;
-		ImGui::ShowDemoWindow(&show);
+		//ImGui::ShowDemoWindow(&show);
 	}
 
 	void ImGuiLayer::SetDarkThemeColors()

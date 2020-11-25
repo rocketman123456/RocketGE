@@ -1,11 +1,11 @@
 #include "GEWindow/Window.h"
 
 #if defined(PLATFORM_WINDOWS)
-#include "WindowWindows.h"
+#include "GEWindow/WindowWindows.h"
 #elif defined(PLATFORM_APPLE)
-#include "WindowApple.h"
+#include "GEWindow/WindowApple.h"
 #elif defined(PLATFORM_LINUX)
-#include "WindowLinux.h"
+#include "GEWindow/WindowLinux.h"
 #endif
 
 namespace Rocket

@@ -1,7 +1,4 @@
 #include "GEApplication/Application.h"
-//#include "GERender/Renderer.h"
-//#include "GERender/RenderCommand.h"
-//#include "GERender/OrthographicCamera.h"
 
 namespace Rocket
 {
@@ -19,6 +16,9 @@ namespace Rocket
 
         m_GuiLayer = new ImGuiLayer();
         PushOverlay(m_GuiLayer);
+
+        m_CurrentTime = m_Clock.now();
+        m_LastTime = m_CurrentTime;
     }
 
     Application::~Application()
@@ -62,17 +62,17 @@ namespace Rocket
         RK_INFO("Start Application Run Loop");
         while (m_Running)
         {
+            // Calculate Delta Time
+            m_LastTime = m_CurrentTime;
+            m_CurrentTime = m_Clock.now();
+            m_Duration = m_CurrentTime - m_LastTime;
             // Common Update
             for (Layer *layer : m_LayerStack)
-            {
-                layer->OnUpdate(Timestep(0.03));
-            }
+                layer->OnUpdate(Timestep(m_Duration.count()));
             // GUI Update
             m_GuiLayer->Begin();
             for (Layer *layer : m_LayerStack)
-            {
                 layer->OnGuiRender();
-            }
             m_GuiLayer->End();
             // Window Update
             m_Window->OnUpdate();
