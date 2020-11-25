@@ -1,5 +1,11 @@
 #include "SandboxApp.h"
 #include "GECore/Core.h"
+
+/*
+When you want to create a new application based on RocketGE,
+you should create a new layer with an application.
+*/
+
 namespace Rocket
 {
     class SimpleSandbox : public Application

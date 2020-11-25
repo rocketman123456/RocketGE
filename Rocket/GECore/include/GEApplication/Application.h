@@ -31,7 +31,7 @@ namespace Rocket {
 		bool OnWindowResize(WindowResizeEvent& e);
     private:
         std::unique_ptr<Window> m_Window;
-        GuiLayer* m_GuiLayer;
+        Layer* m_GuiLayer;
         LayerStack m_LayerStack;
         bool m_Running = true;
         bool m_Minimized = false;

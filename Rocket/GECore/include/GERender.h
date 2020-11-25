@@ -1,8 +1,15 @@
 #pragma once
 
+#include "GERender/Renderer.h"
 #include "GERender/RenderAPI.h"
+#include "GERender/RenderCommand.h"
 #include "GERender/GraphicsContext.h"
 #include "GERender/Shader.h"
+#include "GERender/Buffer.h"
+#include "GERender/Camera.h"
+#include "GERender/OrthographicCamera.h"
+#include "GERender/PerspectiveCamera.h"
+#include "GERender/VertexArray.h"
 
 #if defined(RK_OPENGL)
 #include "GERender/OpenGLShader.h"
