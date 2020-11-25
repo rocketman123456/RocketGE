@@ -21,16 +21,15 @@ namespace Rocket
 		RenderCommand::SetViewport(0, 0, width, height);
 	}
 
-    void Renderer::BeginScene()
+    void Renderer::BeginScene(Ref<Camera> camera)
 	{
-		RenderCommand::SetClearColor({0.2f, 0.3f, 0.3f, 1.0f});
-		RenderCommand::Clear();
+		s_SceneData->ViewProjectionMatrix = camera->GetViewProjectionMatrix();
 	}
 
-    //void Renderer::BeginScene(OrthographicCamera& camera)
-	//{
-	//	s_SceneData->ViewProjectionMatrix = camera.GetViewProjectionMatrix();
-	//}
+	void Renderer::BeginScene(Camera& camera)
+	{
+		s_SceneData->ViewProjectionMatrix = camera.GetViewProjectionMatrix();
+	}
 
 	void Renderer::EndScene()
 	{
@@ -39,7 +38,7 @@ namespace Rocket
 	void Renderer::Submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray, const glm::mat4& transform)
 	{
 		shader->Bind();
-		//shader->SetMat4("u_ViewProjection", s_SceneData->ViewProjectionMatrix);
+		shader->SetMat4("u_ViewProjection", s_SceneData->ViewProjectionMatrix);
 		//shader->SetMat4("u_Transform", transform);
 
 		vertexArray->Bind();

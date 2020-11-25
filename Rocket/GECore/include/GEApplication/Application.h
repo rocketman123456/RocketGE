@@ -8,6 +8,7 @@
 
 #include "GERender/Buffer.h"
 #include "GERender/VertexArray.h"
+#include "GERender/Camera.h"
 
 namespace Rocket {
     class Application {
@@ -38,6 +39,7 @@ namespace Rocket {
 
         Ref<Shader> m_SimpleShader, m_BasicShader;
         Ref<VertexArray> m_VertexArray;
+        Ref<Camera> m_Camera;
     private:
         static Application* s_Instance;
     };

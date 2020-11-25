@@ -1,15 +1,18 @@
 #include "GEApplication/Application.h"
 #include "GERender/Renderer.h"
+#include "GERender/RenderCommand.h"
+#include "GERender/OrthographicCamera.h"
 
-std::string vertexShaderSource = R"(
+std::string vertexShaderSrc = R"(
 #version 410 core
 layout (location = 0) in vec3 a_Position;
+uniform mat4 u_ViewProjection;
 void main()
 {
-    gl_Position = vec4(a_Position.x, a_Position.y, a_Position.z, 1.0);
+    gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
 }
 )";
-std::string fragmentShaderSource = R"(
+std::string fragmentShaderSrc = R"(
 #version 410 core
 out vec4 FragColor;
 void main()
@@ -17,15 +20,16 @@ void main()
     FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);
 }
 )";
-std::string vertexShaderSource1 = R"(
+std::string vertexShaderSrc_1 = R"(
 #version 410 core
 layout (location = 0) in vec3 a_Position;
+uniform mat4 u_ViewProjection;
 void main()
 {
-    gl_Position = vec4(a_Position.x, a_Position.y, a_Position.z, 1.0);
+    gl_Position = u_ViewProjection * vec4(a_Position.x, 1.0);
 }
 )";
-std::string fragmentShaderSource1 = R"(
+std::string fragmentShaderSrc_1 = R"(
 #version 410 core
 out vec4 FragColor;
 void main()
@@ -67,8 +71,12 @@ namespace Rocket
         auto indexBuffer = IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t));
         m_VertexArray->SetIndexBuffer(indexBuffer);
 
-        m_SimpleShader = Shader::Create("Simple Shader", vertexShaderSource, fragmentShaderSource);
-        m_BasicShader = Shader::Create("Basic Shader", vertexShaderSource, fragmentShaderSource);
+        m_SimpleShader = Shader::Create("Simple Shader", vertexShaderSrc, fragmentShaderSrc);
+        m_BasicShader = Shader::Create("Basic Shader", vertexShaderSrc, fragmentShaderSrc);
+
+        m_Camera.reset(new OrthographicCamera(-1.6f, 1.6f, -0.9f, 0.9f));
+        static_cast<OrthographicCamera*>(m_Camera.get())->SetPosition({0.0f, 0.0f, 0.0f});
+        static_cast<OrthographicCamera*>(m_Camera.get())->SetRotation(45.0f);
 
         m_GuiLayer = new ImGuiLayer();
         PushOverlay(m_GuiLayer);
@@ -81,7 +89,6 @@ namespace Rocket
 
     void Application::OnEvent(Event &e)
     {
-        //RK_CORE_TRACE(e);
         EventDispatcher dispatcher(e);
         dispatcher.Dispatch<WindowCloseEvent>(RK_BIND_EVENT_FN(Application::OnWindowClose));
         dispatcher.Dispatch<WindowResizeEvent>(RK_BIND_EVENT_FN(Application::OnWindowResize));
@@ -116,7 +123,10 @@ namespace Rocket
         RK_INFO("Start Application Run Loop");
         while (m_Running)
         {
-            Renderer::BeginScene();
+            RenderCommand::SetClearColor({ 0.2f, 0.3f, 0.3f, 1.0f });
+            RenderCommand::Clear();
+
+            Renderer::BeginScene(m_Camera);
             Renderer::Submit(m_SimpleShader, m_VertexArray);
             Renderer::EndScene();
 
