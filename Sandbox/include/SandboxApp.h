@@ -42,6 +42,7 @@ namespace Rocket
             static_cast<OrthographicCamera*>(m_Camera.get())->SetPosition(m_Position);
             m_Angle = 0.0f;
             static_cast<OrthographicCamera*>(m_Camera.get())->SetRotation(m_Angle);
+            m_Transform = glm::mat4(1.0f);
         }
 
         void OnUpdate(Timestep ts) override
@@ -66,7 +67,7 @@ namespace Rocket
             m_Camera->SetRotation(m_Angle);
 
             Renderer::BeginScene(m_Camera);
-            Renderer::Submit(m_SimpleShader, m_VertexArray);
+            Renderer::Submit(m_SimpleShader, m_VertexArray, m_Transform);
             Renderer::EndScene();
         }
 
@@ -96,5 +97,6 @@ namespace Rocket
         float m_RotationSpeed = 10.0f;
         float m_MoveSpeed = 1.0f;
         glm::vec3 m_Position;
+        glm::mat4 m_Transform;
     };
 }
