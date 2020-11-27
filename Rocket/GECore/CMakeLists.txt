@@ -18,8 +18,8 @@ add_library( GECore
     src/GERender/Shader.cpp
     src/GERender/VertexArray.cpp
     src/GERender/OrthographicCamera.cpp
-    #src/GERender/Camera.cpp
     src/GERender/PerspectiveCamera.cpp
+    src/GERender/Texture.cpp
     src/Engine.cpp
 )
 target_link_libraries( GECore PRIVATE

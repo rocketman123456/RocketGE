@@ -23,10 +23,14 @@ namespace Rocket {
 		switch (s_API)
 		{
 		case RenderAPI::API::None:    RK_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
-		case RenderAPI::API::OpenGL:  return CreateScope<OpenGLRenderAPI>();
+#if defined(RK_OPENGL)
+    	case RenderAPI::API::OpenGL:  return CreateScope<OpenGLRenderAPI>();
+#elif defined(RK_VULKAN)
+    	case RenderAPI::API::Vulkan:  return CreateScope<VulkanRenderAPI>();
+#elif defined(RK_METAL)
+    	case RenderAPI::API::Metal:  return CreateScope<MetalRenderAPI>();
+#endif
+		default: RK_CORE_ASSERT(false, "Unknown RendererAPI!"); return nullptr;
 		}
-
-		RK_CORE_ASSERT(false, "Unknown RendererAPI!");
-		return nullptr;
 	}
 }

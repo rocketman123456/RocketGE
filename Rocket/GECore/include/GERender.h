@@ -10,6 +10,7 @@
 #include "GERender/OrthographicCamera.h"
 #include "GERender/PerspectiveCamera.h"
 #include "GERender/VertexArray.h"
+#include "GERender/Texture.h"
 
 #if defined(RK_OPENGL)
 #include "GERender/OpenGLShader.h"

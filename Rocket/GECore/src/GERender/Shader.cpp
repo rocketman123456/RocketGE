@@ -22,10 +22,8 @@ namespace Rocket {
 #elif defined(RK_METAL)
 			case RenderAPI::API::OpenGL:  return CreateRef<MetalShader>(filepath);
 #endif
+			default: RK_CORE_ASSERT(false, "Unknown RendererAPI!"); return nullptr;
 		}
-
-		RK_CORE_ASSERT(false, "Unknown RenderAPI!");
-		return nullptr;
 	}
 
 	Ref<Shader> Shader::Create(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc)
@@ -40,10 +38,8 @@ namespace Rocket {
 #elif defined(RK_METAL)
 			case RenderAPI::API::OpenGL:  return CreateRef<MetalShader>(name, vertexSrc, fragmentSrc);
 #endif
+			default: RK_CORE_ASSERT(false, "Unknown RendererAPI!"); return nullptr;
 		}
-
-		RK_CORE_ASSERT(false, "Unknown RenderAPI!");
-		return nullptr;
 	}
 
 	void ShaderLibrary::Add(const std::string& name, const Ref<Shader>& shader)

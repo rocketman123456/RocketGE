@@ -21,10 +21,8 @@ namespace Rocket {
 #elif defined(RK_METAL)
 		case RenderAPI::API::OpenGL:  return CreateRef<MetalVertexBuffer>(size);
 #endif
+		default: RK_CORE_ASSERT(false, "Unknown RendererAPI!"); return nullptr;
 		}
-
-		RK_CORE_ASSERT(false, "Unknown RendererAPI!");
-		return nullptr;
 	}
 
 	Ref<VertexBuffer> VertexBuffer::Create(float* vertices, uint32_t size)
@@ -39,10 +37,8 @@ namespace Rocket {
 #elif defined(RK_METAL)
 		case RenderAPI::API::OpenGL:  return CreateRef<MetalVertexBuffer>(vertices, size);
 #endif
+		default: RK_CORE_ASSERT(false, "Unknown RendererAPI!"); return nullptr;
 		}
-
-		RK_CORE_ASSERT(false, "Unknown RendererAPI!");
-		return nullptr;
 	}
 
 	Ref<IndexBuffer> IndexBuffer::Create(uint32_t* indices, uint32_t size)
@@ -57,9 +53,7 @@ namespace Rocket {
 #elif defined(RK_METAL)
 		case RenderAPI::API::OpenGL:  return CreateRef<MetalIndexBuffer>(indices, size);
 #endif
+		default: RK_CORE_ASSERT(false, "Unknown RendererAPI!"); return nullptr;
 		}
-
-		RK_CORE_ASSERT(false, "Unknown RendererAPI!");
-		return nullptr;
 	}
 }

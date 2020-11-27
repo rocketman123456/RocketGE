@@ -17,12 +17,11 @@ namespace Rocket {
 #if defined(RK_OPENGL)
 			case RenderAPI::API::OpenGL:  return CreateScope<OpenGLContext>(static_cast<GLFWwindow*>(window));
 #elif defined(RK_VULKAN)
-			case RenderAPI::API::OpenGL:  return CreateScope<VulkanContext>(static_cast<GLFWwindow*>(window));
+			case RenderAPI::API::Vulkan:  return CreateScope<VulkanContext>(static_cast<GLFWwindow*>(window));
 #elif defined(RK_METAL)
-			case RenderAPI::API::OpenGL:  return CreateScope<MetalContext>(static_cast<GLFWwindow*>(window));
+			case RenderAPI::API::Metal:  return CreateScope<MetalContext>(static_cast<GLFWwindow*>(window));
 #endif
+			default: RK_CORE_ASSERT(false, "Unknown RendererAPI!"); return nullptr;
 		}
-		RK_CORE_ASSERT(false, "Unknown RenderAPI!");
-		return nullptr;
 	}
 }

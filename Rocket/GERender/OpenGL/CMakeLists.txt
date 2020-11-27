@@ -6,7 +6,9 @@ add_library( Render_OpenGL
     src/OpenGLIndexBuffer.cpp 
     src/OpenGLVertexBuffer.cpp
     src/OpenGLVertexArray.cpp
- "include/GERender/OpenGLRenderAPI.h" "src/OpenGLRenderAPI.cpp")
+    "src/OpenGLRenderAPI.cpp"
+    src/OpenGLTexture2D.cpp
+)
 target_link_libraries( Render_OpenGL PRIVATE
     glfw Eigen3::Eigen
 )
