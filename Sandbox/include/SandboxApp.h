@@ -195,10 +195,10 @@ namespace Rocket
             UpdateCamera(ts);
 
             Renderer::BeginScene(m_Camera);
-            if(1) {
+            if(m_ShowSquare) {
                 RenderSquare();
             }
-            if(0) {
+            if(m_ShowCube) {
                 RenderCube();
             }
             Renderer::EndScene();
@@ -209,6 +209,8 @@ namespace Rocket
             ImGui::Begin("Example");
             ImGui::Text("Hello Example!");
 		    ImGui::ColorEdit3("Square Color", glm::value_ptr(m_SquareColor));
+            ImGui::Checkbox("Show Square", &m_ShowSquare);
+            ImGui::Checkbox("Show Cube", &m_ShowCube);
 		    ImGui::End();
         }
 
@@ -235,6 +237,9 @@ namespace Rocket
 
         Ref<Texture2D> m_Texture_1;
         Ref<Texture2D> m_Texture_2;
+
+        bool m_ShowSquare = false;
+        bool m_ShowCube = false;
         
         //Ref<PerspectiveCamera> m_Camera;
         Ref<OrthographicCamera> m_Camera;

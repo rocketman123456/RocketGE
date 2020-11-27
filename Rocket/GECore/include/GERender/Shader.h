@@ -25,11 +25,11 @@ namespace Rocket {
 		virtual void SetMat3(const std::string& name, const glm::mat3& value) = 0;
 		virtual void SetMat4(const std::string& name, const glm::mat4& value) = 0;
 		// Just For Test
-		virtual void SetFloat2Eigen(const std::string& name, const Eigen::Vector2f& value) = 0;
-		virtual void SetFloat3Eigen(const std::string& name, const Eigen::Vector3f& value) = 0;
-		virtual void SetFloat4Eigen(const std::string& name, const Eigen::Vector4f& value) = 0;
-		virtual void SetMat3Eigen(const std::string& name, const Eigen::Matrix3f& value) = 0;
-		virtual void SetMat4Eigen(const std::string& name, const Eigen::Matrix4f& value) = 0;
+		//virtual void SetFloat2Eigen(const std::string& name, const Eigen::Vector2f& value) = 0;
+		//virtual void SetFloat3Eigen(const std::string& name, const Eigen::Vector3f& value) = 0;
+		//virtual void SetFloat4Eigen(const std::string& name, const Eigen::Vector4f& value) = 0;
+		//virtual void SetMat3Eigen(const std::string& name, const Eigen::Matrix3f& value) = 0;
+		//virtual void SetMat4Eigen(const std::string& name, const Eigen::Matrix4f& value) = 0;
 
 		virtual const std::string& GetName() const = 0;
 

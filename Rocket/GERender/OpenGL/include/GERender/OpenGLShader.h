@@ -37,11 +37,11 @@ namespace Rocket {
 
 		virtual const std::string& GetName() const override { return m_Name; }
 		//--------------------------------------------------------------------------------------
-		virtual void SetFloat2Eigen(const std::string& name, const Eigen::Vector2f& value) override;
-		virtual void SetFloat3Eigen(const std::string& name, const Eigen::Vector3f& value) override;
-		virtual void SetFloat4Eigen(const std::string& name, const Eigen::Vector4f& value) override;
-		virtual void SetMat3Eigen(const std::string& name, const Eigen::Matrix3f& value) override;
-		virtual void SetMat4Eigen(const std::string& name, const Eigen::Matrix4f& value) override;
+		virtual void SetFloat2Eigen(const std::string& name, const Eigen::Vector2f& value);
+		virtual void SetFloat3Eigen(const std::string& name, const Eigen::Vector3f& value);
+		virtual void SetFloat4Eigen(const std::string& name, const Eigen::Vector4f& value);
+		virtual void SetMat3Eigen(const std::string& name, const Eigen::Matrix3f& value);
+		virtual void SetMat4Eigen(const std::string& name, const Eigen::Matrix4f& value);
 
 		void UploadUniformFloat2Eigen(const std::string& name, const Eigen::Vector2f& value);
 		void UploadUniformFloat3Eigen(const std::string& name, const Eigen::Vector3f& value);

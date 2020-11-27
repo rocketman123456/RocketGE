@@ -210,7 +210,7 @@ namespace Rocket {
 	{
 		UploadUniformMat4(name, value);
 	}
-
+	//-------------------------------------------------------------------------------------------
 	void OpenGLShader::UploadUniformInt(const std::string& name, int value)
 	{
 		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
