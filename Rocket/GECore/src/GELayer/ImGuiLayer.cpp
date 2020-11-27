@@ -49,7 +49,7 @@ namespace Rocket
 		GLFWwindow *window = static_cast<GLFWwindow *>(app.GetWindow().GetNativeWindow());
 		float xscale, yscale;
 		glfwGetWindowContentScale(window, &xscale, &yscale);
-		io.DisplaySize = ImVec2(app.GetWindow().GetWidth(), app.GetWindow().GetHeight());
+		io.DisplaySize = ImVec2((float)app.GetWindow().GetWidth(), (float)app.GetWindow().GetHeight());
 		io.DisplayFramebufferScale = ImVec2(xscale, yscale);
 
 		// When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
