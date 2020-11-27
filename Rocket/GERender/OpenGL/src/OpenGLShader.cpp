@@ -89,7 +89,6 @@ namespace Rocket {
 
 			shaderSources[ShaderTypeFromString(type)] = (pos == std::string::npos) ? source.substr(nextLinePos) : source.substr(nextLinePos, pos - nextLinePos);
 		}
-
 		return shaderSources;
 	}
 

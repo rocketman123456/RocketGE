@@ -134,11 +134,12 @@ namespace Rocket
             m_Texture_1 = Texture2D::Create(img_path_1);
             m_Texture_2 = Texture2D::Create(img_path_2);
 
-            float fov = 45.0f;
-            //m_Camera.reset(new PerspectiveCamera(glm::radians(fov), 16.0f / 9.0f, 0.1f, 100.0f));
-            m_Camera.reset(new OrthographicCamera(-1.6f, 1.6f, -0.9f, 0.9f));
-            m_Camera->SetPosition(m_Position);
-            m_Camera->SetRotation(m_Angle);
+            m_Camera_O.reset(new OrthographicCamera(-1.6f, 1.6f, -0.9f, 0.9f));
+            m_Camera_O->SetPosition(m_Position);
+            m_Camera_O->SetRotation(m_Angle);
+            m_Camera_P.reset(new PerspectiveCamera(glm::radians(45.0f), 16.0f / 9.0f, 0.1f, 100.0f));
+            m_Camera_P->SetPosition(m_Position);
+            m_Camera_P->SetRotation(m_Angle);
         }
 
         void UpdateCamera(Timestep ts)
@@ -155,8 +156,17 @@ namespace Rocket
                 m_Angle += m_RotationSpeed * ts;
             if (Input::IsKeyPressed(Key::E))
                 m_Angle -= m_RotationSpeed * ts;
-            m_Camera->SetPosition(m_Position);
-            m_Camera->SetRotation(m_Angle);
+            
+            if(m_CameraType)
+            {
+                m_Camera_O->SetPosition(m_Position);
+                m_Camera_O->SetRotation(m_Angle);
+            }
+            else 
+            {
+                m_Camera_P->SetPosition(m_Position);
+                m_Camera_P->SetRotation(m_Angle);
+            }
         }
 
         void RenderSquare()
@@ -194,7 +204,11 @@ namespace Rocket
 
             UpdateCamera(ts);
 
-            Renderer::BeginScene(m_Camera);
+            if(m_CameraType)
+                Renderer::BeginScene(m_Camera_O);
+            else
+                Renderer::BeginScene(m_Camera_P);
+            
             if(m_ShowSquare) {
                 RenderSquare();
             }
@@ -209,6 +223,7 @@ namespace Rocket
             ImGui::Begin("Example");
             ImGui::Text("Hello Example!");
 		    ImGui::ColorEdit3("Square Color", glm::value_ptr(m_SquareColor));
+            ImGui::Checkbox("Camera Type", &m_CameraType);
             ImGui::Checkbox("Show Square", &m_ShowSquare);
             ImGui::Checkbox("Show Cube", &m_ShowCube);
 		    ImGui::End();
@@ -238,11 +253,12 @@ namespace Rocket
         Ref<Texture2D> m_Texture_1;
         Ref<Texture2D> m_Texture_2;
 
+        bool m_CameraType = false;
         bool m_ShowSquare = false;
         bool m_ShowCube = false;
         
-        //Ref<PerspectiveCamera> m_Camera;
-        Ref<OrthographicCamera> m_Camera;
+        Ref<PerspectiveCamera> m_Camera_P;
+        Ref<OrthographicCamera> m_Camera_O;
         float m_Angle = 0.0f;
         float m_RotationSpeed = 10.0f;
         float m_MoveSpeed = 1.0f;
