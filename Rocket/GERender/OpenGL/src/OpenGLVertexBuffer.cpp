@@ -4,16 +4,22 @@
 namespace Rocket {
 	OpenGLVertexBuffer::OpenGLVertexBuffer(uint32_t size)
 	{
+#if defined(HIGH_OPENGL_VERSION)
+		glCreateBuffers(1, &m_RendererID);
+#else
 		glGenBuffers(1, &m_RendererID);
-		//glCreateBuffers(1, &m_RendererID);
+#endif
 		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
 		glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_DYNAMIC_DRAW);
 	}
 
 	OpenGLVertexBuffer::OpenGLVertexBuffer(float* vertices, uint32_t size)
 	{
+#if defined(HIGH_OPENGL_VERSION)
+		glCreateBuffers(1, &m_RendererID);
+#else
 		glGenBuffers(1, &m_RendererID);
-		//glCreateBuffers(1, &m_RendererID);
+#endif
 		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
 		glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
 	}

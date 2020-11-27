@@ -17,16 +17,17 @@ namespace Rocket {
 		case ShaderDataType::Int3:     return GL_INT;
 		case ShaderDataType::Int4:     return GL_INT;
 		case ShaderDataType::Bool:     return GL_BOOL;
+		default: RK_CORE_ASSERT(false, "Unknown ShaderDataType!"); return 0;
 		}
-
-		RK_CORE_ASSERT(false, "Unknown ShaderDataType!");
-		return 0;
 	}
 
 	OpenGLVertexArray::OpenGLVertexArray()
 	{
+#if defined(HIGH_OPENGL_VERSION)
+		glCreateVertexArrays(1, &m_RendererID);
+#else
 		glGenVertexArrays(1, &m_RendererID);
-		//glCreateVertexArrays(1, &m_RendererID);
+#endif
 	}
 
 	OpenGLVertexArray::~OpenGLVertexArray()
