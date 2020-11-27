@@ -129,14 +129,16 @@ namespace Rocket
             m_SimpleShader = Shader::Create(shader_path_1);
             m_ColorShader = Shader::Create(shader_path_2);
 
-            std::string img_path_1 = ProjectSourceDir + "/Sandbox/assets/textures/girl_1.jpeg";
+            std::string img_path_1 = ProjectSourceDir + "/Sandbox/assets/textures/wall.jpg";
             std::string img_path_2 = ProjectSourceDir + "/Sandbox/assets/textures/girl_2.jpeg";
             m_Texture_1 = Texture2D::Create(img_path_1);
             m_Texture_2 = Texture2D::Create(img_path_2);
 
+            float fov = 45.0f;
+            //m_Camera.reset(new PerspectiveCamera(glm::radians(fov), 16.0f / 9.0f, 0.1f, 100.0f));
             m_Camera.reset(new OrthographicCamera(-1.6f, 1.6f, -0.9f, 0.9f));
-            static_cast<OrthographicCamera*>(m_Camera.get())->SetPosition(m_Position);
-            static_cast<OrthographicCamera*>(m_Camera.get())->SetRotation(m_Angle);
+            m_Camera->SetPosition(m_Position);
+            m_Camera->SetRotation(m_Angle);
         }
 
         void UpdateCamera(Timestep ts)
@@ -157,6 +159,34 @@ namespace Rocket
             m_Camera->SetRotation(m_Angle);
         }
 
+        void RenderSquare()
+        {
+            glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.5f));
+            m_ColorShader->Bind();
+            m_ColorShader->SetInt("u_Texture", 0);
+            m_ColorShader->SetFloat3("u_Color", m_SquareColor);
+            m_Texture_1->Bind();
+            for (int y = 0; y < 20; y++)
+            {
+                for (int x = 0; x < 20; x++)
+                {
+                    glm::vec3 pos(x * 0.51f, y * 0.51f, -0.5f);
+                    glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
+                    Renderer::Submit(m_ColorShader, m_SquareVertexArray, transform);
+                }
+            }
+        }
+
+        void RenderCube()
+        {
+            m_Texture_2->Bind();
+            glm::vec3 pos(0.0f, 0.0f, -1.0f);
+            glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos);
+            transform = glm::rotate(transform, glm::radians(45.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+            transform = glm::rotate(transform, glm::radians(45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+            Renderer::Submit(m_ColorShader, m_CubeVertexArray, transform);
+        }
+
         void OnUpdate(Timestep ts) override
         {
             RenderCommand::SetClearColor({ 0.2f, 0.3f, 0.3f, 1.0f });
@@ -165,29 +195,11 @@ namespace Rocket
             UpdateCamera(ts);
 
             Renderer::BeginScene(m_Camera);
-            {
-                glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.5f));
-                m_ColorShader->Bind();
-                m_ColorShader->SetInt("u_Texture", 0);
-                m_ColorShader->SetFloat3("u_Color", m_SquareColor);
-                m_Texture_1->Bind();
-                for (int y = 0; y < 20; y++)
-                {
-                    for (int x = 0; x < 20; x++)
-                    {
-                        glm::vec3 pos(x * 0.51f, y * 0.51f, 0.0f);
-                        glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
-                        Renderer::Submit(m_ColorShader, m_SquareVertexArray, transform);
-                    }
-                }
+            if(1) {
+                RenderSquare();
             }
-            {
-                m_Texture_2->Bind();
-                glm::vec3 pos(0.0f, 0.0f, -1.0f);
-                glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos);
-                transform = glm::rotate(transform, glm::radians(45.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-                transform = glm::rotate(transform, glm::radians(45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-                Renderer::Submit(m_ColorShader, m_CubeVertexArray, transform);
+            if(0) {
+                RenderCube();
             }
             Renderer::EndScene();
         }
@@ -224,6 +236,7 @@ namespace Rocket
         Ref<Texture2D> m_Texture_1;
         Ref<Texture2D> m_Texture_2;
         
+        //Ref<PerspectiveCamera> m_Camera;
         Ref<OrthographicCamera> m_Camera;
         float m_Angle = 0.0f;
         float m_RotationSpeed = 10.0f;

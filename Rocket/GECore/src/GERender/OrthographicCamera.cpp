@@ -4,14 +4,14 @@
 
 namespace Rocket {
     OrthographicCamera::OrthographicCamera(float left, float right, float bottom, float top)
-		: Camera(glm::ortho(left, right, bottom, top, -1.0f, 1.0f))
+		: Camera(glm::ortho(left, right, bottom, top, 0.1f, 100.0f))
 	{
 		Camera::UpdateProjectView();
 	}
 
 	void OrthographicCamera::SetProjection(float left, float right, float bottom, float top)
 	{
-		Camera::SetProjection(glm::ortho(left, right, bottom, top, -1.0f, 1.0f));
+		Camera::SetProjection(glm::ortho(left, right, bottom, top, 0.1f, 100.0f));
 	}
 
 	void OrthographicCamera::RecalculateViewMatrix()
