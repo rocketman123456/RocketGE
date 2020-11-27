@@ -43,7 +43,6 @@ namespace Rocket
             -0.5f,  0.5f, 0.0f, 0.0f, 1.0f,
             };
             uint32_t square_indices[] = { 0, 1, 2, 2, 3, 0 };
-
             {
                 m_SquareVertexArray = VertexArray::Create();
                 m_SquareVertexArray->Bind();
@@ -59,13 +58,48 @@ namespace Rocket
                 m_SquareVertexArray->SetIndexBuffer(indexBuffer_s);
             }
 
+            float cube_vertices[] = {
+                -0.5f, 0.5f, 0.5f, 0.0f, 1.0f,
+                -0.5f,-0.5f, 0.5f, 0.0f, 0.0f,
+                 0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
+                 0.5f,-0.5f, 0.5f, 1.0f, 0.0f,
+                -0.5f, 0.5f,-0.5f, 0.0f, 1.0f,
+                -0.5f,-0.5f,-0.5f, 0.0f, 0.0f,
+                 0.5f, 0.5f,-0.5f, 1.0f, 1.0f,
+                 0.5f,-0.5f,-0.5f, 1.0f, 0.0f
+            };
+            unsigned int cube_indices[] = {
+                0, 2, 3, 0, 3, 1,
+                2, 6, 7, 2, 7, 3,
+                6, 4, 5, 6, 5, 7,
+                4, 0, 1, 4, 1, 5,
+                0, 4, 6, 0, 6, 2,
+                1, 5, 7, 1, 7, 3,
+            };
+            {
+                m_CubeVertexArray = VertexArray::Create();
+                m_CubeVertexArray->Bind();
+
+                auto vertexBuffer_s = VertexBuffer::Create(cube_vertices, sizeof(cube_vertices));
+                vertexBuffer_s->SetLayout({
+                    { Rocket::ShaderDataType::Float3, "a_Position" },
+                    { Rocket::ShaderDataType::Float2, "a_TexCoord" }
+                    });
+                m_CubeVertexArray->AddVertexBuffer(vertexBuffer_s);
+
+                auto indexBuffer_s = IndexBuffer::Create(cube_indices, sizeof(cube_indices) / sizeof(uint32_t));
+                m_CubeVertexArray->SetIndexBuffer(indexBuffer_s);
+            }
+
             std::string shader_path_1 = ProjectSourceDir + "/Sandbox/assets/shaders/SimpleShader.glsl";
             std::string shader_path_2 = ProjectSourceDir + "/Sandbox/assets/shaders/ColorShader.glsl";
             m_SimpleShader = Shader::Create(shader_path_1);
             m_ColorShader = Shader::Create(shader_path_2);
 
-            std::string img_path = ProjectSourceDir + "/Sandbox/assets/textures/girl.jpeg";
-            m_Texture = Texture2D::Create(img_path);
+            std::string img_path_1 = ProjectSourceDir + "/Sandbox/assets/textures/girl_1.jpeg";
+            std::string img_path_2 = ProjectSourceDir + "/Sandbox/assets/textures/girl_2.jpeg";
+            m_Texture_1 = Texture2D::Create(img_path_1);
+            m_Texture_2 = Texture2D::Create(img_path_2);
 
             m_Camera.reset(new OrthographicCamera(-1.6f, 1.6f, -0.9f, 0.9f));
             static_cast<OrthographicCamera*>(m_Camera.get())->SetPosition(m_Position);
@@ -96,21 +130,29 @@ namespace Rocket
             glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.5f));
 
             Renderer::BeginScene(m_Camera);
-            m_ColorShader->Bind();
-            m_ColorShader->SetInt("u_Texture", 0);
-		    m_ColorShader->SetFloat3("u_Color", m_SquareColor);
-            m_Texture->Bind();
-            for (int y = 0; y < 20; y++)
             {
-                for (int x = 0; x < 20; x++)
+                m_ColorShader->Bind();
+                m_ColorShader->SetInt("u_Texture", 0);
+                m_ColorShader->SetFloat3("u_Color", m_SquareColor);
+                m_Texture_2->Bind();
+                for (int y = 0; y < 20; y++)
                 {
-                    glm::vec3 pos(x * 0.51f, y * 0.51f, 0.0f);
-                    glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
-                    Renderer::Submit(m_ColorShader, m_SquareVertexArray, transform);
+                    for (int x = 0; x < 20; x++)
+                    {
+                        glm::vec3 pos(x * 0.51f, y * 0.51f, 0.0f);
+                        glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
+                        Renderer::Submit(m_ColorShader, m_SquareVertexArray, transform);
+                    }
                 }
             }
-            //m_Texture->Unbind();
-            //Renderer::Submit(m_SimpleShader, m_VertexArray, m_Transform);
+            {
+                m_Texture_2->Bind();
+                glm::vec3 pos(0.0f, 0.0f, -1.0f);
+                glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
+                transform = glm::rotate(transform, glm::radians(45.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+                transform = glm::rotate(transform, glm::radians(45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+                //Renderer::Submit(m_ColorShader, m_CubeVertexArray, transform);
+            }
             Renderer::EndScene();
         }
 
@@ -140,9 +182,11 @@ namespace Rocket
         Ref<Shader> m_ColorShader;
         Ref<VertexArray> m_SquareVertexArray;
         glm::vec3 m_SquareColor = { 1.0f, 0.5f, 0.2f };
-        glm::mat4 m_Transform = glm::mat4(1.0f);
 
-        Ref<Texture2D> m_Texture;
+        Ref<VertexArray> m_CubeVertexArray;
+
+        Ref<Texture2D> m_Texture_1;
+        Ref<Texture2D> m_Texture_2;
         
         Ref<OrthographicCamera> m_Camera;
         float m_Angle = 0.0f;
