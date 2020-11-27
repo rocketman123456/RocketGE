@@ -16,9 +16,9 @@ namespace Rocket
         ExampleLayer() : Layer("ExampleLayer")
         {
             float vertices[] = {
-            -0.5f, -0.5f, 0.0f,
-             0.5f, -0.5f, 0.0f,
-             0.0f,  0.5f, 0.0f
+                -0.5f, -0.5f, 0.0f,
+                 0.5f, -0.5f, 0.0f,
+                 0.0f,  0.5f, 0.0f
             };
             uint32_t indices[] = { 0, 1, 2 };
 
@@ -37,10 +37,10 @@ namespace Rocket
             }
 
             float square_vertices[] = {
-            -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
-             0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
-             0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
-            -0.5f,  0.5f, 0.0f, 0.0f, 1.0f,
+                -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+                 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+                 0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+                -0.5f,  0.5f, 0.0f, 0.0f, 1.0f,
             };
             uint32_t square_indices[] = { 0, 1, 2, 2, 3, 0 };
             {
@@ -59,22 +59,55 @@ namespace Rocket
             }
 
             float cube_vertices[] = {
-                -0.5f, 0.5f, 0.5f, 0.0f, 1.0f,
-                -0.5f,-0.5f, 0.5f, 0.0f, 0.0f,
-                 0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
-                 0.5f,-0.5f, 0.5f, 1.0f, 0.0f,
-                -0.5f, 0.5f,-0.5f, 0.0f, 1.0f,
-                -0.5f,-0.5f,-0.5f, 0.0f, 0.0f,
-                 0.5f, 0.5f,-0.5f, 1.0f, 1.0f,
-                 0.5f,-0.5f,-0.5f, 1.0f, 0.0f
+                -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+                 0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+                 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+                 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+                -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+                -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+
+                -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+                 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+                 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+                 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+                -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+                -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+
+                -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+                -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+                -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+                -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+                -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+                -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+                 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+                 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+                 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+                 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+                 0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+                 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+                -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+                 0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+                 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+                 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+                -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+                -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+
+                -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+                 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+                 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+                 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+                -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+                -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
             };
             unsigned int cube_indices[] = {
-                0, 2, 3, 0, 3, 1,
-                2, 6, 7, 2, 7, 3,
-                6, 4, 5, 6, 5, 7,
-                4, 0, 1, 4, 1, 5,
-                0, 4, 6, 0, 6, 2,
-                1, 5, 7, 1, 7, 3,
+                 0,  1,  2,  3,  4,  5,
+                 6,  7,  8,  9, 10, 11,
+                12, 13, 14, 15, 16, 17,
+                18, 19, 20, 21, 22, 23,
+                24, 25, 26, 27, 28, 29,
+                30, 31, 32, 33, 34, 35,
             };
             {
                 m_CubeVertexArray = VertexArray::Create();
@@ -106,11 +139,8 @@ namespace Rocket
             static_cast<OrthographicCamera*>(m_Camera.get())->SetRotation(m_Angle);
         }
 
-        void OnUpdate(Timestep ts) override
+        void UpdateCamera(Timestep ts)
         {
-            RenderCommand::SetClearColor({ 0.2f, 0.3f, 0.3f, 1.0f });
-            RenderCommand::Clear();
-
             if (Input::IsKeyPressed(Key::Left) || Input::IsKeyPressed(Key::A))
                 m_Position.x += m_MoveSpeed * ts;
             if (Input::IsKeyPressed(Key::Right) || Input::IsKeyPressed(Key::D))
@@ -123,18 +153,24 @@ namespace Rocket
                 m_Angle += m_RotationSpeed * ts;
             if (Input::IsKeyPressed(Key::E))
                 m_Angle -= m_RotationSpeed * ts;
-
             m_Camera->SetPosition(m_Position);
             m_Camera->SetRotation(m_Angle);
+        }
 
-            glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.5f));
+        void OnUpdate(Timestep ts) override
+        {
+            RenderCommand::SetClearColor({ 0.2f, 0.3f, 0.3f, 1.0f });
+            RenderCommand::Clear();
+
+            UpdateCamera(ts);
 
             Renderer::BeginScene(m_Camera);
             {
+                glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.5f));
                 m_ColorShader->Bind();
                 m_ColorShader->SetInt("u_Texture", 0);
                 m_ColorShader->SetFloat3("u_Color", m_SquareColor);
-                m_Texture_2->Bind();
+                m_Texture_1->Bind();
                 for (int y = 0; y < 20; y++)
                 {
                     for (int x = 0; x < 20; x++)
@@ -148,10 +184,10 @@ namespace Rocket
             {
                 m_Texture_2->Bind();
                 glm::vec3 pos(0.0f, 0.0f, -1.0f);
-                glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
+                glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos);
                 transform = glm::rotate(transform, glm::radians(45.0f), glm::vec3(1.0f, 0.0f, 0.0f));
                 transform = glm::rotate(transform, glm::radians(45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-                //Renderer::Submit(m_ColorShader, m_CubeVertexArray, transform);
+                Renderer::Submit(m_ColorShader, m_CubeVertexArray, transform);
             }
             Renderer::EndScene();
         }
