@@ -9,6 +9,7 @@ namespace Rocket {
     {
         RK_CORE_ASSERT(m_WindowHandle, "Window handle is null!");
     }
+    
     void OpenGLContext::Init()
     {
         glfwMakeContextCurrent(m_WindowHandle);

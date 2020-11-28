@@ -15,7 +15,7 @@ namespace Rocket {
         static void Init();
 		static void Shutdown();
 		
-		static void OnWindowResize(uint32_t width, uint32_t height);
+		static void OnWindowResize(uint32_t width, uint32_t height, float xscale = 1.0f, float yscale = 1.0f);
 
         static void BeginScene(Ref<Camera> camera);
 		static void BeginScene(Camera& camera);

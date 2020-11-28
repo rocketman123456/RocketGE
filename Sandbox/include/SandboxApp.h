@@ -73,7 +73,8 @@ namespace Rocket
             m_Texture_1 = Texture2D::Create(img_path_1);
             m_Texture_2 = Texture2D::Create(img_path_2);
 
-            m_Controller.reset(new OrthographicCameraController(16.0f / 9.0f));
+            m_Controller.reset(new OrthographicCameraController(16.0f / 9.0f, true));
+            //m_Controller.reset(new PerspectiveCameraController(16.0f / 9.0f));
         }
 
         void UpdateCamera(Timestep ts)
@@ -112,6 +113,7 @@ namespace Rocket
 
         void OnUpdate(Timestep ts) override
         {
+            //RK_TRACE("Time {0}", ts);
             UpdateCamera(ts);
             
             RenderCommand::SetClearColor({ 0.2f, 0.3f, 0.3f, 1.0f });
@@ -164,6 +166,6 @@ namespace Rocket
         bool m_ShowSquare = false;
         bool m_ShowCube = false;
         
-        Ref<OrthographicCameraController> m_Controller;
+        Ref<CameraController> m_Controller;
     };
 }

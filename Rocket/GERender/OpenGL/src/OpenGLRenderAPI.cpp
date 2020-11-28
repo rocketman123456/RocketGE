@@ -40,9 +40,9 @@ namespace Rocket {
 		glEnable(GL_DEPTH_TEST);
 	}
 
-	void OpenGLRenderAPI::SetViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height)
+	void OpenGLRenderAPI::SetViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height, float xscale, float yscale)
 	{
-		glViewport(x, y, width, height);
+		glViewport(x, y, width * xscale, height * yscale);
 	}
 
 	void OpenGLRenderAPI::SetClearColor(const glm::vec4& color)
@@ -59,6 +59,6 @@ namespace Rocket {
 	{
 		uint32_t count = indexCount ? indexCount : vertexArray->GetIndexBuffer()->GetCount();
 		glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr);
-		//glBindTexture(GL_TEXTURE_2D, 0);
+		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 }

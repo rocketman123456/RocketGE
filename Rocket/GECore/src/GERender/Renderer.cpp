@@ -16,9 +16,9 @@ namespace Rocket
 		//Renderer2D::Shutdown();
 	}
 
-	void Renderer::OnWindowResize(uint32_t width, uint32_t height)
+	void Renderer::OnWindowResize(uint32_t width, uint32_t height, float xscale, float yscale)
 	{
-		RenderCommand::SetViewport(0, 0, width, height);
+		RenderCommand::SetViewport(0, 0, width, height, xscale, yscale);
 	}
 
     void Renderer::BeginScene(Ref<Camera> camera)

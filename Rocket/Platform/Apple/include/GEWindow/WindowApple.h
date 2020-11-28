@@ -35,9 +35,9 @@ namespace Rocket
 		struct WindowData
 		{
 			std::string Title;
-			unsigned int Width, Height;
+			uint32_t Width, Height;
+			float xScale, yScale;
 			bool VSync;
-
 			EventCallbackFn EventCallback;
 		};
 

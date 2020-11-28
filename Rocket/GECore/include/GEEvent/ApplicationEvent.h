@@ -6,11 +6,13 @@ namespace Rocket {
     class WindowResizeEvent : implements Event
 	{
 	public:
-		WindowResizeEvent(unsigned int width, unsigned int height)
-			: m_Width(width), m_Height(height) {}
+		WindowResizeEvent(uint32_t width, uint32_t height, float x, float y)
+			: m_Width(width), m_Height(height), m_xScale(x), m_yScale(y) {}
 
-		unsigned int GetWidth() const { return m_Width; }
-		unsigned int GetHeight() const { return m_Height; }
+		uint32_t GetWidth() const { return m_Width; }
+		uint32_t GetHeight() const { return m_Height; }
+		float GetXScale() const { return m_xScale; }
+		float GetYScale() const { return m_yScale; }
 
 		std::string ToString() const override
 		{
@@ -22,7 +24,8 @@ namespace Rocket {
 		EVENT_CLASS_TYPE(WindowResize)
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)
 	private:
-		unsigned int m_Width, m_Height;
+		uint32_t m_Width, m_Height;
+		float m_xScale, m_yScale;
 	};
 
     class WindowCloseEvent : implements Event

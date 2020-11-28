@@ -95,7 +95,7 @@ namespace Rocket
         }
 
         m_Minimized = false;
-        Renderer::OnWindowResize(e.GetWidth(), e.GetHeight());
+        Renderer::OnWindowResize(e.GetWidth(), e.GetHeight(), e.GetXScale(), e.GetYScale());
         return false;
     }
 }

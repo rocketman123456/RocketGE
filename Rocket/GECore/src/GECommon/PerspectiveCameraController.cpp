@@ -3,10 +3,9 @@
 
 namespace Rocket {
 	// TODO : fix PerspectiveCameraController bugs
-    PerspectiveCameraController::PerspectiveCameraController(float aspectRatio, bool rotation)
-		: m_AspectRatio(aspectRatio), 
-        m_Camera(glm::radians(45.0f), m_AspectRatio * m_ZoomLevel, 0.1f, 100.0f), 
-        m_Rotation(rotation) {}
+    PerspectiveCameraController::PerspectiveCameraController(float aspectRatio, float fov, bool rotation)
+		: m_AspectRatio(aspectRatio), m_ZoomLevel(fov), m_Rotation(rotation), 
+        m_Camera(glm::radians(m_ZoomLevel), m_AspectRatio, 0.1f, 100.0f) {}
 
 	void PerspectiveCameraController::OnUpdate(Timestep ts)
 	{
@@ -61,14 +60,17 @@ namespace Rocket {
 	void PerspectiveCameraController::OnResize(float width, float height)
 	{
 		m_AspectRatio = width / height;
-		m_Camera.SetProjection(glm::radians(45.0f), m_AspectRatio * m_ZoomLevel, 0.1f, 100.0f);
+		m_Camera.SetProjection(glm::radians(m_ZoomLevel), m_AspectRatio, 0.1f, 100.0f);
 	}
 
 	bool PerspectiveCameraController::OnMouseScrolled(MouseScrolledEvent& e)
 	{
-		m_ZoomLevel -= e.GetYOffset() * 0.25f;
-		m_ZoomLevel = std::max(m_ZoomLevel, 0.25f);
-		m_Camera.SetProjection(glm::radians(45.0f), m_AspectRatio * m_ZoomLevel, 0.1f, 100.0f);
+		m_ZoomLevel -= e.GetYOffset();
+		if (m_ZoomLevel < 1.0f)
+			m_ZoomLevel = 1.0f;
+		if (m_ZoomLevel > 45.0f)
+			m_ZoomLevel = 45.0f;
+		m_Camera.SetProjection(glm::radians(m_ZoomLevel), m_AspectRatio, 0.1f, 100.0f);
 		return false;
 	}
 

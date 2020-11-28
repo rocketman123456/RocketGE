@@ -50,7 +50,10 @@ namespace Rocket
 			glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
 			glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 			glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+			glfwWindowHint(GLFW_SCALE_TO_MONITOR, GL_TRUE);
+#if defined(DEBUG)
 			glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
+#endif
 			//glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
 			m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
@@ -65,20 +68,25 @@ namespace Rocket
 
 		// Set GLFW callbacks
 		glfwSetWindowSizeCallback(m_Window, [](GLFWwindow *window, int width, int height) {
+			float xscale, yscale;
+			glfwGetWindowContentScale(window, &xscale, &yscale);
+
 			WindowData &data = *(WindowData *)glfwGetWindowUserPointer(window);
 			data.Width = width;
 			data.Height = height;
+			data.xScale = xscale;
+			data.yScale = yscale;
 
-			WindowResizeEvent event(width, height);
+			WindowResizeEvent event(width, height, xscale, yscale);
 			data.EventCallback(event);
 		});
 
 		glfwSetWindowContentScaleCallback(m_Window, [](GLFWwindow* window, float xscale, float yscale){
-			RK_INFO("glfwSetWindowContentScaleCallback");
+			RK_CORE_INFO("glfwSetWindowContentScaleCallback");
 		});
 
 		glfwSetFramebufferSizeCallback(m_Window, [](GLFWwindow* window, int width, int height){
-			RK_INFO("glfwSetFramebufferSizeCallback");
+			RK_CORE_INFO("glfwSetFramebufferSizeCallback");
 		});
 
 		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow *window) {
@@ -181,4 +189,4 @@ namespace Rocket
 	{
 		return m_Data.VSync;
 	}
-} // namespace Rocket
+}

@@ -15,8 +15,8 @@ namespace Rocket {
 
 		void OnResize(float width, float height);
 
-		OrthographicCamera& GetCamera() { return m_Camera; }
-		const OrthographicCamera& GetCamera() const { return m_Camera; }
+		virtual Camera& GetCamera() override { return m_Camera; }
+		virtual const Camera& GetCamera() const override { return m_Camera; }
 
 		float GetZoomLevel() const { return m_ZoomLevel; }
 		void SetZoomLevel(float level) { m_ZoomLevel = level; }
