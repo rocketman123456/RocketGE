@@ -1,5 +1,4 @@
 #pragma once
-
 #include "GECore/Basic.h"
 
 #include "RKConfig.h"
@@ -37,6 +36,10 @@ const std::string RenderAPI = RENDER_API;
 #define RK_BIND_EVENT_FN(fn) [this](auto&&... args) -> decltype(auto) { return this->fn(std::forward<decltype(args)>(args)...); }
 
 namespace Rocket {
+	template<typename Base, typename T>
+	inline bool instanceof(const T*) {
+		return std::is_base_of<Base, T>::value;
+	}
 	template<typename T>
 	using Scope = std::unique_ptr<T>;
 	template<typename T, typename ... Args>
@@ -53,6 +56,9 @@ namespace Rocket {
 		return std::make_shared<T>(std::forward<Args>(args)...);
 	}
 }
+
+#define Interface class
+#define implements public
 
 #define RK_ENABLE_ASSERTS
 #include "GECore/Assert.h"

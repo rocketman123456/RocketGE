@@ -1,10 +1,10 @@
 #pragma once
 
 #include "GEEvent/Event.h"
-#include "GECore/MouseCode.h"
+#include "GEUtils/MouseCode.h"
 
 namespace Rocket {
-    class MouseMovedEvent : public Event
+    class MouseMovedEvent : implements Event
 	{
 	public:
 		MouseMovedEvent(const float x, const float y)
@@ -26,7 +26,7 @@ namespace Rocket {
 		float m_MouseX, m_MouseY;
 	};
 
-	class MouseScrolledEvent : public Event
+	class MouseScrolledEvent : implements Event
 	{
 	public:
 		MouseScrolledEvent(const float xOffset, const float yOffset)
@@ -48,7 +48,7 @@ namespace Rocket {
 		float m_XOffset, m_YOffset;
 	};
 
-	class MouseButtonEvent : public Event
+	class MouseButtonEvent : implements Event
 	{
 	public:
 		MouseCode GetMouseButton() const { return m_Button; }
@@ -61,7 +61,7 @@ namespace Rocket {
 		MouseCode m_Button;
 	};
 
-	class MouseButtonPressedEvent : public MouseButtonEvent
+	class MouseButtonPressedEvent : implements MouseButtonEvent
 	{
 	public:
 		MouseButtonPressedEvent(const MouseCode button)
@@ -77,7 +77,7 @@ namespace Rocket {
 		EVENT_CLASS_TYPE(MouseButtonPressed)
 	};
 
-	class MouseButtonReleasedEvent : public MouseButtonEvent
+	class MouseButtonReleasedEvent : implements MouseButtonEvent
 	{
 	public:
 		MouseButtonReleasedEvent(const MouseCode button)

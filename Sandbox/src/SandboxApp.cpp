@@ -8,7 +8,7 @@ you should create a new layer with an application.
 
 namespace Rocket
 {
-    class SimpleSandbox : public Application
+    class SimpleSandbox : implements Application
     {
     public:
         SimpleSandbox()

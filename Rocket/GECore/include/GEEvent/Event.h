@@ -34,9 +34,9 @@ namespace Rocket {
 								virtual EventType GetEventType() const override { return GetStaticType(); }\
 								virtual const char* GetName() const override { return #type; }
 
-#define EVENT_CLASS_CATEGORY(category) virtual int GetCategoryFlags() const override { return EventCategory::category; }
+#define EVENT_CLASS_CATEGORY(category) virtual int GetCategoryFlags() const override { return static_cast<int>(category); }
 
-    class Event
+    Interface Event
 	{
 	public:
 		virtual ~Event() = default;
@@ -50,7 +50,7 @@ namespace Rocket {
 
 		bool IsInCategory(EventCategory category)
 		{
-			return GetCategoryFlags() & category;
+			return GetCategoryFlags() & static_cast<int>(category);
 		}
 	};
 

@@ -94,6 +94,7 @@ include_directories(
 
 include_directories(
     ${PROJECT_SOURCE_DIR}/Rocket/GECore/include
+    ${PROJECT_SOURCE_DIR}/Rocket/Interface
     ${PROJECT_SOURCE_DIR}/Sandbox/include
 )
 

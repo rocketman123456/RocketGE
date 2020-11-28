@@ -2,10 +2,10 @@
 
 #include "GEEvent.h"
 #include "GECore/Core.h"
-#include "GECore/Timestep.h"
+#include "GEUtils/Timestep.h"
 
 namespace Rocket {
-    class Layer
+    Interface Layer
 	{
 	public:
 		Layer(const std::string& name = "Layer");

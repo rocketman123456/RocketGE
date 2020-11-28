@@ -3,8 +3,8 @@
 #include <glm/glm.hpp>
 #include <Eigen/Core>
 
-#include "GECore/KeyCode.h"
-#include "GECore/MouseCode.h"
+#include "GEUtils/KeyCode.h"
+#include "GEUtils/MouseCode.h"
 
 namespace Rocket {
 	class Input

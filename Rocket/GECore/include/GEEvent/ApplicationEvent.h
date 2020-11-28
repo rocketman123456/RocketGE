@@ -3,7 +3,7 @@
 #include "GEEvent/Event.h"
 
 namespace Rocket {
-    class WindowResizeEvent : public Event
+    class WindowResizeEvent : implements Event
 	{
 	public:
 		WindowResizeEvent(unsigned int width, unsigned int height)
@@ -25,7 +25,7 @@ namespace Rocket {
 		unsigned int m_Width, m_Height;
 	};
 
-    class WindowCloseEvent : public Event
+    class WindowCloseEvent : implements Event
 	{
 	public:
 		WindowCloseEvent() = default;
@@ -34,7 +34,7 @@ namespace Rocket {
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)
 	};
 
-	class AppTickEvent : public Event
+	class AppTickEvent : implements Event
 	{
 	public:
 		AppTickEvent() = default;
@@ -43,7 +43,7 @@ namespace Rocket {
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)
 	};
 
-	class AppUpdateEvent : public Event
+	class AppUpdateEvent : implements Event
 	{
 	public:
 		AppUpdateEvent() = default;
@@ -52,7 +52,7 @@ namespace Rocket {
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)
 	};
 
-	class AppRenderEvent : public Event
+	class AppRenderEvent : implements Event
 	{
 	public:
 		AppRenderEvent() = default;

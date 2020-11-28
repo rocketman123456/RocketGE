@@ -7,7 +7,7 @@
 #include "GERender.h"
 
 namespace Rocket {
-    class Application {
+    Interface Application {
     public:
         Application();
         virtual ~Application();

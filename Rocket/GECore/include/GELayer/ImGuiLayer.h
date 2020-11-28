@@ -5,7 +5,7 @@
 
 namespace Rocket
 {
-    class ImGuiLayer : public Layer
+    class ImGuiLayer : implements Layer
     {
     public:
         ImGuiLayer() : Layer("ImGuiLayer") {}

@@ -1,8 +1,5 @@
 #pragma once
-#include "GECore.h"
-#include "GEEvent.h"
-#include "GELayer.h"
-#include "GERender.h"
+#include "GEEngine.h"
 
 #include <imgui.h>
 #include <glm/gtc/matrix_transform.hpp>
@@ -10,7 +7,7 @@
 
 namespace Rocket
 {
-    class ExampleLayer : public Layer
+    class ExampleLayer : implements Layer
     {
     public:
         ExampleLayer() : Layer("ExampleLayer")
@@ -126,11 +123,13 @@ namespace Rocket
 
             std::string shader_path_1 = ProjectSourceDir + "/Sandbox/assets/shaders/SimpleShader.glsl";
             std::string shader_path_2 = ProjectSourceDir + "/Sandbox/assets/shaders/ColorShader.glsl";
+            //m_ShaderLibrary->Load(shader_path_1);
+            //m_ShaderLibrary->Load(shader_path_2);
             m_SimpleShader = Shader::Create(shader_path_1);
             m_ColorShader = Shader::Create(shader_path_2);
 
-            std::string img_path_1 = ProjectSourceDir + "/Sandbox/assets/textures/wall.jpg";
-            std::string img_path_2 = ProjectSourceDir + "/Sandbox/assets/textures/girl_2.jpeg";
+            std::string img_path_1 = ProjectSourceDir + "/Sandbox/assets/textures/RK-Logo.jpg";
+            std::string img_path_2 = ProjectSourceDir + "/Sandbox/assets/textures/wall.jpg";
             m_Texture_1 = Texture2D::Create(img_path_1);
             m_Texture_2 = Texture2D::Create(img_path_2);
 
@@ -241,6 +240,7 @@ namespace Rocket
             return false;
         }
     private:
+        Ref<ShaderLibrary> m_ShaderLibrary;
         Ref<Shader> m_SimpleShader;
         Ref<VertexArray> m_VertexArray;
 

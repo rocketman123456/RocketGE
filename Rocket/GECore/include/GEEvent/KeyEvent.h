@@ -1,10 +1,10 @@
 #pragma once
 
 #include "GEEvent/Event.h"
-#include "GECore/KeyCode.h"
+#include "GEUtils/KeyCode.h"
 
 namespace Rocket {
-    class KeyEvent : public Event
+    class KeyEvent : implements Event
 	{
 	public:
 		KeyCode GetKeyCode() const { return m_KeyCode; }
@@ -17,7 +17,7 @@ namespace Rocket {
 		KeyCode m_KeyCode;
 	};
 
-	class KeyPressedEvent : public KeyEvent
+	class KeyPressedEvent : implements KeyEvent
 	{
 	public:
 		KeyPressedEvent(const KeyCode keycode, const uint16_t repeatCount)
@@ -37,7 +37,7 @@ namespace Rocket {
 		uint16_t m_RepeatCount;
 	};
 
-	class KeyReleasedEvent : public KeyEvent
+	class KeyReleasedEvent : implements KeyEvent
 	{
 	public:
 		KeyReleasedEvent(const KeyCode keycode)
@@ -53,7 +53,7 @@ namespace Rocket {
 		EVENT_CLASS_TYPE(KeyReleased)
 	};
 
-	class KeyTypedEvent : public KeyEvent
+	class KeyTypedEvent : implements KeyEvent
 	{
 	public:
 		KeyTypedEvent(const KeyCode keycode)

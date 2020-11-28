@@ -40,11 +40,6 @@ namespace Rocket
         }
     }
 
-    void Application::Close()
-    {
-        m_Running = false;
-    }
-
     void Application::PushLayer(Layer *layer)
     {
         m_LayerStack.PushLayer(layer);
@@ -80,9 +75,14 @@ namespace Rocket
         RK_INFO("End Application Run Loop");
     }
 
-    bool Application::OnWindowClose(WindowCloseEvent &e)
+    void Application::Close()
     {
         m_Running = false;
+    }
+
+    bool Application::OnWindowClose(WindowCloseEvent &e)
+    {
+        Close();
         return true;
     }
 
