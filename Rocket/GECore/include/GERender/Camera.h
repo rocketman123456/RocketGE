@@ -28,7 +28,7 @@ namespace Rocket {
             : m_ProjectionMatrix(projection), m_ViewMatrix(view) {}
         // Eigen Version
         Camera(const Eigen::Matrix4f& projection)
-			: m_ProjectionMatrixEigen(projection), m_ViewMatrixEigen(1.0f) {}
+			: m_ProjectionMatrixEigen(projection), m_ViewMatrixEigen(Eigen::Matrix4f::Identity()) {}
         Camera(const Eigen::Matrix4f& projection, const Eigen::Matrix4f& view)
             : m_ProjectionMatrixEigen(projection), m_ViewMatrixEigen(view) {}
 
