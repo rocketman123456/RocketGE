@@ -61,10 +61,10 @@ namespace Rocket
                 m_CubeVertexArray->SetIndexBuffer(indexBuffer_s);
             }
 
-            std::string shader_path_1 = ProjectSourceDir + "/Sandbox/assets/shaders/SimpleShader.glsl";
-            std::string shader_path_2 = ProjectSourceDir + "/Sandbox/assets/shaders/ColorShader.glsl";
-            std::string img_path_1 = ProjectSourceDir + "/Sandbox/assets/textures/wall.jpg";
-            std::string img_path_2 = ProjectSourceDir + "/Sandbox/assets/textures/container.jpg";
+            std::string shader_path_1 = ProjectSourceDir + "/Assets/shaders/SimpleShader.glsl";
+            std::string shader_path_2 = ProjectSourceDir + "/Assets/shaders/ColorShader.glsl";
+            std::string img_path_1 = ProjectSourceDir + "/Assets/textures/wall.jpg";
+            std::string img_path_2 = ProjectSourceDir + "/Assets/textures/container.jpg";
 
             m_ShaderLibrary = ShaderLibrary::Create();
             m_ShaderLibrary->Load("SimpleShader", shader_path_1);
@@ -89,26 +89,24 @@ namespace Rocket
             shader->Bind();
             shader->SetInt("u_Texture", 0);
             shader->SetFloat3("u_Color", m_SquareColor);
-            m_Texture_1->Bind();
             for (int y = 0; y < 20; y++)
             {
                 for (int x = 0; x < 20; x++)
                 {
                     glm::vec3 pos(x * 0.51f, y * 0.51f, -0.5f);
                     glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
-                    Renderer::Submit(shader, m_SquareVertexArray, transform);
+                    Renderer::Submit(shader, m_SquareVertexArray, m_Texture_1, transform);
                 }
             }
         }
 
         void RenderCube()
         {
-            m_Texture_2->Bind();
             glm::vec3 pos(0.0f, 0.0f, -1.0f);
             glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos);
             transform = glm::rotate(transform, glm::radians(45.0f), glm::vec3(1.0f, 0.0f, 0.0f));
             transform = glm::rotate(transform, glm::radians(45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-            Renderer::Submit(m_ShaderLibrary->Get("ColorShader"), m_CubeVertexArray, transform);
+            Renderer::Submit(m_ShaderLibrary->Get("SimpleShader"), m_CubeVertexArray, m_Texture_2, transform);
         }
 
         void OnUpdate(Timestep ts) override

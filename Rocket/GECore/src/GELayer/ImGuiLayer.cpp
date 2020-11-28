@@ -40,8 +40,8 @@ namespace Rocket
 		//io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoTaskBarIcons;
 		//io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoMerge;
 
-		std::string ttf_path = ProjectSourceDir + "/Sandbox/assets/fonts/opensans/OpenSans-Bold.ttf";
-		std::string ttf_default = ProjectSourceDir + "/Sandbox/assets/fonts/opensans/OpenSans-Regular.ttf";
+		std::string ttf_path = ProjectSourceDir + "/Assets/fonts/opensans/OpenSans-Bold.ttf";
+		std::string ttf_default = ProjectSourceDir + "/Assets/fonts/opensans/OpenSans-Regular.ttf";
 		io.Fonts->AddFontFromFileTTF(ttf_path.c_str(), 18.0f);
 		io.FontDefault = io.Fonts->AddFontFromFileTTF(ttf_default.c_str(), 18.0f);
 

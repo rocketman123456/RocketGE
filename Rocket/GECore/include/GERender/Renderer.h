@@ -2,6 +2,7 @@
 #include "GECore/Core.h"
 #include "GERender/RenderAPI.h"
 #include "GERender/VertexArray.h"
+#include "GERender/Texture.h"
 #include "GERender/Shader.h"
 #include "GERender/Camera.h"
 
@@ -22,6 +23,7 @@ namespace Rocket {
 		static void EndScene();
 
 		static void Submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray, const glm::mat4& transform = glm::mat4(1.0f));
+		static void Submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray, const Ref<Texture>& texture, const glm::mat4& transform = glm::mat4(1.0f));
 
 		static RenderAPI::API GetAPI() { return RenderAPI::GetAPI(); }
     private:
