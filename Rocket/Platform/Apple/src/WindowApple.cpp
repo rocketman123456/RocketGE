@@ -74,7 +74,6 @@ namespace Rocket
 
 		// Set GLFW callbacks
 		glfwSetWindowSizeCallback(m_Window, [](GLFWwindow *window, int width, int height) {
-			RK_CORE_INFO("glfwSetWindowSizeCallback");
 			//float xscale, yscale;
 			//glfwGetWindowContentScale(window, &xscale, &yscale);
 
@@ -93,7 +92,6 @@ namespace Rocket
 		});
 
 		glfwSetFramebufferSizeCallback(m_Window, [](GLFWwindow* window, int width, int height){
-			RK_CORE_INFO("glfwSetFramebufferSizeCallback");
 			WindowData &data = *(WindowData *)glfwGetWindowUserPointer(window);
 			data.Width = width;
 			data.Height = height;

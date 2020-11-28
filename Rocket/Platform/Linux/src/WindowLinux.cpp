@@ -46,14 +46,20 @@ namespace Rocket {
 		}
 
 		{
+#if defined(RK_OPENGL)
 			glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 			glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
 			glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+#elif defined(RK_VULKAN)
+			glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+#elif defined(RK_METAL)
+			glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+#endif
 			glfwWindowHint(GLFW_SCALE_TO_MONITOR, GL_TRUE);
-			//glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 #if defined(DEBUG)
 			glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
 #endif
+			//glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
 			m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
 			++s_GLFWWindowCount;
@@ -66,14 +72,13 @@ namespace Rocket {
 		SetVSync(true);
 
 		// Set GLFW callbacks
-		glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height)
-		{
-			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
-			data.Width = width;
-			data.Height = height;
+		glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height) {
+			//WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+			//data.Width = width;
+			//data.Height = height;
 
-			WindowResizeEvent event(width, height);
-			data.EventCallback(event);
+			//WindowResizeEvent event(width, height);
+			//data.EventCallback(event);
 		});
 
 		glfwSetWindowContentScaleCallback(m_Window, [](GLFWwindow* window, float xscale, float yscale){
@@ -81,7 +86,12 @@ namespace Rocket {
 		});
 
 		glfwSetFramebufferSizeCallback(m_Window, [](GLFWwindow* window, int width, int height){
-			RK_INFO("glfwSetFramebufferSizeCallback");
+			WindowData &data = *(WindowData *)glfwGetWindowUserPointer(window);
+			data.Width = width;
+			data.Height = height;
+
+			WindowResizeEvent event(width, height, 1.0f, 1.0f);
+			data.EventCallback(event);
 		});
 
 		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window)
