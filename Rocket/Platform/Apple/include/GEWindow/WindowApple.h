@@ -36,7 +36,7 @@ namespace Rocket
 		{
 			std::string Title;
 			uint32_t Width, Height;
-			float xScale, yScale;
+			float xScale = 1.0f, yScale = 1.0f;
 			bool VSync;
 			EventCallbackFn EventCallback;
 		};

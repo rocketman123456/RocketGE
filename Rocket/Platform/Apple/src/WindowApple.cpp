@@ -46,10 +46,16 @@ namespace Rocket
 		}
 
 		{
+#if defined(RK_OPENGL)
 			glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 			glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
 			glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 			glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+#elif defined(RK_VULKAN)
+			glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+#elif defined(RK_METAL)
+			glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+#endif
 			glfwWindowHint(GLFW_SCALE_TO_MONITOR, GL_TRUE);
 #if defined(DEBUG)
 			glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
@@ -68,17 +74,18 @@ namespace Rocket
 
 		// Set GLFW callbacks
 		glfwSetWindowSizeCallback(m_Window, [](GLFWwindow *window, int width, int height) {
-			float xscale, yscale;
-			glfwGetWindowContentScale(window, &xscale, &yscale);
+			RK_CORE_INFO("glfwSetWindowSizeCallback");
+			//float xscale, yscale;
+			//glfwGetWindowContentScale(window, &xscale, &yscale);
 
-			WindowData &data = *(WindowData *)glfwGetWindowUserPointer(window);
-			data.Width = width;
-			data.Height = height;
-			data.xScale = xscale;
-			data.yScale = yscale;
+			//WindowData &data = *(WindowData *)glfwGetWindowUserPointer(window);
+			//data.Width = width;
+			//data.Height = height;
+			//data.xScale = xscale;
+			//data.yScale = yscale;
 
-			WindowResizeEvent event(width, height, xscale, yscale);
-			data.EventCallback(event);
+			//WindowResizeEvent event(width, height, xscale, yscale);
+			//data.EventCallback(event);
 		});
 
 		glfwSetWindowContentScaleCallback(m_Window, [](GLFWwindow* window, float xscale, float yscale){
@@ -87,6 +94,12 @@ namespace Rocket
 
 		glfwSetFramebufferSizeCallback(m_Window, [](GLFWwindow* window, int width, int height){
 			RK_CORE_INFO("glfwSetFramebufferSizeCallback");
+			WindowData &data = *(WindowData *)glfwGetWindowUserPointer(window);
+			data.Width = width;
+			data.Height = height;
+
+			WindowResizeEvent event(width, height, 1.0f, 1.0f);
+			data.EventCallback(event);
 		});
 
 		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow *window) {
