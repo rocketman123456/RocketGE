@@ -4,7 +4,7 @@ add_executable( SandboxApp
     src/SandboxApp.cpp
 )
 target_link_libraries( SandboxApp PRIVATE
-    GECore
+    GECore GELayer GERender GEApplication GEWindow GECommon
 )
 
 if(Apple)

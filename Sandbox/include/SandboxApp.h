@@ -1,5 +1,5 @@
 #pragma once
-#include "GEEngine.h"
+#include "RKEngine.h"
 
 #include <imgui.h>
 #include <glm/gtc/matrix_transform.hpp>
@@ -123,57 +123,29 @@ namespace Rocket
 
             std::string shader_path_1 = ProjectSourceDir + "/Sandbox/assets/shaders/SimpleShader.glsl";
             std::string shader_path_2 = ProjectSourceDir + "/Sandbox/assets/shaders/ColorShader.glsl";
-            //m_ShaderLibrary->Load(shader_path_1);
-            //m_ShaderLibrary->Load(shader_path_2);
-            m_SimpleShader = Shader::Create(shader_path_1);
-            m_ColorShader = Shader::Create(shader_path_2);
+            m_ShaderLibrary.reset(new ShaderLibrary);
+            m_ShaderLibrary->Load("SimpleShader", shader_path_1);
+            m_ShaderLibrary->Load("ColorShader", shader_path_2);
 
             std::string img_path_1 = ProjectSourceDir + "/Sandbox/assets/textures/RK-Logo.jpg";
             std::string img_path_2 = ProjectSourceDir + "/Sandbox/assets/textures/wall.jpg";
             m_Texture_1 = Texture2D::Create(img_path_1);
             m_Texture_2 = Texture2D::Create(img_path_2);
 
-            m_Camera_O.reset(new OrthographicCamera(-1.6f, 1.6f, -0.9f, 0.9f));
-            m_Camera_O->SetPosition(m_Position);
-            m_Camera_O->SetRotation(m_Angle);
-            m_Camera_P.reset(new PerspectiveCamera(glm::radians(45.0f), 16.0f / 9.0f, 0.1f, 100.0f));
-            m_Camera_P->SetPosition(m_Position);
-            m_Camera_P->SetRotation(m_Angle);
+            m_Controller.reset(new OrthographicCameraController(16.0f / 9.0f));
         }
 
         void UpdateCamera(Timestep ts)
         {
-            if (Input::IsKeyPressed(Key::Left) || Input::IsKeyPressed(Key::A))
-                m_Position.x += m_MoveSpeed * ts;
-            if (Input::IsKeyPressed(Key::Right) || Input::IsKeyPressed(Key::D))
-                m_Position.x -= m_MoveSpeed * ts;
-            if (Input::IsKeyPressed(Key::Up) || Input::IsKeyPressed(Key::W))
-                m_Position.y += m_MoveSpeed * ts;
-            if (Input::IsKeyPressed(Key::Down) || Input::IsKeyPressed(Key::S))
-                m_Position.y -= m_MoveSpeed * ts;
-            if (Input::IsKeyPressed(Key::Q))
-                m_Angle += m_RotationSpeed * ts;
-            if (Input::IsKeyPressed(Key::E))
-                m_Angle -= m_RotationSpeed * ts;
-            
-            if(m_CameraType)
-            {
-                m_Camera_O->SetPosition(m_Position);
-                m_Camera_O->SetRotation(m_Angle);
-            }
-            else 
-            {
-                m_Camera_P->SetPosition(m_Position);
-                m_Camera_P->SetRotation(m_Angle);
-            }
         }
 
         void RenderSquare()
         {
             glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.5f));
-            m_ColorShader->Bind();
-            m_ColorShader->SetInt("u_Texture", 0);
-            m_ColorShader->SetFloat3("u_Color", m_SquareColor);
+            auto shader = m_ShaderLibrary->Get("ColorShader");
+            shader->Bind();
+            shader->SetInt("u_Texture", 0);
+            shader->SetFloat3("u_Color", m_SquareColor);
             m_Texture_1->Bind();
             for (int y = 0; y < 20; y++)
             {
@@ -181,7 +153,7 @@ namespace Rocket
                 {
                     glm::vec3 pos(x * 0.51f, y * 0.51f, -0.5f);
                     glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
-                    Renderer::Submit(m_ColorShader, m_SquareVertexArray, transform);
+                    Renderer::Submit(shader, m_SquareVertexArray, transform);
                 }
             }
         }
@@ -193,7 +165,7 @@ namespace Rocket
             glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos);
             transform = glm::rotate(transform, glm::radians(45.0f), glm::vec3(1.0f, 0.0f, 0.0f));
             transform = glm::rotate(transform, glm::radians(45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-            Renderer::Submit(m_ColorShader, m_CubeVertexArray, transform);
+            Renderer::Submit(m_ShaderLibrary->Get("ColorShader"), m_CubeVertexArray, transform);
         }
 
         void OnUpdate(Timestep ts) override
@@ -201,12 +173,9 @@ namespace Rocket
             RenderCommand::SetClearColor({ 0.2f, 0.3f, 0.3f, 1.0f });
             RenderCommand::Clear();
 
-            UpdateCamera(ts);
+            m_Controller->OnUpdate(ts);
 
-            if(m_CameraType)
-                Renderer::BeginScene(m_Camera_O);
-            else
-                Renderer::BeginScene(m_Camera_P);
+            Renderer::BeginScene(m_Controller->GetCamera());
             
             if(m_ShowSquare) {
                 RenderSquare();
@@ -222,7 +191,6 @@ namespace Rocket
             ImGui::Begin("Example");
             ImGui::Text("Hello Example!");
 		    ImGui::ColorEdit3("Square Color", glm::value_ptr(m_SquareColor));
-            ImGui::Checkbox("Camera Type", &m_CameraType);
             ImGui::Checkbox("Show Square", &m_ShowSquare);
             ImGui::Checkbox("Show Cube", &m_ShowCube);
 		    ImGui::End();
@@ -232,6 +200,7 @@ namespace Rocket
         {
             EventDispatcher dispatcher(event);
             dispatcher.Dispatch<KeyPressedEvent>(RK_BIND_EVENT_FN(ExampleLayer::OnKeyPressed));
+            m_Controller->OnEvent(event);
         }
 
         bool OnKeyPressed(KeyPressedEvent& event)
@@ -241,27 +210,19 @@ namespace Rocket
         }
     private:
         Ref<ShaderLibrary> m_ShaderLibrary;
-        Ref<Shader> m_SimpleShader;
+
         Ref<VertexArray> m_VertexArray;
-
-        Ref<Shader> m_ColorShader;
         Ref<VertexArray> m_SquareVertexArray;
-        glm::vec3 m_SquareColor = { 1.0f, 0.5f, 0.2f };
-
         Ref<VertexArray> m_CubeVertexArray;
+
+        glm::vec3 m_SquareColor = { 1.0f, 0.5f, 0.2f };
 
         Ref<Texture2D> m_Texture_1;
         Ref<Texture2D> m_Texture_2;
 
-        bool m_CameraType = false;
         bool m_ShowSquare = false;
         bool m_ShowCube = false;
         
-        Ref<PerspectiveCamera> m_Camera_P;
-        Ref<OrthographicCamera> m_Camera_O;
-        float m_Angle = 0.0f;
-        float m_RotationSpeed = 10.0f;
-        float m_MoveSpeed = 1.0f;
-        glm::vec3 m_Position = { 0.0f, 0.0f, 0.0f };
+        Ref<OrthographicCameraController> m_Controller;
     };
 }

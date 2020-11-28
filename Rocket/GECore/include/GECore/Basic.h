@@ -8,6 +8,7 @@
 #include <utility>
 #include <algorithm>
 #include <filesystem>
+#include <optional>
 #include <string>
 #include <sstream>
 #include <cstdint>
