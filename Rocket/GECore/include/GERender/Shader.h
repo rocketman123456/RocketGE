@@ -33,7 +33,6 @@ namespace Rocket {
 	class ShaderLibrary
 	{
 	public:
-		ShaderLibrary();
 		void Add(const std::string& name, const Ref<Shader>& shader);
 		inline void Add(const Ref<Shader>& shader);
 		Ref<Shader> Load(const std::string& filepath);
@@ -42,6 +41,8 @@ namespace Rocket {
 		Ref<Shader> Get(const std::string& name);
 
 		inline bool Exists(const std::string& name) const;
+
+		static Ref<ShaderLibrary> Create();
 	private:
 		std::unordered_map<std::string, Ref<Shader>> m_Shaders;
 	};

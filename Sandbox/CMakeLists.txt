@@ -2,6 +2,7 @@ message(STATUS "Add Module Sandbox")
 message(STATUS "###################################")
 add_executable( SandboxApp
     src/SandboxApp.cpp
+    src/SandboxData.cpp
 )
 target_link_libraries( SandboxApp PRIVATE
     GECore GELayer GERender GEApplication GEWindow GECommon

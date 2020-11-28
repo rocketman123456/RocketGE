@@ -5,6 +5,13 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+extern float vertices[9];
+extern uint32_t indices[3];
+extern float square_vertices[20];
+extern uint32_t square_indices[6];
+extern float cube_vertices[180];
+extern uint32_t cube_indices[36];
+
 namespace Rocket
 {
     class ExampleLayer : implements Layer
@@ -12,13 +19,6 @@ namespace Rocket
     public:
         ExampleLayer() : Layer("ExampleLayer")
         {
-            float vertices[] = {
-                -0.5f, -0.5f, 0.0f,
-                 0.5f, -0.5f, 0.0f,
-                 0.0f,  0.5f, 0.0f
-            };
-            uint32_t indices[] = { 0, 1, 2 };
-
             {
                 m_VertexArray = VertexArray::Create();
                 m_VertexArray->Bind();
@@ -32,14 +32,6 @@ namespace Rocket
                 auto indexBuffer = IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t));
                 m_VertexArray->SetIndexBuffer(indexBuffer);
             }
-
-            float square_vertices[] = {
-                -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
-                 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
-                 0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
-                -0.5f,  0.5f, 0.0f, 0.0f, 1.0f,
-            };
-            uint32_t square_indices[] = { 0, 1, 2, 2, 3, 0 };
             {
                 m_SquareVertexArray = VertexArray::Create();
                 m_SquareVertexArray->Bind();
@@ -54,58 +46,6 @@ namespace Rocket
                 auto indexBuffer_s = IndexBuffer::Create(square_indices, sizeof(square_indices) / sizeof(uint32_t));
                 m_SquareVertexArray->SetIndexBuffer(indexBuffer_s);
             }
-
-            float cube_vertices[] = {
-                -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-                 0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-                 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-                 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-                -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-                -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-
-                -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-                 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-                 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-                 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-                -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-                -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-
-                -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-                -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-                -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-                -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-                -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-                -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-                 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-                 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-                 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-                 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-                 0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-                 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-                -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-                 0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-                 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-                 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-                -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-                -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-
-                -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-                 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-                 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-                 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-                -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-                -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
-            };
-            unsigned int cube_indices[] = {
-                 0,  1,  2,  3,  4,  5,
-                 6,  7,  8,  9, 10, 11,
-                12, 13, 14, 15, 16, 17,
-                18, 19, 20, 21, 22, 23,
-                24, 25, 26, 27, 28, 29,
-                30, 31, 32, 33, 34, 35,
-            };
             {
                 m_CubeVertexArray = VertexArray::Create();
                 m_CubeVertexArray->Bind();
@@ -123,12 +63,13 @@ namespace Rocket
 
             std::string shader_path_1 = ProjectSourceDir + "/Sandbox/assets/shaders/SimpleShader.glsl";
             std::string shader_path_2 = ProjectSourceDir + "/Sandbox/assets/shaders/ColorShader.glsl";
-            m_ShaderLibrary.reset(new ShaderLibrary);
+            std::string img_path_1 = ProjectSourceDir + "/Sandbox/assets/textures/wall.jpg";
+            std::string img_path_2 = ProjectSourceDir + "/Sandbox/assets/textures/container.jpg";
+
+            m_ShaderLibrary = ShaderLibrary::Create();
             m_ShaderLibrary->Load("SimpleShader", shader_path_1);
             m_ShaderLibrary->Load("ColorShader", shader_path_2);
 
-            std::string img_path_1 = ProjectSourceDir + "/Sandbox/assets/textures/RK-Logo.jpg";
-            std::string img_path_2 = ProjectSourceDir + "/Sandbox/assets/textures/wall.jpg";
             m_Texture_1 = Texture2D::Create(img_path_1);
             m_Texture_2 = Texture2D::Create(img_path_2);
 
@@ -137,6 +78,7 @@ namespace Rocket
 
         void UpdateCamera(Timestep ts)
         {
+            m_Controller->OnUpdate(ts);
         }
 
         void RenderSquare()
@@ -170,19 +112,18 @@ namespace Rocket
 
         void OnUpdate(Timestep ts) override
         {
+            UpdateCamera(ts);
+            
             RenderCommand::SetClearColor({ 0.2f, 0.3f, 0.3f, 1.0f });
             RenderCommand::Clear();
 
-            m_Controller->OnUpdate(ts);
-
             Renderer::BeginScene(m_Controller->GetCamera());
             
-            if(m_ShowSquare) {
+            if(m_ShowSquare)
                 RenderSquare();
-            }
-            if(m_ShowCube) {
+            if(m_ShowCube)
                 RenderCube();
-            }
+            
             Renderer::EndScene();
         }
 

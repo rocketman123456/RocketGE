@@ -39,11 +39,21 @@ const std::string RenderAPI = RENDER_API;
 #define Interface class
 #define implements public
 
+template<class T>
+inline void SafeRelease(T **ppInterfaceToRelease)
+{
+	if (*ppInterfaceToRelease != nullptr)
+	{
+		(*ppInterfaceToRelease) = nullptr;
+	}
+}
+
 namespace Rocket {
 	template<typename Base, typename T>
 	inline bool instanceof(const T*) {
 		return std::is_base_of<Base, T>::value;
 	}
+	
 	template<typename T>
 	using Scope = std::unique_ptr<T>;
 	template<typename T, typename ... Args>

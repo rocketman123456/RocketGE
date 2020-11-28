@@ -42,9 +42,9 @@ namespace Rocket {
 		}
 	}
 
-	ShaderLibrary::ShaderLibrary()
+	Ref<ShaderLibrary> ShaderLibrary::Create()
 	{
-		m_Shaders.clear();
+		return CreateRef<ShaderLibrary>();
 	}
 
 	void ShaderLibrary::Add(const std::string& name, const Ref<Shader>& shader)

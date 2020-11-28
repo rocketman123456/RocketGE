@@ -7,6 +7,6 @@ int main(int argc, char **argv)
     
     auto app = Rocket::CreateApplication();
     app->Run();
-    delete app;
+    SafeRelease<Rocket::Application>(&app);
     return 0;
 }
