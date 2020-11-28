@@ -4,7 +4,9 @@
 #include "GERender/VertexArray.h"
 #include "GERender/Shader.h"
 #include "GERender/Camera.h"
+
 #include <glm/glm.hpp>
+#include <Eigen/Eigen>
 
 namespace Rocket {
     class Renderer
@@ -26,6 +28,7 @@ namespace Rocket {
 		struct SceneData
 		{
 			glm::mat4 ViewProjectionMatrix;
+			Eigen::Matrix4f ViewProjectionMatrixEigen;
 		};
 
 		static Scope<SceneData> s_SceneData;

@@ -2,7 +2,7 @@
 #include "GERender/RenderAPI.h"
 
 namespace Rocket {
-	class OpenGLRenderAPI : public RenderAPI
+	class OpenGLRenderAPI : implements RenderAPI
 	{
 	public:
 		OpenGLRenderAPI() {}

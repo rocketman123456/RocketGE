@@ -16,18 +16,19 @@ namespace Rocket {
             virtual CameraType GetCameraType() const override { return GetStaticType(); }\
             virtual const char* GetName() const override { return #type; }
 
-    class Camera
+    Interface Camera
     {
     public:
         Camera() = default;
         virtual ~Camera() = default;
-
+        // glm Version
         Camera(const glm::mat4& projection)
 			: m_ProjectionMatrix(projection), m_ViewMatrix(1.0f) {}
         Camera(const glm::mat4& projection, const glm::mat4& view)
             : m_ProjectionMatrix(projection), m_ViewMatrix(view) {}
+        // Eigen Version
         Camera(const Eigen::Matrix4f& projection)
-			: m_ProjectionMatrixEigen(projection), m_ViewMatrix(1.0f) {}
+			: m_ProjectionMatrixEigen(projection), m_ViewMatrixEigen(1.0f) {}
         Camera(const Eigen::Matrix4f& projection, const Eigen::Matrix4f& view)
             : m_ProjectionMatrixEigen(projection), m_ViewMatrixEigen(view) {}
 
@@ -39,11 +40,13 @@ namespace Rocket {
         inline void SetView(const glm::mat4& view) { m_ViewMatrix = view; UpdateProjectView(); }
         inline virtual void UpdateProjectView() { m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix; }
 
+        inline const glm::mat4& GetProjectionMatrix() const { return m_ProjectionMatrix; }
         inline const glm::mat4& GetViewMatrix() const { return m_ViewMatrix; }
         inline const glm::mat4& GetViewProjectionMatrix() const { return m_ViewProjectionMatrix; }
-        inline const glm::mat4& GetProjectionMatrix() const { return m_ProjectionMatrix; }
-
+        // TODO : make all math in eigen3
         inline const Eigen::Matrix4f& GetProjectionMatrixEigen() const { return m_ProjectionMatrixEigen; }
+        inline const Eigen::Matrix4f& GetViewMatrixEigen() const { return m_ViewMatrixEigen; }
+        inline const Eigen::Matrix4f& GetViewProjectionMatrixEigen() const { return m_ViewProjectionMatrixEigen; }
     protected:
         glm::mat4 m_ProjectionMatrix;
         glm::mat4 m_ViewMatrix;

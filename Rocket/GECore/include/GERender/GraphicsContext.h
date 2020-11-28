@@ -3,7 +3,7 @@
 #include "GECore/Core.h"
 
 namespace Rocket {
-	class GraphicsContext
+	Interface GraphicsContext
 	{
 	public:
 		virtual ~GraphicsContext() = default;

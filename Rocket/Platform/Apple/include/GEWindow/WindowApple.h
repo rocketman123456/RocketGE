@@ -9,7 +9,7 @@ struct GLFWwindow;
 
 namespace Rocket
 {
-	class WindowApple : public Window
+	class WindowApple : implements Window
 	{
 	public:
 		WindowApple(const WindowProps &props);

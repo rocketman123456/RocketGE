@@ -3,7 +3,7 @@
 #include "GERender/Buffer.h"
 
 namespace Rocket {
-	class VertexArray
+	Interface VertexArray
 	{
 	public:
 		virtual ~VertexArray() = default;

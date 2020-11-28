@@ -4,7 +4,7 @@
 #include <glm/glm.hpp>
 
 namespace Rocket {
-    class RenderAPI
+    Interface RenderAPI
 	{
 	public:
 		enum class API

@@ -2,7 +2,7 @@
 #include "GECore/Core.h"
 
 namespace Rocket {
-    class Texture
+    Interface Texture
 	{
 	public:
 		virtual ~Texture() = default;
@@ -19,7 +19,7 @@ namespace Rocket {
 		virtual bool operator==(const Texture& other) const = 0;
 	};
 
-	class Texture2D : public Texture
+	Interface Texture2D : implements Texture
 	{
 	public:
 		static Ref<Texture2D> Create(uint32_t width, uint32_t height);

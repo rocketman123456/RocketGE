@@ -97,7 +97,7 @@ namespace Rocket {
 		uint32_t m_Stride = 0;
 	};
 
-	class VertexBuffer
+	Interface VertexBuffer
 	{
 	public:
 		virtual ~VertexBuffer() = default;
@@ -115,7 +115,7 @@ namespace Rocket {
 	};
 
 	// Currently Hazel only supports 32-bit index buffers
-	class IndexBuffer
+	Interface IndexBuffer
 	{
 	public:
 		virtual ~IndexBuffer() = default;
@@ -127,5 +127,4 @@ namespace Rocket {
 
 		static Ref<IndexBuffer> Create(uint32_t* indices, uint32_t count);
 	};
-
 }

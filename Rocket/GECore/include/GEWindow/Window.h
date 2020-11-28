@@ -19,7 +19,7 @@ namespace Rocket {
 	};
 
 	// Interface representing a desktop system based Window
-	class Window
+	Interface Window
 	{
 	public:
 		using EventCallbackFn = std::function<void(Event&)>;

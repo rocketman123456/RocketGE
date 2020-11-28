@@ -2,7 +2,7 @@
 #include "GERender/Camera.h"
 
 namespace Rocket {
-	class PerspectiveCamera : public Camera
+	class PerspectiveCamera : implements Camera
 	{
 	public:
 		PerspectiveCamera(const glm::mat4& projection) : Camera(projection) {}
