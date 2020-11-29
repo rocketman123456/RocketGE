@@ -1,5 +1,5 @@
 #include "GELayer/ImGuiLayer.h"
-#include "GEApplication.h"
+#include "GEModule/Application.h"
 
 #include <imgui.h>
 #ifdef RK_OPENGL

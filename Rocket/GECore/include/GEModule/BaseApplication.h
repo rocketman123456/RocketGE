@@ -1,5 +1,5 @@
 #pragma once
-#include "GEModule/IApplication.h"
+#include "GEInterface/IApplication.h"
 
 namespace Rocket {
     class BaseApplication : implements IApplication

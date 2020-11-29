@@ -16,7 +16,7 @@ namespace Rocket {
 		AppTick, AppUpdate, AppRender,
 		KeyPressed, KeyReleased, KeyTyped,
 		MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled,
-		DelayedEvent
+		DelayedEvent,
     };
 
     enum EventCategory

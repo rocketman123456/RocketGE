@@ -1,7 +1,7 @@
 #pragma once
 
-#include "GEEvent.h"
 #include "GECore/Core.h"
+#include "GEEvent/Event.h"
 #include "GEUtils/Timestep.h"
 
 namespace Rocket {

@@ -1,11 +1,18 @@
 message(STATUS "Add Module Sandbox")
 message(STATUS "###################################")
+include_directories(
+    ${PROJECT_SOURCE_DIR}/Rocket/Interface
+    ${PROJECT_SOURCE_DIR}/Sandbox/SandboxApp
+)
+
 add_executable( SandboxApp
-    src/SandboxApp.cpp
-    src/SandboxData.cpp
+    SandboxApp/SandboxApp.cpp
+    SandboxApp/SandboxData.cpp
 )
 target_link_libraries( SandboxApp PRIVATE
-    GECore GELayer GERender GEApplication GEWindow GECommon
+    GECore GELayer GERender GEModule GEWindow GECommon
+    ${Threads_LIBS} Eigen3::Eigen
+    spdlog imgui glad glfw yaml-cpp stb_image
 )
 
 if(Apple)
@@ -23,8 +30,3 @@ elseif(Vulkan)
 elseif(Metal)
     target_link_libraries(SandboxApp PRIVATE Render_Metal)
 endif()
-
-target_link_libraries( SandboxApp PRIVATE
-    ${Threads_LIBS} Eigen3::Eigen
-    spdlog imgui glad glfw yaml-cpp stb_image
-)

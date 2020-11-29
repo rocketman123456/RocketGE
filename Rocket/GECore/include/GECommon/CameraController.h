@@ -1,6 +1,7 @@
 #pragma once
-#include "GEEvent.h"
+#include "GEEvent/Event.h"
 #include "GERender/Camera.h"
+#include "GEUtils/Timestep.h"
 
 namespace Rocket {
     enum class CameraControllerType
@@ -8,6 +9,15 @@ namespace Rocket {
         None = 0,
         Orthographic,
         Perspective,
+    };
+
+    enum class Camera_Movement {
+        FORWARD,
+        BACKWARD,
+        LEFT,
+        RIGHT,
+        UP,
+        DOWN
     };
 
     Interface CameraController

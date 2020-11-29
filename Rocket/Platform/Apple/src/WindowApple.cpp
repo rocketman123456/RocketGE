@@ -1,4 +1,8 @@
 #include "GEWindow/WindowApple.h"
+#include "GEEvent/KeyEvent.h"
+#include "GEEvent/MouseEvent.h"
+#include "GEEvent/ApplicationEvent.h"
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #ifdef RK_OPENGL

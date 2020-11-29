@@ -9,8 +9,9 @@ add_library( GECommon
     src/GECommon/OrthographicCameraController.cpp
     src/GECommon/PerspectiveCameraController.cpp
 )
-add_library( GEApplication
-    src/GEApplication/Application.cpp
+add_library( GEModule
+    src/GEModule/Application.cpp
+    src/GEModule/BaseApplication.cpp
 )
 add_library( GEWindow
     src/GEWindow/Window.cpp

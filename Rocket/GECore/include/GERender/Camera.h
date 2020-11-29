@@ -1,6 +1,8 @@
 #pragma once
 #include "GECore/Core.h"
 #include <glm/glm.hpp>
+#include <glm/gtc/quaternion.hpp>
+#include <glm/gtx/quaternion.hpp>
 #include <Eigen/Eigen>
 
 namespace Rocket {
@@ -22,38 +24,40 @@ namespace Rocket {
         Camera() = default;
         virtual ~Camera() = default;
         // glm Version
-        Camera(const glm::mat4& projection)
-			: m_ProjectionMatrix(projection), m_ViewMatrix(1.0f) {}
-        Camera(const glm::mat4& projection, const glm::mat4& view)
+        Camera(const glm::mat4& projection, const glm::mat4& view = glm::mat4(1.0f))
             : m_ProjectionMatrix(projection), m_ViewMatrix(view) {}
-        // Eigen Version
-        Camera(const Eigen::Matrix4f& projection)
-			: m_ProjectionMatrixEigen(projection), m_ViewMatrixEigen(Eigen::Matrix4f::Identity()) {}
-        Camera(const Eigen::Matrix4f& projection, const Eigen::Matrix4f& view)
-            : m_ProjectionMatrixEigen(projection), m_ViewMatrixEigen(view) {}
 
+        inline virtual void SetPosition(const glm::vec3& position) { m_Position = position; }
+        inline const glm::vec3& GetPosition() const { return m_Position; }
+        inline virtual void SetRotationMatrix(const glm::mat4& rotation) { m_RotationMatrix = rotation; }
+        inline const glm::mat4& GetRotationMatrix() const { return m_RotationMatrix; }
+
+        inline virtual void SetProjection(const glm::mat4& projection) { m_ProjectionMatrix = projection; UpdateProjectView(); }
+        inline const glm::mat4& GetProjectionMatrix() const { return m_ProjectionMatrix; }
+        inline virtual void SetView(const glm::mat4& view) { m_ViewMatrix = view; UpdateProjectView(); }
+        inline const glm::mat4& GetViewMatrix() const { return m_ViewMatrix; }
+        inline virtual void UpdateProjectView() { m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix; }
+        inline const glm::mat4& GetViewProjectionMatrix() const { return m_ViewProjectionMatrix; }
+    public:
         virtual CameraType GetCameraType() const = 0;
 		virtual const char* GetName() const = 0;
 		virtual std::string ToString() const { return GetName(); }
-
-        inline void SetProjection(const glm::mat4& projection) { m_ProjectionMatrix = projection; UpdateProjectView(); }
-        inline void SetView(const glm::mat4& view) { m_ViewMatrix = view; UpdateProjectView(); }
-        inline virtual void UpdateProjectView() { m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix; }
-
-        inline const glm::mat4& GetProjectionMatrix() const { return m_ProjectionMatrix; }
-        inline const glm::mat4& GetViewMatrix() const { return m_ViewMatrix; }
-        inline const glm::mat4& GetViewProjectionMatrix() const { return m_ViewProjectionMatrix; }
-        // TODO : make all math in eigen3
-        inline const Eigen::Matrix4f& GetProjectionMatrixEigen() const { return m_ProjectionMatrixEigen; }
-        inline const Eigen::Matrix4f& GetViewMatrixEigen() const { return m_ViewMatrixEigen; }
-        inline const Eigen::Matrix4f& GetViewProjectionMatrixEigen() const { return m_ViewProjectionMatrixEigen; }
     protected:
+        // TODO : make all math in eigen3
         glm::mat4 m_ProjectionMatrix;
         glm::mat4 m_ViewMatrix;
         glm::mat4 m_ViewProjectionMatrix;
-
-        Eigen::Matrix4f m_ProjectionMatrixEigen;
-        Eigen::Matrix4f m_ViewMatrixEigen;
-        Eigen::Matrix4f m_ViewProjectionMatrixEigen;
+        glm::mat4 m_RotationMatrix;
+        glm::vec3 m_Position = { 0.0f, 0.0f, 0.0f };
+        // for view matrix
+        glm::vec3 m_Front;
+        glm::vec3 m_Up;
+        glm::vec3 m_Right;
+        glm::vec3 m_WorldUp;
     };
+
+    inline std::ostream& operator<<(std::ostream& os, const Camera& c)
+	{
+		return os << c.ToString();
+	}
 }

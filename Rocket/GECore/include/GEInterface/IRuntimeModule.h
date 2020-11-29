@@ -1,5 +1,6 @@
 #pragma once
 #include "GECore/Core.h"
+#include "GEEvent/Event.h"
 
 namespace Rocket {
     Interface IRuntimeModule{

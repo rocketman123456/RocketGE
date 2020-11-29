@@ -6,12 +6,10 @@ namespace Rocket {
     {
     public:
         OrthographicCamera(const glm::mat4& projection) : Camera(projection) {}
-        OrthographicCamera(float left, float right, float bottom, float top);
+        OrthographicCamera(float left, float right, float bottom, float top, float near = -1.0f, float far = 100.0f);
 
-        void SetProjection(float left, float right, float bottom, float top);
-
-        inline const glm::vec3& GetPosition() const { return m_Position; }
-        inline void SetPosition(const glm::vec3& position) { m_Position = position; RecalculateViewMatrix(); }
+        inline virtual void SetPosition(const glm::vec3& position) override { Camera::SetPosition(position); RecalculateViewMatrix(); }
+        void SetProjection(float left, float right, float bottom, float top, float near = -1.0f, float far = 100.0f);
 
         inline float GetRotation() const { return m_Rotation; }
         inline void SetRotation(float rotation) { m_Rotation = rotation; RecalculateViewMatrix(); }
@@ -20,7 +18,6 @@ namespace Rocket {
     private:
         void RecalculateViewMatrix();
     private:
-        glm::vec3 m_Position = { 0.0f, 0.0f, 0.0f };
         float m_Rotation = 0.0f;
     };
 }

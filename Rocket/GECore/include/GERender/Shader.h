@@ -25,10 +25,16 @@ namespace Rocket {
 		virtual void SetMat4(const std::string& name, const glm::mat4& value) = 0;
 
 		virtual const std::string& GetName() const = 0;
+		virtual std::string ToString() const { return GetName(); }
 
 		static Ref<Shader> Create(const std::string& filepath);
 		static Ref<Shader> Create(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc);
 	};
+
+	inline std::ostream& operator<<(std::ostream& os, const Shader& s)
+	{
+		return os << s.ToString();
+	}
 
 	class ShaderLibrary
 	{

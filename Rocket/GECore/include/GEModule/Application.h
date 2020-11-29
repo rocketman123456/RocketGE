@@ -1,10 +1,12 @@
 #pragma once
 
-#include "GECore.h"
-#include "GEEvent.h"
-#include "GEWindow.h"
-#include "GELayer.h"
-#include "GERender.h"
+#include "GECore/Core.h"
+#include "GEEvent/Event.h"
+#include "GEEvent/ApplicationEvent.h"
+#include "GEWindow/Window.h"
+#include "GELayer/Layer.h"
+#include "GELayer/LayerStack.h"
+#include "GERender/Renderer.h"
 
 namespace Rocket {
     Interface Application {

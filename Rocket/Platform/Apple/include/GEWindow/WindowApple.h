@@ -1,8 +1,8 @@
 #pragma once
 
 #include "GECore/Core.h"
-#include "GEWindow.h"
-#include "GEEvent.h"
+#include "GEWindow/Window.h"
+#include "GEEvent/Event.h"
 #include "GERender/GraphicsContext.h"
 
 struct GLFWwindow;

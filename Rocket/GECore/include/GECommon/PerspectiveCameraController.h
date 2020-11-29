@@ -1,9 +1,9 @@
 #pragma once
-#pragma once
-#include "GEEvent.h"
-#include "GEUtils.h"
 #include "GERender/PerspectiveCamera.h"
 #include "GECommon/CameraController.h"
+#include "GEEvent/KeyEvent.h"
+#include "GEEvent/MouseEvent.h"
+#include "GEEvent/ApplicationEvent.h"
 
 namespace Rocket {
     class PerspectiveCameraController : implements CameraController

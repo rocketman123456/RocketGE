@@ -1,5 +1,6 @@
 #include "GECore/Input.h"
-#include "GEApplication/Application.h"
+#include "GEModule/Application.h"
+
 #include <GLFW/glfw3.h>
 
 namespace Rocket {

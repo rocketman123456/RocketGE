@@ -1,4 +1,8 @@
 #include "GEWindow/WindowLinux.h"
+#include "GEEvent/KeyEvent.h"
+#include "GEEvent/MouseEvent.h"
+#include "GEEvent/ApplicationEvent.h"
+
 #include <glad/glad.h>
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>

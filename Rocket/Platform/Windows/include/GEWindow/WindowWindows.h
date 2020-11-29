@@ -2,7 +2,7 @@
 
 #include "GECore/Core.h"
 #include "GEWindow/Window.h"
-#include "GEEvent.h"
+#include "GEEvent/Event.h"
 #include "GERender/GraphicsContext.h"
 
 struct GLFWwindow;
