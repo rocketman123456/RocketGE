@@ -23,7 +23,7 @@ namespace Rocket {
     };
 }
 
-#ifdef DEBUG
+#ifdef RK_DEBUG
 #define RK_CORE_CRITICAL(...)  ::Rocket::Log::GetCoreLogger()->critical(__VA_ARGS__)
 #define RK_CORE_ERROR(...)  ::Rocket::Log::GetCoreLogger()->error(__VA_ARGS__)
 #define RK_CORE_WARN(...)   ::Rocket::Log::GetCoreLogger()->warn(__VA_ARGS__)

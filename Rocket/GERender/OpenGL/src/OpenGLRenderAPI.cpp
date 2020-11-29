@@ -24,7 +24,7 @@ namespace Rocket {
 
 	void OpenGLRenderAPI::Init()
 	{
-#ifdef DEBUG
+#ifdef RK_DEBUG
 		int flags; glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
 		if (flags & GL_CONTEXT_FLAG_DEBUG_BIT)
 		{

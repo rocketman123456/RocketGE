@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 2.6)
+cmake_minimum_required (VERSION 2.8.12)
 
 if (CMAKE_SYSTEM_NAME MATCHES "Linux")
     set(VCPKG_ROOT "/usr/local/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE PATH "")
@@ -32,9 +32,9 @@ configure_file (
 message(STATUS "###################################")
 
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-    add_definitions(-DDEBUG)
+    add_definitions(-DRK_DEBUG)
 elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
-    add_definitions(-DRELEASE)
+    add_definitions(-DRK_RELEASE)
 endif()
 message(STATUS "Build System Set to ${CMAKE_BUILD_TYPE}")
 

@@ -57,7 +57,7 @@ namespace Rocket
 			glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 #endif
 			glfwWindowHint(GLFW_SCALE_TO_MONITOR, GL_TRUE);
-#if defined(DEBUG)
+#if defined(RK_DEBUG)
 			glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
 #endif
 			//glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);

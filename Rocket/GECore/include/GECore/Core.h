@@ -5,7 +5,7 @@
 const std::string ProjectSourceDir = PROJECT_SOURCE_DIR;
 const std::string RenderAPI = RENDER_API;
 
-#ifdef DEBUG
+#ifdef RK_DEBUG
 	#if defined(PLATFORM_WINDOWS)
 		#define RK_DEBUGBREAK() __debugbreak()
 	#elif defined(PLATFORM_LINUX) || defined(PLATFORM_APPLE)

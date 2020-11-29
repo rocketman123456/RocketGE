@@ -57,7 +57,7 @@ namespace Rocket
 			glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 #endif
 			glfwWindowHint(GLFW_SCALE_TO_MONITOR, GL_TRUE);
-#if defined(DEBUG)
+#if defined(RK_DEBUG)
 			glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
 #endif
 			//glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
@@ -74,17 +74,7 @@ namespace Rocket
 
 		// Set GLFW callbacks
 		glfwSetWindowSizeCallback(m_Window, [](GLFWwindow *window, int width, int height) {
-			//float xscale, yscale;
-			//glfwGetWindowContentScale(window, &xscale, &yscale);
-
-			//WindowData &data = *(WindowData *)glfwGetWindowUserPointer(window);
-			//data.Width = width;
-			//data.Height = height;
-			//data.xScale = xscale;
-			//data.yScale = yscale;
-
-			//WindowResizeEvent event(width, height, xscale, yscale);
-			//data.EventCallback(event);
+			//RK_CORE_INFO("glfwSetWindowSizeCallback");
 		});
 
 		glfwSetWindowContentScaleCallback(m_Window, [](GLFWwindow* window, float xscale, float yscale){
