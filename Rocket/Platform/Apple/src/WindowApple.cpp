@@ -74,11 +74,11 @@ namespace Rocket
 
 		// Set GLFW callbacks
 		glfwSetWindowSizeCallback(m_Window, [](GLFWwindow *window, int width, int height) {
-			//RK_CORE_INFO("glfwSetWindowSizeCallback");
+			//RK_CORE_TRACE("glfwSetWindowSizeCallback");
 		});
 
 		glfwSetWindowContentScaleCallback(m_Window, [](GLFWwindow* window, float xscale, float yscale){
-			RK_CORE_INFO("glfwSetWindowContentScaleCallback");
+			RK_CORE_TRACE("glfwSetWindowContentScaleCallback");
 		});
 
 		glfwSetFramebufferSizeCallback(m_Window, [](GLFWwindow* window, int width, int height){
