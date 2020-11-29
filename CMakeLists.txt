@@ -61,6 +61,7 @@ find_package(Threads REQUIRED)
 find_package(yaml-cpp CONFIG REQUIRED)
 find_package(glfw3 CONFIG REQUIRED)
 find_package(Eigen3 CONFIG REQUIRED)
+#find_package(tinyobjloader CONFIG REQUIRED)
 
 message(STATUS "Render API Set to ${RENDER_API}")
 if (RENDER_API MATCHES "OpenGL")
@@ -86,6 +87,7 @@ include_directories(
     ${PROJECT_SOURCE_DIR}/Thirdparty/glad/include
     ${PROJECT_SOURCE_DIR}/Thirdparty/spdlog/include
     ${PROJECT_SOURCE_DIR}/Thirdparty/stb_image
+    ${PROJECT_SOURCE_DIR}/Thirdparty/tinyobjloader
     ${PROJECT_SOURCE_DIR}/Thirdparty/imgui
     ${PROJECT_SOURCE_DIR}/Thirdparty/glm
     ${EIGEN3_INCLUDE_DIRS}/unsupported
