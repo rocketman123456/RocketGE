@@ -5,10 +5,22 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "(lldb) 启动",
+            "name": "(lldb) Sandbox",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/Sandbox/SandboxApp",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb"
+        }
+        {
+            "name": "(lldb) VulkanTest",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/Test/VulkanTest/VulkanTest",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

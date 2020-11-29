@@ -3,8 +3,6 @@
         "CMAKE_TOOLCHAIN_FILE": "/Users/developer/Program/vcpkg/scripts/buildsystems/vcpkg.cmake"
     },
     "files.associations": {
-        "unordered_map": "cpp",
-        "__locale": "cpp",
-        "system_error": "cpp"
+        "unordered_map": "cpp"
     }
 }
