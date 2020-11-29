@@ -23,10 +23,10 @@ const std::string RenderAPI = RENDER_API;
 #if defined(RK_OPENGL)
 	#define GLFW_INCLUDE_NONE
 #elif defined(RK_VULKAN)
-	#define GLFW_INCLUDE_NONE
+	//#define GLFW_INCLUDE_NONE
 	#define GLFW_INCLUDE_VULKAN
 #elif defined(RK_METAL)
-	#define GLFW_INCLUDE_NONE
+	//#define GLFW_INCLUDE_NONE
 	#define GLFW_EXPOSE_NATIVE_COCOA
 #endif
 

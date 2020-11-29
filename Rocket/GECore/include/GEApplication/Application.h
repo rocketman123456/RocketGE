@@ -26,7 +26,7 @@ namespace Rocket {
         bool OnWindowClose(WindowCloseEvent& e);
 		bool OnWindowResize(WindowResizeEvent& e);
     private:
-        std::unique_ptr<Window> m_Window;
+        Scope<Window> m_Window;
         Layer* m_GuiLayer;
         LayerStack m_LayerStack;
 
