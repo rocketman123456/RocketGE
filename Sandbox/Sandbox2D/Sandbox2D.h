@@ -15,6 +15,9 @@ namespace Rocket {
         Sandbox2DLayer();
         virtual ~Sandbox2DLayer();
 
+        virtual void OnAttach() override;
+		virtual void OnDetach() override;
+
         virtual void OnUpdate(Timestep ts) override;
         virtual void OnGuiRender() override;
         virtual void OnEvent(Event &event) override;

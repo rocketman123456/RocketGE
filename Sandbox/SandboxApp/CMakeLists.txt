@@ -1,6 +1,7 @@
 add_executable( SandboxApp
     SandboxApp.cpp
     SandboxData.cpp
+    ExampleLayer.cpp
 )
 target_link_libraries( SandboxApp PRIVATE
     GECore GELayer GERender GEModule GEWindow GECommon

@@ -16,6 +16,16 @@ namespace Rocket {
 
     }
 
+    void Sandbox2DLayer::OnAttach()
+    {
+
+    }
+
+	void Sandbox2DLayer::OnDetach()
+    {
+
+    }
+
     void Sandbox2DLayer::OnUpdate(Timestep ts)
     {
         RenderCommand::SetClearColor({ 0.2f, 0.3f, 0.3f, 1.0f });

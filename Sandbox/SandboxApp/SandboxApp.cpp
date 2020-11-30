@@ -3,24 +3,16 @@
     you should create a new layer with an application.
 */
 #include "SandboxApp.h"
-#include "GECore/Core.h"
+#include "ExampleLayer.h"
 
 namespace Rocket
 {
-    class SimpleSandbox : implements Application
+    SimpleSandbox::SimpleSandbox()
     {
-    public:
-        SimpleSandbox()
-        {
-            RK_INFO("Build Type: {0}", BUILD_TYPE);
-            RK_INFO("Source Dir: {0}", ProjectSourceDir);
-            PushLayer(new ExampleLayer());
-        }
-        ~SimpleSandbox()
-        {
-
-        }
-    };
+        RK_INFO("Build Type: {0}", BUILD_TYPE);
+        RK_INFO("Source Dir: {0}", ProjectSourceDir);
+        PushLayer(new ExampleLayer());
+    }
 
     Application* CreateApplication()
     {

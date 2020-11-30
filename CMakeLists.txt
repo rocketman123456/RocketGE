@@ -26,7 +26,7 @@ message(STATUS "Project Name ${PROJECT_NAME}")
 
 configure_file (
     "${PROJECT_SOURCE_DIR}/RKConfig.h.in"
-    "${PROJECT_SOURCE_DIR}/Rocket/GECore/include/RKConfig.h"
+    "${PROJECT_SOURCE_DIR}/Rocket/GEEngine/include/RKConfig.h"
 )
 
 message(STATUS "###################################")
@@ -95,7 +95,7 @@ include_directories(
 )
 
 include_directories(
-    ${PROJECT_SOURCE_DIR}/Rocket/GECore/include
+    ${PROJECT_SOURCE_DIR}/Rocket/GEEngine/include
 )
 
 if(OpenGL)
