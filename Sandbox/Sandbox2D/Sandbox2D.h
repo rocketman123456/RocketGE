@@ -24,8 +24,7 @@ namespace Rocket {
     private:
         Ref<CameraController> m_Controller;
 
-        Ref<Texture2D> m_Texture_1;
-        Ref<Texture2D> m_Texture_2;
+        std::vector<Ref<Texture2D>> m_Texture;
 
         glm::vec3 m_SquareColor = { 1.0f, 0.5f, 0.2f };
     };

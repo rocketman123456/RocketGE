@@ -22,8 +22,12 @@ namespace Rocket {
     {
         std::string img_path_1 = ProjectSourceDir + "/Assets/textures/wall.jpg";
         std::string img_path_2 = ProjectSourceDir + "/Assets/textures/container.jpg";
-        m_Texture_1 = Texture2D::Create(img_path_1);
-        m_Texture_2 = Texture2D::Create(img_path_2);
+        std::string img_path_3 = ProjectSourceDir + "/Assets/textures/texture.jpg";
+        std::string img_path_4 = ProjectSourceDir + "/Assets/textures/Checkerboard.png";
+        m_Texture.push_back(Texture2D::Create(img_path_1));
+        m_Texture.push_back(Texture2D::Create(img_path_2));
+        m_Texture.push_back(Texture2D::Create(img_path_3));
+        m_Texture.push_back(Texture2D::Create(img_path_4));
 
         m_Controller.reset(new OrthographicCameraController(16.0f / 9.0f, false));
     }
@@ -31,8 +35,7 @@ namespace Rocket {
 	void Sandbox2DLayer::OnDetach()
     {
         m_Controller.reset();
-        m_Texture_1.reset();
-        m_Texture_2.reset();
+        m_Texture.clear();
     }
 
     void Sandbox2DLayer::OnUpdate(Timestep ts)
@@ -44,9 +47,11 @@ namespace Rocket {
 
         Renderer2D::BeginScene(m_Controller->GetCamera());
         Renderer2D::DrawQuad({0.0f, 0.0f}, {0.9f, 0.9f}, {m_SquareColor, 1.0f});
-        Renderer2D::DrawQuad({1.0f, 0.0f}, {0.9f, 0.9f}, glm::vec4(1.0f) - glm::vec4({m_SquareColor, 0.0f}));
-        Renderer2D::DrawQuad({1.0f, 1.0f}, {0.9f, 0.9f}, m_Texture_1, 1.0);
-        Renderer2D::DrawQuad({0.0f, 1.0f}, {0.9f, 0.9f}, m_Texture_2, 1.0);
+        Renderer2D::DrawQuad({0.0f, 1.0f}, {0.9f, 0.9f}, glm::vec4(1.0f) - glm::vec4({m_SquareColor, 0.0f}));
+        Renderer2D::DrawQuad({1.0f, 0.0f}, {0.9f, 0.9f}, m_Texture[0]);
+        Renderer2D::DrawQuad({1.0f, 1.0f}, {0.9f, 0.9f}, m_Texture[1]);
+        Renderer2D::DrawQuad({2.0f, 0.0f}, {0.9f, 0.9f}, m_Texture[2]);
+        Renderer2D::DrawQuad({2.0f, 1.0f}, {0.9f, 0.9f}, m_Texture[3]);
         Renderer2D::EndScene();
     }
 
