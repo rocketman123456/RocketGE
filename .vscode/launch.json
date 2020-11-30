@@ -8,7 +8,7 @@
             "name": "(lldb) Sandbox",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/Sandbox/SandboxApp",
+            "program": "${workspaceFolder}/build/Sandbox/SandboxApp/SandboxApp",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

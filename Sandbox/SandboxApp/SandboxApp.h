@@ -109,9 +109,8 @@ namespace Rocket
             Renderer::Submit(m_ShaderLibrary->Get("SimpleShader"), m_CubeVertexArray, m_Texture_2, transform);
         }
 
-        void OnUpdate(Timestep ts) override
+        virtual void OnUpdate(Timestep ts) override
         {
-            //RK_TRACE("Time {0}", ts);
             UpdateCamera(ts);
             
             RenderCommand::SetClearColor({ 0.2f, 0.3f, 0.3f, 1.0f });
@@ -127,7 +126,7 @@ namespace Rocket
             Renderer::EndScene();
         }
 
-        void OnGuiRender() override
+        virtual void OnGuiRender() override
         {
             ImGui::Begin("Example");
             ImGui::Text("Hello Example!");
@@ -137,7 +136,7 @@ namespace Rocket
 		    ImGui::End();
         }
 
-        void OnEvent(Event &event) override
+        virtual void OnEvent(Event &event) override
         {
             EventDispatcher dispatcher(event);
             dispatcher.Dispatch<KeyPressedEvent>(RK_BIND_EVENT_FN(ExampleLayer::OnKeyPressed));
