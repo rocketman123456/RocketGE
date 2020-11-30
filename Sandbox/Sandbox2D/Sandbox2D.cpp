@@ -1,6 +1,5 @@
 #include "Sandbox2D.h"
 #include "GERender/Renderer.h"
-#include "GERender2D/Renderer2D.h"
 
 #include <imgui.h>
 #include <glm/gtc/matrix_transform.hpp>
@@ -21,12 +20,19 @@ namespace Rocket {
 
     void Sandbox2DLayer::OnAttach()
     {
+        std::string img_path_1 = ProjectSourceDir + "/Assets/textures/wall.jpg";
+        std::string img_path_2 = ProjectSourceDir + "/Assets/textures/container.jpg";
+        m_Texture_1 = Texture2D::Create(img_path_1);
+        m_Texture_2 = Texture2D::Create(img_path_2);
+
         m_Controller.reset(new OrthographicCameraController(16.0f / 9.0f, false));
     }
 
 	void Sandbox2DLayer::OnDetach()
     {
         m_Controller.reset();
+        m_Texture_1.reset();
+        m_Texture_2.reset();
     }
 
     void Sandbox2DLayer::OnUpdate(Timestep ts)
@@ -38,7 +44,9 @@ namespace Rocket {
 
         Renderer2D::BeginScene(m_Controller->GetCamera());
         Renderer2D::DrawQuad({0.0f, 0.0f}, {0.9f, 0.9f}, {m_SquareColor, 1.0f});
-        Renderer2D::DrawQuad({1.0f, 0.0f}, {0.9f, 0.9f}, {m_SquareColor, 1.0f});
+        Renderer2D::DrawQuad({1.0f, 0.0f}, {0.9f, 0.9f}, glm::vec4(1.0f) - glm::vec4({m_SquareColor, 0.0f}));
+        Renderer2D::DrawQuad({1.0f, 1.0f}, {0.9f, 0.9f}, m_Texture_1, 1.0);
+        Renderer2D::DrawQuad({0.0f, 1.0f}, {0.9f, 0.9f}, m_Texture_2, 1.0);
         Renderer2D::EndScene();
     }
 
@@ -65,10 +73,5 @@ namespace Rocket {
         RK_INFO("Build Type: {0}", BUILD_TYPE);
         RK_INFO("Source Dir: {0}", ProjectSourceDir);
         PushLayer(new Sandbox2DLayer());
-    }
-
-    Sandbox2D::~Sandbox2D()
-    {
-
     }
 }

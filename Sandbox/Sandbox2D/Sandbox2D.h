@@ -6,7 +6,7 @@ namespace Rocket {
     {
     public:
         Sandbox2D();
-        virtual ~Sandbox2D();
+        virtual ~Sandbox2D() = default;
     };
 
     class Sandbox2DLayer : implements Layer
@@ -23,6 +23,9 @@ namespace Rocket {
         virtual void OnEvent(Event &event) override;
     private:
         Ref<CameraController> m_Controller;
+
+        Ref<Texture2D> m_Texture_1;
+        Ref<Texture2D> m_Texture_2;
 
         glm::vec3 m_SquareColor = { 1.0f, 0.5f, 0.2f };
     };
