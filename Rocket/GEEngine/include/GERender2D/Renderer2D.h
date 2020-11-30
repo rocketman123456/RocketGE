@@ -26,7 +26,7 @@ namespace Rocket {
 		static void Shutdown();
 
 		static void BeginScene(const Camera& camera, const glm::mat4& transform);
-		static void BeginScene(const Camera& camera); // TODO: Remove
+		static void BeginScene(const Camera& camera);
 		static void EndScene();
 		static void Flush();
 

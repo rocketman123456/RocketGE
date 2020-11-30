@@ -4,7 +4,7 @@
 #include <glad/glad.h>
 
 #if !defined(HIGH_OPENGL_VERSION)
-static GLenum TextureSlot[] = {
+static const GLenum TextureSlot[] = {
 	GL_TEXTURE0, GL_TEXTURE1, GL_TEXTURE2, GL_TEXTURE3,
 	GL_TEXTURE4, GL_TEXTURE5, GL_TEXTURE6, GL_TEXTURE7,
 	GL_TEXTURE8, GL_TEXTURE9, GL_TEXTURE10, GL_TEXTURE11,

@@ -6,8 +6,8 @@ namespace Rocket
 {
 	// TODO: add keycode convert between different platform
 	using KeyCode = int32_t;
-	static KeyCode GLFWToRK_Key(KeyCode key) { return key; }
-	static KeyCode RKToGLFW_Key(KeyCode key) { return key; }
+	static KeyCode GLFWToRK_Key(int32_t key) { return key; }
+	static int32_t RKToGLFW_Key(KeyCode key) { return key; }
 
 	namespace Key
 	{
