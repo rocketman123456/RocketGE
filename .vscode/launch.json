@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "(lldb) Sandbox",
+            "name": "(lldb) SandboxApp",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/Sandbox/SandboxApp/SandboxApp",
@@ -15,7 +15,19 @@
             "environment": [],
             "externalConsole": false,
             "MIMode": "lldb"
-        }
+        },
+        {
+            "name": "(lldb) Sandbox2D",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/Sandbox/Sandbox2D/Sandbox2D",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb"
+        },
         {
             "name": "(lldb) VulkanTest",
             "type": "cppdbg",

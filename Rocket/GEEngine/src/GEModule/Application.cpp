@@ -1,5 +1,7 @@
 #include "GEModule/Application.h"
 #include "GELayer/ImGuiLayer.h"
+#include "GERender/Renderer.h"
+#include "GERender2D/Renderer2D.h"
 
 namespace Rocket
 {
@@ -24,6 +26,7 @@ namespace Rocket
 
     Application::~Application()
     {
+        Renderer::Shutdown();
         RK_CORE_INFO("Exit Application");
     }
 

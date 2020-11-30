@@ -3,6 +3,13 @@
         "CMAKE_TOOLCHAIN_FILE": "/Users/developer/Program/vcpkg/scripts/buildsystems/vcpkg.cmake"
     },
     "files.associations": {
-        "unordered_map": "cpp"
+        "unordered_map": "cpp",
+        "*.tcc": "cpp",
+        "deque": "cpp",
+        "list": "cpp",
+        "string": "cpp",
+        "unordered_set": "cpp",
+        "vector": "cpp",
+        "system_error": "cpp"
     }
 }

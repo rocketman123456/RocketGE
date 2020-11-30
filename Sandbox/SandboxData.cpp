@@ -13,6 +13,12 @@ float square_vertices[] = {
     0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
     -0.5f,  0.5f, 0.0f, 0.0f, 1.0f,
 };
+float square_vertices_s[] = {
+    -0.5f, -0.5f, 0.0f,
+    0.5f, -0.5f, 0.0f,
+    0.5f,  0.5f, 0.0f,
+    -0.5f,  0.5f, 0.0f
+};
 uint32_t square_indices[] = { 0, 1, 2, 2, 3, 0 };
 
 float cube_vertices[] = {

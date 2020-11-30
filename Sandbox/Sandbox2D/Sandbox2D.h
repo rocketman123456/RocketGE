@@ -13,7 +13,7 @@ namespace Rocket {
     {
     public:
         Sandbox2DLayer();
-        virtual ~Sandbox2DLayer();
+        virtual ~Sandbox2DLayer() = default;
 
         virtual void OnAttach() override;
 		virtual void OnDetach() override;
@@ -22,6 +22,8 @@ namespace Rocket {
         virtual void OnGuiRender() override;
         virtual void OnEvent(Event &event) override;
     private:
-        Ref<ShaderLibrary> m_ShaderLibrary;
+        Ref<CameraController> m_Controller;
+
+        glm::vec3 m_SquareColor = { 1.0f, 0.5f, 0.2f };
     };
 }

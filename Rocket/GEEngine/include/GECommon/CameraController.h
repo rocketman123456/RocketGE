@@ -27,5 +27,7 @@ namespace Rocket {
 		virtual void OnEvent(Event& e) = 0;
         virtual Camera& GetCamera() = 0;
 		virtual const Camera& GetCamera() const = 0;
+
+        static Ref<CameraController> Create(CameraControllerType type, float aspectRatio);
     };
 }

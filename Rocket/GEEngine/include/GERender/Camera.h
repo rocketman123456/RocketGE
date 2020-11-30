@@ -11,7 +11,6 @@ namespace Rocket {
         None = 0,
         Orthographic,
         Perspective,
-        Frustum,
     };
 
 #define CAMERA_CLASS_TYPE(type) static CameraType GetStaticType() { return CameraType::type; }\
@@ -38,6 +37,8 @@ namespace Rocket {
         inline const glm::mat4& GetViewMatrix() const { return m_ViewMatrix; }
         inline virtual void UpdateProjectView() { m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix; }
         inline const glm::mat4& GetViewProjectionMatrix() const { return m_ViewProjectionMatrix; }
+
+        static Ref<Camera> Create(CameraType type, std::vector<float> setting);
     public:
         virtual CameraType GetCameraType() const = 0;
 		virtual const char* GetName() const = 0;

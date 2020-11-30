@@ -1,29 +1,26 @@
 message(STATUS "Add Module GECore")
 message(STATUS "###################################")
-add_library( GECore
+add_library( GEEngine
+    # GECore
     src/GECore/EntryPoint.cpp
     src/GECore/Log.cpp
     src/GECore/GLFWInput.cpp
-)
-add_library( GECommon
+    # GECommon
     src/GECommon/OrthographicCameraController.cpp
     src/GECommon/PerspectiveCameraController.cpp
-)
-add_library( GEModule
+    # GEModule
     src/GEModule/Application.cpp
     src/GEModule/BaseApplication.cpp
-)
-add_library( GEWindow
+    # GEWindow
     src/GEWindow/Window.cpp
-)
-add_library( GELayer
+    # GELayer
     src/GELayer/Layer.cpp
     src/GELayer/LayerStack.cpp
     src/GELayer/ImGuiBuild.cpp
     src/GELayer/ImGuiLayer.cpp
-)
-add_library( GERender
+    # GERender
     src/GERender/Buffer.cpp
+    src/GERender/Camera.cpp
     src/GERender/GraphicsContext.cpp
     src/GERender/RenderAPI.cpp
     src/GERender/Renderer.cpp
@@ -33,16 +30,9 @@ add_library( GERender
     src/GERender/OrthographicCamera.cpp
     src/GERender/PerspectiveCamera.cpp
     src/GERender/Texture.cpp
+    # GERender2D
+    src/GERender2D/Renderer2D.cpp
 )
-target_link_libraries( GECore PRIVATE
-    glfw Eigen3::Eigen
-)
-target_link_libraries( GELayer PRIVATE
-    glfw Eigen3::Eigen
-)
-target_link_libraries( GERender PRIVATE
-    glfw Eigen3::Eigen
-)
-target_link_libraries( GEWindow PRIVATE
+target_link_libraries( GEEngine PRIVATE
     glfw Eigen3::Eigen
 )

@@ -4,6 +4,8 @@
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/quaternion.hpp>
+#include <glm/gtx/quaternion.hpp>
 
 #include <vector>
 
@@ -33,6 +35,7 @@ public:
     glm::vec3 Up;
     glm::vec3 Right;
     glm::vec3 WorldUp;
+    glm::quat Quaternion;
     // euler Angles
     float Yaw;
     float Pitch;

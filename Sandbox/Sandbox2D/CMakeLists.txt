@@ -1,8 +1,14 @@
 add_executable( Sandbox2D
     Sandbox2D.cpp
+    ../SandboxData.cpp
+)
+target_include_directories( Sandbox2D PRIVATE
+    ${PROJECT_SOURCE_DIR}/Rocket/Interface
+    ${PROJECT_SOURCE_DIR}/Sandbox/SandboxApp
+    ${PROJECT_SOURCE_DIR}/Sandbox/Sandbox2D
 )
 target_link_libraries( Sandbox2D PRIVATE
-    GECore GELayer GERender GEModule GEWindow GECommon
+    GEEngine
     ${Threads_LIBS} Eigen3::Eigen
     spdlog imgui glad glfw yaml-cpp stb_image
 )

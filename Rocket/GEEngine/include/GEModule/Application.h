@@ -6,7 +6,6 @@
 #include "GEWindow/Window.h"
 #include "GELayer/Layer.h"
 #include "GELayer/LayerStack.h"
-#include "GERender/Renderer.h"
 
 namespace Rocket {
     Interface Application {
