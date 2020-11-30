@@ -1,0 +1,6 @@
+add_executable( BulletTest
+    BulletTest.cpp
+)
+target_link_libraries( BulletTest PRIVATE 
+    ${BULLET_LIBRARIES}
+)

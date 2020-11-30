@@ -62,7 +62,6 @@ find_package(yaml-cpp CONFIG REQUIRED)
 find_package(glfw3 CONFIG REQUIRED)
 find_package(Eigen3 CONFIG REQUIRED)
 find_package(Bullet CONFIG REQUIRED)
-#target_link_libraries(main PRIVATE LinearMath Bullet3Common BulletDynamics BulletSoftBody)
 
 message(STATUS "Render API Set to ${RENDER_API}")
 if (RENDER_API MATCHES "OpenGL")
@@ -93,6 +92,7 @@ include_directories(
     ${PROJECT_SOURCE_DIR}/Thirdparty/glm
     ${EIGEN3_INCLUDE_DIRS}/unsupported
     ${EIGEN3_INCLUDE_DIRS}
+    ${BULLET_INCLUDE_DIRS}
 )
 
 include_directories(
