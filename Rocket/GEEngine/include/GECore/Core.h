@@ -38,6 +38,7 @@ const std::string RenderAPI = RENDER_API;
 
 #define Interface class
 #define implements public
+#define inheritance public
 
 template<class T>
 inline void SafeRelease(T **ppInterfaceToRelease)

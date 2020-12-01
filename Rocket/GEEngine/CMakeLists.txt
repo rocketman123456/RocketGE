@@ -5,6 +5,8 @@ add_library( GEEngine
     src/GECore/EntryPoint.cpp
     src/GECore/Log.cpp
     src/GECore/GLFWInput.cpp
+    src/GECore/BlockAllocator.cpp
+    src/GECore/MemoryManager.cpp
     # GECommon
     src/GECommon/Camera.cpp
     src/GECommon/OrthographicCamera.cpp
