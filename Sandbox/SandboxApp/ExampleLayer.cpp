@@ -56,13 +56,13 @@ namespace Rocket {
         }
 
         std::string shader_path_1 = ProjectSourceDir + "/Assets/shaders/SimpleShader.glsl";
-        std::string shader_path_2 = ProjectSourceDir + "/Assets/shaders/ColorShader.glsl";
+        std::string shader_path_2 = ProjectSourceDir + "/Assets/shaders/SimpleColorShader.glsl";
         std::string img_path_1 = ProjectSourceDir + "/Assets/textures/wall.jpg";
         std::string img_path_2 = ProjectSourceDir + "/Assets/textures/container.jpg";
 
         m_ShaderLibrary = ShaderLibrary::Create();
         m_ShaderLibrary->Load("SimpleShader", shader_path_1);
-        m_ShaderLibrary->Load("ColorShader", shader_path_2);
+        m_ShaderLibrary->Load("SimpleColorShader", shader_path_2);
 
         m_Texture_1 = Texture2D::Create(img_path_1);
         m_Texture_2 = Texture2D::Create(img_path_2);
@@ -79,7 +79,7 @@ namespace Rocket {
     void ExampleLayer::RenderSquare()
     {
         glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.5f));
-        auto shader = m_ShaderLibrary->Get("ColorShader");
+        auto shader = m_ShaderLibrary->Get("SimpleColorShader");
         shader->Bind();
         shader->SetInt("u_Texture", 0);
         shader->SetFloat3("u_Color", m_SquareColor);

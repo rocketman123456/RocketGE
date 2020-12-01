@@ -1,6 +1,6 @@
 #pragma once
 #include "GEEvent/Event.h"
-#include "GERender/Camera.h"
+#include "GECommon/Camera.h"
 #include "GEUtils/Timestep.h"
 
 namespace Rocket {

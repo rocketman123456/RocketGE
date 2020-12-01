@@ -6,6 +6,9 @@ add_library( GEEngine
     src/GECore/Log.cpp
     src/GECore/GLFWInput.cpp
     # GECommon
+    src/GECommon/Camera.cpp
+    src/GECommon/OrthographicCamera.cpp
+    src/GECommon/PerspectiveCamera.cpp
     src/GECommon/OrthographicCameraController.cpp
     src/GECommon/PerspectiveCameraController.cpp
     # GEModule
@@ -20,18 +23,17 @@ add_library( GEEngine
     src/GELayer/ImGuiLayer.cpp
     # GERender
     src/GERender/Buffer.cpp
-    src/GERender/Camera.cpp
     src/GERender/GraphicsContext.cpp
     src/GERender/RenderAPI.cpp
     src/GERender/Renderer.cpp
     src/GERender/RenderCommand.cpp
     src/GERender/Shader.cpp
     src/GERender/VertexArray.cpp
-    src/GERender/OrthographicCamera.cpp
-    src/GERender/PerspectiveCamera.cpp
     src/GERender/Texture.cpp
     # GERender2D
     src/GERender2D/Renderer2D.cpp
+    # GEUtils
+    src/GEUtils/FunctionUtils.cpp
 )
 target_link_libraries( GEEngine PRIVATE
     glfw Eigen3::Eigen

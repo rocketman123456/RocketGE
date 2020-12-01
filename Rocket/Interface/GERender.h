@@ -6,9 +6,6 @@
 #include "GERender/GraphicsContext.h"
 #include "GERender/Shader.h"
 #include "GERender/Buffer.h"
-#include "GERender/Camera.h"
-#include "GERender/OrthographicCamera.h"
-#include "GERender/PerspectiveCamera.h"
 #include "GERender/VertexArray.h"
 #include "GERender/Texture.h"
 

@@ -18,5 +18,7 @@ uniform vec3 u_Color;
 
 void main()
 {
+    //vec4 color = texture(u_Texture, v_TexCoord);
+    //FragColor = vec4(u_Color, 1.0f) * color;
     FragColor = vec4(u_Color, 1.0f);
 }

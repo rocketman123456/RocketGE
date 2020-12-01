@@ -4,7 +4,7 @@
 #include "GERender/VertexArray.h"
 #include "GERender/Texture.h"
 #include "GERender/Shader.h"
-#include "GERender/Camera.h"
+#include "GECommon/Camera.h"
 
 #include <glm/glm.hpp>
 #include <Eigen/Eigen>

@@ -1,5 +1,5 @@
 #pragma once
-#include "GERender/OrthographicCamera.h"
+#include "GECommon/OrthographicCamera.h"
 #include "GECommon/CameraController.h"
 #include "GEEvent/KeyEvent.h"
 #include "GEEvent/MouseEvent.h"

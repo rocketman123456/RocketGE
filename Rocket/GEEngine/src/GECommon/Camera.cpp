@@ -1,6 +1,6 @@
-#include "GERender/Camera.h"
-#include "GERender/OrthographicCamera.h"
-#include "GERender/PerspectiveCamera.h"
+#include "GECommon/Camera.h"
+#include "GECommon/OrthographicCamera.h"
+#include "GECommon/PerspectiveCamera.h"
 #include "GECore/Core.h"
 
 namespace Rocket {

@@ -46,8 +46,8 @@ int main()
 
     // build and compile our shader program
     // ------------------------------------
-    std::string path_vs = ProjectSourceDir + "/Test/OpenGLTest/3.3.shader.vs";
-    std::string path_fs = ProjectSourceDir + "/Test/OpenGLTest/3.3.shader.fs";
+    std::string path_vs = ProjectSourceDir + "/Assets/shaders/3.3.shader.vs";
+    std::string path_fs = ProjectSourceDir + "/Assets/shaders/3.3.shader.fs";
     Shader ourShader(path_vs.c_str(), path_fs.c_str()); // you can name your shader files however you like
 
     // set up vertex data (and buffer(s)) and configure vertex attributes

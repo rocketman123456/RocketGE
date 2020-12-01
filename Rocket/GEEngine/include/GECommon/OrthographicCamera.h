@@ -1,5 +1,5 @@
 #pragma once
-#include "GERender/Camera.h"
+#include "GECommon/Camera.h"
 
 namespace Rocket {
     class OrthographicCamera : implements Camera

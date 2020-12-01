@@ -1,6 +1,6 @@
 #pragma once
 #include "GECore/Core.h"
-#include "GERender/Camera.h"
+#include "GECommon/Camera.h"
 #include "GERender/Texture.h"
 
 namespace Rocket {
