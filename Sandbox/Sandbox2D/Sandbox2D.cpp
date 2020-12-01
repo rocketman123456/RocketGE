@@ -20,7 +20,7 @@ namespace Rocket {
     void Sandbox2DLayer::OnAttach()
     {
         RK_PROFILE_FUNCTION();
-        
+
         std::string img_path_1 = ProjectSourceDir + "/Assets/textures/wall.jpg";
         std::string img_path_2 = ProjectSourceDir + "/Assets/textures/container.jpg";
         std::string img_path_3 = ProjectSourceDir + "/Assets/textures/texture.jpg";
@@ -35,32 +35,52 @@ namespace Rocket {
 
 	void Sandbox2DLayer::OnDetach()
     {
+        RK_PROFILE_FUNCTION();
+        
         m_Controller.reset();
         m_Texture.clear();
     }
 
     void Sandbox2DLayer::OnUpdate(Timestep ts)
     {
+        RK_PROFILE_FUNCTION();
+
+        Renderer2D::ResetStats();
+
         m_Controller->OnUpdate(ts);
 
-        RenderCommand::SetClearColor({ 0.2f, 0.3f, 0.3f, 1.0f });
-        RenderCommand::Clear();
-
-        Renderer2D::BeginScene(m_Controller->GetCamera());
-        Renderer2D::DrawQuad({0.0f, 0.0f}, {0.9f, 0.9f}, {m_SquareColor, 1.0f});
-        Renderer2D::DrawQuad({0.0f, 1.0f}, {0.9f, 0.9f}, glm::vec4(1.0f) - glm::vec4({m_SquareColor, 0.0f}));
-        Renderer2D::DrawQuad({1.0f, 0.0f}, {0.9f, 0.9f}, m_Texture[0]);
-        Renderer2D::DrawQuad({1.0f, 1.0f}, {0.9f, 0.9f}, m_Texture[1]);
-        Renderer2D::DrawQuad({2.0f, 0.0f}, {0.9f, 0.9f}, m_Texture[2]);
-        Renderer2D::DrawQuad({2.0f, 1.0f}, {0.9f, 0.9f}, m_Texture[3]);
-        Renderer2D::EndScene();
+        {
+            RK_PROFILE_SCOPE("Renderer Prepare");
+            RenderCommand::SetClearColor({ 0.2f, 0.3f, 0.3f, 1.0f });
+            RenderCommand::Clear();
+        }
+        {
+            RK_PROFILE_SCOPE("Renderer Draw");
+            Renderer2D::BeginScene(m_Controller->GetCamera());
+            Renderer2D::DrawQuad({0.0f, 0.0f}, {0.9f, 0.9f}, {m_SquareColor, 1.0f});
+            Renderer2D::DrawQuad({0.0f, 1.0f}, {0.9f, 0.9f}, glm::vec4(1.0f) - glm::vec4({m_SquareColor, 0.0f}));
+            Renderer2D::DrawQuad({1.0f, 0.0f}, {0.9f, 0.9f}, m_Texture[0]);
+            Renderer2D::DrawQuad({1.0f, 1.0f}, {0.9f, 0.9f}, m_Texture[1]);
+            Renderer2D::DrawQuad({2.0f, 0.0f}, {0.9f, 0.9f}, m_Texture[2]);
+            Renderer2D::DrawQuad({2.0f, 1.0f}, {0.9f, 0.9f}, m_Texture[3]);
+            Renderer2D::EndScene();
+        }
     }
 
     void Sandbox2DLayer::OnGuiRender()
     {
-        ImGui::Begin("Example");
-        ImGui::Text("Hello Example!");
+        RK_PROFILE_FUNCTION();
+
+        ImGui::Begin("Setting");
         ImGui::ColorEdit3("Square Color", glm::value_ptr(m_SquareColor));
+        
+        auto stats = Rocket::Renderer2D::GetStats();
+        ImGui::Text("Renderer2D Stats:");
+        ImGui::Text("Draw Calls: %d", stats.DrawCalls);
+        ImGui::Text("Quads: %d", stats.QuadCount);
+        ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
+        ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
+        
         ImGui::End();
     }
 
