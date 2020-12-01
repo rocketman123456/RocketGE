@@ -1,5 +1,4 @@
 #include "Sandbox2D.h"
-#include "GERender/Renderer.h"
 
 #include <imgui.h>
 #include <glm/gtc/matrix_transform.hpp>
@@ -20,6 +19,8 @@ namespace Rocket {
 
     void Sandbox2DLayer::OnAttach()
     {
+        RK_PROFILE_FUNCTION();
+        
         std::string img_path_1 = ProjectSourceDir + "/Assets/textures/wall.jpg";
         std::string img_path_2 = ProjectSourceDir + "/Assets/textures/container.jpg";
         std::string img_path_3 = ProjectSourceDir + "/Assets/textures/texture.jpg";

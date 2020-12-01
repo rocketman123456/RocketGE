@@ -4,3 +4,5 @@
 #include "GEUtils/MouseCode.h"
 #include "GEUtils/Timestep.h"
 #include "GEUtils/PlatformUtils.h"
+#include "GEUtils/Portable.h"
+#include "GEUtils/Profile.h"
