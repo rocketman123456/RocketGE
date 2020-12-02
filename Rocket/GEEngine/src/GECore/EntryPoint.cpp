@@ -1,5 +1,5 @@
 #include "GECore/EntryPoint.h"
-#include "GEUtils/Profile.h"
+#include "GEUtils/Instrumentor.h"
 
 int main(int argc, char **argv)
 {

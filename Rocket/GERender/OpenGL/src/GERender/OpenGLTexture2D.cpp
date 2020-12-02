@@ -20,6 +20,7 @@ namespace Rocket {
     OpenGLTexture2D::OpenGLTexture2D(uint32_t width, uint32_t height)
 		: m_Width(width), m_Height(height)
 	{
+		RK_PROFILE_FUNCTION();
 		m_InternalFormat = GL_RGBA8;
 		m_DataFormat = GL_RGBA;
 #if defined(HIGH_OPENGL_VERSION)
@@ -47,10 +48,13 @@ namespace Rocket {
 	OpenGLTexture2D::OpenGLTexture2D(const std::string& path)
 		: m_Path(path)
 	{
+		RK_PROFILE_FUNCTION();
+
 		int width, height, channels;
 		stbi_set_flip_vertically_on_load(1);
 		stbi_uc* data = nullptr;
 		{
+			RK_PROFILE_SCOPE("OpenGLTexture2D::OpenGLTexture2D -- stbi_load");
 			data = stbi_load(path.c_str(), &width, &height, &channels, 0);
 		}
 		RK_CORE_ASSERT(data, "Failed to load image!");
@@ -104,11 +108,15 @@ namespace Rocket {
 
 	OpenGLTexture2D::~OpenGLTexture2D()
 	{
+		RK_PROFILE_FUNCTION();
+
 		glDeleteTextures(1, &m_RendererID);
 	}
 
 	void OpenGLTexture2D::SetData(void* data, uint32_t size)
 	{
+		RK_PROFILE_FUNCTION();
+
 		uint32_t bpp = m_DataFormat == GL_RGBA ? 4 : 3;
 		RK_CORE_ASSERT(size == m_Width * m_Height * bpp, "Data must be entire texture!");
 #if defined(HIGH_OPENGL_VERSION)
@@ -121,6 +129,7 @@ namespace Rocket {
 
 	void OpenGLTexture2D::Bind(uint32_t slot) const
 	{
+		//RK_PROFILE_FUNCTION();
 #if defined(HIGH_OPENGL_VERSION)
 		glBindTextureUnit(slot, m_RendererID);
 #else	
@@ -130,6 +139,7 @@ namespace Rocket {
 	}
     void OpenGLTexture2D::Unbind(uint32_t slot) const
 	{
+		//RK_PROFILE_FUNCTION();
 #if defined(HIGH_OPENGL_VERSION)
 		glBindTextureUnit(slot, 0);
 #else

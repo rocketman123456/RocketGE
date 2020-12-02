@@ -41,3 +41,4 @@ Rocket/GEEngine/include/RKConfig.h
 .VSCodeCounter/
 build/
 out/
+imgui.ini

@@ -29,6 +29,18 @@
             "MIMode": "lldb"
         },
         {
+            "name": "(lldb) RayTrace 01",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/Test/RayTrace/RayTrace01",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb"
+        },
+        {
             "name": "(lldb) VulkanTest",
             "type": "cppdbg",
             "request": "launch",

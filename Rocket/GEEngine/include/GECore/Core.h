@@ -29,7 +29,30 @@ const std::string RenderAPI = RENDER_API;
 	//#define GLFW_INCLUDE_NONE
 	#define GLFW_EXPOSE_NATIVE_COCOA
 #endif
-
+// TODO : make all types have explicit size
+typedef char			s8;
+#ifdef _WIN32
+typedef __int16			s16;
+typedef __int32			s32;
+typedef __int64			s64;
+#else
+typedef short			s16;
+typedef long			s32;
+typedef long long		s64;
+#endif
+typedef unsigned char		u8;
+#ifdef _WIN32
+typedef unsigned __int16	u16;
+typedef unsigned __int32	u32;
+typedef unsigned __int64	u64;
+#else
+typedef unsigned short		u16;
+typedef unsigned long		u32;
+typedef unsigned long long	u64;
+#endif
+typedef float			f32;
+typedef double			f64;
+// TODO : make all types have explicit size
 #define RK_EXPAND_MACRO(x) x
 #define RK_STRINGIFY_MACRO(x) #x
 
@@ -74,3 +97,4 @@ namespace Rocket {
 
 #include "GECore/Assert.h"
 #include "GECore/Log.h"
+#include "GEUtils/Instrumentor.h"

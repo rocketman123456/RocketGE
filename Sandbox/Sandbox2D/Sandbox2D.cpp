@@ -4,10 +4,16 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include <cstring>
+
 extern float square_vertices_s[12];
 extern uint32_t square_indices[6];
 
 namespace Rocket {
+
+#define PROFILE_SCOPE(name) Timer timer##__LINE__(name, [&](ProfileResult_ profileResult)\
+                            { m_ProfileResults.push_back(profileResult); })
+    
     Application* CreateApplication()
     {
         return static_cast<Application*>(new Sandbox2D);
@@ -44,17 +50,22 @@ namespace Rocket {
     void Sandbox2DLayer::OnUpdate(Timestep ts)
     {
         RK_PROFILE_FUNCTION();
+        PROFILE_SCOPE("Sandbox2D::OnUpdate");
 
         Renderer2D::ResetStats();
 
-        m_Controller->OnUpdate(ts);
-
         {
+            PROFILE_SCOPE("CameraController::OnUpdate");
+            m_Controller->OnUpdate(ts);
+        }
+        {
+            PROFILE_SCOPE("Renderer Prepare");
             RK_PROFILE_SCOPE("Renderer Prepare");
             RenderCommand::SetClearColor({ 0.2f, 0.3f, 0.3f, 1.0f });
             RenderCommand::Clear();
         }
         {
+            PROFILE_SCOPE("Renderer Draw");
             RK_PROFILE_SCOPE("Renderer Draw");
             Renderer2D::BeginScene(m_Controller->GetCamera());
             Renderer2D::DrawQuad({0.0f, 0.0f}, {0.9f, 0.9f}, {m_SquareColor, 1.0f});
@@ -80,14 +91,23 @@ namespace Rocket {
         ImGui::Text("Quads: %d", stats.QuadCount);
         ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
         ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
+
+        for (auto& result : m_ProfileResults)
+        {
+            char label[100];
+            strcpy(label, "%.3fms ");
+            strcat(label, result.Name);
+            ImGui::Text(label, result.Time);
+        }
+        m_ProfileResults.clear();
         
         ImGui::End();
     }
 
     void Sandbox2DLayer::OnEvent(Event &event)
     {
+        RK_PROFILE_FUNCTION();
         m_Controller->OnEvent(event);
-
         EventDispatcher dispatcher(event);
     }
     //------------------------------------------------------------------------

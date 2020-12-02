@@ -27,11 +27,13 @@ namespace Rocket
 
 	WindowWindows::WindowWindows(const WindowProps &props)
 	{
+		RK_PROFILE_FUNCTION();
 		Init(props);
 	}
 
 	WindowWindows::~WindowWindows()
 	{
+		RK_PROFILE_FUNCTION();
 		Shutdown();
 	}
 
@@ -181,6 +183,7 @@ namespace Rocket
 
 	void WindowWindows::OnUpdate()
 	{
+		RK_PROFILE_FUNCTION();
 		glfwPollEvents();
 		m_Context->SwapBuffers();
 	}

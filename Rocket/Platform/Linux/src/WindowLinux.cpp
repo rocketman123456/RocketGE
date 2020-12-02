@@ -26,11 +26,13 @@ namespace Rocket {
 
     WindowLinux::WindowLinux(const WindowProps& props)
 	{
+		RK_PROFILE_FUNCTION();
 		Init(props);
 	}
 
 	WindowLinux::~WindowLinux()
 	{
+		RK_PROFILE_FUNCTION();
 		Shutdown();
 	}
 
@@ -186,6 +188,7 @@ namespace Rocket {
 
 	void WindowLinux::OnUpdate()
 	{
+		RK_PROFILE_FUNCTION();
 		glfwPollEvents();
 		m_Context->SwapBuffers();
 	}

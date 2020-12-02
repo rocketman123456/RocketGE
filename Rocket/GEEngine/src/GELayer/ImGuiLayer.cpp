@@ -1,5 +1,6 @@
 #include "GELayer/ImGuiLayer.h"
 #include "GEModule/Application.h"
+#include "GEUtils/Profile.h"
 
 #include <imgui.h>
 #ifdef RK_OPENGL
@@ -116,7 +117,14 @@ namespace Rocket
 	void ImGuiLayer::OnGuiRender()
 	{
 		static bool show = true;
-		//ImGui::ShowDemoWindow(&show);
+		ImGui::Begin("Setting");
+		ImGui::Text("Runtime Stats:");
+		auto info_stack = g_Profiler.GetProfileInfo();
+		for(auto info : info_stack)
+		{
+			ImGui::Text(info.c_str());
+		}
+		ImGui::End();
 	}
 
 	void ImGuiLayer::SetDarkThemeColors()

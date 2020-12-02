@@ -16,6 +16,8 @@ namespace Rocket {
 
     OpenGLShader::OpenGLShader(const std::string& filepath)
 	{
+		RK_PROFILE_FUNCTION();
+
 		std::string source = ReadFile(filepath);
 		auto shaderSources = PreProcess(source);
 		Compile(shaderSources);
@@ -30,6 +32,8 @@ namespace Rocket {
 
     OpenGLShader::OpenGLShader(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc)
     {
+		RK_PROFILE_FUNCTION();
+
         std::unordered_map<GLenum, std::string> sources;
 		sources[GL_VERTEX_SHADER] = vertexSrc;
 		sources[GL_FRAGMENT_SHADER] = fragmentSrc;
@@ -38,11 +42,15 @@ namespace Rocket {
 
     OpenGLShader::~OpenGLShader()
     {
+		RK_PROFILE_FUNCTION();
+
         glDeleteProgram(m_RendererID);
     }
 
     std::string OpenGLShader::ReadFile(const std::string& filepath)
 	{
+		RK_PROFILE_FUNCTION();
+
 		std::string result;
 		std::ifstream in(filepath, std::ios::in | std::ios::binary); // ifstream closes itself due to RAII
 		if (in)
@@ -70,6 +78,8 @@ namespace Rocket {
 
     std::unordered_map<GLenum, std::string> OpenGLShader::PreProcess(const std::string& source)
 	{
+		RK_PROFILE_FUNCTION();
+
 		std::unordered_map<GLenum, std::string> shaderSources;
 
 		const char* typeToken = "#type";
@@ -94,6 +104,8 @@ namespace Rocket {
 
     void OpenGLShader::Compile(const std::unordered_map<GLenum, std::string>& shaderSources)
 	{
+		RK_PROFILE_FUNCTION();
+
 		GLuint program = glCreateProgram();
 		RK_CORE_ASSERT(shaderSources.size() <= 2, "We only support 2 shaders for now");
 		std::array<GLenum, 2> glShaderIDs;
@@ -168,11 +180,15 @@ namespace Rocket {
 
     void OpenGLShader::Bind() const
 	{
+		RK_PROFILE_FUNCTION();
+
 		glUseProgram(m_RendererID);
 	}
 
 	void OpenGLShader::Unbind() const
 	{
+		RK_PROFILE_FUNCTION();
+		
 		glUseProgram(0);
 	}
 

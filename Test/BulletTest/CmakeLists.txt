@@ -1,3 +1,5 @@
+message(STATUS "Add Module BulletTest")
+message(STATUS "###################################")
 add_executable( BulletTest
     BulletTest.cpp
 )

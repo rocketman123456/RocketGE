@@ -9,6 +9,12 @@ namespace Rocket {
         virtual ~Sandbox2D() = default;
     };
 
+    struct ProfileResult_
+	{
+		const char* Name;
+		float Time;
+	};
+
     class Sandbox2DLayer : implements Layer
     {
     public:
@@ -25,6 +31,8 @@ namespace Rocket {
         Ref<CameraController> m_Controller;
 
         std::vector<Ref<Texture2D>> m_Texture;
+
+        std::vector<ProfileResult_> m_ProfileResults;
 
         glm::vec3 m_SquareColor = { 1.0f, 0.5f, 0.2f };
     };

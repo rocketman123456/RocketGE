@@ -13,6 +13,8 @@ namespace Rocket {
     
     void OpenGLContext::Init()
     {
+        RK_PROFILE_FUNCTION();
+
         glfwMakeContextCurrent(m_WindowHandle);
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		RK_CORE_ASSERT(status, "Failed to Initialize GLAD");

@@ -105,11 +105,11 @@ include_directories(
 )
 
 if(OpenGL)
-    include_directories(${PROJECT_SOURCE_DIR}/Rocket/GERender/OpenGL/include)
+    include_directories( ${PROJECT_SOURCE_DIR}/Rocket/GERender/OpenGL/include )
 elseif(Vulkan)
-    include_directories(${PROJECT_SOURCE_DIR}/Rocket/GERender/Vulkan/include)
+    include_directories( ${PROJECT_SOURCE_DIR}/Rocket/GERender/Vulkan/include )
 elseif(Metal)
-    include_directories(${PROJECT_SOURCE_DIR}/Rocket/GERender/Metal/include)
+    include_directories( ${PROJECT_SOURCE_DIR}/Rocket/GERender/Metal/include )
 endif()
 
 if(Apple)

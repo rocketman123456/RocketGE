@@ -45,6 +45,7 @@ namespace Rocket {
 
     void Renderer2D::ResetStats()
 	{
+		RK_PROFILE_FUNCTION();
 		memset(&s_Data.Stats, 0, sizeof(Statistics));
 	}
 
@@ -55,6 +56,7 @@ namespace Rocket {
 
     void Renderer2D::Init()
     {
+		RK_PROFILE_FUNCTION();
         s_Data.QuadVertexArray = VertexArray::Create();
         s_Data.QuadVertexArray->Bind();
 
@@ -114,11 +116,13 @@ namespace Rocket {
 
     void Renderer2D::Shutdown()
     {
+		RK_PROFILE_FUNCTION();
         delete[] s_Data.QuadVertexBufferBase;
     }
 
     void Renderer2D::BeginScene(const Camera& camera, const glm::mat4& transform)
     {
+		RK_PROFILE_FUNCTION();
         glm::mat4 viewProj = camera.GetProjectionMatrix() * glm::inverse(transform);
 
 		s_Data.TextureShader->Bind();
@@ -129,6 +133,7 @@ namespace Rocket {
 
     void Renderer2D::BeginScene(const Camera& camera)
     {
+		RK_PROFILE_FUNCTION();
         s_Data.TextureShader->Bind();
 		s_Data.TextureShader->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
 
@@ -137,11 +142,15 @@ namespace Rocket {
 
     void Renderer2D::EndScene()
     {
+		RK_PROFILE_FUNCTION();
+
         Flush();
     }
 
     void Renderer2D::StartBatch()
     {
+		RK_PROFILE_FUNCTION();
+
         s_Data.QuadIndexCount = 0;
 		s_Data.QuadVertexBufferPtr = s_Data.QuadVertexBufferBase;
 
@@ -150,6 +159,8 @@ namespace Rocket {
 
     void Renderer2D::Flush()
     {
+		RK_PROFILE_FUNCTION();
+
         if (s_Data.QuadIndexCount == 0)
 			return; // Nothing to draw
         
@@ -169,6 +180,8 @@ namespace Rocket {
 
     void Renderer2D::NextBatch()
 	{
+		RK_PROFILE_FUNCTION();
+
 		Flush();
 		StartBatch();
 	}
@@ -201,6 +214,8 @@ namespace Rocket {
 
     void Renderer2D::DrawQuad(const glm::mat4& transform, const glm::vec4& color)
     {
+		RK_PROFILE_FUNCTION();
+
         constexpr size_t quadVertexCount = 4;
 		const float textureIndex = 0.0f; // White Texture
 		constexpr glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
@@ -226,6 +241,8 @@ namespace Rocket {
 
     void Renderer2D::DrawQuad(const glm::mat4& transform, const Ref<Texture2D>& texture, float tilingFactor, const glm::vec4& tintColor)
     {
+		RK_PROFILE_FUNCTION();
+		
         constexpr size_t quadVertexCount = 4;
 		constexpr glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
 

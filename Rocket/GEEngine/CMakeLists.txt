@@ -36,6 +36,7 @@ add_library( GEEngine
     src/GERender2D/Renderer2D.cpp
     # GEUtils
     src/GEUtils/FunctionUtils.cpp
+    src/GEUtils/Profile.cpp
 )
 target_link_libraries( GEEngine PRIVATE
     glfw Eigen3::Eigen
