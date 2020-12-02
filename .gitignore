@@ -34,7 +34,7 @@
 # ignore files
 .DS_Store
 imgui.ini
-Rocket/GECore/include/RKConfig.h
+Rocket/GEEngine/include/RKConfig.h
 
 # ignore dir
 .vs/

@@ -2,7 +2,7 @@
 #include "GERender/Buffer.h"
 
 namespace Rocket {
-	class OpenGLIndexBuffer : public IndexBuffer
+	class OpenGLIndexBuffer : implements IndexBuffer
 	{
 	public:
 		OpenGLIndexBuffer(uint32_t* indices, uint32_t count);

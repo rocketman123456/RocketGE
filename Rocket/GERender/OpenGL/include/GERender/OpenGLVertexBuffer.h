@@ -2,7 +2,7 @@
 #include "GERender/Buffer.h"
 
 namespace Rocket {
-	class OpenGLVertexBuffer : public VertexBuffer
+	class OpenGLVertexBuffer : implements VertexBuffer
 	{
 	public:
 		OpenGLVertexBuffer(uint32_t size);

@@ -5,7 +5,7 @@
 #include <Eigen/Eigen>
 
 namespace Rocket {
-    class OpenGLShader : public Shader
+    class OpenGLShader : implements Shader
     {
     public:
         OpenGLShader(const std::string& filepath);

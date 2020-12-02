@@ -1,15 +1,15 @@
 #pragma once
 
 #include "GECore/Core.h"
-#include "GEWindow.h"
-#include "GEEvent.h"
+#include "GEWindow/Window.h"
+#include "GEEvent/Event.h"
 #include "GERender/GraphicsContext.h"
 
 struct GLFWwindow;
 
 namespace Rocket
 {
-	class WindowApple : public Window
+	class WindowApple : implements Window
 	{
 	public:
 		WindowApple(const WindowProps &props);
@@ -35,9 +35,9 @@ namespace Rocket
 		struct WindowData
 		{
 			std::string Title;
-			unsigned int Width, Height;
+			uint32_t Width, Height;
+			float xScale = 1.0f, yScale = 1.0f;
 			bool VSync;
-
 			EventCallbackFn EventCallback;
 		};
 

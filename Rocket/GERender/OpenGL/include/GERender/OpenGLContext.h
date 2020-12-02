@@ -4,7 +4,7 @@
 struct GLFWwindow;
 
 namespace Rocket {
-    class OpenGLContext : public GraphicsContext
+    class OpenGLContext : implements GraphicsContext
     {
     public:
         OpenGLContext(GLFWwindow* windowHandle);

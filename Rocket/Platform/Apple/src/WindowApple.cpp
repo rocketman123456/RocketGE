@@ -1,4 +1,8 @@
 #include "GEWindow/WindowApple.h"
+#include "GEEvent/KeyEvent.h"
+#include "GEEvent/MouseEvent.h"
+#include "GEEvent/ApplicationEvent.h"
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #ifdef RK_OPENGL
@@ -46,11 +50,20 @@ namespace Rocket
 		}
 
 		{
+#if defined(RK_OPENGL)
 			glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 			glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
 			glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 			glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+#elif defined(RK_VULKAN)
+			glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+#elif defined(RK_METAL)
+			glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+#endif
+			glfwWindowHint(GLFW_SCALE_TO_MONITOR, GL_TRUE);
+#if defined(RK_DEBUG)
 			glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
+#endif
 			//glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
 			m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
@@ -65,20 +78,20 @@ namespace Rocket
 
 		// Set GLFW callbacks
 		glfwSetWindowSizeCallback(m_Window, [](GLFWwindow *window, int width, int height) {
+			//RK_CORE_TRACE("glfwSetWindowSizeCallback");
+		});
+
+		glfwSetWindowContentScaleCallback(m_Window, [](GLFWwindow* window, float xscale, float yscale){
+			RK_CORE_TRACE("glfwSetWindowContentScaleCallback");
+		});
+
+		glfwSetFramebufferSizeCallback(m_Window, [](GLFWwindow* window, int width, int height){
 			WindowData &data = *(WindowData *)glfwGetWindowUserPointer(window);
 			data.Width = width;
 			data.Height = height;
 
-			WindowResizeEvent event(width, height);
+			WindowResizeEvent event(width, height, 1.0f, 1.0f);
 			data.EventCallback(event);
-		});
-
-		glfwSetWindowContentScaleCallback(m_Window, [](GLFWwindow* window, float xscale, float yscale){
-			RK_INFO("glfwSetWindowContentScaleCallback");
-		});
-
-		glfwSetFramebufferSizeCallback(m_Window, [](GLFWwindow* window, int width, int height){
-			RK_INFO("glfwSetFramebufferSizeCallback");
 		});
 
 		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow *window) {
@@ -181,4 +194,4 @@ namespace Rocket
 	{
 		return m_Data.VSync;
 	}
-} // namespace Rocket
+}

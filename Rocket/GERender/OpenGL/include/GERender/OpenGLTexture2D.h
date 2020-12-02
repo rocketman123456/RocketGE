@@ -3,7 +3,7 @@
 #include <glad/glad.h>
 
 namespace Rocket {
-    class OpenGLTexture2D : public Texture2D
+    class OpenGLTexture2D : implements Texture2D
 	{
 	public:
 		OpenGLTexture2D(uint32_t width, uint32_t height);

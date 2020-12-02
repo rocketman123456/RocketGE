@@ -2,14 +2,14 @@
 
 #include "GECore/Core.h"
 #include "GEWindow/Window.h"
-#include "GEEvent.h"
+#include "GEEvent/Event.h"
 #include "GERender/GraphicsContext.h"
 
 struct GLFWwindow;
 
 namespace Rocket
 {
-	class WindowWindows : public Window
+	class WindowWindows : implements Window
 	{
 	public:
 		WindowWindows(const WindowProps &props);

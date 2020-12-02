@@ -2,7 +2,7 @@
 #include "GERender/VertexArray.h"
 
 namespace Rocket {
-	class OpenGLVertexArray : public VertexArray
+	class OpenGLVertexArray : implements VertexArray
 	{
 	public:
 		OpenGLVertexArray();

@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 2.6)
+cmake_minimum_required (VERSION 2.8.12)
 
 if (CMAKE_SYSTEM_NAME MATCHES "Linux")
     set(VCPKG_ROOT "/usr/local/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE PATH "")
@@ -12,6 +12,8 @@ set(CMAKE_TOOLCHAIN_FILE ${VCPKG_ROOT})
 #### Main Project Config ############################
 set(RENDER_API "OpenGL")
 set(CMAKE_BUILD_TYPE "Debug")
+set(PROFILE 0) # This Option will generate runtime profile info to json
+#### Main Project Config ############################
 
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_STANDARD 11)
@@ -26,15 +28,18 @@ message(STATUS "Project Name ${PROJECT_NAME}")
 
 configure_file (
     "${PROJECT_SOURCE_DIR}/RKConfig.h.in"
-    "${PROJECT_SOURCE_DIR}/Rocket/GECore/include/RKConfig.h"
+    "${PROJECT_SOURCE_DIR}/Rocket/GEEngine/include/RKConfig.h"
 )
 
 message(STATUS "###################################")
 
+if(PROFILE)
+    add_definitions(-DRK_PROFILE)
+endif()
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-    add_definitions(-DDEBUG)
+    add_definitions(-DRK_DEBUG)
 elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
-    add_definitions(-DRELEASE)
+    add_definitions(-DRK_RELEASE)
 endif()
 message(STATUS "Build System Set to ${CMAKE_BUILD_TYPE}")
 
@@ -61,6 +66,7 @@ find_package(Threads REQUIRED)
 find_package(yaml-cpp CONFIG REQUIRED)
 find_package(glfw3 CONFIG REQUIRED)
 find_package(Eigen3 CONFIG REQUIRED)
+find_package(Bullet CONFIG REQUIRED)
 
 message(STATUS "Render API Set to ${RENDER_API}")
 if (RENDER_API MATCHES "OpenGL")
@@ -86,15 +92,16 @@ include_directories(
     ${PROJECT_SOURCE_DIR}/Thirdparty/glad/include
     ${PROJECT_SOURCE_DIR}/Thirdparty/spdlog/include
     ${PROJECT_SOURCE_DIR}/Thirdparty/stb_image
+    ${PROJECT_SOURCE_DIR}/Thirdparty/tinyobjloader
     ${PROJECT_SOURCE_DIR}/Thirdparty/imgui
     ${PROJECT_SOURCE_DIR}/Thirdparty/glm
     ${EIGEN3_INCLUDE_DIRS}/unsupported
     ${EIGEN3_INCLUDE_DIRS}
+    ${BULLET_INCLUDE_DIRS}
 )
 
 include_directories(
-    ${PROJECT_SOURCE_DIR}/Rocket/GECore/include
-    ${PROJECT_SOURCE_DIR}/Sandbox/include
+    ${PROJECT_SOURCE_DIR}/Rocket/GEEngine/include
 )
 
 if(OpenGL)
@@ -116,3 +123,4 @@ endif()
 add_subdirectory( Thirdparty )
 add_subdirectory( Rocket )
 add_subdirectory( Sandbox )
+add_subdirectory( Test )
