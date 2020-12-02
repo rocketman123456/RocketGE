@@ -14,20 +14,6 @@
 #define NUM_PROFILE_SAMPLES 100
 
 namespace Rocket {
-    // TODO : shoule only use for profile
-    class CustomTimer : implements Singleton <CustomTimer>
-    {
-    public:
-        void InitTime(void);
-        void MarkTimeThisTick(void);
-        float GetElapsedTime(void);
-        float GetExactTime(void);
-    private:
-        std::chrono::time_point<std::chrono::steady_clock> m_StartTimepoint;
-        std::chrono::time_point<std::chrono::steady_clock> m_CurrentTimepoint;
-        long long m_TimeLastTick;
-    };
-
     typedef struct
     {
         bool bValid;                    //Whether this data is valid
@@ -51,18 +37,32 @@ namespace Rocket {
         float fMax;       //Maximum time per frame (percentage)
     } ProfileSampleHistory;
 
-    class Profiler : implements Singleton<Profiler>
+    // this timer shoule only use for profile
+    class ProfilerTimer// : implements Singleton<CustomTimer>
+    {
+    public:
+        void InitTime(void);
+        void MarkTimeThisTick(void);
+        float GetElapsedTime(void);
+        float GetExactTime(void);
+    private:
+        std::chrono::time_point<std::chrono::steady_clock> m_StartTimepoint;
+        std::chrono::time_point<std::chrono::steady_clock> m_CurrentTimepoint;
+        long long m_TimeLastTick;
+    };
+
+    class Profiler// : implements Singleton<Profiler>
     {
     public:
         void ProfileInit(void);
-        void ProfileBegin(char* name);
-        void ProfileEnd(char* name);
+        void ProfileBegin(const std::string& name);
+        void ProfileEnd(const std::string& name);
         void ProfileDumpOutputToBuffer(void);
 
         const std::vector<std::string>& GetProfileInfo() { return m_ProfileInfo; }
     private:
-        void StoreProfileInHistory(char* name, float percent);
-        void GetProfileFromHistory(char* name, float *ave, float *min, float *max);
+        void StoreProfileInHistory(const std::string& name, float percent);
+        void GetProfileFromHistory(const std::string& name, float *ave, float *min, float *max);
     private:
         std::vector<std::string>    m_ProfileInfo;
         ProfileSample               m_Samples[NUM_PROFILE_SAMPLES];
@@ -71,7 +71,10 @@ namespace Rocket {
         float                       m_EndProfile = 0.0f;
     };
 
-    #define g_CustomTimer CustomTimer::GetSingleton()
-    #define g_Profiler Profiler::GetSingleton()
+    // TODO : use singlton to replace this raw pointer
+    extern ProfilerTimer* g_ProfilerTimer;
+    extern Profiler* g_Profiler;
+    //#define g_ProfilerTimer ProfilerTimer::GetSingleton()
+    //#define g_Profiler Profiler::GetSingleton()
 }
 

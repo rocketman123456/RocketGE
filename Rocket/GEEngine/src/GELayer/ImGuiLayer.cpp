@@ -116,10 +116,9 @@ namespace Rocket
 
 	void ImGuiLayer::OnGuiRender()
 	{
-		static bool show = true;
-		ImGui::Begin("Setting");
+		ImGui::Begin("Profiler");
 		ImGui::Text("Runtime Stats:");
-		auto info_stack = g_Profiler.GetProfileInfo();
+		auto info_stack = g_Profiler->GetProfileInfo();
 		for(auto info : info_stack)
 		{
 			ImGui::Text(info.c_str());

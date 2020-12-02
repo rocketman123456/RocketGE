@@ -11,14 +11,16 @@
 #include "GEUtils/Profile.h"
 
 namespace Rocket {
-    void CustomTimer::InitTime()
+    ProfilerTimer* g_ProfilerTimer = new ProfilerTimer();
+
+    void ProfilerTimer::InitTime()
     {
         m_StartTimepoint = std::chrono::high_resolution_clock::now();
         m_CurrentTimepoint = std::chrono::high_resolution_clock::now();
         m_TimeLastTick = 1000;
     }
 
-    void CustomTimer::MarkTimeThisTick()
+    void ProfilerTimer::MarkTimeThisTick()
     {
         std::chrono::time_point<std::chrono::steady_clock> current;
         long long start = std::chrono::time_point_cast<std::chrono::microseconds>(m_CurrentTimepoint).time_since_epoch().count();
@@ -31,13 +33,13 @@ namespace Rocket {
             m_TimeLastTick = 10;
     }
 
-    float CustomTimer::GetElapsedTime(void)
+    float ProfilerTimer::GetElapsedTime(void)
     {
         float duration = (m_TimeLastTick) * 0.001f;
         return duration;
     }
 
-    float CustomTimer::GetExactTime(void)
+    float ProfilerTimer::GetExactTime(void)
     {
         m_CurrentTimepoint = std::chrono::high_resolution_clock::now();
         long long start = std::chrono::time_point_cast<std::chrono::microseconds>(m_StartTimepoint).time_since_epoch().count();
@@ -49,31 +51,33 @@ namespace Rocket {
 }
 
 namespace Rocket {
+    Profiler* g_Profiler = new Profiler();
+
     void Profiler::ProfileInit(void)
     {
-        g_CustomTimer.InitTime();
+        g_ProfilerTimer->InitTime();
 
         for (unsigned int i = 0; i < NUM_PROFILE_SAMPLES; i++)
         {
             m_Samples[i].bValid = false;
             m_History[i].bValid = false;
         }
-        m_StartProfile = g_CustomTimer.GetExactTime();
+        m_StartProfile = g_ProfilerTimer->GetExactTime();
         m_ProfileInfo.clear();
     }
 
-    void Profiler::ProfileBegin(char* name)
+    void Profiler::ProfileBegin(const std::string& name)
     {
         unsigned int i = 0;
 
         while (i < NUM_PROFILE_SAMPLES && m_Samples[i].bValid == true)
         {
-            if (strcmp(m_Samples[i].szName, name) == 0)
+            if (m_Samples[i].szName.compare(name) == 0)
             {
                 //Found the sample
                 m_Samples[i].iOpenProfiles++;
                 m_Samples[i].iProfileInstances++;
-                m_Samples[i].fStartTime = g_CustomTimer.GetExactTime();
+                m_Samples[i].fStartTime = g_ProfilerTimer->GetExactTime();
                 assert(m_Samples[i].iOpenProfiles == 1); //max 1 open at once
                 return;
             }
@@ -86,27 +90,28 @@ namespace Rocket {
             return;
         }
 
-        strcpy(m_Samples[i].szName, name);
+        //strcpy(m_Samples[i].szName, name);
+        m_Samples[i].szName = name;
         m_Samples[i].bValid = true;
         m_Samples[i].iOpenProfiles = 1;
         m_Samples[i].iProfileInstances = 1;
         m_Samples[i].fAccumulator = 0.0f;
-        m_Samples[i].fStartTime = g_CustomTimer.GetExactTime();
+        m_Samples[i].fStartTime = g_ProfilerTimer->GetExactTime();
         m_Samples[i].fChildrenSampleTime = 0.0f;
     }
 
-    void Profiler::ProfileEnd(char *name)
+    void Profiler::ProfileEnd(const std::string& name)
     {
         unsigned int i = 0;
         unsigned int numParents = 0;
 
         while (i < NUM_PROFILE_SAMPLES && m_Samples[i].bValid == true)
         {
-            if (strcmp(m_Samples[i].szName, name) == 0)
+            if (m_Samples[i].szName.compare(name) == 0)
             { //Found the sample
                 unsigned int inner = 0;
                 int parent = -1;
-                float fEndTime = g_CustomTimer.GetExactTime();
+                float fEndTime = g_ProfilerTimer->GetExactTime();
                 m_Samples[i].iOpenProfiles--;
 
                 //Count all parents and find the immediate parent
@@ -148,10 +153,10 @@ namespace Rocket {
     {
         unsigned int i = 0;
 
-        m_EndProfile = g_CustomTimer.GetExactTime();
+        m_EndProfile = g_ProfilerTimer->GetExactTime();
         m_ProfileInfo.clear();
 
-        m_ProfileInfo.push_back("  Ave :   Min :   Max :   # : Profile Name\n");
+        m_ProfileInfo.push_back("   Ave :   Min :   Max :   # : Profile Name\n");
         m_ProfileInfo.push_back("--------------------------------------------\n");
 
         while (i < NUM_PROFILE_SAMPLES && m_Samples[i].bValid == true)
@@ -185,7 +190,7 @@ namespace Rocket {
             sprintf(max, "%3.1f", maxTime);
             sprintf(num, "%3d", m_Samples[i].iProfileInstances);
 
-            strcpy(indentedName, m_Samples[i].szName);
+            strcpy(indentedName, m_Samples[i].szName.c_str());
             for (indent = 0; indent < m_Samples[i].iNumParents; indent++)
             {
                 sprintf(name, "   %s", indentedName);
@@ -195,6 +200,7 @@ namespace Rocket {
             sprintf(line, "%5s : %5s : %5s : %3s : %s\n", ave, min, max, num, indentedName);
             m_ProfileInfo.push_back(line); //Send the line to text buffer
             i++;
+            RK_CORE_TRACE(line);
         }
 
         { //Reset samples for next frame
@@ -203,15 +209,15 @@ namespace Rocket {
             {
                 m_Samples[i].bValid = false;
             }
-            m_StartProfile = g_CustomTimer.GetExactTime();
+            m_StartProfile = g_ProfilerTimer->GetExactTime();
         }
     }
 
-    void Profiler::StoreProfileInHistory(char *name, float percent)
+    void Profiler::StoreProfileInHistory(const std::string& name, float percent)
     {
         unsigned int i = 0;
         float oldRatio;
-        float newRatio = 0.8f * g_CustomTimer.GetElapsedTime();
+        float newRatio = 0.8f * g_ProfilerTimer->GetElapsedTime();
         if (newRatio > 1.0f)
         {
             newRatio = 1.0f;
@@ -220,7 +226,7 @@ namespace Rocket {
 
         while (i < NUM_PROFILE_SAMPLES && m_History[i].bValid == true)
         {
-            if (strcmp(m_History[i].szName, name) == 0)
+            if (m_Samples[i].szName.compare(name) == 0)
             { //Found the sample
                 m_History[i].fAve = (m_History[i].fAve * oldRatio) + (percent * newRatio);
                 if (percent < m_History[i].fMin)
@@ -252,7 +258,8 @@ namespace Rocket {
 
         if (i < NUM_PROFILE_SAMPLES)
         { //Add to history
-            strcpy(m_History[i].szName, name);
+            //strcpy(m_History[i].szName, name);
+            m_History[i].szName = name;
             m_History[i].bValid = true;
             m_History[i].fAve = m_History[i].fMin = m_History[i].fMax = percent;
         }
@@ -262,12 +269,12 @@ namespace Rocket {
         }
     }
 
-    void Profiler::GetProfileFromHistory(char *name, float *ave, float *min, float *max)
+    void Profiler::GetProfileFromHistory(const std::string& name, float *ave, float *min, float *max)
     {
         unsigned int i = 0;
         while (i < NUM_PROFILE_SAMPLES && m_History[i].bValid == true)
         {
-            if (strcmp(m_History[i].szName, name) == 0)
+            if (m_Samples[i].szName.compare(name) == 0)
             { //Found the sample
                 *ave = m_History[i].fAve;
                 *min = m_History[i].fMin;

@@ -7,7 +7,6 @@
  * below is included in the resulting source code, for example:
  * "Portions Copyright (C) Scott Bilas, 2000"
  */
-
 #pragma once
 
 /* Sample Usage
@@ -30,21 +29,21 @@ void SomeFunction( void )
 
 template <typename T> class Singleton
 {
-    static T* ms_Singleton;
+    static T* s_Singleton;
 
 public:
     Singleton( void )
     {
-        assert( !ms_Singleton );
-        int offset = (int)(T*)1 - (int)(Singleton <T>*)(T*)1;
-        ms_Singleton = (T*)((int)this + offset);
+        assert( !s_Singleton );
+        int offset = (int)(T*)1 - (int)(Singleton<T>*)(T*)1;
+        s_Singleton = (T*)((int)this + offset);
     }
     ~Singleton( void )
-        {  assert( ms_Singleton );  ms_Singleton = 0;  }
+        {  assert( s_Singleton );  s_Singleton = 0;  }
     static T& GetSingleton( void )
-        {  assert( ms_Singleton );  return ( *ms_Singleton );  }
+        {  assert( s_Singleton );  return ( *s_Singleton );  }
     static T* GetSingletonPtr( void )
-        {  return ( ms_Singleton );  }
+        {  return ( s_Singleton );  }
 };
 
-template <typename T> T* Singleton <T>::ms_Singleton = 0;
+template <typename T> T* Singleton <T>::s_Singleton = 0;
