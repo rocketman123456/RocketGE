@@ -182,22 +182,10 @@ namespace Rocket {
             strcpy(indentedName, m_Samples[i].szName.c_str());
             for (indent = 0; indent < m_Samples[i].iNumParents; indent++)
             {
-                sprintf(name, "-%s", indentedName);
+                sprintf(name, "    %s", indentedName);
                 strcpy(indentedName, name);
             }
             
-            //char line[256];
-            //char ave[16], min[16], max[16], num[16], parent[16];
-
-            //Format the data
-            //sprintf(ave, "%3.1f", aveTime);
-            //sprintf(min, "%3.1f", minTime);
-            //sprintf(max, "%3.1f", maxTime);
-            //sprintf(num, "%3d", m_Samples[i].iProfileInstances);
-            //sprintf(parent, "%3d", m_Samples[i].iNumParents);
-
-            //sprintf(line, "|  %5s :  %5s :  %5s :  %3s :  %3s : %s", ave, min, max, num, parent, indentedName);
-            //RK_CORE_TRACE(line);
             m_ProfileInfoVec.push_back({
                 indentedName, 
                 aveTime, minTime, maxTime, 

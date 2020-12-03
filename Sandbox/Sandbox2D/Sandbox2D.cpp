@@ -84,14 +84,14 @@ namespace Rocket {
 
         ImGui::Begin("Setting");
         ImGui::ColorEdit3("Square Color", glm::value_ptr(m_SquareColor));
-        
+        ImGui::Separator();
         auto stats = Rocket::Renderer2D::GetStats();
         ImGui::Text("Renderer2D Stats:");
         ImGui::Text("Draw Calls: %d", stats.DrawCalls);
         ImGui::Text("Quads: %d", stats.QuadCount);
         ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
         ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
-
+        ImGui::Separator();
         for (auto& result : m_ProfileResults)
         {
             char label[100];
@@ -100,7 +100,6 @@ namespace Rocket {
             ImGui::Text(label, result.Time);
         }
         m_ProfileResults.clear();
-        
         ImGui::End();
     }
 

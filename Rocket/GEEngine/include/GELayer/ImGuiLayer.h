@@ -8,7 +8,7 @@ namespace Rocket
     class ImGuiLayer : implements Layer
     {
     public:
-        ImGuiLayer() : Layer("ImGuiLayer") {}
+        ImGuiLayer(bool show_status = true) : Layer("ImGuiLayer"), m_ShowStatus(show_status) {}
         virtual ~ImGuiLayer() = default;
 
         virtual void OnAttach() override;
@@ -23,7 +23,10 @@ namespace Rocket
         void SetDarkThemeColors();
         void BlockEvents(bool block) { m_BlockEvents = block; }
     private:
+        void RenderStatusTable();
+    private:
         bool m_BlockEvents = true;
+        bool m_ShowStatus;
         float m_Time = 0.0f;
     };
 } // namespace Rocket
