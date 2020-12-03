@@ -37,8 +37,18 @@ namespace Rocket {
         float fMax;       //Maximum time per frame (percentage)
     } ProfileSampleHistory;
 
+    typedef struct
+    {
+        std::string szName;
+        float fAve;       //Average time per frame (percentage)
+        float fMin;       //Minimum time per frame (percentage)
+        float fMax;       //Maximum time per frame (percentage)
+        unsigned int iNum;
+        unsigned int iParent;
+    } ProfileInfo;
+
     // this timer shoule only use for profile
-    class ProfilerTimer// : implements Singleton<CustomTimer>
+    class ProfilerTimer : implements Singleton<ProfilerTimer>
     {
     public:
         void InitTime(void);
@@ -51,7 +61,7 @@ namespace Rocket {
         long long m_TimeLastTick;
     };
 
-    class Profiler// : implements Singleton<Profiler>
+    class Profiler : implements Singleton<Profiler>
     {
     public:
         void ProfileInit(void);
@@ -59,22 +69,24 @@ namespace Rocket {
         void ProfileEnd(const std::string& name);
         void ProfileDumpOutputToBuffer(void);
 
-        const std::vector<std::string>& GetProfileInfo() { return m_ProfileInfo; }
+        const std::vector<ProfileInfo>& GetProfileInfo() { return m_ProfileInfoVec; }
     private:
         void StoreProfileInHistory(const std::string& name, float percent);
         void GetProfileFromHistory(const std::string& name, float *ave, float *min, float *max);
     private:
-        std::vector<std::string>    m_ProfileInfo;
+        std::vector<ProfileInfo>    m_ProfileInfoVec;
         ProfileSample               m_Samples[NUM_PROFILE_SAMPLES];
         ProfileSampleHistory        m_History[NUM_PROFILE_SAMPLES];
         float                       m_StartProfile = 0.0f;
         float                       m_EndProfile = 0.0f;
     };
 
-    // TODO : use singlton to replace this raw pointer
-    extern ProfilerTimer* g_ProfilerTimer;
-    extern Profiler* g_Profiler;
     //#define g_ProfilerTimer ProfilerTimer::GetSingleton()
     //#define g_Profiler Profiler::GetSingleton()
+    #define ProfilerInit() Profiler::GetSingleton().ProfileInit()
+    #define ProfilerBegin(name) Profiler::GetSingleton().ProfileBegin(name)
+    #define ProfilerEnd(name) Profiler::GetSingleton().ProfileEnd(name)
+    #define ProfilerDump() Profiler::GetSingleton().ProfileDumpOutputToBuffer()
+    #define ProfilerGetInfo() Profiler::GetSingleton().GetProfileInfo()
 }
 

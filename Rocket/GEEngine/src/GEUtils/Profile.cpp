@@ -10,9 +10,9 @@
  */
 #include "GEUtils/Profile.h"
 
-namespace Rocket {
-    ProfilerTimer* g_ProfilerTimer = new ProfilerTimer();
+#define g_ProfilerTimer Rocket::ProfilerTimer::GetSingleton()
 
+namespace Rocket {
     void ProfilerTimer::InitTime()
     {
         m_StartTimepoint = std::chrono::high_resolution_clock::now();
@@ -51,19 +51,17 @@ namespace Rocket {
 }
 
 namespace Rocket {
-    Profiler* g_Profiler = new Profiler();
-
     void Profiler::ProfileInit(void)
     {
-        g_ProfilerTimer->InitTime();
+        g_ProfilerTimer.InitTime();
 
         for (unsigned int i = 0; i < NUM_PROFILE_SAMPLES; i++)
         {
             m_Samples[i].bValid = false;
             m_History[i].bValid = false;
         }
-        m_StartProfile = g_ProfilerTimer->GetExactTime();
-        m_ProfileInfo.clear();
+        m_StartProfile = g_ProfilerTimer.GetExactTime();
+        m_ProfileInfoVec.clear();
     }
 
     void Profiler::ProfileBegin(const std::string& name)
@@ -77,7 +75,7 @@ namespace Rocket {
                 //Found the sample
                 m_Samples[i].iOpenProfiles++;
                 m_Samples[i].iProfileInstances++;
-                m_Samples[i].fStartTime = g_ProfilerTimer->GetExactTime();
+                m_Samples[i].fStartTime = g_ProfilerTimer.GetExactTime();
                 assert(m_Samples[i].iOpenProfiles == 1); //max 1 open at once
                 return;
             }
@@ -86,17 +84,16 @@ namespace Rocket {
 
         if (i >= NUM_PROFILE_SAMPLES)
         {
-            assert(!"Exceeded Max Available Profile Samples");
+            RK_CORE_ASSERT(false, "Exceeded Max Available Profile Samples");
             return;
         }
 
-        //strcpy(m_Samples[i].szName, name);
         m_Samples[i].szName = name;
         m_Samples[i].bValid = true;
         m_Samples[i].iOpenProfiles = 1;
         m_Samples[i].iProfileInstances = 1;
         m_Samples[i].fAccumulator = 0.0f;
-        m_Samples[i].fStartTime = g_ProfilerTimer->GetExactTime();
+        m_Samples[i].fStartTime = g_ProfilerTimer.GetExactTime();
         m_Samples[i].fChildrenSampleTime = 0.0f;
     }
 
@@ -111,7 +108,7 @@ namespace Rocket {
             { //Found the sample
                 unsigned int inner = 0;
                 int parent = -1;
-                float fEndTime = g_ProfilerTimer->GetExactTime();
+                float fEndTime = g_ProfilerTimer.GetExactTime();
                 m_Samples[i].iOpenProfiles--;
 
                 //Count all parents and find the immediate parent
@@ -151,28 +148,25 @@ namespace Rocket {
 
     void Profiler::ProfileDumpOutputToBuffer(void)
     {
+        g_ProfilerTimer.MarkTimeThisTick();
+
         unsigned int i = 0;
 
-        m_EndProfile = g_ProfilerTimer->GetExactTime();
-        m_ProfileInfo.clear();
-
-        m_ProfileInfo.push_back("   Ave :   Min :   Max :   # : Profile Name\n");
-        m_ProfileInfo.push_back("--------------------------------------------\n");
+        m_EndProfile = g_ProfilerTimer.GetExactTime();
+        m_ProfileInfoVec.clear();
 
         while (i < NUM_PROFILE_SAMPLES && m_Samples[i].bValid == true)
         {
-            unsigned int indent = 0;
             float sampleTime, percentTime, aveTime, minTime, maxTime;
-            char line[256], name[256], indentedName[256];
-            char ave[16], min[16], max[16], num[16];
+            char indentedName[256], name[256];
 
             if (m_Samples[i].iOpenProfiles < 0)
             {
-                assert(!"ProfileEnd() called without a ProfileBegin()");
+                RK_CORE_ASSERT(false, "ProfileEnd() called without a ProfileBegin()");
             }
             else if (m_Samples[i].iOpenProfiles > 0)
             {
-                assert(!"ProfileBegin() called without a ProfileEnd()");
+                RK_CORE_ASSERT(false, "ProfileBegin() called without a ProfileEnd()");
             }
 
             sampleTime = m_Samples[i].fAccumulator - m_Samples[i].fChildrenSampleTime;
@@ -184,23 +178,33 @@ namespace Rocket {
             StoreProfileInHistory(m_Samples[i].szName, percentTime);
             GetProfileFromHistory(m_Samples[i].szName, &aveTime, &minTime, &maxTime);
 
-            //Format the data
-            sprintf(ave, "%3.1f", aveTime);
-            sprintf(min, "%3.1f", minTime);
-            sprintf(max, "%3.1f", maxTime);
-            sprintf(num, "%3d", m_Samples[i].iProfileInstances);
-
+            unsigned int indent = 0;
             strcpy(indentedName, m_Samples[i].szName.c_str());
             for (indent = 0; indent < m_Samples[i].iNumParents; indent++)
             {
-                sprintf(name, "   %s", indentedName);
+                sprintf(name, "-%s", indentedName);
                 strcpy(indentedName, name);
             }
+            
+            //char line[256];
+            //char ave[16], min[16], max[16], num[16], parent[16];
 
-            sprintf(line, "%5s : %5s : %5s : %3s : %s\n", ave, min, max, num, indentedName);
-            m_ProfileInfo.push_back(line); //Send the line to text buffer
+            //Format the data
+            //sprintf(ave, "%3.1f", aveTime);
+            //sprintf(min, "%3.1f", minTime);
+            //sprintf(max, "%3.1f", maxTime);
+            //sprintf(num, "%3d", m_Samples[i].iProfileInstances);
+            //sprintf(parent, "%3d", m_Samples[i].iNumParents);
+
+            //sprintf(line, "|  %5s :  %5s :  %5s :  %3s :  %3s : %s", ave, min, max, num, parent, indentedName);
+            //RK_CORE_TRACE(line);
+            m_ProfileInfoVec.push_back({
+                indentedName, 
+                aveTime, minTime, maxTime, 
+                m_Samples[i].iProfileInstances, 
+                m_Samples[i].iNumParents
+            });
             i++;
-            RK_CORE_TRACE(line);
         }
 
         { //Reset samples for next frame
@@ -209,7 +213,7 @@ namespace Rocket {
             {
                 m_Samples[i].bValid = false;
             }
-            m_StartProfile = g_ProfilerTimer->GetExactTime();
+            m_StartProfile = g_ProfilerTimer.GetExactTime();
         }
     }
 
@@ -217,7 +221,7 @@ namespace Rocket {
     {
         unsigned int i = 0;
         float oldRatio;
-        float newRatio = 0.8f * g_ProfilerTimer->GetElapsedTime();
+        float newRatio = 0.8f * g_ProfilerTimer.GetElapsedTime();
         if (newRatio > 1.0f)
         {
             newRatio = 1.0f;
@@ -258,14 +262,13 @@ namespace Rocket {
 
         if (i < NUM_PROFILE_SAMPLES)
         { //Add to history
-            //strcpy(m_History[i].szName, name);
             m_History[i].szName = name;
             m_History[i].bValid = true;
             m_History[i].fAve = m_History[i].fMin = m_History[i].fMax = percent;
         }
         else
         {
-            assert(!"Exceeded Max Available Profile Samples!");
+            RK_CORE_ASSERT(false, "Exceeded Max Available Profile Samples!");
         }
     }
 

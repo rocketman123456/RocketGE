@@ -29,21 +29,10 @@ void SomeFunction( void )
 
 template <typename T> class Singleton
 {
-    static T* s_Singleton;
-
 public:
-    Singleton( void )
-    {
-        assert( !s_Singleton );
-        int offset = (int)(T*)1 - (int)(Singleton<T>*)(T*)1;
-        s_Singleton = (T*)((int)this + offset);
-    }
-    ~Singleton( void )
-        {  assert( s_Singleton );  s_Singleton = 0;  }
     static T& GetSingleton( void )
-        {  assert( s_Singleton );  return ( *s_Singleton );  }
-    static T* GetSingletonPtr( void )
-        {  return ( s_Singleton );  }
+    {  
+        static T instance;
+        return instance;  
+    }
 };
-
-template <typename T> T* Singleton <T>::s_Singleton = 0;

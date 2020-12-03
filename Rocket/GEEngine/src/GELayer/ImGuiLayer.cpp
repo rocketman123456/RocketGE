@@ -117,12 +117,50 @@ namespace Rocket
 	void ImGuiLayer::OnGuiRender()
 	{
 		ImGui::Begin("Profiler");
-		ImGui::Text("Runtime Stats:");
-		auto info_stack = g_Profiler->GetProfileInfo();
+		//ImGui::Text("|   Ave :   Min :   Max :   # : Profile Name");
+		//ImGui::Text("|---------------------------------------------------------------");
+		// TODO : use table to show data
+		auto info_stack = ProfilerGetInfo();
+		ImGui::Columns(5, "Status");
+        ImGui::Separator();
+			if (ImGui::Selectable("Ave")) {}
+				ImGui::NextColumn();
+			if (ImGui::Selectable("Min")) {}
+				ImGui::NextColumn();
+			if (ImGui::Selectable("Max")) {}
+				ImGui::NextColumn();
+			if (ImGui::Selectable("Count")) {}
+				ImGui::NextColumn();
+			if (ImGui::Selectable("Profile Name")) {}
+				ImGui::NextColumn();
+		ImGui::Separator();
 		for(auto info : info_stack)
 		{
-			ImGui::Text(info.c_str());
+			char label[32];
+
+            sprintf(label, "%3.1f", info.fAve);
+            if (ImGui::Selectable(label)) {}
+            ImGui::NextColumn();
+
+			sprintf(label, "%3.1f", info.fMin);
+            if (ImGui::Selectable(label)) {}
+            ImGui::NextColumn();
+
+			sprintf(label, "%3.1f", info.fMax);
+            if (ImGui::Selectable(label)) {}
+            ImGui::NextColumn();
+
+			sprintf(label, "%3d", info.iNum);
+            if (ImGui::Selectable(label)) {}
+            ImGui::NextColumn();
+
+			sprintf(label, "%s", info.szName.c_str());
+            if (ImGui::Selectable(label)) {}
+            ImGui::NextColumn();
+			//ImGui::Text("|  %3.1f : %3.1f : %3.1f : %3d : %3d : %s", 
+			//	info.fAve, info.fMin, info.fMax, info.iNum, info.iParent, info.szName.c_str());
 		}
+		ImGui::Separator();
 		ImGui::End();
 	}
 

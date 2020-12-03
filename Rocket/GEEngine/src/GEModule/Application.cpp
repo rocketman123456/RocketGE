@@ -28,7 +28,7 @@ namespace Rocket
         m_LastTime = m_CurrentTime;
 
         // for realtime loop profile
-        g_Profiler->ProfileInit();
+        ProfilerInit();
     }
 
     Application::~Application()
@@ -85,48 +85,54 @@ namespace Rocket
 
             {
                 RK_PROFILE_SCOPE("Profiler Start Loop");
-                g_Profiler->ProfileBegin("Main Loop");
+                ProfilerBegin("Main Loop");
             }
             // Common Update
+            ProfilerBegin("Layer Update");
             for (Layer *layer : m_LayerStack)
             {
                 RK_PROFILE_SCOPE("Layer Update");
-                g_Profiler->ProfileBegin(layer->GetName());
+                ProfilerBegin(layer->GetName());
                 layer->OnUpdate(Timestep(m_Duration.count()));
-                g_Profiler->ProfileEnd(layer->GetName());
+                ProfilerEnd(layer->GetName());
             }
+            ProfilerEnd("Layer Update");
             // GUI Update
             {
                 RK_PROFILE_SCOPE("Layer GUI Begin");
-                g_Profiler->ProfileBegin("GuiLayer Begin");
+                ProfilerBegin("GuiLayer Begin");
                 m_GuiLayer->Begin();
-                g_Profiler->ProfileEnd("GuiLayer Begin");
+                ProfilerEnd("GuiLayer Begin");
             }
+            ProfilerBegin("Layer GUI Update");
             for (Layer *layer : m_LayerStack)
             {
                 RK_PROFILE_SCOPE("Layer GUI Update");
-                g_Profiler->ProfileBegin(layer->GetName() + " GUI");
+                ProfilerBegin(layer->GetName() + " GUI");
                 layer->OnGuiRender();
-                g_Profiler->ProfileEnd(layer->GetName() + " GUI");
+                ProfilerEnd(layer->GetName() + " GUI");
             }
+            ProfilerEnd("Layer GUI Update");
             {
                 RK_PROFILE_SCOPE("Layer GUI End");
-                g_Profiler->ProfileBegin("GuiLayer End");
+                ProfilerBegin("GuiLayer End");
                 m_GuiLayer->End();
-                g_Profiler->ProfileEnd("GuiLayer End");
+                ProfilerEnd("GuiLayer End");
             }
             // Window Update
             {
                 RK_PROFILE_SCOPE("Window Update");
+                ProfilerBegin("Window Update");
                 m_Window->OnUpdate();
+                ProfilerEnd("Window Update");
             }
             {
                 RK_PROFILE_SCOPE("Profiler End Loop");
-                g_Profiler->ProfileEnd("Main Loop");
+                ProfilerEnd("Main Loop");
             }
             {
-                RK_PROFILE_SCOPE("Profiler Update");
-                g_Profiler->ProfileDumpOutputToBuffer();
+                RK_PROFILE_SCOPE("Profiler Dump");
+                ProfilerDump();
             }
         }
         RK_INFO("End Application Run Loop");
