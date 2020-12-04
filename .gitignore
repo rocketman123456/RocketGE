@@ -41,4 +41,6 @@ Rocket/GEEngine/include/RKConfig.h
 .VSCodeCounter/
 build/
 out/
+Assets/sounds/Piano.ff/
+Assets/sounds/Piano.pp/
 imgui.ini

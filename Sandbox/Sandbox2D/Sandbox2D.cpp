@@ -19,10 +19,6 @@ namespace Rocket {
         return static_cast<Application*>(new Sandbox2D);
     }
 
-    Sandbox2DLayer::Sandbox2DLayer() : Layer("Sandbox2DLayer")
-    {
-    }
-
     void Sandbox2DLayer::OnAttach()
     {
         RK_PROFILE_FUNCTION();
@@ -113,10 +109,17 @@ namespace Rocket {
     //------------------------------------------------------------------------
     //------------------------------------------------------------------------
     //------------------------------------------------------------------------
-    Sandbox2D::Sandbox2D()
+    int Sandbox2D::Initialize()
     {
         RK_INFO("Build Type: {0}", BUILD_TYPE);
         RK_INFO("Source Dir: {0}", ProjectSourceDir);
+        Application::Initialize();
         PushLayer(new Sandbox2DLayer());
+        return 0;
+    }
+
+    void Sandbox2D::Finalize()
+    {
+        Application::Finalize();
     }
 }

@@ -9,7 +9,7 @@ namespace Rocket
 {
     Application *Application::s_Instance = nullptr;
 
-    Application::Application()
+    int Application::Initialize()
     {
         RK_PROFILE_FUNCTION();
 
@@ -29,14 +29,46 @@ namespace Rocket
 
         // for realtime loop profile
         ProfilerInit();
+
+        return 0;
     }
 
-    Application::~Application()
+    void Application::Finalize()
     {
         RK_PROFILE_FUNCTION();
 
         Renderer::Shutdown();
         RK_CORE_INFO("Exit Application");
+    }
+
+    int Application::InitializeModule()
+    {
+        int ret = 0;
+        for (auto& module : m_Modules)
+        {
+            if ((ret = module->Initialize()) != 0) {
+                RK_CORE_ERROR("Failed. err = {0}", ret);
+                return ret;
+            }
+        }
+        return ret;
+    }
+
+    void Application::FinalizeModule()
+    {
+        for (auto& module : m_Modules)
+        {
+            module->Finalize();
+            delete module;
+        }
+    }
+
+    void Application::TickModule()
+    {
+        for (auto& module : m_Modules)
+        {
+            module->Tick(Timestep(m_Duration.count()));
+        }
     }
 
     void Application::OnEvent(Event &e)
@@ -71,71 +103,81 @@ namespace Rocket
         layer->OnAttach();
     }
 
+    void Application::PushModule(IRuntimeModule* module)
+    {
+        m_Modules.push_back(module);
+    }
+
     void Application::Run()
     {
         RK_INFO("Start Application Run Loop");
         while (m_Running)
         {
-            RK_PROFILE_FUNCTION();
-
-            // Calculate Delta Time
-            m_LastTime = m_CurrentTime;
-            m_CurrentTime = m_Clock.now();
-            m_Duration = m_CurrentTime - m_LastTime;
-
-            {
-                RK_PROFILE_SCOPE("Profiler Start Loop");
-                ProfilerBegin("Main Loop");
-            }
-            // Common Update
-            ProfilerBegin("Layer Update");
-            for (Layer *layer : m_LayerStack)
-            {
-                RK_PROFILE_SCOPE("Layer Update");
-                ProfilerBegin(layer->GetName());
-                layer->OnUpdate(Timestep(m_Duration.count()));
-                ProfilerEnd(layer->GetName());
-            }
-            ProfilerEnd("Layer Update");
-            // GUI Update
-            {
-                RK_PROFILE_SCOPE("Layer GUI Begin");
-                ProfilerBegin("GuiLayer Begin");
-                m_GuiLayer->Begin();
-                ProfilerEnd("GuiLayer Begin");
-            }
-            ProfilerBegin("Layer GUI Update");
-            for (Layer *layer : m_LayerStack)
-            {
-                RK_PROFILE_SCOPE("Layer GUI Update");
-                ProfilerBegin(layer->GetName() + " GUI");
-                layer->OnGuiRender();
-                ProfilerEnd(layer->GetName() + " GUI");
-            }
-            ProfilerEnd("Layer GUI Update");
-            {
-                RK_PROFILE_SCOPE("Layer GUI End");
-                ProfilerBegin("GuiLayer End");
-                m_GuiLayer->End();
-                ProfilerEnd("GuiLayer End");
-            }
-            // Window Update
-            {
-                RK_PROFILE_SCOPE("Window Update");
-                ProfilerBegin("Window Update");
-                m_Window->OnUpdate();
-                ProfilerEnd("Window Update");
-            }
-            {
-                RK_PROFILE_SCOPE("Profiler End Loop");
-                ProfilerEnd("Main Loop");
-            }
-            {
-                RK_PROFILE_SCOPE("Profiler Dump");
-                ProfilerDump();
-            }
+            Tick();
         }
         RK_INFO("End Application Run Loop");
+    }
+
+    void Application::Tick()
+    {
+        RK_PROFILE_FUNCTION();
+
+        // Calculate Delta Time
+        m_LastTime = m_CurrentTime;
+        m_CurrentTime = m_Clock.now();
+        m_Duration = m_CurrentTime - m_LastTime;
+
+        {
+            RK_PROFILE_SCOPE("Profiler Start Loop");
+            ProfilerBegin("Main Loop");
+        }
+        // Common Update
+        ProfilerBegin("Layer Update");
+        for (Layer *layer : m_LayerStack)
+        {
+            RK_PROFILE_SCOPE("Layer Update");
+            ProfilerBegin(layer->GetName());
+            layer->OnUpdate(Timestep(m_Duration.count()));
+            ProfilerEnd(layer->GetName());
+        }
+        ProfilerEnd("Layer Update");
+        // GUI Update
+        {
+            RK_PROFILE_SCOPE("Layer GUI Begin");
+            ProfilerBegin("GuiLayer Begin");
+            m_GuiLayer->Begin();
+            ProfilerEnd("GuiLayer Begin");
+        }
+        ProfilerBegin("Layer GUI Update");
+        for (Layer *layer : m_LayerStack)
+        {
+            RK_PROFILE_SCOPE("Layer GUI Update");
+            ProfilerBegin(layer->GetName() + " GUI");
+            layer->OnGuiRender();
+            ProfilerEnd(layer->GetName() + " GUI");
+        }
+        ProfilerEnd("Layer GUI Update");
+        {
+            RK_PROFILE_SCOPE("Layer GUI End");
+            ProfilerBegin("GuiLayer End");
+            m_GuiLayer->End();
+            ProfilerEnd("GuiLayer End");
+        }
+        // Window Update
+        {
+            RK_PROFILE_SCOPE("Window Update");
+            ProfilerBegin("Window Update");
+            m_Window->OnUpdate();
+            ProfilerEnd("Window Update");
+        }
+        {
+            RK_PROFILE_SCOPE("Profiler End Loop");
+            ProfilerEnd("Main Loop");
+        }
+        {
+            RK_PROFILE_SCOPE("Profiler Dump");
+            ProfilerDump();
+        }
     }
 
     void Application::Close()

@@ -1,4 +1,4 @@
-#include "GECore/MemoryManager.h"
+#include "GEModule/MemoryManager.h"
 
 using namespace Rocket;
 using namespace std;
@@ -9,7 +9,7 @@ namespace Rocket {
         auto n = static_cast<int32_t>(type);
         n = endian_net_unsigned_int<int32_t>(n);
         char* c = reinterpret_cast<char*>(&n);
-         
+        
         for (size_t i = 0; i < sizeof(int32_t); i++) {
             out << *c++;
         }
@@ -28,7 +28,7 @@ void MemoryManager::Finalize()
     assert(m_mapMemoryAllocationInfo.empty());
 }
 
-void MemoryManager::Tick()
+void MemoryManager::Tick(Timestep ts)
 {
 #if DEBUG
     static int count = 0;

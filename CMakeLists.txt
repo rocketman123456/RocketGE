@@ -67,6 +67,8 @@ find_package(yaml-cpp CONFIG REQUIRED)
 find_package(glfw3 CONFIG REQUIRED)
 find_package(Eigen3 CONFIG REQUIRED)
 find_package(Bullet CONFIG REQUIRED)
+find_package(OpenAL CONFIG REQUIRED)
+find_package(SndFile CONFIG REQUIRED)
 
 message(STATUS "Render API Set to ${RENDER_API}")
 if (RENDER_API MATCHES "OpenGL")
@@ -98,6 +100,8 @@ include_directories(
     ${EIGEN3_INCLUDE_DIRS}/unsupported
     ${EIGEN3_INCLUDE_DIRS}
     ${BULLET_INCLUDE_DIRS}
+    ${OPENAL_INCLUDE_DIRS}
+    ${SNDFILE_INCLUDE_DIRS}
 )
 
 include_directories(

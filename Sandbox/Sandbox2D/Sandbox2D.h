@@ -5,8 +5,11 @@ namespace Rocket {
     class Sandbox2D : implements Application
     {
     public:
-        Sandbox2D();
+        Sandbox2D() {}
         virtual ~Sandbox2D() = default;
+
+        virtual int Initialize() override;
+        virtual void Finalize() override;
     };
 
     struct ProfileResult_
@@ -18,7 +21,7 @@ namespace Rocket {
     class Sandbox2DLayer : implements Layer
     {
     public:
-        Sandbox2DLayer();
+        Sandbox2DLayer() : Layer("Sandbox2DLayer") {}
         virtual ~Sandbox2DLayer() = default;
 
         virtual void OnAttach() override;

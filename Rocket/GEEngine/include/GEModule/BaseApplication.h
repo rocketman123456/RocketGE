@@ -8,7 +8,7 @@ namespace Rocket {
         virtual int Initialize();
         virtual void Finalize();
         // One cycle of the main loop
-        virtual void Tick();
+        virtual void Tick(Timestep ts);
 
         virtual bool IsQuit();
 

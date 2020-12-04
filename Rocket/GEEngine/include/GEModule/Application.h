@@ -6,12 +6,20 @@
 #include "GEWindow/Window.h"
 #include "GELayer/Layer.h"
 #include "GELayer/LayerStack.h"
+#include "GEModule/AudioManager.h"
 
 namespace Rocket {
     Interface Application {
     public:
-        Application();
-        virtual ~Application();
+        Application() {}
+        virtual ~Application() = default;
+
+        virtual int Initialize();
+        virtual void Finalize();
+
+        virtual int InitializeModule();
+        virtual void FinalizeModule();
+        void TickModule();
 
         void OnEvent(Event& e);
         void Close();
@@ -19,9 +27,13 @@ namespace Rocket {
         void PushLayer(Layer* layer);
 		void PushOverlay(Layer* layer);
 
+        void PushModule(IRuntimeModule* module);
+
         void Run();
+        void Tick();
 
         inline Window& GetWindow() { return *m_Window; }
+        inline bool GetIsRunning() { return m_Running; }
         static Application& Get() { return *s_Instance; }
     private:
         bool OnWindowClose(WindowCloseEvent& e);
@@ -30,6 +42,8 @@ namespace Rocket {
         Scope<Window> m_Window;
         Layer* m_GuiLayer;
         LayerStack m_LayerStack;
+
+        std::vector<IRuntimeModule*> m_Modules;
 
         bool m_Running = true;
         bool m_Minimized = false;

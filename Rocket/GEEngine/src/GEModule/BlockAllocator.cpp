@@ -1,5 +1,5 @@
-#include "GECore/BlockAllocator.h"
-#include "GECore/MemoryManager.h"
+#include "GEModule/BlockAllocator.h"
+#include "GEModule/MemoryManager.h"
 #include <cassert>
 #include <cstdlib>
 #include <cstring>

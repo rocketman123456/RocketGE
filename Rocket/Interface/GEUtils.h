@@ -8,3 +8,4 @@
 #include "GEUtils/Instrumentor.h"
 #include "GEUtils/Timer.h"
 #include "GEUtils/Profile.h"
+#include "GEUtils/FunctionUtils.h"

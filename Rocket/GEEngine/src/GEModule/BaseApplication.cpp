@@ -14,7 +14,7 @@ namespace Rocket {
     }
 
     // One cycle of the main loop
-    void BaseApplication::Tick()
+    void BaseApplication::Tick(Timestep ts)
     {
     }
 
