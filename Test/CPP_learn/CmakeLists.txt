@@ -3,3 +3,12 @@ message(STATUS "###################################")
 add_executable( SingletonTest
     Singleton.cpp
 )
+add_executable( Enum2String_1
+    Enum2String_1.cpp
+)
+add_executable( Enum2String_2
+    Enum2String_2.cpp
+)
+add_executable( Enum2String_3
+    Enum2String_3.cpp
+)
