@@ -27,6 +27,7 @@ namespace Rocket {
 		std::vector<Layer*>::const_reverse_iterator rend() const { return m_Layers.rend(); }
 	private:
 		std::vector<Layer*> m_Layers;
+		std::unordered_map<std::string, Layer*> m_LayersMap;
 		unsigned int m_LayerInsertIndex = 0;
 	};
 }

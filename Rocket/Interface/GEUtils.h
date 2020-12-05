@@ -14,3 +14,4 @@
 #include "GEUtils/Queue.h"
 #include "GEUtils/Semaphore.h"
 #include "GEUtils/ThreadPool.h"
+#include "GEUtils/RAII.h"

@@ -14,5 +14,10 @@ namespace Rocket {
 
         virtual void Tick(Timestep ts) = 0;
         virtual void OnEvent(Event& event) {}
+
+        // For debug
+        virtual const std::string& GetName() const { return m_Name; }
+    protected:
+        std::string m_Name = "IRuntimeModule";
     };
 }

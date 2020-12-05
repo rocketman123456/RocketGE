@@ -52,7 +52,7 @@ typedef unsigned long long	u64;
 #endif
 typedef float			f32;
 typedef double			f64;
-// TODO : make all types have explicit size
+
 #define RK_EXPAND_MACRO(x) x
 #define RK_STRINGIFY_MACRO(x) #x
 
@@ -68,6 +68,7 @@ inline void SafeRelease(T **ppInterfaceToRelease)
 {
 	if (*ppInterfaceToRelease != nullptr)
 	{
+		delete (*ppInterfaceToRelease);
 		(*ppInterfaceToRelease) = nullptr;
 	}
 }
@@ -93,6 +94,9 @@ namespace Rocket {
 	{
 		return std::make_shared<T>(std::forward<Args>(args)...);
 	}
+
+	template<typename T>
+	using StoreRef = std::weak_ptr<T>;
 }
 
 #include "GECore/Assert.h"

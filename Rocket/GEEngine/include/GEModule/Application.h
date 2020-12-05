@@ -47,6 +47,7 @@ namespace Rocket {
         LayerStack m_LayerStack;
 
         std::vector<IRuntimeModule*> m_Modules;
+        std::unordered_map<std::string, IRuntimeModule*> m_ModulesMap;
 
         bool m_Running = true;
         bool m_Minimized = false;

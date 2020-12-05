@@ -12,3 +12,6 @@ add_executable( Enum2String_2
 add_executable( Enum2String_3
     Enum2String_3.cpp
 )
+add_executable( AoS_vs_SoA
+    AoS_vs_SoA.cpp
+)
