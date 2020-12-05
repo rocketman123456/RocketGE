@@ -7,13 +7,11 @@
 
 namespace Rocket
 {
-    int SimpleSandbox::Initialize()
+    void SimpleSandbox::PreInitialize()
     {
         RK_INFO("Build Type: {0}", BUILD_TYPE);
         RK_INFO("Source Dir: {0}", ProjectSourceDir);
-        Application::Initialize();
         PushLayer(new ExampleLayer());
-        return 0;
     }
 
     Application* CreateApplication()

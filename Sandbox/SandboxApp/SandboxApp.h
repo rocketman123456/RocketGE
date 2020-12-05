@@ -20,6 +20,6 @@ namespace Rocket
         SimpleSandbox() {}
         virtual ~SimpleSandbox() = default;
 
-        virtual int Initialize() override;
+        virtual void PreInitialize() override;
     };
 }

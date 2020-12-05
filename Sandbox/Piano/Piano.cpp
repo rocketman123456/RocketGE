@@ -2,20 +2,27 @@
 #include "PianoLayer.h"
 
 namespace Rocket {
-    int Piano::Initialize()
+    void Piano::PreInitialize()
+    {
+        PushLayer(new PianoLayer(m_AudioManager));
+    }
+
+    void Piano::PostInitialize()
+    {
+        
+    }
+
+    void Piano::PreInitializeModule()
     {
         RK_INFO("Build Type: {0}", BUILD_TYPE);
         RK_INFO("Source Dir: {0}", ProjectSourceDir);
-        Application::Initialize();
+
         m_AudioManager = new AudioManager();
-        PushLayer(new PianoLayer(m_AudioManager));
         PushModule(m_AudioManager);
-        return 0;
     }
 
-    int Piano::InitializeModule()
+    void Piano::PostInitializeModule()
     {
-        Application::InitializeModule();
         std::string A0 = ProjectSourceDir + "/Assets/sounds/Piano.ff/Piano.ff.A0.wav";
         std::string A1 = ProjectSourceDir + "/Assets/sounds/Piano.ff/Piano.ff.A1.wav";
         std::string A2 = ProjectSourceDir + "/Assets/sounds/Piano.ff/Piano.ff.A2.wav";
@@ -33,7 +40,6 @@ namespace Rocket {
         m_AudioManager->LoadAudio(A5);
         m_AudioManager->LoadAudio(A6);
         m_AudioManager->LoadAudio(A7);
-        return 0;
     }
 
     Application* CreateApplication()

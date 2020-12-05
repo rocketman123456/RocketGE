@@ -13,14 +13,6 @@ namespace Rocket
     {
         RK_PROFILE_FUNCTION();
 
-        RK_CORE_ASSERT(!s_Instance, "Application already exists!");
-        s_Instance = this;
-
-        m_Window = Window::Create({"Rocket Engine", 1280, 720});
-        m_Window->SetEventCallback(RK_BIND_EVENT_FN(Application::OnEvent));
-
-        Renderer::Init();
-
         m_GuiLayer = new ImGuiLayer();
         PushOverlay(m_GuiLayer);
 
@@ -43,6 +35,14 @@ namespace Rocket
 
     int Application::InitializeModule()
     {
+        RK_CORE_ASSERT(!s_Instance, "Application already exists!");
+        s_Instance = this;
+
+        m_Window = Window::Create({"Rocket Engine", 1280, 720});
+        m_Window->SetEventCallback(RK_BIND_EVENT_FN(Application::OnEvent));
+
+        Renderer::Init();
+
         int ret = 0;
         for (auto& module : m_Modules)
         {

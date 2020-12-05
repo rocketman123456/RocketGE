@@ -8,8 +8,7 @@ namespace Rocket {
         Sandbox2D() {}
         virtual ~Sandbox2D() = default;
 
-        virtual int Initialize() override;
-        virtual void Finalize() override;
+        virtual void PreInitialize() override;
     };
 
     struct ProfileResult_

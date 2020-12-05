@@ -5,8 +5,10 @@ namespace Rocket {
     class Piano : implements Application
     {
     public:
-        virtual int Initialize() override;
-        virtual int InitializeModule() override;
+        virtual void PreInitialize() override;
+        virtual void PostInitialize() override;
+        virtual void PreInitializeModule() override;
+        virtual void PostInitializeModule() override;
         private:
         AudioManager* m_AudioManager;
     };

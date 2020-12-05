@@ -9,10 +9,14 @@ int main(int argc, char **argv)
     RK_PROFILE_BEGIN_SESSION("Startup", "Profile-Startup.json");
     // TODO : modify init order, use module first
     auto app = Rocket::CreateApplication();
-    if(app->Initialize() != 0)
-        return 1;
+    app->PreInitializeModule();
     if(app->InitializeModule() != 0)
         return 1;
+    app->PostInitializeModule();
+    app->PreInitialize();
+    if(app->Initialize() != 0)
+        return 1;
+    app->PostInitialize();
     RK_PROFILE_END_SESSION();
 
 	RK_PROFILE_BEGIN_SESSION("Runtime", "Profile-Runtime.json");
@@ -25,8 +29,8 @@ int main(int argc, char **argv)
 	RK_PROFILE_END_SESSION();
 
 	RK_PROFILE_BEGIN_SESSION("Shutdown", "Profile-Shutdown.json");
-    app->FinalizeModule();
     app->Finalize();
+    app->FinalizeModule();
 	delete app;
 	RK_PROFILE_END_SESSION();
     return 0;

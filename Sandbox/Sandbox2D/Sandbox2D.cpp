@@ -109,17 +109,10 @@ namespace Rocket {
     //------------------------------------------------------------------------
     //------------------------------------------------------------------------
     //------------------------------------------------------------------------
-    int Sandbox2D::Initialize()
+    void Sandbox2D::PreInitialize()
     {
         RK_INFO("Build Type: {0}", BUILD_TYPE);
         RK_INFO("Source Dir: {0}", ProjectSourceDir);
-        Application::Initialize();
         PushLayer(new Sandbox2DLayer());
-        return 0;
-    }
-
-    void Sandbox2D::Finalize()
-    {
-        Application::Finalize();
     }
 }

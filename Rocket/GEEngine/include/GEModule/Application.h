@@ -14,10 +14,14 @@ namespace Rocket {
         Application() {}
         virtual ~Application() = default;
 
+        virtual void PreInitialize() {}
         virtual int Initialize();
+        virtual void PostInitialize() {}
         virtual void Finalize();
 
+        virtual void PreInitializeModule() {}
         virtual int InitializeModule();
+        virtual void PostInitializeModule() {}
         virtual void FinalizeModule();
 
         void OnEvent(Event& e);
