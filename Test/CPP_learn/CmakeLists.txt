@@ -15,3 +15,6 @@ add_executable( Enum2String_3
 add_executable( AoS_vs_SoA
     AoS_vs_SoA.cpp
 )
+add_executable( Event
+    Event.cpp
+)
