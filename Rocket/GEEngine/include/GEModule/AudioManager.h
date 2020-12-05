@@ -1,7 +1,7 @@
 #pragma once
 #include "GEInterface/IRuntimeModule.h"
-#include "GEInterface/Singleton.h"
 #include "GEAudio/Audio.h"
+#include "GEUtils/ThreadPool.h"
 
 #include <AL/al.h>
 #include <AL/alc.h>
@@ -30,10 +30,11 @@ namespace Rocket {
         void PlayAudio(const std::string& name);
     private:
         ALuint Load(const std::string& filename);
+        void Play(AudioInfo& info);
     private:
         std::unordered_map<std::string, AudioInfo> m_AudioStore;
-        std::vector<std::thread> m_Threads;
+        // TODO : use uniform task/thread manager
+        thread_pool m_ThreadPool;
     };
-    
-    void Play(AudioInfo& info);
+
 }

@@ -19,7 +19,6 @@ namespace Rocket {
 
         virtual int InitializeModule();
         virtual void FinalizeModule();
-        void TickModule();
 
         void OnEvent(Event& e);
         void Close();
@@ -29,7 +28,7 @@ namespace Rocket {
 
         void PushModule(IRuntimeModule* module);
 
-        void Run();
+        void TickModule();
         void Tick();
 
         inline Window& GetWindow() { return *m_Window; }

@@ -63,14 +63,6 @@ namespace Rocket
         }
     }
 
-    void Application::TickModule()
-    {
-        for (auto& module : m_Modules)
-        {
-            module->Tick(Timestep(m_Duration.count()));
-        }
-    }
-
     void Application::OnEvent(Event &e)
     {
         RK_PROFILE_FUNCTION();
@@ -108,14 +100,12 @@ namespace Rocket
         m_Modules.push_back(module);
     }
 
-    void Application::Run()
+    void Application::TickModule()
     {
-        RK_INFO("Start Application Run Loop");
-        while (m_Running)
+        for (auto& module : m_Modules)
         {
-            Tick();
+            module->Tick(Timestep(m_Duration.count()));
         }
-        RK_INFO("End Application Run Loop");
     }
 
     void Application::Tick()
@@ -143,22 +133,22 @@ namespace Rocket
         ProfilerEnd("Layer Update");
         // GUI Update
         {
-            RK_PROFILE_SCOPE("Layer GUI Begin");
+            RK_PROFILE_SCOPE("GuiLayer Begin");
             ProfilerBegin("GuiLayer Begin");
             m_GuiLayer->Begin();
             ProfilerEnd("GuiLayer Begin");
         }
-        ProfilerBegin("Layer GUI Update");
+        ProfilerBegin("GuiLayer Update");
         for (Layer *layer : m_LayerStack)
         {
-            RK_PROFILE_SCOPE("Layer GUI Update");
+            RK_PROFILE_SCOPE("GuiLayer Update");
             ProfilerBegin(layer->GetName() + " GUI");
             layer->OnGuiRender();
             ProfilerEnd(layer->GetName() + " GUI");
         }
-        ProfilerEnd("Layer GUI Update");
+        ProfilerEnd("GuiLayer Update");
         {
-            RK_PROFILE_SCOPE("Layer GUI End");
+            RK_PROFILE_SCOPE("GuiLayer End");
             ProfilerBegin("GuiLayer End");
             m_GuiLayer->End();
             ProfilerEnd("GuiLayer End");

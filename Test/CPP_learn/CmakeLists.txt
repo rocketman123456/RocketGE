@@ -1,0 +1,5 @@
+message(STATUS "Add Module SingletonTest")
+message(STATUS "###################################")
+add_executable( SingletonTest
+    Singleton.cpp
+)

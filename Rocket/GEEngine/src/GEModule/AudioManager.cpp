@@ -18,6 +18,9 @@ namespace Rocket {
             return 1;
         }
 
+        // Check for EAX 2.0 support
+        auto bEAX = alIsExtensionPresent("EAX2.0");
+
         ctx = alcCreateContext(device, NULL);
         if(ctx == NULL || alcMakeContextCurrent(ctx) == ALC_FALSE)
         {
@@ -176,9 +179,8 @@ namespace Rocket {
         auto it = m_AudioStore.find(name);
         if (it != m_AudioStore.end())
         {
-            std::thread _thread(Play, std::ref(m_AudioStore[name]));
-            if(_thread.joinable())
-                _thread.detach();
+            // TODO : use uniform task/thread manager
+            m_ThreadPool.enqueue_work(&AudioManager::Play, this, std::ref(m_AudioStore[name]));
         }
         else
         {
@@ -186,7 +188,7 @@ namespace Rocket {
         }
     }
 
-    void Play(AudioInfo& info)
+    void AudioManager::Play(AudioInfo& info)
     {
         ALenum state;
         alSourcePlay(info.source);
