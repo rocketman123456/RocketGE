@@ -19,7 +19,7 @@ namespace Rocket {
     //		  spawn another process and call AttachToParent() on itself.  If the new process fails, the child will
     //		  get an Abort() call on it, even though its status is RUNNING.
     //---------------------------------------------------------------------------------------------------------------------
-    class Process
+    Interface Process
     {
         friend class ProcessManager;
     public:
@@ -74,8 +74,6 @@ namespace Rocket {
 
         // child functions
         inline void AttachChild(StrongProcessPtr pChild);
-        // TODO : fix AttachToParent error
-        bool AttachToParent(StrongProcessPtr pParent);
         StrongProcessPtr RemoveChild(void);  // releases ownership of the child
         StrongProcessPtr PeekChild(void) { return m_pChild; }  // doesn't release ownership of the child
 

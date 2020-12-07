@@ -1,7 +1,6 @@
 #pragma once
 #include "GEInterface/IRuntimeModule.h"
 #include "GEAudio/Audio.h"
-#include "GEUtils/ThreadPool.h"
 
 #include <AL/al.h>
 #include <AL/alc.h>
@@ -33,8 +32,6 @@ namespace Rocket {
         void Play(AudioInfo& info);
     private:
         std::unordered_map<std::string, AudioInfo> m_AudioStore;
-        // TODO : use uniform task/thread manager
-        thread_pool m_ThreadPool;
     };
 
     extern AudioManager* g_AudioManager;

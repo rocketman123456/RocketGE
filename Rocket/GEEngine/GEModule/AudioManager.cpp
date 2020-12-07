@@ -1,5 +1,7 @@
 #include "GEModule/AudioManager.h"
 #include "GEUtils/FunctionUtils.h"
+#include "GEModule/ProcessManager.h"
+#include "GEProcess/AudioProcess.h"
 
 #include <thread>
 
@@ -81,7 +83,8 @@ namespace Rocket {
             RK_CORE_INFO("Audio Resource {0} is Loaded", name);
             return;
         }
-
+        
+        // TODO : make a uniform asset loader
         ALuint buffer = Load(filename);
         ALuint source = 0;
 
@@ -179,11 +182,11 @@ namespace Rocket {
         auto it = m_AudioStore.find(name);
         if (it != m_AudioStore.end())
         {
-            // TODO : use uniform task/thread/process manager
-            //m_ThreadPool.enqueue_work(&AudioManager::Play, this, std::ref(m_AudioStore[name]));
-            std::thread _thread(&AudioManager::Play, this, std::ref(m_AudioStore[name]));
-            if(_thread.joinable())
-                _thread.detach();
+            auto buffer = m_AudioStore[name].buffer;
+            g_ProcessManager->AttachProcess(CreateRef<AudioProcess>(buffer));
+            //std::thread _thread(&AudioManager::Play, this, std::ref(m_AudioStore[name]));
+            //if(_thread.joinable())
+            //    _thread.detach();
         }
         else
         {
