@@ -15,7 +15,7 @@ namespace Rocket {
 
     bool PianoLayer::OnPianoPlay(KeyPressedEvent& e)
     {
-        RK_CORE_TRACE(e);
+        //RK_TRACE(e);
 
         std::string A0_1 = "Piano.ff.C2";
         std::string A1_1 = "Piano.ff.D2";

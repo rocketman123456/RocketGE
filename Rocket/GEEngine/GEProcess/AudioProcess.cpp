@@ -18,7 +18,9 @@ namespace Rocket {
         // audio should be loaded before this process
         alGenSources(1, &m_Source);
         alSourcei(m_Source, AL_BUFFER, (ALint)m_Buffer);
+
         alSourcef(m_Source, AL_GAIN, m_Volume / 100.0f);
+        alSourcei(m_Source, AL_LOOPING, m_Looping);
 
         Play(m_Volume, m_Looping);
     }
@@ -48,10 +50,28 @@ namespace Rocket {
         alSourcePlay(m_Source);
     }
 
-    void AudioProcess::SetVolume(int vol) 
-    { 
-        m_Volume = vol;
-        alSourcef(m_Source, AL_GAIN, m_Volume / 100.0f);
+    void AudioProcess::SetPosition(const glm::vec3& pos)
+    {
+        m_Position = pos;
+        alSource3f(m_Source, AL_POSITION, m_Position.x, m_Position.y, m_Position.z);
+    }
+
+    void AudioProcess::SetPosition(float x, float y, float z)
+    {
+        m_Position = {x, y, z};
+        alSource3f(m_Source, AL_POSITION, m_Position.x, m_Position.y, m_Position.z);
+    }
+
+    void AudioProcess::SetVelocity(const glm::vec3& vel)
+    {
+        m_Velocity = vel;
+        alSource3f(m_Source, AL_VELOCITY, m_Velocity.x, m_Velocity.y, m_Velocity.z);
+    }
+
+    void AudioProcess::SetVelocity(float x, float y, float z)
+    {
+        m_Velocity = {x, y, z};
+        alSource3f(m_Source, AL_VELOCITY, m_Velocity.x, m_Velocity.y, m_Velocity.z);
     }
 
     /////////////////////////////////////////////////////////////////////////////
