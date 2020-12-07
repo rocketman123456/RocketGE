@@ -18,7 +18,7 @@ namespace Rocket {
     class AudioManager : implements IRuntimeModule
     {
     public:
-        AudioManager() {}
+        AudioManager() : IRuntimeModule("AudioManager") {}
         virtual ~AudioManager() {}
 
         virtual int Initialize() override;

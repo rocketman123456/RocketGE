@@ -28,7 +28,7 @@ message(STATUS "Project Name ${PROJECT_NAME}")
 
 configure_file (
     "${PROJECT_SOURCE_DIR}/RKConfig.h.in"
-    "${PROJECT_SOURCE_DIR}/Rocket/GEEngine/include/RKConfig.h"
+    "${PROJECT_SOURCE_DIR}/Rocket/GEEngine/RKConfig.h"
 )
 
 message(STATUS "###################################")
@@ -105,15 +105,15 @@ include_directories(
 )
 
 include_directories(
-    ${PROJECT_SOURCE_DIR}/Rocket/GEEngine/include
+    ${PROJECT_SOURCE_DIR}/Rocket/GEEngine
 )
 
 if(OpenGL)
-    include_directories( ${PROJECT_SOURCE_DIR}/Rocket/GERender/OpenGL/include )
+    include_directories( ${PROJECT_SOURCE_DIR}/Rocket/PlatformRender/OpenGL/include )
 elseif(Vulkan)
-    include_directories( ${PROJECT_SOURCE_DIR}/Rocket/GERender/Vulkan/include )
+    include_directories( ${PROJECT_SOURCE_DIR}/Rocket/PlatformRender/Vulkan/include )
 elseif(Metal)
-    include_directories( ${PROJECT_SOURCE_DIR}/Rocket/GERender/Metal/include )
+    include_directories( ${PROJECT_SOURCE_DIR}/Rocket/PlatformRender/Metal/include )
 endif()
 
 if(Apple)

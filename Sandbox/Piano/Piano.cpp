@@ -17,6 +17,7 @@ namespace Rocket {
         RK_INFO("Build Type: {0}", BUILD_TYPE);
         RK_INFO("Source Dir: {0}", ProjectSourceDir);
 
+        PushModule(g_ProcessManager);
         PushModule(g_AudioManager);
     }
 
