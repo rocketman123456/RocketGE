@@ -28,7 +28,7 @@ message(STATUS "Project Name ${PROJECT_NAME}")
 
 configure_file (
     "${PROJECT_SOURCE_DIR}/RKConfig.h.in"
-    "${PROJECT_SOURCE_DIR}/Rocket/GEEngine/include/RKConfig.h"
+    "${PROJECT_SOURCE_DIR}/Rocket/GEEngine/RKConfig.h"
 )
 
 message(STATUS "###################################")
@@ -67,6 +67,8 @@ find_package(yaml-cpp CONFIG REQUIRED)
 find_package(glfw3 CONFIG REQUIRED)
 find_package(Eigen3 CONFIG REQUIRED)
 find_package(Bullet CONFIG REQUIRED)
+find_package(OpenAL CONFIG REQUIRED)
+find_package(SndFile CONFIG REQUIRED)
 
 message(STATUS "Render API Set to ${RENDER_API}")
 if (RENDER_API MATCHES "OpenGL")
@@ -98,18 +100,20 @@ include_directories(
     ${EIGEN3_INCLUDE_DIRS}/unsupported
     ${EIGEN3_INCLUDE_DIRS}
     ${BULLET_INCLUDE_DIRS}
+    ${OPENAL_INCLUDE_DIRS}
+    ${SNDFILE_INCLUDE_DIRS}
 )
 
 include_directories(
-    ${PROJECT_SOURCE_DIR}/Rocket/GEEngine/include
+    ${PROJECT_SOURCE_DIR}/Rocket/GEEngine
 )
 
 if(OpenGL)
-    include_directories(${PROJECT_SOURCE_DIR}/Rocket/GERender/OpenGL/include)
+    include_directories( ${PROJECT_SOURCE_DIR}/Rocket/PlatformRender/OpenGL/include )
 elseif(Vulkan)
-    include_directories(${PROJECT_SOURCE_DIR}/Rocket/GERender/Vulkan/include)
+    include_directories( ${PROJECT_SOURCE_DIR}/Rocket/PlatformRender/Vulkan/include )
 elseif(Metal)
-    include_directories(${PROJECT_SOURCE_DIR}/Rocket/GERender/Metal/include)
+    include_directories( ${PROJECT_SOURCE_DIR}/Rocket/PlatformRender/Metal/include )
 endif()
 
 if(Apple)

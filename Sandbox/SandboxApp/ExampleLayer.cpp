@@ -13,7 +13,9 @@ extern uint32_t cube_indices[36];
 namespace Rocket {
     ExampleLayer::ExampleLayer() : Layer("ExampleLayer")
     {
+        RK_PROFILE_FUNCTION();
         {
+            RK_PROFILE_SCOPE("ExampleLayer::ExampleLayer -- m_VertexArray");
             m_VertexArray = VertexArray::Create();
             m_VertexArray->Bind();
 
@@ -27,6 +29,7 @@ namespace Rocket {
             m_VertexArray->SetIndexBuffer(indexBuffer);
         }
         {
+            RK_PROFILE_SCOPE("ExampleLayer::ExampleLayer -- m_SquareVertexArray");
             m_SquareVertexArray = VertexArray::Create();
             m_SquareVertexArray->Bind();
 
@@ -41,6 +44,7 @@ namespace Rocket {
             m_SquareVertexArray->SetIndexBuffer(indexBuffer_s);
         }
         {
+            RK_PROFILE_SCOPE("ExampleLayer::ExampleLayer -- m_CubeVertexArray");
             m_CubeVertexArray = VertexArray::Create();
             m_CubeVertexArray->Bind();
 
@@ -73,11 +77,15 @@ namespace Rocket {
 
     void ExampleLayer::UpdateCamera(Timestep ts)
     {
+        RK_PROFILE_FUNCTION();
+
         m_Controller->OnUpdate(ts);
     }
 
     void ExampleLayer::RenderSquare()
     {
+        RK_PROFILE_FUNCTION();
+
         glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.5f));
         auto shader = m_ShaderLibrary->Get("SimpleColorShader");
         shader->Bind();
@@ -96,6 +104,8 @@ namespace Rocket {
 
     void ExampleLayer::RenderCube()
     {
+        RK_PROFILE_FUNCTION();
+
         glm::vec3 pos(0.0f, 0.0f, -1.0f);
         glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos);
         transform = glm::rotate(transform, glm::radians(45.0f), glm::vec3(1.0f, 0.0f, 0.0f));
@@ -105,6 +115,8 @@ namespace Rocket {
 
     void ExampleLayer::OnUpdate(Timestep ts)
     {
+        RK_PROFILE_FUNCTION();
+
         UpdateCamera(ts);
         
         RenderCommand::SetClearColor({ 0.2f, 0.3f, 0.3f, 1.0f });
@@ -122,6 +134,8 @@ namespace Rocket {
 
     void ExampleLayer::OnGuiRender()
     {
+        RK_PROFILE_FUNCTION();
+
         ImGui::Begin("Example");
         ImGui::Text("Hello Example!");
         ImGui::ColorEdit3("Square Color", glm::value_ptr(m_SquareColor));
@@ -132,6 +146,8 @@ namespace Rocket {
 
     void ExampleLayer::OnEvent(Event &event)
     {
+        RK_PROFILE_FUNCTION();
+        
         EventDispatcher dispatcher(event);
         dispatcher.Dispatch<KeyPressedEvent>(RK_BIND_EVENT_FN(ExampleLayer::OnKeyPressed));
         m_Controller->OnEvent(event);

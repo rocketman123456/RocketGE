@@ -26,11 +26,13 @@ namespace Rocket
 
 	WindowApple::WindowApple(const WindowProps &props)
 	{
+		RK_PROFILE_FUNCTION();
 		Init(props);
 	}
 
 	WindowApple::~WindowApple()
 	{
+		RK_PROFILE_FUNCTION();
 		Shutdown();
 	}
 
@@ -176,6 +178,7 @@ namespace Rocket
 
 	void WindowApple::OnUpdate()
 	{
+		RK_PROFILE_FUNCTION();
 		glfwPollEvents();
 		m_Context->SwapBuffers();
 	}

@@ -9,9 +9,8 @@ target_include_directories( SandboxApp PRIVATE
     ${PROJECT_SOURCE_DIR}/Sandbox/Sandbox2D
 )
 target_link_libraries( SandboxApp PRIVATE
-    GEEngine
-    ${Threads_LIBS} Eigen3::Eigen
-    spdlog imgui glad glfw yaml-cpp stb_image
+    GEEngine imgui glad stb_image ${ENGINE_THIRD_PARTY}
+    OpenAL::OpenAL SndFile::sndfile Eigen3::Eigen
 )
 
 if(Apple)

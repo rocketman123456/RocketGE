@@ -1,42 +1,55 @@
 message(STATUS "Add Module GECore")
 message(STATUS "###################################")
 add_library( GEEngine
+    #GEAudio
+    GEAudio/Audio.cpp
     # GECore
-    src/GECore/EntryPoint.cpp
-    src/GECore/Log.cpp
-    src/GECore/GLFWInput.cpp
-    src/GECore/BlockAllocator.cpp
-    src/GECore/MemoryManager.cpp
+    GECore/EntryPoint.cpp
+    GECore/Log.cpp
+    GECore/GLFWInput.cpp
     # GECommon
-    src/GECommon/Camera.cpp
-    src/GECommon/OrthographicCamera.cpp
-    src/GECommon/PerspectiveCamera.cpp
-    src/GECommon/OrthographicCameraController.cpp
-    src/GECommon/PerspectiveCameraController.cpp
+    GECommon/Camera.cpp
+    GECommon/OrthographicCamera.cpp
+    GECommon/PerspectiveCamera.cpp
+    GECommon/OrthographicCameraController.cpp
+    GECommon/PerspectiveCameraController.cpp
     # GEModule
-    src/GEModule/Application.cpp
-    src/GEModule/BaseApplication.cpp
+    GEModule/AudioManager.cpp
+    GEModule/Application.cpp
+    GEModule/BaseApplication.cpp
+    GEModule/BlockAllocator.cpp
+    GEModule/MemoryManager.cpp
+    GEModule/ProcessManager.cpp
     # GEWindow
-    src/GEWindow/Window.cpp
+    GEWindow/Window.cpp
     # GELayer
-    src/GELayer/Layer.cpp
-    src/GELayer/LayerStack.cpp
-    src/GELayer/ImGuiBuild.cpp
-    src/GELayer/ImGuiLayer.cpp
+    GELayer/Layer.cpp
+    GELayer/LayerStack.cpp
+    GELayer/ImGuiBuild.cpp
+    GELayer/ImGuiLayer.cpp
+    # GEProcess
+    GEProcess/Process.cpp
     # GERender
-    src/GERender/Buffer.cpp
-    src/GERender/GraphicsContext.cpp
-    src/GERender/RenderAPI.cpp
-    src/GERender/Renderer.cpp
-    src/GERender/RenderCommand.cpp
-    src/GERender/Shader.cpp
-    src/GERender/VertexArray.cpp
-    src/GERender/Texture.cpp
+    GERender/Buffer.cpp
+    GERender/GraphicsContext.cpp
+    GERender/RenderAPI.cpp
+    GERender/Renderer.cpp
+    GERender/RenderCommand.cpp
+    GERender/Shader.cpp
+    GERender/VertexArray.cpp
+    GERender/Texture.cpp
     # GERender2D
-    src/GERender2D/Renderer2D.cpp
+    GERender2D/Renderer2D.cpp
     # GEUtils
-    src/GEUtils/FunctionUtils.cpp
+    GEUtils/FunctionUtils.cpp
+    GEUtils/Profile.cpp
 )
 target_link_libraries( GEEngine PRIVATE
     glfw Eigen3::Eigen
+)
+
+set(ENGINE_THIRD_PARTY 
+    ${Threads_LIBS} ${OPENAL_LIBRARY} 
+    Eigen3::Eigen spdlog glfw yaml-cpp
+    OpenAL::OpenAL SndFile::sndfile
 )
