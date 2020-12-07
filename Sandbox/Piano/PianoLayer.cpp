@@ -28,14 +28,14 @@ namespace Rocket {
 
         switch(e.GetKeyCode())
         {
-            case Key::D0: m_AudioManager->PlayAudio(A0); break;
-            case Key::D1: m_AudioManager->PlayAudio(A1); break;
-            case Key::D2: m_AudioManager->PlayAudio(A2); break;
-            case Key::D3: m_AudioManager->PlayAudio(A3); break;
-            case Key::D4: m_AudioManager->PlayAudio(A4); break;
-            case Key::D5: m_AudioManager->PlayAudio(A5); break;
-            case Key::D6: m_AudioManager->PlayAudio(A6); break;
-            case Key::D7: m_AudioManager->PlayAudio(A7); break;
+            case Key::D0: g_AudioManager->PlayAudio(A0); break;
+            case Key::D1: g_AudioManager->PlayAudio(A1); break;
+            case Key::D2: g_AudioManager->PlayAudio(A2); break;
+            case Key::D3: g_AudioManager->PlayAudio(A3); break;
+            case Key::D4: g_AudioManager->PlayAudio(A4); break;
+            case Key::D5: g_AudioManager->PlayAudio(A5); break;
+            case Key::D6: g_AudioManager->PlayAudio(A6); break;
+            case Key::D7: g_AudioManager->PlayAudio(A7); break;
         }
         return false;
     }

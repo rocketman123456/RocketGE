@@ -5,7 +5,7 @@ namespace Rocket {
     class PianoLayer : implements Layer
     {
     public:
-        PianoLayer(AudioManager* manager) : Layer("PianoLayer"), m_AudioManager(manager) {}
+        PianoLayer() : Layer("PianoLayer") {}
         virtual ~PianoLayer() = default;
 
         virtual void OnUpdate(Timestep ts) override;
@@ -13,7 +13,5 @@ namespace Rocket {
 
     private:
         bool OnPianoPlay(KeyPressedEvent& e);
-    private:
-        AudioManager* m_AudioManager;
     };
 }

@@ -1,7 +1,7 @@
 #pragma once
 #include "GECore/Core.h"
 #include "GEUtils/Queue.h"
-
+// TODO : should only used for large works, with too many small work this will pause
 class simple_thread_pool
 {
 public:

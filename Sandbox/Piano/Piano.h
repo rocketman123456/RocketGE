@@ -9,7 +9,5 @@ namespace Rocket {
         virtual void PostInitialize() override;
         virtual void PreInitializeModule() override;
         virtual void PostInitializeModule() override;
-        private:
-        AudioManager* m_AudioManager;
     };
 }

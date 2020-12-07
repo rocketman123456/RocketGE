@@ -37,4 +37,5 @@ namespace Rocket {
         thread_pool m_ThreadPool;
     };
 
+    extern AudioManager* g_AudioManager;
 }

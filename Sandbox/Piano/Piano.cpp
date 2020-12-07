@@ -4,7 +4,7 @@
 namespace Rocket {
     void Piano::PreInitialize()
     {
-        PushLayer(new PianoLayer(m_AudioManager));
+        PushLayer(new PianoLayer());
     }
 
     void Piano::PostInitialize()
@@ -17,8 +17,7 @@ namespace Rocket {
         RK_INFO("Build Type: {0}", BUILD_TYPE);
         RK_INFO("Source Dir: {0}", ProjectSourceDir);
 
-        m_AudioManager = new AudioManager();
-        PushModule(m_AudioManager);
+        PushModule(g_AudioManager);
     }
 
     void Piano::PostInitializeModule()
@@ -32,14 +31,14 @@ namespace Rocket {
         std::string A6 = ProjectSourceDir + "/Assets/sounds/Piano.ff/Piano.ff.A6.wav";
         std::string A7 = ProjectSourceDir + "/Assets/sounds/Piano.ff/Piano.ff.A7.wav";
 
-        m_AudioManager->LoadAudio(A0);
-        m_AudioManager->LoadAudio(A1);
-        m_AudioManager->LoadAudio(A2);
-        m_AudioManager->LoadAudio(A3);
-        m_AudioManager->LoadAudio(A4);
-        m_AudioManager->LoadAudio(A5);
-        m_AudioManager->LoadAudio(A6);
-        m_AudioManager->LoadAudio(A7);
+        g_AudioManager->LoadAudio(A0);
+        g_AudioManager->LoadAudio(A1);
+        g_AudioManager->LoadAudio(A2);
+        g_AudioManager->LoadAudio(A3);
+        g_AudioManager->LoadAudio(A4);
+        g_AudioManager->LoadAudio(A5);
+        g_AudioManager->LoadAudio(A6);
+        g_AudioManager->LoadAudio(A7);
     }
 
     Application* CreateApplication()

@@ -2,7 +2,6 @@
 #include "GECore/Input.h"
 
 namespace Rocket {
-	// TODO : fix PerspectiveCameraController bugs
     PerspectiveCameraController::PerspectiveCameraController(float aspectRatio, float fov, bool rotation)
 		: m_AspectRatio(aspectRatio), m_ZoomLevel(fov), m_Rotation(rotation), 
         m_Camera(glm::radians(m_ZoomLevel), m_AspectRatio, 0.1f, 100.0f) {}

@@ -4,6 +4,8 @@
 #include <thread>
 
 namespace Rocket {
+    AudioManager* g_AudioManager = new AudioManager();
+
     int AudioManager::Initialize()
     {
         const ALCchar *name;
@@ -83,8 +85,6 @@ namespace Rocket {
         ALuint buffer = Load(filename);
         ALuint source = 0;
 
-        alGenSources(1, &source);
-        alSourcei(source, AL_BUFFER, (ALint)buffer);
         RK_CORE_ASSERT(alGetError()==AL_NO_ERROR, "Failed to setup sound source");
 
         m_AudioStore[name] = {buffer, source};
@@ -160,7 +160,7 @@ namespace Rocket {
         free(membuf);
         sf_close(sndfile);
 
-        /* Check if an error occured, and clean up if so. */
+        // Check if an error occured, and clean up if so.
         err = alGetError();
         if(err != AL_NO_ERROR)
         {
@@ -179,8 +179,11 @@ namespace Rocket {
         auto it = m_AudioStore.find(name);
         if (it != m_AudioStore.end())
         {
-            // TODO : use uniform task/thread manager
-            m_ThreadPool.enqueue_work(&AudioManager::Play, this, std::ref(m_AudioStore[name]));
+            // TODO : use uniform task/thread/process manager
+            //m_ThreadPool.enqueue_work(&AudioManager::Play, this, std::ref(m_AudioStore[name]));
+            std::thread _thread(&AudioManager::Play, this, std::ref(m_AudioStore[name]));
+            if(_thread.joinable())
+                _thread.detach();
         }
         else
         {
@@ -191,10 +194,17 @@ namespace Rocket {
     void AudioManager::Play(AudioInfo& info)
     {
         ALenum state;
-        alSourcePlay(info.source);
+        ALuint source = 0;
+
+        alGenSources(1, &source);
+        alSourcei(source, AL_BUFFER, (ALint)info.buffer);
+
+        alSourcePlay(source);
         do {
             std::this_thread::sleep_for(std::chrono::microseconds(100));
-            alGetSourcei(info.source, AL_SOURCE_STATE, &state);
+            alGetSourcei(source, AL_SOURCE_STATE, &state);
         } while(alGetError() == AL_NO_ERROR && state == AL_PLAYING);
+
+        alDeleteSources(1, &source);
     }
 }
