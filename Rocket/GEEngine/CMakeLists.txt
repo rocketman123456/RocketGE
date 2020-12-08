@@ -29,6 +29,7 @@ add_library( GEEngine
     GELayer/ImGuiLayer.cpp
     # GEProcess
     GEProcess/Process.cpp
+    GEProcess/AudioProcess.cpp
     # GERender
     GERender/Buffer.cpp
     GERender/GraphicsContext.cpp

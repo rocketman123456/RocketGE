@@ -10,18 +10,17 @@ namespace Rocket {
 
     void ProcessManager::Finalize()
     {
+        AbortAllProcesses(true);
         m_ProcessList.clear();
     }
 
     void ProcessManager::Tick(Timestep ts)
     {
         uint64_t result_i = UpdateProcesses(ts.GetMilliseconds());
-#if defined(RK_DEBUG)
-        std::stringstream stream;
-        stream << std::hex << result_i;
-        std::string result( stream.str() );
-        RK_CORE_TRACE("Process Manager Tick Result {0}", result);
-#endif
+        //std::stringstream stream;
+        //stream << std::hex << result_i;
+        //std::string result( stream.str() );
+        //RK_CORE_TRACE("Process Manager Tick Result {0}", result);
     }
 
     //---------------------------------------------------------------------------------------------------------------------

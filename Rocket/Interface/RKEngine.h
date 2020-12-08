@@ -5,6 +5,7 @@
 #include "GEEvent.h"
 #include "GELayer.h"
 #include "GEModule.h"
+#include "GEProcess.h"
 #include "GERender.h"
 #include "GERender2D.h"
 #include "GERender3D.h"

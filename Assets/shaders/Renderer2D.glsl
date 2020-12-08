@@ -13,6 +13,7 @@ uniform mat4 u_ViewProjection;
 
 out vec4 v_Color;
 out vec2 v_TexCoord;
+out vec2 v_ScreenPos;
 out float v_TexIndex;
 out float v_TilingFactor;
 
@@ -23,6 +24,7 @@ void main()
 	v_TexIndex = a_TexIndex;
 	v_TilingFactor = a_TilingFactor;
 	gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
+	v_ScreenPos = gl_Position.xy;
 }
 
 #type fragment
@@ -32,6 +34,7 @@ layout(location = 0) out vec4 color;
 
 in vec4 v_Color;
 in vec2 v_TexCoord;
+in vec2 v_ScreenPos;
 in float v_TexIndex;
 in float v_TilingFactor;
 
@@ -39,6 +42,11 @@ uniform sampler2D u_Textures[16];
 
 void main()
 {
+	// Dark Effect
+	float dist = 1.0f - distance(v_ScreenPos * 0.8f, vec2(0.0f));
+	dist = clamp(dist, 0.0f, 1.0f);
+	dist = sqrt(dist);
+
 	vec4 texColor = v_Color;
 	switch(int(v_TexIndex))
 	{
@@ -75,5 +83,5 @@ void main()
 		//case 30: texColor *= texture(u_Textures[30], v_TexCoord * v_TilingFactor); break;
 		//case 31: texColor *= texture(u_Textures[31], v_TexCoord * v_TilingFactor); break;
 	}
-	color = texColor;
+	color = texColor * dist;
 }
