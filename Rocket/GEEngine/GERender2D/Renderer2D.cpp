@@ -22,7 +22,7 @@ namespace Rocket {
 		static const uint32_t MaxQuads = 20000;
 		static const uint32_t MaxVertices = MaxQuads * 4;
 		static const uint32_t MaxIndices = MaxQuads * 6;
-		static const uint32_t MaxTextureSlots = 32; // TODO: RenderCaps
+		static const uint32_t MaxTextureSlots = 16; // TODO: RenderCaps
 
 		Ref<VertexArray> QuadVertexArray;
 		Ref<VertexBuffer> QuadVertexBuffer;
@@ -100,7 +100,7 @@ namespace Rocket {
 		for (uint32_t i = 0; i < s_Data.MaxTextureSlots; i++)
 			samplers[i] = i;
 
-        std::string shader_path = ProjectSourceDir + "/Assets/shaders/2DShader.glsl";
+        std::string shader_path = ProjectSourceDir + "/Assets/shaders/Renderer2D.glsl";
 		s_Data.TextureShader = Shader::Create(shader_path);
 		s_Data.TextureShader->Bind();
 		s_Data.TextureShader->SetIntArray("u_Textures", samplers, s_Data.MaxTextureSlots);

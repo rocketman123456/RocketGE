@@ -17,6 +17,18 @@
             "MIMode": "lldb"
         },
         {
+            "name": "(lldb) SimpleGame",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/Sandbox/SimpleGame/SimpleGame",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb"
+        },
+        {
             "name": "(lldb) Sandbox2D",
             "type": "cppdbg",
             "request": "launch",

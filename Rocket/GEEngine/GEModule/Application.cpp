@@ -102,9 +102,25 @@ namespace Rocket
 
     void Application::TickModule()
     {
+        RK_PROFILE_FUNCTION();
+        {
+            RK_PROFILE_SCOPE("Window Update");
+            ProfilerBegin("Window Update");
+            m_Window->OnUpdate();
+            ProfilerEnd("Window Update");
+        }
+        
         for (auto& module : m_Modules)
         {
+            RK_PROFILE_SCOPE(module->GetName());
+            ProfilerBegin(module->GetName());
             module->Tick(Timestep(m_Duration.count()));
+            ProfilerEnd(module->GetName());
+        }
+
+        {
+            RK_PROFILE_SCOPE("Profiler Dump");
+            ProfilerDump();
         }
     }
 
@@ -122,15 +138,17 @@ namespace Rocket
             ProfilerBegin("Main Loop");
         }
         // Common Update
-        ProfilerBegin("Layer Update");
-        for (Layer *layer : m_LayerStack)
         {
-            RK_PROFILE_SCOPE("Layer Update");
-            ProfilerBegin(layer->GetName());
-            layer->OnUpdate(Timestep(m_Duration.count()));
-            ProfilerEnd(layer->GetName());
+            ProfilerBegin("Layer Update");
+            for (Layer *layer : m_LayerStack)
+            {
+                RK_PROFILE_SCOPE("Layer Update");
+                ProfilerBegin(layer->GetName());
+                layer->OnUpdate(Timestep(m_Duration.count()));
+                ProfilerEnd(layer->GetName());
+            }
+            ProfilerEnd("Layer Update");
         }
-        ProfilerEnd("Layer Update");
         // GUI Update
         {
             RK_PROFILE_SCOPE("GuiLayer Begin");
@@ -138,35 +156,26 @@ namespace Rocket
             m_GuiLayer->Begin();
             ProfilerEnd("GuiLayer Begin");
         }
-        ProfilerBegin("GuiLayer Update");
-        for (Layer *layer : m_LayerStack)
         {
-            RK_PROFILE_SCOPE("GuiLayer Update");
-            ProfilerBegin(layer->GetName() + " GUI");
-            layer->OnGuiRender();
-            ProfilerEnd(layer->GetName() + " GUI");
+            ProfilerBegin("GuiLayer Update");
+            for (Layer *layer : m_LayerStack)
+            {
+                RK_PROFILE_SCOPE("GuiLayer Update");
+                ProfilerBegin(layer->GetName() + " GUI");
+                layer->OnGuiRender();
+                ProfilerEnd(layer->GetName() + " GUI");
+            }
+            ProfilerEnd("GuiLayer Update");
         }
-        ProfilerEnd("GuiLayer Update");
         {
             RK_PROFILE_SCOPE("GuiLayer End");
             ProfilerBegin("GuiLayer End");
             m_GuiLayer->End();
             ProfilerEnd("GuiLayer End");
         }
-        // Window Update
-        {
-            RK_PROFILE_SCOPE("Window Update");
-            ProfilerBegin("Window Update");
-            m_Window->OnUpdate();
-            ProfilerEnd("Window Update");
-        }
         {
             RK_PROFILE_SCOPE("Profiler End Loop");
             ProfilerEnd("Main Loop");
-        }
-        {
-            RK_PROFILE_SCOPE("Profiler Dump");
-            ProfilerDump();
         }
     }
 

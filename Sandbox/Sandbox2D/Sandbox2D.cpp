@@ -69,7 +69,7 @@ namespace Rocket {
             Renderer2D::DrawQuad({1.0f, 0.0f}, {0.9f, 0.9f}, m_Texture[0]);
             Renderer2D::DrawQuad({1.0f, 1.0f}, {0.9f, 0.9f}, m_Texture[1]);
             Renderer2D::DrawQuad({2.0f, 0.0f}, {0.9f, 0.9f}, m_Texture[2]);
-            Renderer2D::DrawQuad({2.0f, 1.0f}, {0.9f, 0.9f}, m_Texture[3]);
+            Renderer2D::DrawRotatedQuad({2.0f, 1.0f}, {0.9f, 0.9f}, (45.0f), m_Texture[3]);
             Renderer2D::EndScene();
         }
     }

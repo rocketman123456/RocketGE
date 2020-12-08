@@ -18,3 +18,9 @@ add_executable( AoS_vs_SoA
 add_executable( Event
     Event.cpp
 )
+add_executable( RAII
+    RAII.cpp
+)
+add_executable( Hashing
+    Hashing.cpp
+)
