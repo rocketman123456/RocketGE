@@ -6,6 +6,9 @@ namespace Rocket {
     class ProcessManager : implements IRuntimeModule
     {
     public:
+        ProcessManager() : IRuntimeModule("ProcessManager") {}
+        virtual ~ProcessManager() = default;
+
         virtual int Initialize() override;
         virtual void Finalize() override;
 

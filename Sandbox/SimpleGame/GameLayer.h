@@ -19,6 +19,7 @@ public:
 	void OnEvent(Rocket::Event& e) override;
 	bool OnMouseButtonPressed(Rocket::MouseButtonPressedEvent& e);
 	bool OnWindowResize(Rocket::WindowResizeEvent& e);
+	bool OnKeyEvent(Rocket::KeyPressedEvent& e);
 private:
 	void CreateCamera(uint32_t width, uint32_t height);
 private:

@@ -103,6 +103,7 @@ namespace Rocket
     void Application::TickModule()
     {
         RK_PROFILE_FUNCTION();
+        ProfilerBegin("Module Tick");
         {
             RK_PROFILE_SCOPE("Window Update");
             ProfilerBegin("Window Update");
@@ -117,7 +118,7 @@ namespace Rocket
             module->Tick(Timestep(m_Duration.count()));
             ProfilerEnd(module->GetName());
         }
-
+        ProfilerEnd("Module Tick");
         {
             RK_PROFILE_SCOPE("Profiler Dump");
             ProfilerDump();
@@ -135,7 +136,7 @@ namespace Rocket
 
         {
             RK_PROFILE_SCOPE("Profiler Start Loop");
-            ProfilerBegin("Main Loop");
+            ProfilerBegin("Layer Tick");
         }
         // Common Update
         {
@@ -175,7 +176,7 @@ namespace Rocket
         }
         {
             RK_PROFILE_SCOPE("Profiler End Loop");
-            ProfilerEnd("Main Loop");
+            ProfilerEnd("Layer Tick");
         }
     }
 

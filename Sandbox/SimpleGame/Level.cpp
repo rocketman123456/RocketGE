@@ -145,10 +145,10 @@ bool Level::CollisionTest()
 		return true;
 
 	glm::vec4 playerVertices[4] = {
-		{ -0.5f, -0.5f, 0.0f, 1.0f },
-		{  0.5f, -0.5f, 0.0f, 1.0f },
-		{  0.5f,  0.5f, 0.0f, 1.0f },
-		{ -0.5f,  0.5f, 0.0f, 1.0f }
+		{ -0.4f, -0.4f, 0.0f, 1.0f },
+		{  0.4f, -0.4f, 0.0f, 1.0f },
+		{  0.4f,  0.4f, 0.0f, 1.0f },
+		{ -0.4f,  0.4f, 0.0f, 1.0f }
 	};
 
 	const auto& pos = m_Player.GetPosition();
