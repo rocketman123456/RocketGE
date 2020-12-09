@@ -20,6 +20,8 @@ add_library( GEEngine
     GEModule/BlockAllocator.cpp
     GEModule/MemoryManager.cpp
     GEModule/ProcessManager.cpp
+    GEModule/WindowManager.cpp
+    GEModule/EventManager.cpp
     # GEWindow
     GEWindow/Window.cpp
     # GELayer

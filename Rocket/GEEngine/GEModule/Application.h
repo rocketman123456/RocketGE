@@ -13,7 +13,7 @@ namespace Rocket {
     Interface Application : implements IApplication
     {
     public:
-        Application() {}
+        Application(const std::string& name = "Application") : IApplication(name) {}
         virtual ~Application() = default;
 
         virtual void PreInitialize() override {}
@@ -45,7 +45,7 @@ namespace Rocket {
         bool OnWindowClose(WindowCloseEvent& e);
 		bool OnWindowResize(WindowResizeEvent& e);
     private:
-        Scope<Window> m_Window;
+        Ref<Window> m_Window;
         Layer* m_GuiLayer;
         LayerStack m_LayerStack;
 

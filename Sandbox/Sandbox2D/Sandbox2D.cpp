@@ -111,8 +111,16 @@ namespace Rocket {
     //------------------------------------------------------------------------
     void Sandbox2D::PreInitialize()
     {
+        PushLayer(new Sandbox2DLayer());
+    }
+
+    void Sandbox2D::PreInitializeModule()
+    {
         RK_INFO("Build Type: {0}", BUILD_TYPE);
         RK_INFO("Source Dir: {0}", ProjectSourceDir);
-        PushLayer(new Sandbox2DLayer());
+
+        PushModule(Rocket::g_ProcessManager);
+        PushModule(Rocket::g_AudioManager);
+        PushModule(Rocket::g_WindowManager);
     }
 }

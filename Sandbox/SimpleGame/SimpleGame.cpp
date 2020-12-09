@@ -16,6 +16,7 @@ public:
 
         PushModule(Rocket::g_ProcessManager);
         PushModule(Rocket::g_AudioManager);
+        PushModule(Rocket::g_WindowManager);
     }
 
     virtual void PostInitializeModule() override
@@ -75,7 +76,7 @@ public:
         Rocket::g_AudioManager->LoadAudio(A7_2);
     }
 
-	SimpleGame() {}
+	SimpleGame() : Rocket::Application("SimpleGame") {}
 	virtual ~SimpleGame() = default;
 };
 

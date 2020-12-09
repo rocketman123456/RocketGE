@@ -17,9 +17,10 @@ namespace Rocket
     class SimpleSandbox : implements Application
     {
     public:
-        SimpleSandbox() {}
+        SimpleSandbox() : Application("SimpleSandbox") {}
         virtual ~SimpleSandbox() = default;
 
         virtual void PreInitialize() override;
+        virtual void PreInitializeModule() override;
     };
 }

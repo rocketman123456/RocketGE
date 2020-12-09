@@ -10,18 +10,15 @@
 
 namespace Rocket
 {
-	Scope<Window> Window::Create(const WindowProps& props)
+	Ref<Window> Window::Create(const WindowProps& props)
 	{
-	#ifdef PLATFORM_WINDOWS
-		return CreateScope<WindowWindows>(props);
-    #endif
-	#ifdef PLATFORM_APPLE
-		return CreateScope<WindowApple>(props);
-	#endif
-    #ifdef PLATFORM_LINUX
-        return CreateScope<WindowLinux>(props);
-    #endif
-    #if !defined(PLATFORM_WINDOWS) && !defined(PLATFORM_APPLE) && !defined(PLATFORM_LINUX)
+	#if defined(PLATFORM_WINDOWS)
+		return CreateRef<WindowWindows>(props);
+	#elif defined(PLATFORM_APPLE)
+		return CreateRef<WindowApple>(props);
+    #elif defined(PLATFORM_LINUX)
+        return CreateRef<WindowLinux>(props);
+    #else
         RK_CORE_ASSERT(false, "Unknown platform!");
         return nullptr;
     #endif

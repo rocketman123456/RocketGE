@@ -18,6 +18,7 @@ namespace Rocket {
         RK_INFO("Source Dir: {0}", ProjectSourceDir);
 
         PushModule(g_ProcessManager);
+        PushModule(g_WindowManager);
         PushModule(g_AudioManager);
     }
 

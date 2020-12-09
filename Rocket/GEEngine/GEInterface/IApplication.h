@@ -6,6 +6,9 @@ namespace Rocket {
     Interface IApplication : implements IRuntimeModule
     {
     public:
+        IApplication(const std::string& name = "IApplication") : IRuntimeModule(name) {}
+        virtual ~IApplication() = default;
+
         virtual void PreInitialize() = 0;
         virtual int Initialize() = 0;
         virtual void PostInitialize() = 0;
