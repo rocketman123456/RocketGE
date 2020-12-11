@@ -102,25 +102,6 @@ namespace Rocket
         m_Modules.push_back(module);
     }
 
-    void Application::TickModule()
-    {
-        RK_PROFILE_FUNCTION();
-        ProfilerBegin("Module Tick");
-        
-        for (auto& module : m_Modules)
-        {
-            RK_PROFILE_SCOPE(module->GetName());
-            ProfilerBegin(module->GetName());
-            module->Tick(Timestep(m_Duration.count()));
-            ProfilerEnd(module->GetName());
-        }
-        ProfilerEnd("Module Tick");
-        {
-            RK_PROFILE_SCOPE("Profiler Dump");
-            ProfilerDump();
-        }
-    }
-
     void Application::Tick()
     {
         RK_PROFILE_FUNCTION();
@@ -173,6 +154,46 @@ namespace Rocket
         {
             RK_PROFILE_SCOPE("Profiler End Loop");
             ProfilerEnd("Layer Tick");
+        }
+    }
+
+    void Application::TickModule()
+    {
+        RK_PROFILE_FUNCTION();
+        ProfilerBegin("Module Tick");
+
+        std::vector< std::future<int> > futures;
+
+        if(m_Parallel) {
+            for (auto& module : m_Modules)
+            {
+                futures.push_back( 
+                    m_ThreadPool.enqueue_task(&IRuntimeModule::Tick, module, Timestep(m_Duration.count())) 
+                );
+            }
+
+            for(auto& f : futures)
+                f.wait();
+
+            for(auto& f : futures)
+                f.get();
+        }
+        else {
+            for (auto& module : m_Modules)
+            {
+                RK_PROFILE_SCOPE(module->GetName());
+                ProfilerBegin(module->GetName());
+                module->Tick(Timestep(m_Duration.count()));
+                ProfilerEnd(module->GetName());
+            }
+        }
+
+        m_Window->OnUpdate();
+
+        ProfilerEnd("Module Tick");
+        {
+            RK_PROFILE_SCOPE("Profiler Dump");
+            ProfilerDump();
         }
     }
 

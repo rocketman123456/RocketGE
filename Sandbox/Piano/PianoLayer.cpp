@@ -44,6 +44,14 @@ namespace Rocket {
         std::string A6_2 = "Piano.ff.B4";
         std::string A7_2 = "Piano.ff.C5";
 
+        std::string A1_3 = "Piano.ff.D5";
+        std::string A2_3 = "Piano.ff.E5";
+        std::string A3_3 = "Piano.ff.F5";
+        std::string A4_3 = "Piano.ff.G5";
+        std::string A5_3 = "Piano.ff.A5";
+        std::string A6_3 = "Piano.ff.B5";
+        std::string A7_3 = "Piano.ff.C6";
+
         switch(e.GetKeyCode())
         {
             case Key::Q: g_AudioManager->PlayAudio(A0_1); break;
@@ -72,6 +80,14 @@ namespace Rocket {
             case Key::G: g_AudioManager->PlayAudio(A5_2); break;
             case Key::H: g_AudioManager->PlayAudio(A6_2); break;
             case Key::J: g_AudioManager->PlayAudio(A7_2); break;
+
+            case Key::Z: g_AudioManager->PlayAudio(A1_3); break;
+            case Key::X: g_AudioManager->PlayAudio(A2_3); break;
+            case Key::C: g_AudioManager->PlayAudio(A3_3); break;
+            case Key::V: g_AudioManager->PlayAudio(A4_3); break;
+            case Key::B: g_AudioManager->PlayAudio(A5_3); break;
+            case Key::N: g_AudioManager->PlayAudio(A6_3); break;
+            case Key::M: g_AudioManager->PlayAudio(A7_3); break;
         }
         return false;
     }

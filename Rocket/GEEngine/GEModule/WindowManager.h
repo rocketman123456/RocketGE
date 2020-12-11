@@ -12,7 +12,7 @@ namespace Rocket {
         virtual int Initialize() override;
         virtual void Finalize() override;
 
-        virtual void Tick(Timestep ts) override;
+        virtual int Tick(Timestep ts) override;
         virtual void OnEvent(Event& event) override;
 
         Ref<Window> GetWindow() { return m_Window; }

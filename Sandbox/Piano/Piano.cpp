@@ -51,6 +51,14 @@ namespace Rocket {
         std::string A6_2 = ProjectSourceDir + "/Assets/sounds/Piano.ff/Piano.ff.B4.wav";
         std::string A7_2 = ProjectSourceDir + "/Assets/sounds/Piano.ff/Piano.ff.C5.wav";
 
+        std::string A1_3 = ProjectSourceDir + "/Assets/sounds/Piano.ff/Piano.ff.D5.wav";
+        std::string A2_3 = ProjectSourceDir + "/Assets/sounds/Piano.ff/Piano.ff.E5.wav";
+        std::string A3_3 = ProjectSourceDir + "/Assets/sounds/Piano.ff/Piano.ff.F5.wav";
+        std::string A4_3 = ProjectSourceDir + "/Assets/sounds/Piano.ff/Piano.ff.G5.wav";
+        std::string A5_3 = ProjectSourceDir + "/Assets/sounds/Piano.ff/Piano.ff.A5.wav";
+        std::string A6_3 = ProjectSourceDir + "/Assets/sounds/Piano.ff/Piano.ff.B5.wav";
+        std::string A7_3 = ProjectSourceDir + "/Assets/sounds/Piano.ff/Piano.ff.C6.wav";
+
         g_AudioManager->LoadAudio(A0);
         g_AudioManager->LoadAudio(A1);
         g_AudioManager->LoadAudio(A2);
@@ -77,6 +85,14 @@ namespace Rocket {
         g_AudioManager->LoadAudio(A5_2);
         g_AudioManager->LoadAudio(A6_2);
         g_AudioManager->LoadAudio(A7_2);
+
+        g_AudioManager->LoadAudio(A1_3);
+        g_AudioManager->LoadAudio(A2_3);
+        g_AudioManager->LoadAudio(A3_3);
+        g_AudioManager->LoadAudio(A4_3);
+        g_AudioManager->LoadAudio(A5_3);
+        g_AudioManager->LoadAudio(A6_3);
+        g_AudioManager->LoadAudio(A7_3);
     }
 
     Application* CreateApplication()

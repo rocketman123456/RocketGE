@@ -1,13 +1,13 @@
 #pragma once
 
 #include "GECore/Core.h"
+#include "GEInterface/IApplication.h"
 #include "GEEvent/Event.h"
 #include "GEEvent/ApplicationEvent.h"
 #include "GEWindow/Window.h"
 #include "GELayer/Layer.h"
 #include "GELayer/LayerStack.h"
-#include "GEModule/AudioManager.h"
-#include "GEInterface/IApplication.h"
+#include "GEUtils/ThreadPool.h"
 
 namespace Rocket {
     Interface Application : implements IApplication
@@ -36,7 +36,6 @@ namespace Rocket {
 
         virtual void TickModule() override;
         virtual void Tick() override;
-        virtual void Tick(Timestep ts) override {}
 
         inline Window& GetWindow() { return *m_Window; }
         inline bool GetIsRunning() override { return m_Running; }
@@ -50,10 +49,12 @@ namespace Rocket {
         LayerStack m_LayerStack;
 
         std::vector<IRuntimeModule*> m_Modules;
-        std::unordered_map<std::string, IRuntimeModule*> m_ModulesMap;
+
+        thread_pool m_ThreadPool;
 
         bool m_Running = true;
         bool m_Minimized = false;
+        bool m_Parallel = false;
 
         std::chrono::steady_clock m_Clock;
         std::chrono::duration<double> m_Duration;

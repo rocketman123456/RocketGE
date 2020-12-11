@@ -13,9 +13,9 @@ namespace Rocket {
 
     }
 
-    void EventManager::Tick(Timestep ts)
+    int EventManager::Tick(Timestep ts)
     {
-
+        return 0;
     }
 
     void EventManager::OnEvent(Event& event)

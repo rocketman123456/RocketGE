@@ -18,8 +18,8 @@ namespace Rocket
         RK_INFO("Source Dir: {0}", ProjectSourceDir);
 
         PushModule(Rocket::g_ProcessManager);
-        PushModule(Rocket::g_AudioManager);
         PushModule(Rocket::g_WindowManager);
+        PushModule(Rocket::g_AudioManager);
     }
 
     Application* CreateApplication()

@@ -14,8 +14,9 @@ namespace Rocket {
     }
 
     // One cycle of the main loop
-    void BaseApplication::Tick(Timestep ts)
+    int BaseApplication::Tick(Timestep ts)
     {
+        return 0;
     }
 
     bool BaseApplication::IsQuit()

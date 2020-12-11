@@ -67,8 +67,9 @@ namespace Rocket {
         alcCloseDevice(device);
     }
 
-    void AudioManager::Tick(Timestep ts)
+    int AudioManager::Tick(Timestep ts)
     {
+        return 0;
     }
     
     void AudioManager::LoadAudio(const std::string& filename)

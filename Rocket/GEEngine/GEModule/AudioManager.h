@@ -23,7 +23,7 @@ namespace Rocket {
         virtual int Initialize() override;
         virtual void Finalize() override;
 
-        virtual void Tick(Timestep ts) override;
+        virtual int Tick(Timestep ts) override;
         
         void LoadAudio(const std::string& filename);
         void PlayAudio(const std::string& name);

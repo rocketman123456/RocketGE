@@ -12,7 +12,7 @@ namespace Rocket {
         virtual int Initialize() override;
         virtual void Finalize() override;
 
-        virtual void Tick(Timestep ts) override;
+        virtual int Tick(Timestep ts) override;
 
         // interface
         uint64_t UpdateProcesses(unsigned long deltaMs);  // updates all attached processes

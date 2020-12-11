@@ -14,13 +14,14 @@ namespace Rocket {
         m_ProcessList.clear();
     }
 
-    void ProcessManager::Tick(Timestep ts)
+    int ProcessManager::Tick(Timestep ts)
     {
         uint64_t result_i = UpdateProcesses(ts.GetMilliseconds());
         //std::stringstream stream;
         //stream << std::hex << result_i;
         //std::string result( stream.str() );
         //RK_CORE_TRACE("Process Manager Tick Result {0}", result);
+        return result_i;
     }
 
     //---------------------------------------------------------------------------------------------------------------------

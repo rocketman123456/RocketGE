@@ -14,9 +14,10 @@ namespace Rocket {
 
     }
 
-    void WindowManager::Tick(Timestep ts)
+    int WindowManager::Tick(Timestep ts)
     {
-        m_Window->OnUpdate();
+        //m_Window->OnUpdate();
+        return 0;
     }
 
     void WindowManager::OnEvent(Event& event)

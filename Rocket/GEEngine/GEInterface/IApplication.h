@@ -10,9 +10,9 @@ namespace Rocket {
         virtual ~IApplication() = default;
 
         virtual void PreInitialize() = 0;
-        virtual int Initialize() = 0;
+        virtual int Initialize() override = 0;
         virtual void PostInitialize() = 0;
-        virtual void Finalize() = 0;
+        virtual void Finalize() override = 0;
 
         virtual void PreInitializeModule() = 0;
         virtual int InitializeModule() = 0;
@@ -22,8 +22,8 @@ namespace Rocket {
         virtual void TickModule() = 0;
         virtual void Tick() = 0;
 
-        virtual void Tick(Timestep ts) = 0;
-        virtual void OnEvent(Event& event) = 0;
+        virtual int Tick(Timestep ts) override { return 0; }
+        virtual void OnEvent(Event& event) override = 0;
 
         virtual bool GetIsRunning() = 0;
     };
