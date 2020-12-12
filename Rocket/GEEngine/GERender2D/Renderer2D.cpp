@@ -22,6 +22,7 @@ namespace Rocket {
 		static const uint32_t MaxQuads = 20000;
 		static const uint32_t MaxVertices = MaxQuads * 4;
 		static const uint32_t MaxIndices = MaxQuads * 6;
+		// glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &texture_units);
 		static const uint32_t MaxTextureSlots = 16; // TODO: RenderCaps
 
 		Ref<VertexArray> QuadVertexArray;
