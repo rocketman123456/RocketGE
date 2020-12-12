@@ -13,3 +13,12 @@ add_executable( RayTrace03
 add_executable( RayTrace04
     RayTrace04.cpp
 )
+add_executable( RayTrace05
+    RayTrace05.cpp
+)
+add_executable( RayTrace06
+    RayTrace06.cpp
+)
+add_executable( RayTrace07
+    RayTrace07.cpp
+)

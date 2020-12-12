@@ -69,6 +69,17 @@ namespace Rocket {
             Renderer2D::DrawQuad({1.0f, 0.0f}, {0.9f, 0.9f}, m_Texture[0]);
             Renderer2D::DrawQuad({1.0f, 1.0f}, {0.9f, 0.9f}, m_Texture[1]);
             Renderer2D::DrawQuad({2.0f, 0.0f}, {0.9f, 0.9f}, m_Texture[2]);
+            // For Benchmark
+            for(int i = 0; i < 120; ++i)
+            {
+                for(int j = 0; j < 120; ++j)
+                {
+                    int index = rand() % 4;
+                    //int index = 3;
+                    Renderer2D::DrawQuad({2.0f + i * 1.0f, 2.0f + j * 1.0f}, {0.9f, 0.9f}, m_Texture[index]);
+                }
+            }
+
             Renderer2D::DrawRotatedQuad({2.0f, 1.0f}, {0.9f, 0.9f}, (45.0f), m_Texture[3]);
             Renderer2D::EndScene();
         }
@@ -120,7 +131,7 @@ namespace Rocket {
         RK_INFO("Source Dir: {0}", ProjectSourceDir);
 
         PushModule(Rocket::g_ProcessManager);
-        PushModule(Rocket::g_AudioManager);
         PushModule(Rocket::g_WindowManager);
+        PushModule(Rocket::g_AudioManager);
     }
 }
