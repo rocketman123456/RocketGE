@@ -21,3 +21,8 @@ add_executable( OpenGLTest4.2 OpenGLTest4.2.cpp )
 target_link_libraries( OpenGLTest4.2
     spdlog imgui glad glfw stb_image
 )
+
+add_executable( OpenGLTest10.1 OpenGLTest10.1.cpp )
+target_link_libraries( OpenGLTest10.1
+    spdlog imgui glad glfw stb_image
+)

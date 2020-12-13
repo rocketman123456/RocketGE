@@ -15,7 +15,8 @@ namespace Rocket
 		WindowApple(const WindowProps &props);
 		virtual ~WindowApple();
 
-		void OnUpdate() override;
+		virtual void PollEvent() override;
+		virtual void OnUpdate() override;
 
 		unsigned int GetWidth() const override { return m_Data.Width; }
 		unsigned int GetHeight() const override { return m_Data.Height; }

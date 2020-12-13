@@ -63,6 +63,15 @@ namespace Rocket {
 		
 		uint32_t count = indexCount ? indexCount : vertexArray->GetIndexBuffer()->GetCount();
 		glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr);
-		glBindTexture(GL_TEXTURE_2D, 0);
+		//glBindTexture(GL_TEXTURE_2D, 0);
+	}
+
+	void OpenGLRenderAPI::DrawInstance(const Ref<VertexArray>& vertexArray, uint32_t indexCount, uint32_t numCount)
+	{
+		RK_PROFILE_FUNCTION();
+		
+		uint32_t count = indexCount ? indexCount : vertexArray->GetIndexBuffer()->GetCount();
+		glDrawArraysInstanced(GL_TRIANGLES, count, GL_UNSIGNED_INT, numCount);
+		//glBindTexture(GL_TEXTURE_2D, 0);
 	}
 }

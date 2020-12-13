@@ -186,6 +186,11 @@ namespace Rocket {
 		}
 	}
 
+	void WindowLinux::PollEvent()
+	{
+		glfwPollEvents();
+	}
+
 	void WindowLinux::OnUpdate()
 	{
 		RK_PROFILE_FUNCTION();

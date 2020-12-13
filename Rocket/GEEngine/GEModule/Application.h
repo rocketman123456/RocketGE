@@ -54,7 +54,7 @@ namespace Rocket {
 
         bool m_Running = true;
         bool m_Minimized = false;
-        bool m_Parallel = false;
+        bool m_Parallel = true;
 
         std::chrono::steady_clock m_Clock;
         std::chrono::duration<double> m_Duration;

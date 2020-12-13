@@ -14,5 +14,6 @@ namespace Rocket {
 		virtual void Clear() override;
 
 		virtual void DrawIndexed(const Ref<VertexArray>& vertexArray, uint32_t indexCount = 0) override;
+		virtual void DrawInstance(const Ref<VertexArray>& vertexArray, uint32_t indexCount = 0, uint32_t count = 0) override;
 	};
 }

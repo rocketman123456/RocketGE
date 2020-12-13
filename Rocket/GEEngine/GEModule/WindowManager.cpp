@@ -16,7 +16,7 @@ namespace Rocket {
 
     int WindowManager::Tick(Timestep ts)
     {
-        //m_Window->OnUpdate();
+        m_Window->OnUpdate();
         return 0;
     }
 

@@ -111,6 +111,8 @@ namespace Rocket
         m_CurrentTime = m_Clock.now();
         m_Duration = m_CurrentTime - m_LastTime;
 
+        m_Window->PollEvent();
+
         {
             RK_PROFILE_SCOPE("Profiler Start Loop");
             ProfilerBegin("Layer Tick");
@@ -187,8 +189,6 @@ namespace Rocket
                 ProfilerEnd(module->GetName());
             }
         }
-
-        m_Window->OnUpdate();
 
         ProfilerEnd("Module Tick");
         {

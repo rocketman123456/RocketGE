@@ -114,6 +114,20 @@ namespace Rocket {
 		static Ref<VertexBuffer> Create(float* vertices, uint32_t size);
 	};
 
+	template<typename T>
+	Interface InstanceBuffer
+	{
+	public:
+		virtual ~InstanceBuffer() = default;
+
+		virtual void Bind() const = 0;
+		virtual void Unbind() const = 0;
+
+		virtual uint32_t GetCount() const = 0;
+
+		static Ref< InstanceBuffer<T> > Create(T* data, uint32_t count);
+	};
+
 	// Currently Hazel only supports 32-bit index buffers
 	Interface IndexBuffer
 	{

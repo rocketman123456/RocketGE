@@ -176,10 +176,14 @@ namespace Rocket
 		}
 	}
 
+	void WindowApple::PollEvent()
+	{
+		glfwPollEvents();
+	}
+
 	void WindowApple::OnUpdate()
 	{
 		RK_PROFILE_FUNCTION();
-		glfwPollEvents();
 		m_Context->SwapBuffers();
 	}
 
