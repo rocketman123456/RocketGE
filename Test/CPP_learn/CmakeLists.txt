@@ -24,8 +24,8 @@ add_executable( RAII
 add_executable( Hashing
     Hashing.cpp
 )
-add_executable( MulitHashing
-    MulitHashing.cpp
+add_executable( MultiHashing
+    MultiHashing.cpp
 )
 add_executable( PragmaPack
     PragmaPack.cpp

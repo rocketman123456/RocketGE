@@ -162,11 +162,12 @@ namespace Rocket
     void Application::TickModule()
     {
         RK_PROFILE_FUNCTION();
-        ProfilerBegin("Module Tick");
-
-        std::vector< std::future<int> > futures;
-
+        
         if(m_Parallel) {
+            ProfilerBegin("Module Tick Parallel");
+
+            std::vector< std::future<int> > futures;
+
             for (auto& module : m_Modules)
             {
                 futures.push_back( 
@@ -179,8 +180,11 @@ namespace Rocket
 
             for(auto& f : futures)
                 f.get();
+            
+            ProfilerEnd("Module Tick Parallel");
         }
         else {
+            ProfilerBegin("Module Tick");
             for (auto& module : m_Modules)
             {
                 RK_PROFILE_SCOPE(module->GetName());
@@ -188,9 +192,8 @@ namespace Rocket
                 module->Tick(Timestep(m_Duration.count()));
                 ProfilerEnd(module->GetName());
             }
+            ProfilerEnd("Module Tick");
         }
-
-        ProfilerEnd("Module Tick");
         {
             RK_PROFILE_SCOPE("Profiler Dump");
             ProfilerDump();

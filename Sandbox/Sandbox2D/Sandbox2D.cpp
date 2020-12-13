@@ -1,4 +1,5 @@
 #include "Sandbox2D.h"
+#include "Random.h"
 
 #include <imgui.h>
 #include <glm/gtc/matrix_transform.hpp>
@@ -32,14 +33,32 @@ namespace Rocket {
         m_Texture.push_back(Texture2D::Create(img_path_3));
         m_Texture.push_back(Texture2D::Create(img_path_4));
 
-        m_Controller.reset(new OrthographicCameraController(16.0f / 9.0f, false));
+        // Smoke
+        m_SmokeParticle.Position = { 0.0f, 0.0f };
+        m_SmokeParticle.Velocity = { 0.0f, 0.0f }, m_SmokeParticle.VelocityVariation = { 4.0f, 2.0f };
+        m_SmokeParticle.SizeBegin = 0.35f, m_SmokeParticle.SizeEnd = 0.0f, m_SmokeParticle.SizeVariation = 0.15f;
+        m_SmokeParticle.ColorBegin = { 0.8f, 0.8f, 0.8f, 1.0f };
+        m_SmokeParticle.ColorEnd = { 0.6f, 0.6f, 0.6f, 1.0f };
+        m_SmokeParticle.LifeTime = 4.0f;
+
+        // Flames
+        m_EngineParticle.Position = { 0.0f, 0.0f };
+        m_EngineParticle.Velocity = { 0.0f, 0.0f }, m_EngineParticle.VelocityVariation = { 3.0f, 1.0f };
+        m_EngineParticle.SizeBegin = 0.5f, m_EngineParticle.SizeEnd = 0.0f, m_EngineParticle.SizeVariation = 0.3f;
+        m_EngineParticle.ColorBegin = { 254 / 255.0f, 109 / 255.0f, 41 / 255.0f, 1.0f };
+        m_EngineParticle.ColorEnd = { 254 / 255.0f, 212 / 255.0f, 123 / 255.0f , 1.0f };
+        m_EngineParticle.LifeTime = 1.0f;
+
+        m_Controller = new OrthographicCameraController(16.0f / 9.0f, false);
+
+        Random::Init();
     }
 
 	void Sandbox2DLayer::OnDetach()
     {
         RK_PROFILE_FUNCTION();
         
-        m_Controller.reset();
+        delete m_Controller;
         m_Texture.clear();
     }
 
@@ -53,6 +72,42 @@ namespace Rocket {
         {
             PROFILE_SCOPE("CameraController::OnUpdate");
             m_Controller->OnUpdate(ts);
+
+            if(Input::IsMouseButtonPressed(Mouse::ButtonLeft))
+            {
+                // Flames
+                float r1 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+                float r2 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+                float r3 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+                float r4 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+                float r5 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+                float r6 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+                float r7 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+                float r8 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+                float r9 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+                glm::vec2 emissionPoint = { (r1 - 0.5f) / 2.0f, (r2 - 0.5f) / 2.0f };
+                float rotation = r3 * 360.0f;
+                glm::vec4 rotated = glm::rotate(glm::mat4(1.0f), glm::radians(rotation), { 0.0f, 0.0f, 1.0f }) * glm::vec4(emissionPoint, 0.0f, 1.0f);
+                
+                float x = Input::GetMouseX();
+                float y = Input::GetMouseY();
+                auto width = Rocket::Application::Get().GetWindow().GetWidth();
+		        auto height = Rocket::Application::Get().GetWindow().GetHeight();
+                auto bounds = m_Controller->GetBounds();
+		        auto pos = m_Controller->GetCamera().GetPosition();
+                x = (x / width) * bounds.GetWidth() - bounds.GetWidth() * 0.5f;
+		        y = bounds.GetHeight() * 0.5f - (y / height) * bounds.GetHeight();
+                m_Position = {x + pos.x, y + pos.y};
+
+                m_EngineParticle.ColorBegin = { r4 * 255.0f / 255.0f, r5 * 255.0f / 255.0f, r6 * 255.0f / 255.0f, 1.0f };
+                m_EngineParticle.ColorEnd = { r7 * 255.0f / 255.0f, r8 * 255.0f / 255.0f, r9 * 255.0f / 255.0f, 1.0f };
+                
+                m_EngineParticle.Position = m_Position + glm::vec2{ rotated.x, rotated.y };
+                m_EngineParticle.Velocity.y = -m_Velocity.y * 0.2f - 0.2f;
+                m_ParticleSystem.Emit(m_EngineParticle);
+            }
+
+            m_ParticleSystem.OnUpdate(ts);
         }
         {
             PROFILE_SCOPE("Renderer Prepare");
@@ -64,23 +119,25 @@ namespace Rocket {
             PROFILE_SCOPE("Renderer Draw");
             RK_PROFILE_SCOPE("Renderer Draw");
             Renderer2D::BeginScene(m_Controller->GetCamera());
-            Renderer2D::DrawQuad({0.0f, 0.0f}, {0.9f, 0.9f}, {m_SquareColor, 1.0f});
-            Renderer2D::DrawQuad({0.0f, 1.0f}, {0.9f, 0.9f}, glm::vec4(1.0f) - glm::vec4({m_SquareColor, 0.0f}));
-            Renderer2D::DrawQuad({1.0f, 0.0f}, {0.9f, 0.9f}, m_Texture[0]);
-            Renderer2D::DrawQuad({1.0f, 1.0f}, {0.9f, 0.9f}, m_Texture[1]);
-            Renderer2D::DrawQuad({2.0f, 0.0f}, {0.9f, 0.9f}, m_Texture[2]);
+            Renderer2D::DrawQuad({0.0f, 0.0f, -0.1f}, {0.9f, 0.9f}, {m_SquareColor, 1.0f});
+            Renderer2D::DrawQuad({0.0f, 1.0f, -0.1f}, {0.9f, 0.9f}, glm::vec4(1.0f) - glm::vec4({m_SquareColor, 0.0f}));
+            Renderer2D::DrawQuad({1.0f, 0.0f, -0.1f}, {0.9f, 0.9f}, m_Texture[0]);
+            Renderer2D::DrawQuad({1.0f, 1.0f, -0.1f}, {0.9f, 0.9f}, m_Texture[1]);
+            Renderer2D::DrawQuad({2.0f, 0.0f, -0.1f}, {0.9f, 0.9f}, m_Texture[2]);
+            Renderer2D::DrawQuad({0.0f, 0.0f, -0.2f}, {10.0f, 10.0f}, m_Texture[3], 10.0f);
             // For Benchmark
-            for(int i = 0; i < 120; ++i)
+            for(float y = -5.0f; y < 4.5f; y += 0.5f)
             {
-                for(int j = 0; j < 120; ++j)
+                for(float x = -5.0f; x < 4.5f; x += 0.5f)
                 {
-                    int index = rand() % 4;
-                    //int index = 3;
-                    Renderer2D::DrawQuad({2.0f + i * 1.0f, 2.0f + j * 1.0f}, {0.9f, 0.9f}, m_Texture[index]);
+                    glm::vec4 color = {(x + 5.0f) / 10.0f, 0.4f, (y + 5.0f) / 10.0f, 0.5f};
+                    Renderer2D::DrawQuad({0.5f + x, 0.5f + y, -0.15f}, {0.45f, 0.45f}, color);
                 }
             }
 
-            Renderer2D::DrawRotatedQuad({2.0f, 1.0f}, {0.9f, 0.9f}, (45.0f), m_Texture[3]);
+            m_ParticleSystem.OnRender();
+
+            //Renderer2D::DrawRotatedQuad({2.0f, 1.0f}, {0.9f, 0.9f}, (45.0f), m_Texture[3]);
             Renderer2D::EndScene();
         }
     }

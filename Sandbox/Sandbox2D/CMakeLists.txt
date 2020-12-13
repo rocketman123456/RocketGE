@@ -1,6 +1,8 @@
 add_executable( Sandbox2D
     Sandbox2D.cpp
     ../SandboxData.cpp
+    ParticleSystem.cpp
+    Random.cpp
 )
 target_include_directories( Sandbox2D PRIVATE
     ${PROJECT_SOURCE_DIR}/Rocket/Interface

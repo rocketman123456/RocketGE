@@ -6,6 +6,15 @@
 #include "GEEvent/ApplicationEvent.h"
 
 namespace Rocket {
+
+	struct OrthographicCameraBounds
+	{
+		float Left, Right;
+		float Bottom, Top;
+
+		float GetWidth() { return Right - Left; }
+		float GetHeight() { return Top - Bottom; }
+	};
     class OrthographicCameraController : implements CameraController
 	{
 	public:
@@ -16,8 +25,8 @@ namespace Rocket {
 
 		void OnResize(float width, float height);
 
-		virtual Camera& GetCamera() override { return m_Camera; }
 		virtual const Camera& GetCamera() const override { return m_Camera; }
+		const OrthographicCameraBounds& GetBounds() const { return m_Bounds; }
 
 		float GetZoomLevel() const { return m_ZoomLevel; }
 		void SetZoomLevel(float level) { m_ZoomLevel = level; }
@@ -27,6 +36,7 @@ namespace Rocket {
 	private:
 		float m_AspectRatio;
 		float m_ZoomLevel = 1.0f;
+		OrthographicCameraBounds m_Bounds;
 		OrthographicCamera m_Camera;
 
 		bool m_Rotation;
