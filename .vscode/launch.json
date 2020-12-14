@@ -53,6 +53,18 @@
             "MIMode": "lldb"
         },
         {
+            "name": "(lldb) RayTrace 10",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/Test/RayTrace/RayTrace10",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb"
+        },
+        {
             "name": "(lldb) Piano",
             "type": "cppdbg",
             "request": "launch",

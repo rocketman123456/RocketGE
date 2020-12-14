@@ -28,18 +28,12 @@ namespace Rocket {
         std::string img_path_2 = ProjectSourceDir + "/Assets/textures/container.jpg";
         std::string img_path_3 = ProjectSourceDir + "/Assets/textures/texture.jpg";
         std::string img_path_4 = ProjectSourceDir + "/Assets/textures/Checkerboard.png";
+        std::string img_path_5 = ProjectSourceDir + "/Assets/textures/RPGpack_sheet_2X.png";
         m_Texture.push_back(Texture2D::Create(img_path_1));
         m_Texture.push_back(Texture2D::Create(img_path_2));
         m_Texture.push_back(Texture2D::Create(img_path_3));
         m_Texture.push_back(Texture2D::Create(img_path_4));
-
-        // Smoke
-        m_SmokeParticle.Position = { 0.0f, 0.0f };
-        m_SmokeParticle.Velocity = { 0.0f, 0.0f }, m_SmokeParticle.VelocityVariation = { 4.0f, 2.0f };
-        m_SmokeParticle.SizeBegin = 0.35f, m_SmokeParticle.SizeEnd = 0.0f, m_SmokeParticle.SizeVariation = 0.15f;
-        m_SmokeParticle.ColorBegin = { 0.8f, 0.8f, 0.8f, 1.0f };
-        m_SmokeParticle.ColorEnd = { 0.6f, 0.6f, 0.6f, 1.0f };
-        m_SmokeParticle.LifeTime = 4.0f;
+        m_Texture.push_back(Texture2D::Create(img_path_5));
 
         // Flames
         m_EngineParticle.Position = { 0.0f, 0.0f };
@@ -127,12 +121,13 @@ namespace Rocket {
             PROFILE_SCOPE("Renderer Draw");
             RK_PROFILE_SCOPE("Renderer Draw");
             Renderer2D::BeginScene(m_Controller->GetCamera());
+            Renderer2D::DrawQuad({0.0f, 0.0f, -0.2f}, {10.0f, 10.0f}, m_Texture[3], 10.0f);
             Renderer2D::DrawQuad({0.0f, 0.0f, -0.1f}, {0.9f, 0.9f}, {m_SquareColor, 1.0f});
             Renderer2D::DrawQuad({0.0f, 1.0f, -0.1f}, {0.9f, 0.9f}, glm::vec4(1.0f) - glm::vec4({m_SquareColor, 0.0f}));
             Renderer2D::DrawQuad({1.0f, 0.0f, -0.1f}, {0.9f, 0.9f}, m_Texture[0]);
             Renderer2D::DrawQuad({1.0f, 1.0f, -0.1f}, {0.9f, 0.9f}, m_Texture[1]);
             Renderer2D::DrawQuad({2.0f, 0.0f, -0.1f}, {0.9f, 0.9f}, m_Texture[2]);
-            Renderer2D::DrawQuad({0.0f, 0.0f, -0.2f}, {10.0f, 10.0f}, m_Texture[3], 10.0f);
+            
             // For Benchmark
             for(float y = -5.0f; y < 4.5f; y += 0.5f)
             {
@@ -143,9 +138,11 @@ namespace Rocket {
                 }
             }
 
+            auto sub_texture = SubTexture2D::Create(m_Texture[4], {7, 6}, {128.0f, 128.0f});
+            Renderer2D::DrawQuad({2.0f, 1.0f, -0.1f}, {0.9f, 0.9f}, sub_texture);
+
             m_ParticleSystem.OnRender();
 
-            //Renderer2D::DrawRotatedQuad({2.0f, 1.0f}, {0.9f, 0.9f}, (45.0f), m_Texture[3]);
             Renderer2D::EndScene();
         }
     }

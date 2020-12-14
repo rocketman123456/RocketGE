@@ -8,6 +8,7 @@
 #include "GERender/Buffer.h"
 #include "GERender/VertexArray.h"
 #include "GERender/Texture.h"
+#include "GERender/SubTexture2D.h"
 
 #if defined(RK_OPENGL)
 #include "GERender/OpenGLShader.h"

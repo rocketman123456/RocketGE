@@ -432,7 +432,7 @@ HazelDashLayer::HazelDashLayer()
 
 
 void HazelDashLayer::OnAttach() {
-	std::string basePath = "assets/textures/tile";
+	std::string basePath = ProjectSourceDir + "/Assets/textures/dash";
 	std::string extension = ".png";
 
 	for (size_t i = 0; i < m_Tiles.size(); ++i) {

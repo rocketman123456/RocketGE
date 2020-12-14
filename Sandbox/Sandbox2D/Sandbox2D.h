@@ -41,7 +41,7 @@ namespace Rocket {
 
         glm::vec3 m_SquareColor = { 1.0f, 0.5f, 0.2f };
 
-        ParticleProps m_SmokeParticle, m_EngineParticle;
+        ParticleProps m_EngineParticle;
 	    ParticleSystem m_ParticleSystem;
         glm::vec2 m_Position = { 0.0f, 0.0f };
         glm::vec2 m_Velocity = { 0.0f, 0.0f };

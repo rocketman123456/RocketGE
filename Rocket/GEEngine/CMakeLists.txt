@@ -39,6 +39,7 @@ add_library( GEEngine
     GERender/Renderer.cpp
     GERender/RenderCommand.cpp
     GERender/Shader.cpp
+    GERender/SubTexture2D.cpp
     GERender/VertexArray.cpp
     GERender/Texture.cpp
     # GERender2D

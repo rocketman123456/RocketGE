@@ -28,6 +28,9 @@ add_executable( RayTrace08
 add_executable( RayTrace09
     RayTrace09.cpp
 )
-#target_link_libraries( RayTrace09
-#    omp
-#)
+add_executable( RayTrace10
+    RayTrace10.cpp
+)
+add_executable( RayTrace11
+    RayTrace11.cpp
+)
