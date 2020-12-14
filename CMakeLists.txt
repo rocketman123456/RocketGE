@@ -70,6 +70,32 @@ find_package(Bullet CONFIG REQUIRED)
 find_package(OpenAL CONFIG REQUIRED)
 find_package(SndFile CONFIG REQUIRED)
 
+#if(Apple)
+#    set(CMAKE_C_COMPILER /usr/local/opt/llvm/bin/clang)
+#    set(CMAKE_CXX_COMPILER /usr/local/opt/llvm/bin/clang++)
+#    if(CMAKE_C_COMPILER_ID MATCHES "Clang")
+#        set(OpenMP_C "${CMAKE_C_COMPILER}")
+#        set(OpenMP_C_FLAGS "-fopenmp -Wno-unused-command-line-argument")
+#        set(OpenMP_C_LIB_NAMES "libomp" "libgomp" "libiomp5")
+#        set(OpenMP_libomp_LIBRARY ${OpenMP_C_LIB_NAMES})
+#        set(OpenMP_libgomp_LIBRARY ${OpenMP_C_LIB_NAMES})
+#        set(OpenMP_libiomp5_LIBRARY ${OpenMP_C_LIB_NAMES})
+#    endif()
+#    if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+#        set(OpenMP_CXX "${CMAKE_CXX_COMPILER}")
+#        set(OpenMP_CXX_FLAGS "-fopenmp -Wno-unused-command-line-argument")
+#        set(OpenMP_CXX_LIB_NAMES "libomp" "libgomp" "libiomp5")
+#        set(OpenMP_libomp_LIBRARY ${OpenMP_CXX_LIB_NAMES})
+#        set(OpenMP_libgomp_LIBRARY ${OpenMP_CXX_LIB_NAMES})
+#        set(OpenMP_libiomp5_LIBRARY ${OpenMP_CXX_LIB_NAMES})
+#    endif()
+#endif()
+
+#find_package(OpenMP REQUIRED)
+#link_directories( "${OPENMP_LIBRARIES}" )
+#set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+#set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+
 message(STATUS "Render API Set to ${RENDER_API}")
 if (RENDER_API MATCHES "OpenGL")
     set(OpenGL 1)
@@ -102,6 +128,7 @@ include_directories(
     ${BULLET_INCLUDE_DIRS}
     ${OPENAL_INCLUDE_DIRS}
     ${SNDFILE_INCLUDE_DIRS}
+    ${OPENMP_INCLUDES}
 )
 
 include_directories(

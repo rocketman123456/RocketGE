@@ -43,11 +43,11 @@ namespace Rocket {
 
         // Flames
         m_EngineParticle.Position = { 0.0f, 0.0f };
-        m_EngineParticle.Velocity = { 0.0f, 0.0f }, m_EngineParticle.VelocityVariation = { 3.0f, 1.0f };
+        m_EngineParticle.Velocity = { 0.0f, 0.0f }, m_EngineParticle.VelocityVariation = { 0.1f, 0.1f };
         m_EngineParticle.SizeBegin = 0.5f, m_EngineParticle.SizeEnd = 0.0f, m_EngineParticle.SizeVariation = 0.3f;
         m_EngineParticle.ColorBegin = { 254 / 255.0f, 109 / 255.0f, 41 / 255.0f, 1.0f };
         m_EngineParticle.ColorEnd = { 254 / 255.0f, 212 / 255.0f, 123 / 255.0f , 1.0f };
-        m_EngineParticle.LifeTime = 1.0f;
+        m_EngineParticle.LifeTime = 10.0f;
 
         m_Controller = new OrthographicCameraController(16.0f / 9.0f, false);
 
@@ -79,14 +79,11 @@ namespace Rocket {
                 float r1 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
                 float r2 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
                 float r3 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-                float r4 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-                float r5 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-                float r6 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-                float r7 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-                float r8 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-                float r9 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+                
                 glm::vec2 emissionPoint = { (r1 - 0.5f) / 2.0f, (r2 - 0.5f) / 2.0f };
-                float rotation = r3 * 360.0f;
+                float rotation = r3 * 180.0f;
+                m_EngineParticle.RotationStart = rotation;
+                m_EngineParticle.RotationEnd = rotation;
                 glm::vec4 rotated = glm::rotate(glm::mat4(1.0f), glm::radians(rotation), { 0.0f, 0.0f, 1.0f }) * glm::vec4(emissionPoint, 0.0f, 1.0f);
                 
                 float x = Input::GetMouseX();
@@ -99,11 +96,22 @@ namespace Rocket {
 		        y = bounds.GetHeight() * 0.5f - (y / height) * bounds.GetHeight();
                 m_Position = {x + pos.x, y + pos.y};
 
-                m_EngineParticle.ColorBegin = { r4 * 255.0f / 255.0f, r5 * 255.0f / 255.0f, r6 * 255.0f / 255.0f, 1.0f };
-                m_EngineParticle.ColorEnd = { r7 * 255.0f / 255.0f, r8 * 255.0f / 255.0f, r9 * 255.0f / 255.0f, 1.0f };
+                float r4 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+                float r5 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+                float r6 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+                float r7 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+                float r8 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+                float r9 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+
+                m_EngineParticle.ColorBegin = { r4 * 255.0f / 255.0f, r5 * 255.0f / 255.0f, r6 * 255.0f / 255.0f, 0.8f };
+                m_EngineParticle.ColorEnd = { r7 * 255.0f / 255.0f, r8 * 255.0f / 255.0f, r9 * 255.0f / 255.0f, 0.8f };
+
+                float r10 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+                float r11 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
                 
                 m_EngineParticle.Position = m_Position + glm::vec2{ rotated.x, rotated.y };
-                m_EngineParticle.Velocity.y = -m_Velocity.y * 0.2f - 0.2f;
+                m_EngineParticle.Velocity = {(r10 - 0.5f) / 10.0f, (r11 - 0.5f) / 10.0f};
+                //m_EngineParticle.Velocity = {0.0f, 0.0f};
                 m_ParticleSystem.Emit(m_EngineParticle);
             }
 

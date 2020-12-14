@@ -34,6 +34,11 @@ void ParticleSystem::Emit(const ParticleProps& particleProps)
 	particle.LifeTime = particleProps.LifeTime;
 	particle.LifeRemaining = particleProps.LifeTime;
 
+	// Rotation
+	particle.Rotation = particleProps.Rotation;
+	particle.RotationStart = particleProps.RotationStart;
+	particle.RotationEnd = particleProps.RotationEnd;
+
 	m_PoolIndex = --m_PoolIndex % m_ParticlePool.size();
 }
 
@@ -68,6 +73,9 @@ void ParticleSystem::OnRender()
 		color.a = color.a * life;
 
 		float size = glm::lerp(particle.SizeEnd, particle.SizeBegin, life);
-		Rocket::Renderer2D::DrawRotatedQuad(particle.Position, { size, size }, particle.Rotation, color);
+
+		float rotation = glm::lerp(particle.RotationStart, particle.RotationEnd, life);
+
+		Rocket::Renderer2D::DrawRotatedQuad(particle.Position, { size, size }, rotation, color);
 	}
 }
