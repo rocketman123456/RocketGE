@@ -34,3 +34,9 @@ add_executable( RayTrace10
 add_executable( RayTrace11
     RayTrace11.cpp
 )
+add_executable( RayTrace12
+    RayTrace12.cpp
+)
+add_executable( RayTrace13
+    RayTrace13.cpp
+)

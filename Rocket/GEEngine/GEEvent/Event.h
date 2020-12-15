@@ -109,7 +109,7 @@ namespace Rocket {
 		AppTick, AppUpdate, AppRender,
 		KeyPressed, KeyReleased, KeyTyped,
 		MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled,
-		DelayedEvent,
+		AudioEvent,
     };
 
     enum EventCategory
@@ -120,7 +120,7 @@ namespace Rocket {
 		EventCategoryKeyboard       = BIT(2),
 		EventCategoryMouse          = BIT(3),
 		EventCategoryMouseButton    = BIT(4),
-		EventCategoryDelay		    = BIT(4)
+		EventCategoryAudio		    = BIT(5),
 	};
 
 #define EVENT_CLASS_TYPE(type) static EventType GetStaticType() { return EventType::type; }\

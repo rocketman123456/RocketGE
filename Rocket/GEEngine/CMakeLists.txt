@@ -51,9 +51,3 @@ add_library( GEEngine
 target_link_libraries( GEEngine PRIVATE
     glfw Eigen3::Eigen
 )
-
-set(ENGINE_THIRD_PARTY 
-    ${Threads_LIBS} ${OPENAL_LIBRARY} 
-    Eigen3::Eigen spdlog glfw yaml-cpp
-    OpenAL::OpenAL SndFile::sndfile
-)
