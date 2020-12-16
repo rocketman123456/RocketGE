@@ -84,17 +84,25 @@ namespace Rocket
     void Application::PushLayer(Layer *layer)
     {
         RK_PROFILE_FUNCTION();
-
         m_LayerStack.PushLayer(layer);
-        layer->OnAttach();
     }
 
     void Application::PushOverlay(Layer *layer)
     {
         RK_PROFILE_FUNCTION();
-
         m_LayerStack.PushOverlay(layer);
-        layer->OnAttach();
+    }
+
+    void Application::PopLayer(Layer* layer)
+    {
+        RK_PROFILE_FUNCTION();
+        m_LayerStack.PopLayer(layer);
+    }
+
+    void Application::PopOverlay(Layer* layer)
+    {
+        RK_PROFILE_FUNCTION();
+        m_LayerStack.PopOverlay(layer);
     }
 
     void Application::PushModule(IRuntimeModule* module)

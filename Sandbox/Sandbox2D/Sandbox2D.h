@@ -35,6 +35,7 @@ namespace Rocket {
     private:
         void DrawQuads();
         void DrawMap();
+        void DockSpace();
     private:
         OrthographicCameraController* m_Controller;
 

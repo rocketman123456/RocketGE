@@ -31,6 +31,8 @@ namespace Rocket {
 
         void PushLayer(Layer* layer);
 		void PushOverlay(Layer* layer);
+        void PopLayer(Layer* layer);
+		void PopOverlay(Layer* layer);
 
         void PushModule(IRuntimeModule* module);
 
