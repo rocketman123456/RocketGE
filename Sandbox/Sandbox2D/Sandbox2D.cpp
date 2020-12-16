@@ -10,6 +10,23 @@
 extern float square_vertices_s[12];
 extern uint32_t square_indices[6];
 
+static uint32_t s_MapWidth = 24;
+static uint32_t s_MapHeight = 12;
+static const char* s_MapTiles = 
+    "WWWWWWWWWWWWWWWWWWWWWWWW"
+    "WWWDDDDDDDDDDDDDDDWWWWWW"
+    "WWWDDDDDDDDDDDDDDDDWWWWW"
+    "WWWWWDDDDDDDDDDDDDDDDWWW"
+    "WWWDDDDDDDDWWWWWDDDWWWWW"
+    "WWWWDDDDWWWWWWWWWWWWWWWW"
+    "WWWWDDDDDDDDDDDDDDDDWWWW"
+    "WWWDDDDDDDDWWWWWWWWWWWWW"
+    "WWWDDDDDWWWWWWWWDDDWWWWW"
+    "WWWWDDDDDDDDWWWWWWWWWWWW"
+    "WWWWWWWDDDDDDDDDDDDDWWWW"
+    "WWWWWWWWWWWWWWWWWWWWWWWW"
+;
+
 namespace Rocket {
 
 #define PROFILE_SCOPE(name) Timer timer##__LINE__(name, [&](ProfileResult_ profileResult)\
@@ -45,6 +62,9 @@ namespace Rocket {
 
         m_Controller = new OrthographicCameraController(16.0f / 9.0f, false);
 
+        m_TextureMap['D'] = SubTexture2D::Create(m_Texture[4], { 6, 11}, {128.0f, 128.0f});
+        m_TextureMap['W'] = SubTexture2D::Create(m_Texture[4], {11, 11}, {128.0f, 128.0f});
+
         Random::Init();
     }
 
@@ -66,19 +86,24 @@ namespace Rocket {
         {
             PROFILE_SCOPE("CameraController::OnUpdate");
             m_Controller->OnUpdate(ts);
+        }
+        {
+            PROFILE_SCOPE("Renderer Prepare");
+            RK_PROFILE_SCOPE("Renderer Prepare");
 
             if(Input::IsMouseButtonPressed(Mouse::ButtonLeft))
             {
                 // Flames
                 float r1 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
                 float r2 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-                float r3 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+                float r3_1 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+                float r3_2 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
                 
                 glm::vec2 emissionPoint = { (r1 - 0.5f) / 2.0f, (r2 - 0.5f) / 2.0f };
-                float rotation = r3 * 180.0f;
-                m_EngineParticle.RotationStart = rotation;
-                m_EngineParticle.RotationEnd = rotation;
-                glm::vec4 rotated = glm::rotate(glm::mat4(1.0f), glm::radians(rotation), { 0.0f, 0.0f, 1.0f }) * glm::vec4(emissionPoint, 0.0f, 1.0f);
+                float rotation_1 = r3_1 * 180.0f;
+                float rotation_2 = r3_2 * 180.0f;
+                m_EngineParticle.RotationStart = rotation_1;
+                m_EngineParticle.RotationEnd = rotation_2;
                 
                 float x = Input::GetMouseX();
                 float y = Input::GetMouseY();
@@ -103,17 +128,13 @@ namespace Rocket {
                 float r10 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
                 float r11 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
                 
-                m_EngineParticle.Position = m_Position + glm::vec2{ rotated.x, rotated.y };
+                m_EngineParticle.Position = m_Position;
                 m_EngineParticle.Velocity = {(r10 - 0.5f) / 10.0f, (r11 - 0.5f) / 10.0f};
                 //m_EngineParticle.Velocity = {0.0f, 0.0f};
                 m_ParticleSystem.Emit(m_EngineParticle);
             }
-
             m_ParticleSystem.OnUpdate(ts);
-        }
-        {
-            PROFILE_SCOPE("Renderer Prepare");
-            RK_PROFILE_SCOPE("Renderer Prepare");
+
             RenderCommand::SetClearColor({ 0.2f, 0.3f, 0.3f, 1.0f });
             RenderCommand::Clear();
         }
@@ -121,30 +142,51 @@ namespace Rocket {
             PROFILE_SCOPE("Renderer Draw");
             RK_PROFILE_SCOPE("Renderer Draw");
             Renderer2D::BeginScene(m_Controller->GetCamera());
-            Renderer2D::DrawQuad({0.0f, 0.0f, -0.2f}, {10.0f, 10.0f}, m_Texture[3], 10.0f);
-            Renderer2D::DrawQuad({0.0f, 0.0f, -0.1f}, {0.9f, 0.9f}, {m_SquareColor, 1.0f});
-            Renderer2D::DrawQuad({0.0f, 1.0f, -0.1f}, {0.9f, 0.9f}, glm::vec4(1.0f) - glm::vec4({m_SquareColor, 0.0f}));
-            Renderer2D::DrawQuad({1.0f, 0.0f, -0.1f}, {0.9f, 0.9f}, m_Texture[0]);
-            Renderer2D::DrawQuad({1.0f, 1.0f, -0.1f}, {0.9f, 0.9f}, m_Texture[1]);
-            Renderer2D::DrawQuad({2.0f, 0.0f, -0.1f}, {0.9f, 0.9f}, m_Texture[2]);
             
-            // For Benchmark
-            for(float y = -5.0f; y < 4.5f; y += 0.5f)
-            {
-                for(float x = -5.0f; x < 4.5f; x += 0.5f)
-                {
-                    glm::vec4 color = {(x + 5.0f) / 10.0f, 0.4f, (y + 5.0f) / 10.0f, 0.5f};
-                    Renderer2D::DrawQuad({0.5f + x, 0.5f + y, -0.15f}, {0.45f, 0.45f}, color);
-                }
-            }
-
-            auto sub_texture = SubTexture2D::Create(m_Texture[4], {7, 6}, {128.0f, 128.0f});
-            Renderer2D::DrawQuad({2.0f, 1.0f, -0.1f}, {0.9f, 0.9f}, sub_texture);
+            //DrawQuads();
+            DrawMap();
 
             m_ParticleSystem.OnRender();
 
             Renderer2D::EndScene();
         }
+    }
+
+    void Sandbox2DLayer::DrawMap()
+    {
+        for(int y = 0; y < s_MapHeight; ++y)
+        {
+            for(int x = 0; x < s_MapWidth; ++x)
+            {
+                char key = s_MapTiles[x + y*s_MapWidth];
+                if(m_TextureMap.find(key) != m_TextureMap.end())
+                    Renderer2D::DrawQuad({x - s_MapWidth / 2.0f, y - s_MapHeight / 2.0f, 0.0f}, {1.0f, 1.0f}, m_TextureMap[key]);
+                else
+                    Renderer2D::DrawQuad({x - s_MapWidth / 2.0f, y - s_MapHeight / 2.0f, 0.0f}, {1.0f, 1.0f}, {1.0f, 0.0f, 0.0f, 1.0f});
+            }
+        }
+    }
+
+    void Sandbox2DLayer::DrawQuads()
+    {
+        Renderer2D::DrawQuad({0.0f, 0.0f, -0.2f}, {10.0f, 10.0f}, m_Texture[3], 10.0f);
+        Renderer2D::DrawQuad({0.0f, 0.0f, -0.1f}, {0.9f, 0.9f}, {m_SquareColor, 1.0f});
+        Renderer2D::DrawQuad({0.0f, 1.0f, -0.1f}, {0.9f, 0.9f}, glm::vec4(1.0f) - glm::vec4({m_SquareColor, 0.0f}));
+        Renderer2D::DrawQuad({1.0f, 0.0f, -0.1f}, {0.9f, 0.9f}, m_Texture[0]);
+        Renderer2D::DrawQuad({1.0f, 1.0f, -0.1f}, {0.9f, 0.9f}, m_Texture[1]);
+        Renderer2D::DrawQuad({2.0f, 0.0f, -0.1f}, {0.9f, 0.9f}, m_Texture[2]);
+        
+        for(float y = -5.0f; y < 4.5f; y += 0.5f)
+        {
+            for(float x = -5.0f; x < 4.5f; x += 0.5f)
+            {
+                glm::vec4 color = {(x + 5.0f) / 10.0f, 0.4f, (y + 5.0f) / 10.0f, 0.5f};
+                Renderer2D::DrawQuad({0.5f + x, 0.5f + y, -0.15f}, {0.45f, 0.45f}, color);
+            }
+        }
+
+        auto sub_texture = SubTexture2D::Create(m_Texture[4], {7, 6}, {128.0f, 128.0f});
+        Renderer2D::DrawQuad({2.0f, 1.0f, -0.1f}, {0.9f, 0.9f}, sub_texture);
     }
 
     void Sandbox2DLayer::OnGuiRender()

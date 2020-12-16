@@ -33,13 +33,17 @@ namespace Rocket {
         virtual void OnGuiRender() override;
         virtual void OnEvent(Event &event) override;
     private:
+        void DrawQuads();
+        void DrawMap();
+    private:
         OrthographicCameraController* m_Controller;
 
         std::vector<Ref<Texture2D>> m_Texture;
+        glm::vec3 m_SquareColor = { 1.0f, 0.5f, 0.2f };
 
         std::vector<ProfileResult_> m_ProfileResults;
 
-        glm::vec3 m_SquareColor = { 1.0f, 0.5f, 0.2f };
+        std::unordered_map<char, Ref<SubTexture2D>> m_TextureMap;
 
         ParticleProps m_EngineParticle;
 	    ParticleSystem m_ParticleSystem;

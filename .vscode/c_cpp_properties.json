@@ -5,7 +5,7 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "${vcpkgRoot}/x64-osx/include",
-                "${workspaceFolder}/Rocket/GEEngine/include"
+                "${workspaceFolder}/Rocket/GEEngine"
             ],
             "defines": [],
             "macFrameworkPath": [],
