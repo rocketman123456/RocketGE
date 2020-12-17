@@ -17,6 +17,18 @@
             "MIMode": "lldb"
         },
         {
+            "name": "(lldb) Editor",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/Editor/EditorApp",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb"
+        },
+        {
             "name": "(lldb) SimpleGame",
             "type": "cppdbg",
             "request": "launch",

@@ -2,6 +2,7 @@ message(STATUS "Add Module OpenGL")
 message(STATUS "###################################")
 add_library( Render_OpenGL
     src/GERender/OpenGLContext.cpp
+    src/GERender/OpenGLFrameBuffer.cpp
     src/GERender/OpenGLShader.cpp
     src/GERender/OpenGLIndexBuffer.cpp 
     src/GERender/OpenGLInstanceBuffer.cpp

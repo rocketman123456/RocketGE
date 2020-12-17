@@ -1,4 +1,4 @@
-message(STATUS "Add Module GECore")
+message(STATUS "Add Module GEEngine")
 message(STATUS "###################################")
 add_library( GEEngine
     #GEAudio
@@ -34,6 +34,7 @@ add_library( GEEngine
     GEProcess/AudioProcess.cpp
     # GERender
     GERender/Buffer.cpp
+    GERender/FrameBuffer.cpp
     GERender/GraphicsContext.cpp
     GERender/RenderAPI.cpp
     GERender/Renderer.cpp

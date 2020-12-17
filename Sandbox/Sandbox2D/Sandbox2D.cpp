@@ -58,7 +58,7 @@ namespace Rocket {
         m_EngineParticle.SizeBegin = 0.5f, m_EngineParticle.SizeEnd = 0.0f, m_EngineParticle.SizeVariation = 0.3f;
         m_EngineParticle.ColorBegin = { 254 / 255.0f, 109 / 255.0f, 41 / 255.0f, 1.0f };
         m_EngineParticle.ColorEnd = { 254 / 255.0f, 212 / 255.0f, 123 / 255.0f , 1.0f };
-        m_EngineParticle.LifeTime = 10.0f;
+        m_EngineParticle.LifeTime = 40.0f;
 
         m_Controller = new OrthographicCameraController(16.0f / 9.0f, false);
 
@@ -122,6 +122,9 @@ namespace Rocket {
                 m_EngineParticle.ColorBegin = { r4 * 255.0f / 255.0f, r5 * 255.0f / 255.0f, r6 * 255.0f / 255.0f, 0.8f };
                 m_EngineParticle.ColorEnd = { r7 * 255.0f / 255.0f, r8 * 255.0f / 255.0f, r9 * 255.0f / 255.0f, 0.8f };
 
+                m_EngineParticle.ColorBegin = { 0.0f / 255.0f, 0.0f / 255.0f, 0.0f / 255.0f, 0.8f };
+                m_EngineParticle.ColorEnd = { 255.0f / 255.0f, 255.0f / 255.0f, 255.0f / 255.0f, 0.8f };
+
                 float r10 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
                 float r11 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
                 
@@ -139,8 +142,8 @@ namespace Rocket {
             RK_PROFILE_SCOPE("Renderer Draw");
             Renderer2D::BeginScene(m_Controller->GetCamera());
             
-            //DrawQuads();
-            DrawMap();
+            DrawQuads();
+            //DrawMap();
 
             m_ParticleSystem.OnRender();
 
