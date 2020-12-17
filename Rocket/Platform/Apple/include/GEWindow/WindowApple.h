@@ -18,8 +18,8 @@ namespace Rocket
 		virtual void PollEvent() override;
 		virtual void OnUpdate() override;
 
-		unsigned int GetWidth() const override { return m_Data.Width; }
-		unsigned int GetHeight() const override { return m_Data.Height; }
+		uint32_t GetWidth() const override { return m_Data.Width; }
+		uint32_t GetHeight() const override { return m_Data.Height; }
 
 		// Window attributes
 		void SetEventCallback(const EventCallbackFn &callback) override { m_Data.EventCallback = callback; }

@@ -25,7 +25,7 @@ struct Vertex {
 };
 
 struct Texture {
-    unsigned int id;
+    uint32_t id;
     std::string type;
     std::string path;
 };
@@ -34,12 +34,12 @@ class Mesh {
 public:
     // mesh Data
     std::vector<Vertex>       vertices;
-    std::vector<unsigned int> indices;
+    std::vector<uint32_t> indices;
     std::vector<Texture>      textures;
-    unsigned int VAO;
+    uint32_t VAO;
 
     // constructor
-    Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture> textures)
+    Mesh(vector<Vertex> vertices, vector<uint32_t> indices, vector<Texture> textures)
     {
         this->vertices = vertices;
         this->indices = indices;
@@ -53,11 +53,11 @@ public:
     void Draw(Shader &shader) 
     {
         // bind appropriate textures
-        unsigned int diffuseNr  = 1;
-        unsigned int specularNr = 1;
-        unsigned int normalNr   = 1;
-        unsigned int heightNr   = 1;
-        for(unsigned int i = 0; i < textures.size(); i++)
+        uint32_t diffuseNr  = 1;
+        uint32_t specularNr = 1;
+        uint32_t normalNr   = 1;
+        uint32_t heightNr   = 1;
+        for(uint32_t i = 0; i < textures.size(); i++)
         {
             glActiveTexture(GL_TEXTURE0 + i); // active proper texture unit before binding
             // retrieve texture number (the N in diffuse_textureN)
@@ -89,7 +89,7 @@ public:
 
 private:
     // render data 
-    unsigned int VBO, EBO;
+    uint32_t VBO, EBO;
 
     // initializes all the buffer objects/arrays
     void setupMesh()
@@ -108,7 +108,7 @@ private:
         glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);  
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(uint32_t), &indices[0], GL_STATIC_DRAW);
 
         // set the vertex attribute pointers
         // vertex Positions

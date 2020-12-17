@@ -20,7 +20,7 @@ namespace Rocket {
         void AbortAllProcesses(bool immediate);
 
         // accessors
-        unsigned int GetProcessCount(void) const { return m_ProcessList.size(); }
+        uint32_t GetProcessCount(void) const { return m_ProcessList.size(); }
     private:
         typedef std::list<StrongProcessPtr> ProcessList;
 	    ProcessList m_ProcessList;

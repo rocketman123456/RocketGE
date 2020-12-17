@@ -17,14 +17,14 @@ namespace Rocket {
     typedef struct
     {
         bool bValid;                    //Whether this data is valid
-        unsigned int iProfileInstances; //# of times ProfileBegin called
+        uint32_t iProfileInstances; //# of times ProfileBegin called
         int iOpenProfiles;              //# of times ProfileBegin w/o ProfileEnd
         //char szName[256];               //Name of sample
         std::string szName;
         float fStartTime;               //The current open profile start time
         float fAccumulator;             //All samples this frame added together
         float fChildrenSampleTime;      //Time taken by all children
-        unsigned int iNumParents;       //Number of profile parents
+        uint32_t iNumParents;       //Number of profile parents
     } ProfileSample;
 
     typedef struct
@@ -43,8 +43,8 @@ namespace Rocket {
         float fAve;       //Average time per frame (percentage)
         float fMin;       //Minimum time per frame (percentage)
         float fMax;       //Maximum time per frame (percentage)
-        unsigned int iNum;
-        unsigned int iParent;
+        uint32_t iNum;
+        uint32_t iParent;
     } ProfileInfo;
 
     // this timer shoule only use for profile

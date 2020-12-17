@@ -4,7 +4,7 @@
 class semaphore
 {
 public:
-	explicit semaphore(unsigned int count = 0)
+	explicit semaphore(uint32_t count = 0)
 	: m_count(count) {}
 
 	void post()
@@ -16,7 +16,7 @@ public:
 		m_cv.notify_one();
 	}
 
-	void post(unsigned int count)
+	void post(uint32_t count)
 	{
 		{
 			std::unique_lock lock(m_mutex);
@@ -53,7 +53,7 @@ public:
 	}
 
 private:
-	unsigned int m_count;
+	uint32_t m_count;
 	std::mutex m_mutex;
 	std::condition_variable m_cv;
 };
@@ -61,7 +61,7 @@ private:
 class fast_semaphore
 {
 public:
-	explicit fast_semaphore(unsigned int count = 0)
+	explicit fast_semaphore(uint32_t count = 0)
 	: m_count(count), m_semaphore(0) {}
 
 	void post()

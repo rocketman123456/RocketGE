@@ -6,6 +6,7 @@
 #include "GEEvent/ApplicationEvent.h"
 #include "GEWindow/Window.h"
 #include "GELayer/Layer.h"
+#include "GELayer/ImGuiLayer.h"
 #include "GELayer/LayerStack.h"
 #include "GEUtils/ThreadPool.h"
 
@@ -39,6 +40,7 @@ namespace Rocket {
         virtual void TickModule() override;
         virtual void Tick() override;
 
+        inline ImGuiLayer* GetGuiLayer() { return m_GuiLayer; }
         inline Window& GetWindow() { return *m_Window; }
         inline bool GetIsRunning() override { return m_Running; }
         static Application& Get() { return *s_Instance; }
@@ -47,7 +49,7 @@ namespace Rocket {
 		bool OnWindowResize(WindowResizeEvent& e);
     private:
         Ref<Window> m_Window;
-        Layer* m_GuiLayer;
+        ImGuiLayer* m_GuiLayer;
         LayerStack m_LayerStack;
 
         std::vector<IRuntimeModule*> m_Modules;

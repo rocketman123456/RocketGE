@@ -5,6 +5,8 @@
 class EditorApp : implements Rocket::Application
 {
 public:
+    EditorApp() : Rocket::Application("Rocket Editor") {}
+
     virtual void PreInitialize() override
     {
         PushLayer(new EditorLayer());

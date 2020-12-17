@@ -5,7 +5,7 @@
 class simple_thread_pool
 {
 public:
-	explicit simple_thread_pool(unsigned int threads = std::thread::hardware_concurrency())
+	explicit simple_thread_pool(uint32_t threads = std::thread::hardware_concurrency())
 	{
 		if(!threads)
 			throw std::invalid_argument("Invalid thread count!");
@@ -64,7 +64,7 @@ private:
 class thread_pool
 {
 public:
-	explicit thread_pool(unsigned int threads = std::thread::hardware_concurrency())
+	explicit thread_pool(uint32_t threads = std::thread::hardware_concurrency())
 	: m_queues(threads), m_count(threads)
 	{
 		if(!threads)
@@ -138,8 +138,8 @@ private:
 	using Threads = std::vector<std::thread>;
 	Threads m_threads;
 
-	const unsigned int m_count;
+	const uint32_t m_count;
 	std::atomic_uint m_index = 0;
 
-	inline static const unsigned int K = 2;
+	inline static const uint32_t K = 2;
 };

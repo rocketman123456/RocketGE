@@ -28,6 +28,6 @@ namespace Rocket {
 	private:
 		std::vector<Layer*> m_Layers;
 		std::unordered_map<std::string, Layer*> m_LayersMap;
-		unsigned int m_LayerInsertIndex = 0;
+		uint32_t m_LayerInsertIndex = 0;
 	};
 }

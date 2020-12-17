@@ -14,6 +14,7 @@ public:
     virtual void OnGuiRender() override;
 private:
     void DrawQuads();
+    void DockSpace();
 private:
     Rocket::OrthographicCameraController* m_Controller;
 
