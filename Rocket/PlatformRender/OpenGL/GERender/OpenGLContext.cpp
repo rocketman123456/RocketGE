@@ -25,6 +25,11 @@ namespace Rocket {
 		RK_CORE_INFO("  Version: {0}", glGetString(GL_VERSION));
     }
 
+    void OpenGLContext::Destory()
+    {
+
+    }
+
     void OpenGLContext::SwapBuffers()
     {
         glfwSwapBuffers(m_WindowHandle);

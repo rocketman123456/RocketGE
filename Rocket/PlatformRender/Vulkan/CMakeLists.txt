@@ -1,14 +1,13 @@
 message(STATUS "Add Module Vulkan")
 message(STATUS "###################################")
 add_library( Render_Vulkan
-    src/VulkanContext.cpp
+    GERender/VulkanContext.cpp
 )
 target_link_libraries( Render_Vulkan PRIVATE
     glfw Eigen3::Eigen
 )
 if(Apple)
-    set(Vulkan_LIBRARIES /Users/developer/Program/CppCode/MoltenVK/MoltenVK/dylib/macOS/libMoltenVK.dylib)
-    set(Vulkan_INCLUDE_DIRS /Users/developer/Program/CppCode/MoltenVK/MoltenVK/include)
+    find_package(Vulkan REQUIRED)
 elseif(Linux)
     find_package(Vulkan REQUIRED)
 elseif(Windows)

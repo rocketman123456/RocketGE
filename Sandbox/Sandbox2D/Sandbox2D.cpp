@@ -205,7 +205,7 @@ namespace Rocket {
         ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
         ImGui::Separator();
         auto textureid = m_Texture[3]->GetRendererID();
-        ImGui::Image((void*)textureid, ImVec2({100, 100}));
+        ImGui::Image(reinterpret_cast<void*>(textureid), ImVec2({100, 100}));
         ImGui::End();
     }
 

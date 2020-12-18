@@ -57,15 +57,15 @@ namespace Rocket
 			glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
 			glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 			glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+#if defined(RK_DEBUG)
+			glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
+#endif
 #elif defined(RK_VULKAN)
 			glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 #elif defined(RK_METAL)
 			glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 #endif
 			glfwWindowHint(GLFW_SCALE_TO_MONITOR, GL_TRUE);
-#if defined(RK_DEBUG)
-			glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
-#endif
 			//glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
 			m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
@@ -78,9 +78,14 @@ namespace Rocket
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
 
+		SetCallback();
+	}
+
+	void WindowApple::SetCallback()
+	{
 		// Set GLFW callbacks
 		glfwSetWindowSizeCallback(m_Window, [](GLFWwindow *window, int width, int height) {
-			//RK_CORE_TRACE("glfwSetWindowSizeCallback");
+			RK_CORE_TRACE("glfwSetWindowSizeCallback");
 		});
 
 		glfwSetWindowContentScaleCallback(m_Window, [](GLFWwindow* window, float xscale, float yscale){
@@ -89,7 +94,6 @@ namespace Rocket
 
 		glfwSetWindowRefreshCallback(m_Window, [](GLFWwindow* window){
 			RK_CORE_TRACE("glfwSetWindowRefreshCallback");
-			//glfwSwapBuffers(window);
 		});
 
 		glfwSetFramebufferSizeCallback(m_Window, [](GLFWwindow* window, int width, int height){
@@ -115,18 +119,15 @@ namespace Rocket
 			case GLFW_PRESS: {
 				KeyPressedEvent event(key, 0);
 				data.EventCallback(event);
-				break;
-			}
+				break; }
 			case GLFW_RELEASE: {
 				KeyReleasedEvent event(key);
 				data.EventCallback(event);
-				break;
-			}
+				break; }
 			case GLFW_REPEAT: {
 				KeyPressedEvent event(key, 1);
 				data.EventCallback(event);
-				break;
-			}
+				break; }
 			}
 		});
 
@@ -145,13 +146,11 @@ namespace Rocket
 			case GLFW_PRESS: {
 				MouseButtonPressedEvent event(button);
 				data.EventCallback(event);
-				break;
-			}
+				break; }
 			case GLFW_RELEASE: {
 				MouseButtonReleasedEvent event(button);
 				data.EventCallback(event);
-				break;
-			}
+				break; }
 			}
 		});
 
@@ -172,6 +171,8 @@ namespace Rocket
 
 	void WindowApple::Shutdown()
 	{
+		m_Context->Destory();
+
 		glfwDestroyWindow(m_Window);
 		--s_GLFWWindowCount;
 

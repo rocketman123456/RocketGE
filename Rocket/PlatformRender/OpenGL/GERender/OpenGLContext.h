@@ -11,6 +11,7 @@ namespace Rocket {
         virtual ~OpenGLContext() = default;
 
         virtual void Init() override;
+        virtual void Destory() override;
 		virtual void SwapBuffers() override;
     private:
         GLFWwindow* m_WindowHandle;

@@ -31,6 +31,7 @@ namespace Rocket
 	private:
 		virtual void Init(const WindowProps &props);
 		virtual void Shutdown();
+		virtual void SetCallback();
 
 	private:
 		struct WindowData

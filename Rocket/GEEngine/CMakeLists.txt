@@ -1,12 +1,21 @@
 message(STATUS "Add Module GEEngine")
 message(STATUS "###################################")
+
+if(Apple)
+    set( Input_Method GECore/GLFWInput.cpp )
+elseif(Linux)
+    set( Input_Method GECore/GLFWInput.cpp )
+elseif(Windows)
+    set( Input_Method GECore/GLFWInput.cpp )
+endif()
+
 add_library( GEEngine
     #GEAudio
     GEAudio/Audio.cpp
     # GECore
     GECore/EntryPoint.cpp
     GECore/Log.cpp
-    GECore/GLFWInput.cpp
+    ${Input_Method}
     # GECommon
     GECommon/Camera.cpp
     GECommon/OrthographicCamera.cpp
