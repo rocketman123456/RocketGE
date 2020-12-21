@@ -60,7 +60,7 @@ namespace Rocket
 	void PerspectiveCameraController::OnResize(float width, float height)
 	{
 		m_AspectRatio = width / height;
-		m_Camera.SetProjection(glm::radians(m_ZoomLevel), m_AspectRatio, 0.1f, 100.0f);
+		m_Camera.SetProjectionMatrix(glm::radians(m_ZoomLevel), m_AspectRatio, 0.1f, 100.0f);
 	}
 
 	bool PerspectiveCameraController::OnMouseScrolled(MouseScrolledEvent &e)
@@ -70,7 +70,7 @@ namespace Rocket
 			m_ZoomLevel = 1.0f;
 		if (m_ZoomLevel > 45.0f)
 			m_ZoomLevel = 45.0f;
-		m_Camera.SetProjection(glm::radians(m_ZoomLevel), m_AspectRatio, 0.1f, 100.0f);
+		m_Camera.SetProjectionMatrix(glm::radians(m_ZoomLevel), m_AspectRatio, 0.1f, 100.0f);
 		return false;
 	}
 

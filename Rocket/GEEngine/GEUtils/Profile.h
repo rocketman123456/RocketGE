@@ -49,7 +49,7 @@ namespace Rocket
     } ProfileInfo;
 
     // this timer shoule only use for profile
-    class ProfilerTimer : implements Singleton<ProfilerTimer>
+    class ProfilerTimer
     {
     public:
         void InitTime(void);
@@ -78,6 +78,7 @@ namespace Rocket
         void GetProfileFromHistory(const std::string &name, float *ave, float *min, float *max);
 
     private:
+        ProfilerTimer m_Timer;
         std::vector<ProfileInfo> m_ProfileInfoVec;
         ProfileSample m_Samples[NUM_PROFILE_SAMPLES];
         ProfileSampleHistory m_History[NUM_PROFILE_SAMPLES];

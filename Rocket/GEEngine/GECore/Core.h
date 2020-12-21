@@ -2,8 +2,8 @@
 #include "GECore/Basic.h"
 
 #include "RKConfig.h"
-const std::string ProjectSourceDir = PROJECT_SOURCE_DIR;
-const std::string RenderAPI = RENDER_API;
+static const std::string ProjectSourceDir = PROJECT_SOURCE_DIR;
+static const std::string RenderAPI = RENDER_API;
 
 #ifdef RK_DEBUG
 #if defined(PLATFORM_WINDOWS)

@@ -5,7 +5,7 @@ set( ENGINE_LIBRARY
     ${Threads_LIBS} ${OPENAL_LIBRARY} 
     ${ENGINE_PLATFORM} ${ENGINE_RENDER}
     Eigen3::Eigen spdlog glfw yaml-cpp
-    OpenAL::OpenAL SndFile::sndfile
+    OpenAL::OpenAL SndFile::sndfile EnTT::EnTT
     imgui glad stb_image
     CACHE STRING ""
 )

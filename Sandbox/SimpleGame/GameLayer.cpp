@@ -105,6 +105,8 @@ void GameLayer::OnUpdate(Rocket::Timestep ts)
 		m_Level.OnUpdate(ts);
 		break;
 	}
+	default:
+		break;
 	}
 
 	// Render

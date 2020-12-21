@@ -67,7 +67,7 @@ void ViewPort::Update(Rocket::Timestep ts)
 			}
 		}
 	}
-	m_Camera.SetProjection(m_Left - 0.5f, (m_Left + m_Width) - 0.5f, m_Bottom - 0.5f, (m_Bottom + m_Height) - 0.5f);
+	m_Camera.SetProjectionMatrix(m_Left - 0.5f, (m_Left + m_Width) - 0.5f, m_Bottom - 0.5f, (m_Bottom + m_Height) - 0.5f);
 }
 
 bool ViewPort::Overlaps(const Position &pos)

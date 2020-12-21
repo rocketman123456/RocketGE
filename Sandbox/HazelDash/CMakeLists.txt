@@ -1,8 +1,8 @@
 add_executable( HazelDash
+    HazelDashApp.cpp
+    HazelDashLayer.cpp
     ViewPort.cpp
     Random.cpp
-    HazelDashLayer.cpp
-    HazelDashApp.cpp
 )
 target_include_directories( HazelDash PRIVATE
     ${PROJECT_SOURCE_DIR}/Rocket/Interface
@@ -10,8 +10,9 @@ target_include_directories( HazelDash PRIVATE
     ${PROJECT_SOURCE_DIR}/Sandbox/Sandbox2D
 )
 target_link_libraries( HazelDash PRIVATE
-    GEEngine imgui glad stb_image ${ENGINE_THIRD_PARTY}
-    OpenAL::OpenAL SndFile::sndfile Eigen3::Eigen
+    GEEngine ${ENGINE_LIBRARY}
+    ${ENGINE_PLATFORM_LIBRARY}
+    ${ENGINE_RENDER_LIBRARY}
 )
 
 if(Apple)

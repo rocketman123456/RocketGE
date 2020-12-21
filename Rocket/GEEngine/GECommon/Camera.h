@@ -12,6 +12,7 @@ namespace Rocket
         None = 0,
         Orthographic,
         Perspective,
+        SceneCamera,
     };
 
 #define CAMERA_CLASS_TYPE(type)                                                   \
@@ -30,21 +31,24 @@ namespace Rocket
 
         inline virtual void SetPosition(const glm::vec3 &position) { m_Position = position; }
         inline const glm::vec3 &GetPosition() const { return m_Position; }
+
         inline virtual void SetRotationMatrix(const glm::mat4 &rotation) { m_RotationMatrix = rotation; }
         inline const glm::mat4 &GetRotationMatrix() const { return m_RotationMatrix; }
 
-        inline virtual void SetProjection(const glm::mat4 &projection)
+        inline virtual void SetProjectionMatrix(const glm::mat4 &projection)
         {
             m_ProjectionMatrix = projection;
             UpdateProjectView();
         }
         inline const glm::mat4 &GetProjectionMatrix() const { return m_ProjectionMatrix; }
-        inline virtual void SetView(const glm::mat4 &view)
+
+        inline virtual void SetViewMatrix(const glm::mat4 &view)
         {
             m_ViewMatrix = view;
             UpdateProjectView();
         }
         inline const glm::mat4 &GetViewMatrix() const { return m_ViewMatrix; }
+        
         inline virtual void UpdateProjectView() { m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix; }
         inline const glm::mat4 &GetViewProjectionMatrix() const { return m_ViewProjectionMatrix; }
 
@@ -57,10 +61,10 @@ namespace Rocket
 
     protected:
         // TODO : make all math in eigen3
-        glm::mat4 m_ProjectionMatrix;
-        glm::mat4 m_ViewMatrix;
-        glm::mat4 m_ViewProjectionMatrix;
-        glm::mat4 m_RotationMatrix;
+        glm::mat4 m_ProjectionMatrix = glm::mat4(1.0f);
+        glm::mat4 m_ViewMatrix = glm::mat4(1.0f);
+        glm::mat4 m_ViewProjectionMatrix = glm::mat4(1.0f);
+        glm::mat4 m_RotationMatrix = glm::mat4(1.0f);
         glm::vec3 m_Position = {0.0f, 0.0f, 0.0f};
         // for view matrix
         glm::vec3 m_Front;

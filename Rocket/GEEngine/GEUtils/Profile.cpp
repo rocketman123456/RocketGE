@@ -10,8 +10,6 @@
  */
 #include "GEUtils/Profile.h"
 
-#define g_ProfilerTimer Rocket::ProfilerTimer::GetSingleton()
-
 namespace Rocket
 {
     void ProfilerTimer::InitTime()
@@ -55,14 +53,14 @@ namespace Rocket
 {
     void Profiler::ProfileInit(void)
     {
-        g_ProfilerTimer.InitTime();
+        m_Timer.InitTime();
 
         for (uint32_t i = 0; i < NUM_PROFILE_SAMPLES; i++)
         {
             m_Samples[i].bValid = false;
             m_History[i].bValid = false;
         }
-        m_StartProfile = g_ProfilerTimer.GetExactTime();
+        m_StartProfile = m_Timer.GetExactTime();
         m_ProfileInfoVec.clear();
     }
 
@@ -77,7 +75,7 @@ namespace Rocket
                 //Found the sample
                 m_Samples[i].iOpenProfiles++;
                 m_Samples[i].iProfileInstances++;
-                m_Samples[i].fStartTime = g_ProfilerTimer.GetExactTime();
+                m_Samples[i].fStartTime = m_Timer.GetExactTime();
                 assert(m_Samples[i].iOpenProfiles == 1); //max 1 open at once
                 return;
             }
@@ -95,7 +93,7 @@ namespace Rocket
         m_Samples[i].iOpenProfiles = 1;
         m_Samples[i].iProfileInstances = 1;
         m_Samples[i].fAccumulator = 0.0f;
-        m_Samples[i].fStartTime = g_ProfilerTimer.GetExactTime();
+        m_Samples[i].fStartTime = m_Timer.GetExactTime();
         m_Samples[i].fChildrenSampleTime = 0.0f;
     }
 
@@ -110,7 +108,7 @@ namespace Rocket
             { //Found the sample
                 uint32_t inner = 0;
                 int parent = -1;
-                float fEndTime = g_ProfilerTimer.GetExactTime();
+                float fEndTime = m_Timer.GetExactTime();
                 m_Samples[i].iOpenProfiles--;
 
                 //Count all parents and find the immediate parent
@@ -150,11 +148,11 @@ namespace Rocket
 
     void Profiler::ProfileDumpOutputToBuffer(void)
     {
-        g_ProfilerTimer.MarkTimeThisTick();
+        m_Timer.MarkTimeThisTick();
 
         uint32_t i = 0;
 
-        m_EndProfile = g_ProfilerTimer.GetExactTime();
+        m_EndProfile = m_Timer.GetExactTime();
         m_ProfileInfoVec.clear();
 
         while (i < NUM_PROFILE_SAMPLES && m_Samples[i].bValid == true)
@@ -201,7 +199,7 @@ namespace Rocket
             {
                 m_Samples[i].bValid = false;
             }
-            m_StartProfile = g_ProfilerTimer.GetExactTime();
+            m_StartProfile = m_Timer.GetExactTime();
         }
     }
 
@@ -209,7 +207,7 @@ namespace Rocket
     {
         uint32_t i = 0;
         float oldRatio;
-        float newRatio = 0.8f * g_ProfilerTimer.GetElapsedTime();
+        float newRatio = 0.8f * m_Timer.GetElapsedTime();
         if (newRatio > 1.0f)
         {
             newRatio = 1.0f;

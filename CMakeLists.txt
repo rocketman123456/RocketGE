@@ -69,6 +69,7 @@ find_package(Eigen3 CONFIG REQUIRED)
 find_package(Bullet CONFIG REQUIRED)
 find_package(OpenAL CONFIG REQUIRED)
 find_package(SndFile CONFIG REQUIRED)
+find_package(EnTT CONFIG REQUIRED)
 
 message(STATUS "Render API Set to ${RENDER_API}")
 if (RENDER_API MATCHES "OpenGL")
@@ -90,7 +91,7 @@ endif()
 message(STATUS "###################################")
 
 include_directories(
-    ${PROJECT_SOURCE_DIR}/Thirdparty/entt/include
+    #${PROJECT_SOURCE_DIR}/Thirdparty/entt/include
     ${PROJECT_SOURCE_DIR}/Thirdparty/glad/include
     ${PROJECT_SOURCE_DIR}/Thirdparty/spdlog/include
     ${PROJECT_SOURCE_DIR}/Thirdparty/stb_image

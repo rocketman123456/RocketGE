@@ -54,6 +54,11 @@ add_library( GEEngine
     GERender/Texture.cpp
     # GERender2D
     GERender2D/Renderer2D.cpp
+    # GERender3D
+    # GEScene
+    GEScene/Scene.cpp
+    GEScene/SceneCamera.cpp
+    GEScene/Entity.cpp
     # GEUtils
     GEUtils/FunctionUtils.cpp
     GEUtils/Profile.cpp

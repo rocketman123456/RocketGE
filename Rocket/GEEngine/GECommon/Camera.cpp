@@ -1,7 +1,7 @@
 #include "GECommon/Camera.h"
 #include "GECommon/OrthographicCamera.h"
 #include "GECommon/PerspectiveCamera.h"
-#include "GECore/Core.h"
+#include "GEScene/SceneCamera.h"
 
 namespace Rocket
 {
@@ -10,9 +10,6 @@ namespace Rocket
         int count = setting.size();
         switch (type)
         {
-        case CameraType::None:
-            RK_CORE_ASSERT(false, "Unknown Camera Type")
-            return nullptr;
         case CameraType::Orthographic:
             if (count == 4)
                 return CreateRef<OrthographicCamera>(setting[0], setting[1], setting[2], setting[3]);
@@ -33,6 +30,8 @@ namespace Rocket
                 RK_CORE_ASSERT(false, "Error Camera Setting")
                 return nullptr;
             }
+        case CameraType::SceneCamera:
+            return CreateRef<SceneCamera>();
         default:
             RK_CORE_ASSERT(false, "Unknown Camera Type")
             return nullptr;
