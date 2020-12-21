@@ -4,15 +4,15 @@
 
 namespace Rocket
 {
-	OrthographicCamera::OrthographicCamera(float left, float right, float bottom, float top, float near, float far)
-		: Camera(glm::ortho(left, right, bottom, top, near, far))
+	OrthographicCamera::OrthographicCamera(float left, float right, float bottom, float top, float znear, float zfar)
+		: Camera(glm::ortho(left, right, bottom, top, znear, zfar))
 	{
 		Camera::UpdateProjectView();
 	}
 
-	void OrthographicCamera::SetProjection(float left, float right, float bottom, float top, float near, float far)
+	void OrthographicCamera::SetProjection(float left, float right, float bottom, float top, float znear, float zfar)
 	{
-		Camera::SetProjection(glm::ortho(left, right, bottom, top, near, far));
+		Camera::SetProjection(glm::ortho(left, right, bottom, top, znear, zfar));
 	}
 
 	void OrthographicCamera::RecalculateViewMatrix()
