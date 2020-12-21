@@ -1,6 +1,7 @@
 #include "GEProcess/Process.h"
 
-namespace Rocket {
+namespace Rocket
+{
     //---------------------------------------------------------------------------------------------------------------------
     // Constructor
     //---------------------------------------------------------------------------------------------------------------------
@@ -30,7 +31,7 @@ namespace Rocket {
     {
         if (m_pChild)
         {
-            StrongProcessPtr pChild = m_pChild;  // this keeps the child from getting destroyed when we clear it
+            StrongProcessPtr pChild = m_pChild; // this keeps the child from getting destroyed when we clear it
             m_pChild.reset();
             //pChild->SetParent(NULL);
             return pChild;
@@ -38,4 +39,4 @@ namespace Rocket {
 
         return StrongProcessPtr();
     }
-}
+} // namespace Rocket

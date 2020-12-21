@@ -5,16 +5,18 @@
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
-namespace Rocket {
+namespace Rocket
+{
     class VulkanContext : public GraphicsContext
     {
     public:
-        VulkanContext(GLFWwindow* windowHandle);
+        VulkanContext(GLFWwindow *windowHandle);
         virtual ~VulkanContext() = default;
 
         virtual void Init() override;
         virtual void Destory() override;
-		virtual void SwapBuffers() override;
+        virtual void SwapBuffers() override;
+
     private:
         void createInstance();
         void setupDebugMessenger();
@@ -24,13 +26,15 @@ namespace Rocket {
         void createSwapChain();
 
         bool checkValidationLayerSupport();
-        std::vector<const char*> getRequiredExtensions();
-        void populateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& createInfo);
+        std::vector<const char *> getRequiredExtensions();
+        void populateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT &createInfo);
         bool isDeviceSuitable(VkPhysicalDevice device);
         VkSampleCountFlagBits getMaxUsableSampleCount();
         QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device);
+
     private:
-        GLFWwindow* m_WindowHandle;
+        GLFWwindow *m_WindowHandle;
+
     private:
         VkInstance instance;
         VkDebugUtilsMessengerEXT debugMessenger;
@@ -94,4 +98,4 @@ namespace Rocket {
 
         bool framebufferResized = false;
     };
-}
+} // namespace Rocket

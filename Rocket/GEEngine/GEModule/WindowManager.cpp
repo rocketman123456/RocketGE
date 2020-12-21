@@ -1,7 +1,8 @@
 #include "GEModule/WindowManager.h"
 
-namespace Rocket {
-    WindowManager* g_WindowManager = new WindowManager();
+namespace Rocket
+{
+    WindowManager *g_WindowManager = new WindowManager();
 
     int WindowManager::Initialize()
     {
@@ -11,7 +12,6 @@ namespace Rocket {
 
     void WindowManager::Finalize()
     {
-
     }
 
     int WindowManager::Tick(Timestep ts)
@@ -20,8 +20,7 @@ namespace Rocket {
         return 0;
     }
 
-    void WindowManager::OnEvent(Event& event)
+    void WindowManager::OnEvent(Event &event)
     {
-        
     }
-}
+} // namespace Rocket

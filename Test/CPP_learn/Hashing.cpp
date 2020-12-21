@@ -9,7 +9,7 @@ struct H
 	string s1, s2;
 };
 
-ostream& operator << (ostream& os, const H& h)
+ostream &operator<<(ostream &os, const H &h)
 {
 	os << h.s1 << "," << h.s2;
 	return os;
@@ -17,30 +17,31 @@ ostream& operator << (ostream& os, const H& h)
 
 namespace std
 {
-	template <> struct hash<H>
+	template <>
+	struct hash<H>
 	{
-		size_t operator()(const H& h) const
+		size_t operator()(const H &h) const
 		{
 			return hash<string>{}(h.s1) ^ (hash<string>{}(h.s2) << 1);
 		}
 	};
-}
+} // namespace std
 
 int main()
 {
-	for(int i = 1; i <= 3; ++i)
+	for (int i = 1; i <= 3; ++i)
 		cout << "Hash of '" << i << "': " << hash<int>{}(i) << endl;
 
-	for(char c = 'A'; c <= 'C'; ++c)
+	for (char c = 'A'; c <= 'C'; ++c)
 		cout << "Hash of '" << c << "': " << hash<char>{}(c) << endl;
 
-	for(float f = 1.1; f < 1.4; f += 0.1)
+	for (float f = 1.1; f < 1.4; f += 0.1)
 		cout << "Hash of '" << f << "': " << hash<float>{}(f) << endl;
 
-	char* p = new char[3];
-	char* q = p;
-	for(; p < q + 3; ++p)
-		cout << "Hash of '" << (int*)p << "': " << hash<char*>{}(p) << endl;
+	char *p = new char[3];
+	char *q = p;
+	for (; p < q + 3; ++p)
+		cout << "Hash of '" << (int *)p << "': " << hash<char *>{}(p) << endl;
 
 	string s1 = "Vorbrodt's C++ Blog";
 	string s2 = "Vorbrodt's C++ Blog";

@@ -83,11 +83,11 @@ namespace Rocket
 			RK_CORE_TRACE("glfwSetWindowSizeCallback");
 		});
 
-		glfwSetWindowContentScaleCallback(m_Window, [](GLFWwindow* window, float xscale, float yscale){
+		glfwSetWindowContentScaleCallback(m_Window, [](GLFWwindow *window, float xscale, float yscale) {
 			RK_CORE_TRACE("glfwSetWindowContentScaleCallback");
 		});
 
-		glfwSetFramebufferSizeCallback(m_Window, [](GLFWwindow* window, int width, int height){
+		glfwSetFramebufferSizeCallback(m_Window, [](GLFWwindow *window, int width, int height) {
 			WindowData &data = *(WindowData *)glfwGetWindowUserPointer(window);
 			data.Width = width;
 			data.Height = height;

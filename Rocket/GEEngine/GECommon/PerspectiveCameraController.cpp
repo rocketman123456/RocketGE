@@ -1,10 +1,11 @@
 #include "GECommon/PerspectiveCameraController.h"
 #include "GECore/Input.h"
 
-namespace Rocket {
-    PerspectiveCameraController::PerspectiveCameraController(float aspectRatio, float fov, bool rotation)
-		: m_AspectRatio(aspectRatio), m_ZoomLevel(fov), m_Rotation(rotation), 
-        m_Camera(glm::radians(m_ZoomLevel), m_AspectRatio, 0.1f, 100.0f) {}
+namespace Rocket
+{
+	PerspectiveCameraController::PerspectiveCameraController(float aspectRatio, float fov, bool rotation)
+		: m_AspectRatio(aspectRatio), m_ZoomLevel(fov), m_Rotation(rotation),
+		  m_Camera(glm::radians(m_ZoomLevel), m_AspectRatio, 0.1f, 100.0f) {}
 
 	void PerspectiveCameraController::OnUpdate(Timestep ts)
 	{
@@ -49,7 +50,7 @@ namespace Rocket {
 		m_CameraTranslationSpeed = m_ZoomLevel;
 	}
 
-	void PerspectiveCameraController::OnEvent(Event& e)
+	void PerspectiveCameraController::OnEvent(Event &e)
 	{
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<MouseScrolledEvent>(RK_BIND_EVENT_FN(PerspectiveCameraController::OnMouseScrolled));
@@ -62,7 +63,7 @@ namespace Rocket {
 		m_Camera.SetProjection(glm::radians(m_ZoomLevel), m_AspectRatio, 0.1f, 100.0f);
 	}
 
-	bool PerspectiveCameraController::OnMouseScrolled(MouseScrolledEvent& e)
+	bool PerspectiveCameraController::OnMouseScrolled(MouseScrolledEvent &e)
 	{
 		m_ZoomLevel -= e.GetYOffset();
 		if (m_ZoomLevel < 1.0f)
@@ -73,9 +74,9 @@ namespace Rocket {
 		return false;
 	}
 
-	bool PerspectiveCameraController::OnWindowResized(WindowResizeEvent& e)
+	bool PerspectiveCameraController::OnWindowResized(WindowResizeEvent &e)
 	{
 		OnResize((float)e.GetWidth(), (float)e.GetHeight());
 		return false;
 	}
-}
+} // namespace Rocket

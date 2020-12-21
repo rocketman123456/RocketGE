@@ -6,7 +6,7 @@ struct H
 	std::string s1, s2;
 };
 
-std::ostream& operator << (std::ostream& os, const H& h)
+std::ostream &operator<<(std::ostream &os, const H &h)
 {
 	os << h.s1 << "," << h.s2;
 	return os;
@@ -14,17 +14,18 @@ std::ostream& operator << (std::ostream& os, const H& h)
 
 namespace std
 {
-	template <> struct hash<H>
+	template <>
+	struct hash<H>
 	{
-		size_t operator()(const H& h) const
+		size_t operator()(const H &h) const
 		{
 			return hash<std::string>{}(h.s1) ^ (hash<std::string>{}(h.s2) << 1);
 		}
 	};
-}
+} // namespace std
 
-template<typename T>
-auto hashN(const T& key, std::size_t N) -> std::vector<std::size_t>
+template <typename T>
+auto hashN(const T &key, std::size_t N) -> std::vector<std::size_t>
 {
 	std::minstd_rand0 rng(std::hash<T>{}(key));
 	std::vector<std::size_t> hashes(N);
@@ -32,8 +33,8 @@ auto hashN(const T& key, std::size_t N) -> std::vector<std::size_t>
 	return hashes;
 }
 
-template<std::size_t N, typename T>
-auto hashNT(const T& key) -> std::array<std::size_t, N>
+template <std::size_t N, typename T>
+auto hashNT(const T &key) -> std::array<std::size_t, N>
 {
 	std::minstd_rand0 rng(std::hash<T>{}(key));
 	std::array<std::size_t, N> hashes{};

@@ -1,11 +1,12 @@
 #pragma once
 #include "GECore/Core.h"
 
-namespace Rocket {
-    struct FramebufferSpecification
+namespace Rocket
+{
+	struct FramebufferSpecification
 	{
 		uint32_t Width = 0, Height = 0;
-		// FramebufferFormat Format = 
+		// FramebufferFormat Format =
 		uint32_t Samples = 1;
 
 		bool SwapChainTarget = false;
@@ -24,8 +25,8 @@ namespace Rocket {
 		virtual uint32_t GetColorAttachmentRendererID() const = 0;
 		virtual uint32_t GetDepthAttachmentRendererID() const = 0;
 
-		virtual const FramebufferSpecification& GetSpecification() const = 0;
+		virtual const FramebufferSpecification &GetSpecification() const = 0;
 
-		static Ref<Framebuffer> Create(const FramebufferSpecification& spec);
+		static Ref<Framebuffer> Create(const FramebufferSpecification &spec);
 	};
-}
+} // namespace Rocket

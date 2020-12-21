@@ -2,8 +2,8 @@
 
 namespace Rocket
 {
-    Layer::Layer(const std::string& debugName)
+	Layer::Layer(const std::string &debugName)
 		: m_DebugName(debugName)
 	{
 	}
-}
+} // namespace Rocket

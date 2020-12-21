@@ -76,11 +76,11 @@ public:
         Rocket::g_AudioManager->LoadAudio(A7_2);
     }
 
-	SimpleGame() : Rocket::Application("SimpleGame") {}
-	virtual ~SimpleGame() = default;
+    SimpleGame() : Rocket::Application("SimpleGame") {}
+    virtual ~SimpleGame() = default;
 };
 
-Rocket::Application* Rocket::CreateApplication()
+Rocket::Application *Rocket::CreateApplication()
 {
-	return new SimpleGame();
+    return new SimpleGame();
 }

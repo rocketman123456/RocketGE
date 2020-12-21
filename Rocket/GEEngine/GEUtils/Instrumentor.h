@@ -1,8 +1,9 @@
 #pragma once
 #include "GECore/Basic.h"
 
-namespace Rocket {
-    using FloatingPointMicroseconds = std::chrono::duration<double, std::micro>;
+namespace Rocket
+{
+	using FloatingPointMicroseconds = std::chrono::duration<double, std::micro>;
 
 	struct ProfileResult
 	{
@@ -21,10 +22,10 @@ namespace Rocket {
 	class Instrumentor
 	{
 	public:
-		Instrumentor(const Instrumentor&) = delete;
-		Instrumentor(Instrumentor&&) = delete;
+		Instrumentor(const Instrumentor &) = delete;
+		Instrumentor(Instrumentor &&) = delete;
 
-		void BeginSession(const std::string& name, const std::string& filepath = "results.json")
+		void BeginSession(const std::string &name, const std::string &filepath = "results.json")
 		{
 			std::lock_guard lock(m_Mutex);
 			if (m_CurrentSession)
@@ -61,7 +62,7 @@ namespace Rocket {
 			InternalEndSession();
 		}
 
-		void WriteProfile(const ProfileResult& result)
+		void WriteProfile(const ProfileResult &result)
 		{
 			std::stringstream json;
 
@@ -84,11 +85,12 @@ namespace Rocket {
 			}
 		}
 
-		static Instrumentor& Get()
+		static Instrumentor &Get()
 		{
 			static Instrumentor instance;
 			return instance;
 		}
+
 	private:
 		Instrumentor()
 			: m_CurrentSession(nullptr)
@@ -98,7 +100,7 @@ namespace Rocket {
 		~Instrumentor()
 		{
 			EndSession();
-		}		
+		}
 
 		void WriteHeader()
 		{
@@ -124,16 +126,17 @@ namespace Rocket {
 				m_CurrentSession = nullptr;
 			}
 		}
+
 	private:
 		std::mutex m_Mutex;
-		InstrumentationSession* m_CurrentSession;
+		InstrumentationSession *m_CurrentSession;
 		std::ofstream m_OutputStream;
 	};
 
 	class InstrumentationTimer
 	{
 	public:
-		InstrumentationTimer(const char* name)
+		InstrumentationTimer(const char *name)
 			: m_Name(name), m_Stopped(false)
 		{
 			m_StartTimepoint = std::chrono::steady_clock::now();
@@ -148,20 +151,22 @@ namespace Rocket {
 		void Stop()
 		{
 			auto endTimepoint = std::chrono::steady_clock::now();
-			auto highResStart = FloatingPointMicroseconds{ m_StartTimepoint.time_since_epoch() };
+			auto highResStart = FloatingPointMicroseconds{m_StartTimepoint.time_since_epoch()};
 			auto elapsedTime = std::chrono::time_point_cast<std::chrono::microseconds>(endTimepoint).time_since_epoch() - std::chrono::time_point_cast<std::chrono::microseconds>(m_StartTimepoint).time_since_epoch();
 
-			Instrumentor::Get().WriteProfile({ m_Name, highResStart, elapsedTime, std::this_thread::get_id() });
+			Instrumentor::Get().WriteProfile({m_Name, highResStart, elapsedTime, std::this_thread::get_id()});
 
 			m_Stopped = true;
 		}
+
 	private:
-		const char* m_Name;
+		const char *m_Name;
 		std::chrono::time_point<std::chrono::steady_clock> m_StartTimepoint;
 		bool m_Stopped;
 	};
 
-    namespace InstrumentorUtils {
+	namespace InstrumentorUtils
+	{
 		template <size_t N>
 		struct ChangeResult
 		{
@@ -169,7 +174,7 @@ namespace Rocket {
 		};
 
 		template <size_t N, size_t K>
-		constexpr auto CleanupOutputString(const char(&expr)[N], const char(&remove)[K])
+		constexpr auto CleanupOutputString(const char (&expr)[N], const char (&remove)[K])
 		{
 			ChangeResult<N> result = {};
 
@@ -187,41 +192,42 @@ namespace Rocket {
 			}
 			return result;
 		}
-	}
-}
+	} // namespace InstrumentorUtils
+} // namespace Rocket
 
 #if RK_PROFILE
-	// Resolve which function signature macro will be used. Note that this only
-	// is resolved when the (pre)compiler starts, so the syntax highlighting
-	// could mark the wrong one in your editor!
-	#if defined(__GNUC__) || (defined(__MWERKS__) && (__MWERKS__ >= 0x3000)) || (defined(__ICC) && (__ICC >= 600)) || defined(__ghs__)
-		#define RK_FUNC_SIG __PRETTY_FUNCTION__
-	#elif defined(__DMC__) && (__DMC__ >= 0x810)
-		#define RK_FUNC_SIG __PRETTY_FUNCTION__
-	#elif (defined(__FUNCSIG__) || (_MSC_VER))
-		#define RK_FUNC_SIG __FUNCSIG__
-	#elif (defined(__INTEL_COMPILER) && (__INTEL_COMPILER >= 600)) || (defined(__IBMCPP__) && (__IBMCPP__ >= 500))
-		#define RK_FUNC_SIG __FUNCTION__
-	#elif defined(__BORLANDC__) && (__BORLANDC__ >= 0x550)
-		#define RK_FUNC_SIG __FUNC__
-	#elif defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 199901)
-		#define RK_FUNC_SIG __func__
-	#elif defined(__cplusplus) && (__cplusplus >= 201103)
-		#define RK_FUNC_SIG __func__
-	#else
-		#define RK_FUNC_SIG "RK_FUNC_SIG unknown!"
-	#endif
-
-	#define RK_PROFILE_BEGIN_SESSION(name, filepath) ::Rocket::Instrumentor::Get().BeginSession(name, filepath)
-	#define RK_PROFILE_END_SESSION() ::Rocket::Instrumentor::Get().EndSession()
-	#define RK_PROFILE_SCOPE_LINE2(name, line) constexpr auto fixedName##line = ::Rocket::InstrumentorUtils::CleanupOutputString(name, "__cdecl ");\
-											::Rocket::InstrumentationTimer timer##line(fixedName##line.Data)
-	#define RK_PROFILE_SCOPE_LINE(name, line) RK_PROFILE_SCOPE_LINE2(name, line)
-	#define RK_PROFILE_SCOPE(name) RK_PROFILE_SCOPE_LINE(name, __LINE__)
-	#define RK_PROFILE_FUNCTION() RK_PROFILE_SCOPE(RK_FUNC_SIG)
+// Resolve which function signature macro will be used. Note that this only
+// is resolved when the (pre)compiler starts, so the syntax highlighting
+// could mark the wrong one in your editor!
+#if defined(__GNUC__) || (defined(__MWERKS__) && (__MWERKS__ >= 0x3000)) || (defined(__ICC) && (__ICC >= 600)) || defined(__ghs__)
+#define RK_FUNC_SIG __PRETTY_FUNCTION__
+#elif defined(__DMC__) && (__DMC__ >= 0x810)
+#define RK_FUNC_SIG __PRETTY_FUNCTION__
+#elif (defined(__FUNCSIG__) || (_MSC_VER))
+#define RK_FUNC_SIG __FUNCSIG__
+#elif (defined(__INTEL_COMPILER) && (__INTEL_COMPILER >= 600)) || (defined(__IBMCPP__) && (__IBMCPP__ >= 500))
+#define RK_FUNC_SIG __FUNCTION__
+#elif defined(__BORLANDC__) && (__BORLANDC__ >= 0x550)
+#define RK_FUNC_SIG __FUNC__
+#elif defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 199901)
+#define RK_FUNC_SIG __func__
+#elif defined(__cplusplus) && (__cplusplus >= 201103)
+#define RK_FUNC_SIG __func__
 #else
-	#define RK_PROFILE_BEGIN_SESSION(name, filepath)
-	#define RK_PROFILE_END_SESSION()
-	#define RK_PROFILE_SCOPE(name)
-	#define RK_PROFILE_FUNCTION()
+#define RK_FUNC_SIG "RK_FUNC_SIG unknown!"
+#endif
+
+#define RK_PROFILE_BEGIN_SESSION(name, filepath) ::Rocket::Instrumentor::Get().BeginSession(name, filepath)
+#define RK_PROFILE_END_SESSION() ::Rocket::Instrumentor::Get().EndSession()
+#define RK_PROFILE_SCOPE_LINE2(name, line)                                                               \
+	constexpr auto fixedName##line = ::Rocket::InstrumentorUtils::CleanupOutputString(name, "__cdecl "); \
+	::Rocket::InstrumentationTimer timer##line(fixedName##line.Data)
+#define RK_PROFILE_SCOPE_LINE(name, line) RK_PROFILE_SCOPE_LINE2(name, line)
+#define RK_PROFILE_SCOPE(name) RK_PROFILE_SCOPE_LINE(name, __LINE__)
+#define RK_PROFILE_FUNCTION() RK_PROFILE_SCOPE(RK_FUNC_SIG)
+#else
+#define RK_PROFILE_BEGIN_SESSION(name, filepath)
+#define RK_PROFILE_END_SESSION()
+#define RK_PROFILE_SCOPE(name)
+#define RK_PROFILE_FUNCTION()
 #endif

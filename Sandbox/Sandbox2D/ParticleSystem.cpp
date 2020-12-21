@@ -10,9 +10,9 @@ ParticleSystem::ParticleSystem()
 	m_ParticlePool.resize(1000);
 }
 
-void ParticleSystem::Emit(const ParticleProps& particleProps)
+void ParticleSystem::Emit(const ParticleProps &particleProps)
 {
-	Particle& particle = m_ParticlePool[m_PoolIndex];
+	Particle &particle = m_ParticlePool[m_PoolIndex];
 	particle.Active = true;
 	particle.Position = particleProps.Position;
 	particle.Rotation = Random::Float() * 2.0f * glm::pi<float>();
@@ -44,7 +44,7 @@ void ParticleSystem::Emit(const ParticleProps& particleProps)
 
 void ParticleSystem::OnUpdate(Rocket::Timestep ts)
 {
-	for (auto& particle : m_ParticlePool)
+	for (auto &particle : m_ParticlePool)
 	{
 		if (!particle.Active)
 			continue;
@@ -63,7 +63,7 @@ void ParticleSystem::OnUpdate(Rocket::Timestep ts)
 
 void ParticleSystem::OnRender()
 {
-	for (auto& particle : m_ParticlePool)
+	for (auto &particle : m_ParticlePool)
 	{
 		if (!particle.Active)
 			continue;
@@ -76,6 +76,6 @@ void ParticleSystem::OnRender()
 
 		float rotation = glm::lerp(particle.RotationStart, particle.RotationEnd, life);
 
-		Rocket::Renderer2D::DrawRotatedQuad(particle.Position, { size, size }, rotation, color);
+		Rocket::Renderer2D::DrawRotatedQuad(particle.Position, {size, size}, rotation, color);
 	}
 }

@@ -1,7 +1,8 @@
 #include "GEModule/EventManager.h"
 
-namespace Rocket {
-    EventManager* g_EventManager = new EventManager();
+namespace Rocket
+{
+    EventManager *g_EventManager = new EventManager();
 
     int EventManager::Initialize()
     {
@@ -10,7 +11,6 @@ namespace Rocket {
 
     void EventManager::Finalize()
     {
-
     }
 
     int EventManager::Tick(Timestep ts)
@@ -18,8 +18,7 @@ namespace Rocket {
         return 0;
     }
 
-    void EventManager::OnEvent(Event& event)
+    void EventManager::OnEvent(Event &event)
     {
-
     }
-}
+} // namespace Rocket

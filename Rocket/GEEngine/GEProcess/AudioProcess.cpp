@@ -1,6 +1,7 @@
 #include "GEProcess/AudioProcess.h"
 
-namespace Rocket {
+namespace Rocket
+{
     AudioProcess::AudioProcess(ALuint buffer, int volume, bool looping)
         : m_Buffer(buffer), m_Volume(volume), m_Looping(looping)
     {
@@ -50,7 +51,7 @@ namespace Rocket {
         alSourcePlay(m_Source);
     }
 
-    void AudioProcess::SetPosition(const glm::vec3& pos)
+    void AudioProcess::SetPosition(const glm::vec3 &pos)
     {
         m_Position = pos;
         alSource3f(m_Source, AL_POSITION, m_Position.x, m_Position.y, m_Position.z);
@@ -62,7 +63,7 @@ namespace Rocket {
         alSource3f(m_Source, AL_POSITION, m_Position.x, m_Position.y, m_Position.z);
     }
 
-    void AudioProcess::SetVelocity(const glm::vec3& vel)
+    void AudioProcess::SetVelocity(const glm::vec3 &vel)
     {
         m_Velocity = vel;
         alSource3f(m_Source, AL_VELOCITY, m_Velocity.x, m_Velocity.y, m_Velocity.z);
@@ -75,8 +76,8 @@ namespace Rocket {
     }
 
     /////////////////////////////////////////////////////////////////////////////
-    // 
-    // FadeProcess Implementation 
+    //
+    // FadeProcess Implementation
     //
     //////////////////////////////////////////////////////////////////////
 
@@ -105,12 +106,12 @@ namespace Rocket {
             Succeed();
 
         float cooef = (float)m_ElapsedTime / m_TotalFadeTime;
-        if (cooef>1.0f)
+        if (cooef > 1.0f)
             cooef = 1.0f;
-        if (cooef<0.0f)
+        if (cooef < 0.0f)
             cooef = 0.0f;
 
-        int newVolume = m_StartVolume + (int)( float(m_EndVolume - m_StartVolume) * cooef);
+        int newVolume = m_StartVolume + (int)(float(m_EndVolume - m_StartVolume) * cooef);
 
         if (m_ElapsedTime >= m_TotalFadeTime)
         {
@@ -120,4 +121,4 @@ namespace Rocket {
 
         m_Sound->SetVolume(newVolume);
     }
-}
+} // namespace Rocket

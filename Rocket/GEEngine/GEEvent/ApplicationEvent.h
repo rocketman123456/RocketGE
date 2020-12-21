@@ -2,8 +2,9 @@
 
 #include "GEEvent/Event.h"
 
-namespace Rocket {
-    class WindowResizeEvent : implements Event
+namespace Rocket
+{
+	class WindowResizeEvent : implements Event
 	{
 	public:
 		WindowResizeEvent(uint32_t width, uint32_t height, float x, float y)
@@ -28,7 +29,7 @@ namespace Rocket {
 		float m_xScale, m_yScale;
 	};
 
-    class WindowCloseEvent : implements Event
+	class WindowCloseEvent : implements Event
 	{
 	public:
 		WindowCloseEvent() = default;
@@ -63,4 +64,4 @@ namespace Rocket {
 		EVENT_CLASS_TYPE(AppRender)
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)
 	};
-}
+} // namespace Rocket

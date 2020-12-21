@@ -3,14 +3,13 @@
 #include "GEUtils/Portable.h"
 #include "GECore/Core.h"
 
-namespace Rocket {
-    ENUM(MemoryType)
-    {
+namespace Rocket
+{
+    ENUM(MemoryType){
         CPU = "CPU"_i32,
-        GPU = "GPU"_i32
-    };
+        GPU = "GPU"_i32};
 
-    std::ostream& operator<< (std::ostream& out, MemoryType type);
+    std::ostream &operator<<(std::ostream &out, MemoryType type);
 
     class MemoryManager : implements IMemoryManager
     {
@@ -21,17 +20,16 @@ namespace Rocket {
         void Finalize() override;
         int Tick(Timestep ts) override;
 
-        void* AllocatePage(size_t size) override;
-        void  FreePage(void* p) override;
+        void *AllocatePage(size_t size) override;
+        void FreePage(void *p) override;
 
     protected:
-        struct MemoryAllocationInfo 
+        struct MemoryAllocationInfo
         {
             size_t PageSize;
             MemoryType PageMemoryType;
         };
 
-        std::map<void*, MemoryAllocationInfo> m_mapMemoryAllocationInfo;
+        std::map<void *, MemoryAllocationInfo> m_mapMemoryAllocationInfo;
     };
-}
-
+} // namespace Rocket

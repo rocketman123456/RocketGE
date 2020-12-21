@@ -1,6 +1,7 @@
 #include "GEModule/BaseApplication.h"
 
-namespace Rocket {
+namespace Rocket
+{
     // Parse command line, read configuration, initialize all sub modules
     int BaseApplication::Initialize()
     {
@@ -23,4 +24,4 @@ namespace Rocket {
     {
         return m_bQuit;
     }
-}
+} // namespace Rocket

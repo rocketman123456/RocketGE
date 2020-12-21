@@ -3,20 +3,22 @@
 using namespace Rocket;
 using namespace std;
 
-namespace Rocket {
-    std::ostream& operator<< (std::ostream& out, MemoryType type)
+namespace Rocket
+{
+    std::ostream &operator<<(std::ostream &out, MemoryType type)
     {
         auto n = static_cast<int32_t>(type);
         n = endian_net_unsigned_int<int32_t>(n);
-        char* c = reinterpret_cast<char*>(&n);
-        
-        for (size_t i = 0; i < sizeof(int32_t); i++) {
+        char *c = reinterpret_cast<char *>(&n);
+
+        for (size_t i = 0; i < sizeof(int32_t); i++)
+        {
             out << *c++;
         }
 
         return out;
     }
-}
+} // namespace Rocket
 
 int MemoryManager::Initialize()
 {
@@ -46,21 +48,21 @@ int MemoryManager::Tick(Timestep ts)
     return 0;
 }
 
-void* MemoryManager::AllocatePage(size_t size)
+void *MemoryManager::AllocatePage(size_t size)
 {
-    uint8_t* p;
+    uint8_t *p;
 
-    p = static_cast<uint8_t*>(malloc(size));
+    p = static_cast<uint8_t *>(malloc(size));
     if (p)
     {
         MemoryAllocationInfo info = {size, MemoryType::CPU};
         m_mapMemoryAllocationInfo.insert({p, info});
     }
 
-    return static_cast<void*>(p);
+    return static_cast<void *>(p);
 }
 
-void MemoryManager::FreePage(void* p)
+void MemoryManager::FreePage(void *p)
 {
     auto it = m_mapMemoryAllocationInfo.find(p);
     if (it != m_mapMemoryAllocationInfo.end())

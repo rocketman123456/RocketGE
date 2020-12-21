@@ -2,7 +2,8 @@
 
 #include "GECore/Core.h"
 
-namespace Rocket {
+namespace Rocket
+{
 	Interface GraphicsContext
 	{
 	public:
@@ -12,6 +13,6 @@ namespace Rocket {
 		virtual void SwapBuffers() = 0;
 		virtual void Destory() = 0;
 
-		static Scope<GraphicsContext> Create(void* window);
+		static Scope<GraphicsContext> Create(void *window);
 	};
-}
+} // namespace Rocket

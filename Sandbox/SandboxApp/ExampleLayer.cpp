@@ -10,7 +10,8 @@ extern uint32_t square_indices[6];
 extern float cube_vertices[180];
 extern uint32_t cube_indices[36];
 
-namespace Rocket {
+namespace Rocket
+{
     ExampleLayer::ExampleLayer() : Layer("ExampleLayer")
     {
         RK_PROFILE_FUNCTION();
@@ -20,9 +21,7 @@ namespace Rocket {
             m_VertexArray->Bind();
 
             auto vertexBuffer = VertexBuffer::Create(vertices, sizeof(vertices));
-            vertexBuffer->SetLayout({
-                { Rocket::ShaderDataType::Float3, "a_Position" }
-                });
+            vertexBuffer->SetLayout({{Rocket::ShaderDataType::Float3, "a_Position"}});
             m_VertexArray->AddVertexBuffer(vertexBuffer);
 
             auto indexBuffer = IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t));
@@ -34,10 +33,8 @@ namespace Rocket {
             m_SquareVertexArray->Bind();
 
             auto vertexBuffer_s = VertexBuffer::Create(square_vertices, sizeof(square_vertices));
-            vertexBuffer_s->SetLayout({
-                { Rocket::ShaderDataType::Float3, "a_Position" },
-                { Rocket::ShaderDataType::Float2, "a_TexCoord" }
-                });
+            vertexBuffer_s->SetLayout({{Rocket::ShaderDataType::Float3, "a_Position"},
+                                       {Rocket::ShaderDataType::Float2, "a_TexCoord"}});
             m_SquareVertexArray->AddVertexBuffer(vertexBuffer_s);
 
             auto indexBuffer_s = IndexBuffer::Create(square_indices, sizeof(square_indices) / sizeof(uint32_t));
@@ -49,10 +46,8 @@ namespace Rocket {
             m_CubeVertexArray->Bind();
 
             auto vertexBuffer_s = VertexBuffer::Create(cube_vertices, sizeof(cube_vertices));
-            vertexBuffer_s->SetLayout({
-                { Rocket::ShaderDataType::Float3, "a_Position" },
-                { Rocket::ShaderDataType::Float2, "a_TexCoord" }
-                });
+            vertexBuffer_s->SetLayout({{Rocket::ShaderDataType::Float3, "a_Position"},
+                                       {Rocket::ShaderDataType::Float2, "a_TexCoord"}});
             m_CubeVertexArray->AddVertexBuffer(vertexBuffer_s);
 
             auto indexBuffer_s = IndexBuffer::Create(cube_indices, sizeof(cube_indices) / sizeof(uint32_t));
@@ -118,17 +113,17 @@ namespace Rocket {
         RK_PROFILE_FUNCTION();
 
         UpdateCamera(ts);
-        
-        RenderCommand::SetClearColor({ 0.2f, 0.3f, 0.3f, 1.0f });
+
+        RenderCommand::SetClearColor({0.2f, 0.3f, 0.3f, 1.0f});
         RenderCommand::Clear();
 
         Renderer::BeginScene(m_Controller->GetCamera());
-        
-        if(m_ShowSquare)
+
+        if (m_ShowSquare)
             RenderSquare();
-        if(m_ShowCube)
+        if (m_ShowCube)
             RenderCube();
-        
+
         Renderer::EndScene();
     }
 
@@ -147,15 +142,15 @@ namespace Rocket {
     void ExampleLayer::OnEvent(Event &event)
     {
         RK_PROFILE_FUNCTION();
-        
+
         EventDispatcher dispatcher(event);
         dispatcher.Dispatch<KeyPressedEvent>(RK_BIND_EVENT_FN(ExampleLayer::OnKeyPressed));
         m_Controller->OnEvent(event);
     }
 
-    bool ExampleLayer::OnKeyPressed(KeyPressedEvent& event)
+    bool ExampleLayer::OnKeyPressed(KeyPressedEvent &event)
     {
         RK_TRACE("KeyCode {0} Key Pressed", event.GetKeyCode());
         return false;
     }
-}
+} // namespace Rocket

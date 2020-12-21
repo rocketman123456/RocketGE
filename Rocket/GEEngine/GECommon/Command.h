@@ -1,7 +1,8 @@
 #pragma once
 #include "GECore/Core.h"
 
-namespace Rocket {
+namespace Rocket
+{
     // TODO : use command pattern to execute different type
     Interface Command
     {
@@ -14,4 +15,4 @@ namespace Rocket {
     //{
     //    command->execute(actor);
     //}
-}
+} // namespace Rocket

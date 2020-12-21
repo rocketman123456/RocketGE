@@ -7,44 +7,44 @@
 class timer
 {
 public:
-	template<typename T>
-	timer(T&& tick)
-	: m_tick(std::chrono::duration_cast<std::chrono::nanoseconds>(tick)), m_thread([this]()
+	template <typename T>
+	timer(T &&tick)
+		: m_tick(std::chrono::duration_cast<std::chrono::nanoseconds>(tick)), m_thread([this]() {
+			  assert(m_tick.count() > 0);
+			  auto start = std::chrono::high_resolution_clock::now();
+			  std::chrono::nanoseconds drift{0};
+			  while (!m_event.wait_for(m_tick - drift))
+			  {
+				  ++m_ticks;
+				  auto it = std::begin(m_events);
+				  auto end = std::end(m_events);
+				  while (it != end)
+				  {
+					  auto &event = *it;
+					  ++event.elapsed;
+					  if (event.elapsed == event.ticks)
+					  {
+						  auto remove = event.proc();
+						  if (remove)
+						  {
+							  m_events.erase(it++);
+							  continue;
+						  }
+						  else
+						  {
+							  event.elapsed = 0;
+						  }
+					  }
+					  ++it;
+				  }
+				  auto now = std::chrono::high_resolution_clock::now();
+				  auto realDuration = std::chrono::duration_cast<std::chrono::nanoseconds>(now - start);
+				  auto fakeDuration = std::chrono::duration_cast<std::chrono::nanoseconds>(m_tick * m_ticks);
+				  drift = realDuration - fakeDuration;
+			  }
+		  })
 	{
-		assert(m_tick.count() > 0);
-		auto start = std::chrono::high_resolution_clock::now();
-		std::chrono::nanoseconds drift{0};
-		while(!m_event.wait_for(m_tick - drift))
-		{
-			++m_ticks;
-			auto it = std::begin(m_events);
-			auto end = std::end(m_events);
-			while(it != end)
-			{
-				auto& event = *it;
-				++event.elapsed;
-				if(event.elapsed == event.ticks)
-				{
-					auto remove = event.proc();
-					if(remove)
-					{
-						m_events.erase(it++);
-						continue;
-					}
-					else
-					{
-						event.elapsed = 0;
-					}
-				}
-				++it;
-			}
-			auto now = std::chrono::high_resolution_clock::now();
-			auto realDuration = std::chrono::duration_cast<std::chrono::nanoseconds>(now - start);
-			auto fakeDuration = std::chrono::duration_cast<std::chrono::nanoseconds>(m_tick * m_ticks);
-			drift = realDuration - fakeDuration;
-		}
-	})
-	{}
+	}
 
 	~timer()
 	{
@@ -52,33 +52,35 @@ public:
 		m_thread.join();
 	}
 
-	template<typename T, typename F, typename... Args>
-	auto set_timeout(T&& timeout, F f, Args&&... args)
+	template <typename T, typename F, typename... Args>
+	auto set_timeout(T &&timeout, F f, Args &&... args)
 	{
 		assert(std::chrono::duration_cast<std::chrono::nanoseconds>(timeout).count() >= m_tick.count());
 		auto event = std::make_shared<manual_event>();
 		auto proc = [=]() {
-			if(event->wait_for(std::chrono::seconds(0))) return true;
+			if (event->wait_for(std::chrono::seconds(0)))
+				return true;
 			f(args...);
 			return true;
 		};
-		m_events.insert({ event_ctx::kNextSeqNum++, proc,
-			static_cast<unsigned long long>(std::chrono::duration_cast<std::chrono::nanoseconds>(timeout).count() / m_tick.count()), 0, event });
+		m_events.insert({event_ctx::kNextSeqNum++, proc,
+						 static_cast<unsigned long long>(std::chrono::duration_cast<std::chrono::nanoseconds>(timeout).count() / m_tick.count()), 0, event});
 		return event;
 	}
 
-	template<typename T, typename F, typename... Args>
-	auto set_interval(T&& interval, F f, Args&&... args)
+	template <typename T, typename F, typename... Args>
+	auto set_interval(T &&interval, F f, Args &&... args)
 	{
 		assert(std::chrono::duration_cast<std::chrono::nanoseconds>(interval).count() >= m_tick.count());
 		auto event = std::make_shared<manual_event>();
 		auto proc = [=]() {
-			if(event->wait_for(std::chrono::seconds(0))) return true;
+			if (event->wait_for(std::chrono::seconds(0)))
+				return true;
 			f(args...);
 			return false;
 		};
-		m_events.insert({ event_ctx::kNextSeqNum++, proc,
-			static_cast<unsigned long long>(std::chrono::duration_cast<std::chrono::nanoseconds>(interval).count() / m_tick.count()), 0, event });
+		m_events.insert({event_ctx::kNextSeqNum++, proc,
+						 static_cast<unsigned long long>(std::chrono::duration_cast<std::chrono::nanoseconds>(interval).count() / m_tick.count()), 0, event});
 		return event;
 	}
 
@@ -90,7 +92,7 @@ private:
 
 	struct event_ctx
 	{
-		bool operator < (const event_ctx& rhs) const { return seq_num < rhs.seq_num; }
+		bool operator<(const event_ctx &rhs) const { return seq_num < rhs.seq_num; }
 		static inline unsigned long long kNextSeqNum = 0;
 		unsigned long long seq_num;
 		std::function<bool(void)> proc;
@@ -103,38 +105,40 @@ private:
 	set m_events;
 };
 
-namespace Rocket {
-    template<typename Fn>
-    class Timer
-    {
-    public:
-        Timer(const char* name, Fn&& func) : m_Name(name), m_Func(func), m_Stopped(false)
-        {
-            m_StartTimepoint = std::chrono::high_resolution_clock::now();
-        }
+namespace Rocket
+{
+	template <typename Fn>
+	class Timer
+	{
+	public:
+		Timer(const char *name, Fn &&func) : m_Name(name), m_Func(func), m_Stopped(false)
+		{
+			m_StartTimepoint = std::chrono::high_resolution_clock::now();
+		}
 
-        ~Timer()
-        {
-            if (!m_Stopped)
-                Stop();
-        }
+		~Timer()
+		{
+			if (!m_Stopped)
+				Stop();
+		}
 
-        void Stop()
-        {
-            auto endTimepoint = std::chrono::high_resolution_clock::now();
+		void Stop()
+		{
+			auto endTimepoint = std::chrono::high_resolution_clock::now();
 
-            long long start = std::chrono::time_point_cast<std::chrono::microseconds>(m_StartTimepoint).time_since_epoch().count();
-            long long end = std::chrono::time_point_cast<std::chrono::microseconds>(endTimepoint).time_since_epoch().count();
+			long long start = std::chrono::time_point_cast<std::chrono::microseconds>(m_StartTimepoint).time_since_epoch().count();
+			long long end = std::chrono::time_point_cast<std::chrono::microseconds>(endTimepoint).time_since_epoch().count();
 
-            m_Stopped = true;
+			m_Stopped = true;
 
-            float duration = (end - start) * 0.001f;
-            m_Func({ m_Name, duration });
-        }
-    private:
-        const char* m_Name;
-        Fn m_Func;
-        std::chrono::time_point<std::chrono::steady_clock> m_StartTimepoint;
-        bool m_Stopped;
-    };
-}
+			float duration = (end - start) * 0.001f;
+			m_Func({m_Name, duration});
+		}
+
+	private:
+		const char *m_Name;
+		Fn m_Func;
+		std::chrono::time_point<std::chrono::steady_clock> m_StartTimepoint;
+		bool m_Stopped;
+	};
+} // namespace Rocket

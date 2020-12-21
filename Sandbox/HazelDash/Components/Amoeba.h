@@ -1,5 +1,6 @@
 #pragma once
 
-struct Amoeba {
+struct Amoeba
+{
 	float GrowthProbability = 0.01f;
 };

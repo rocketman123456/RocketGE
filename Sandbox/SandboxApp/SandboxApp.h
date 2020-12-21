@@ -23,4 +23,4 @@ namespace Rocket
         virtual void PreInitialize() override;
         virtual void PreInitializeModule() override;
     };
-}
+} // namespace Rocket

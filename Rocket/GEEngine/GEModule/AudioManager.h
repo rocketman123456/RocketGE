@@ -7,7 +7,8 @@
 #include <AL/alext.h>
 #include <sndfile.h>
 
-namespace Rocket {
+namespace Rocket
+{
     struct AudioInfo
     {
         ALuint buffer;
@@ -24,15 +25,17 @@ namespace Rocket {
         virtual void Finalize() override;
 
         virtual int Tick(Timestep ts) override;
-        
-        void LoadAudio(const std::string& filename);
-        void PlayAudio(const std::string& name);
+
+        void LoadAudio(const std::string &filename);
+        void PlayAudio(const std::string &name);
+
     private:
-        ALuint Load(const std::string& filename);
-        void Play(AudioInfo& info);
+        ALuint Load(const std::string &filename);
+        void Play(AudioInfo &info);
+
     private:
         std::unordered_map<std::string, AudioInfo> m_AudioStore;
     };
 
-    extern AudioManager* g_AudioManager;
-}
+    extern AudioManager *g_AudioManager;
+} // namespace Rocket

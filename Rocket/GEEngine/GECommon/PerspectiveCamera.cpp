@@ -2,7 +2,8 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
-namespace Rocket {
+namespace Rocket
+{
 	PerspectiveCamera::PerspectiveCamera(float fovy, float aspect, float zNear, float zFar)
 		: Camera(glm::perspective(fovy, aspect, zNear, zFar))
 	{
@@ -20,4 +21,4 @@ namespace Rocket {
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_Position) * m_RotationMatrix;
 		Camera::SetView(glm::inverse(transform));
 	}
-}
+} // namespace Rocket

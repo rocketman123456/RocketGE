@@ -1,20 +1,22 @@
 #include "GEAudio/Audio.h"
 
-namespace Rocket {
-    void Audio::Play()
-    {
-        m_Playing = true;
-        alSourcePlay(m_Source);
-        do {
-            std::this_thread::sleep_for(std::chrono::microseconds(100));
-            alGetSourcei(m_Source, AL_SOURCE_STATE, &m_State);
-            // Get the source offset.
-            alGetSourcef(m_Source, AL_SEC_OFFSET, &m_Offset);
-        } while(alGetError() == AL_NO_ERROR && m_State == AL_PLAYING);
-        m_Playing = false;
-    }
+namespace Rocket
+{
+	void Audio::Play()
+	{
+		m_Playing = true;
+		alSourcePlay(m_Source);
+		do
+		{
+			std::this_thread::sleep_for(std::chrono::microseconds(100));
+			alGetSourcei(m_Source, AL_SOURCE_STATE, &m_State);
+			// Get the source offset.
+			alGetSourcef(m_Source, AL_SEC_OFFSET, &m_Offset);
+		} while (alGetError() == AL_NO_ERROR && m_State == AL_PLAYING);
+		m_Playing = false;
+	}
 
-    AudioSource::AudioSource(uint32_t handle, bool loaded, float length)
+	AudioSource::AudioSource(uint32_t handle, bool loaded, float length)
 		: m_BufferHandle(handle), m_Loaded(loaded), m_TotalDuration(length)
 	{
 	}
@@ -66,14 +68,14 @@ namespace Rocket {
 
 	std::pair<uint32_t, uint32_t> AudioSource::GetLengthMinutesAndSeconds() const
 	{
-		return { (uint32_t)(m_TotalDuration / 60.0f), (uint32_t)m_TotalDuration % 60 };
+		return {(uint32_t)(m_TotalDuration / 60.0f), (uint32_t)m_TotalDuration % 60};
 	}
 
-	AudioSource AudioSource::LoadFromFile(const std::string& file, bool spatial)
+	AudioSource AudioSource::LoadFromFile(const std::string &file, bool spatial)
 	{
-        AudioSource result;
+		AudioSource result;
 		//AudioSource result = Audio::LoadAudioSource(file);
 		result.SetSpatial(spatial);
 		return result;
 	}
-}
+} // namespace Rocket

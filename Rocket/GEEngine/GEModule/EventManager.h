@@ -1,7 +1,8 @@
 #pragma once
 #include "GEInterface/IRuntimeModule.h"
 
-namespace Rocket {
+namespace Rocket
+{
     class EventManager : implements IRuntimeModule
     {
     public:
@@ -12,8 +13,8 @@ namespace Rocket {
         virtual void Finalize() override;
 
         virtual int Tick(Timestep ts) override;
-        virtual void OnEvent(Event& event) override;
+        virtual void OnEvent(Event &event) override;
     };
 
-    extern EventManager* g_EventManager;
-}
+    extern EventManager *g_EventManager;
+} // namespace Rocket

@@ -2,11 +2,12 @@
 #include "GEInterface/IRuntimeModule.h"
 #include "GEEvent/Event.h"
 
-namespace Rocket {
+namespace Rocket
+{
     Interface IApplication : implements IRuntimeModule
     {
     public:
-        IApplication(const std::string& name = "IApplication") : IRuntimeModule(name) {}
+        IApplication(const std::string &name = "IApplication") : IRuntimeModule(name) {}
         virtual ~IApplication() = default;
 
         virtual void PreInitialize() = 0;
@@ -23,10 +24,10 @@ namespace Rocket {
         virtual void Tick() = 0;
 
         virtual int Tick(Timestep ts) override { return 0; }
-        virtual void OnEvent(Event& event) override = 0;
+        virtual void OnEvent(Event & event) override = 0;
 
         virtual bool GetIsRunning() = 0;
     };
 
-    IApplication* CreateApplicationInstance();
-}
+    IApplication *CreateApplicationInstance();
+} // namespace Rocket

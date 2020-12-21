@@ -40,9 +40,10 @@ namespace Rocket
         s_Instance = this;
 
         int ret = 0;
-        for (auto& module : m_Modules)
+        for (auto &module : m_Modules)
         {
-            if ((ret = module->Initialize()) != 0) {
+            if ((ret = module->Initialize()) != 0)
+            {
                 RK_CORE_ERROR("Failed. err = {0}", ret);
                 return ret;
             }
@@ -56,7 +57,7 @@ namespace Rocket
 
     void Application::FinalizeModule()
     {
-        for (auto& module : m_Modules)
+        for (auto &module : m_Modules)
         {
             module->Finalize();
             delete module;
@@ -93,19 +94,19 @@ namespace Rocket
         m_LayerStack.PushOverlay(layer);
     }
 
-    void Application::PopLayer(Layer* layer)
+    void Application::PopLayer(Layer *layer)
     {
         RK_PROFILE_FUNCTION();
         m_LayerStack.PopLayer(layer);
     }
 
-    void Application::PopOverlay(Layer* layer)
+    void Application::PopOverlay(Layer *layer)
     {
         RK_PROFILE_FUNCTION();
         m_LayerStack.PopOverlay(layer);
     }
 
-    void Application::PushModule(IRuntimeModule* module)
+    void Application::PushModule(IRuntimeModule *module)
     {
         m_Modules.push_back(module);
     }
@@ -170,30 +171,31 @@ namespace Rocket
     void Application::TickModule()
     {
         RK_PROFILE_FUNCTION();
-        
-        if(m_Parallel) {
+
+        if (m_Parallel)
+        {
             ProfilerBegin("Module Tick Parallel");
 
-            std::vector< std::future<int> > futures;
+            std::vector<std::future<int>> futures;
 
-            for (auto& module : m_Modules)
+            for (auto &module : m_Modules)
             {
-                futures.push_back( 
-                    m_ThreadPool.enqueue_task(&IRuntimeModule::Tick, module, Timestep(m_Duration.count())) 
-                );
+                futures.push_back(
+                    m_ThreadPool.enqueue_task(&IRuntimeModule::Tick, module, Timestep(m_Duration.count())));
             }
 
-            for(auto& f : futures)
+            for (auto &f : futures)
                 f.wait();
 
-            for(auto& f : futures)
+            for (auto &f : futures)
                 f.get();
-            
+
             ProfilerEnd("Module Tick Parallel");
         }
-        else {
+        else
+        {
             ProfilerBegin("Module Tick");
-            for (auto& module : m_Modules)
+            for (auto &module : m_Modules)
             {
                 RK_PROFILE_SCOPE(module->GetName());
                 ProfilerBegin(module->GetName());
@@ -222,7 +224,7 @@ namespace Rocket
     bool Application::OnWindowResize(WindowResizeEvent &e)
     {
         RK_PROFILE_FUNCTION();
-        
+
         if (e.GetWidth() == 0 || e.GetHeight() == 0)
         {
             m_Minimized = true;
@@ -233,4 +235,4 @@ namespace Rocket
         Renderer::OnWindowResize(e.GetWidth(), e.GetHeight(), e.GetXScale(), e.GetYScale());
         return false;
     }
-}
+} // namespace Rocket

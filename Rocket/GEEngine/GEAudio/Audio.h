@@ -5,26 +5,28 @@
 #include <AL/alc.h>
 #include <AL/alext.h>
 
-namespace Rocket {
-    class Audio
-    {
-    public:
-        Audio(const std::string& name, ALuint source) : m_Name(name), m_Source(source) {}
-        virtual ~Audio() = default;
+namespace Rocket
+{
+	class Audio
+	{
+	public:
+		Audio(const std::string &name, ALuint source) : m_Name(name), m_Source(source) {}
+		virtual ~Audio() = default;
 
-        void Play();
+		void Play();
 
-        const std::string& GetName() { return m_Name; }
-        bool IsPlaying() { return m_Playing; }
-    private:
-        std::string m_Name;
-        ALuint m_Source;
-        ALenum m_State;
-        ALfloat m_Offset;
-        bool m_Playing = false;
-    };
+		const std::string &GetName() { return m_Name; }
+		bool IsPlaying() { return m_Playing; }
 
-    class AudioSource
+	private:
+		std::string m_Name;
+		ALuint m_Source;
+		ALenum m_State;
+		ALfloat m_Offset;
+		bool m_Playing = false;
+	};
+
+	class AudioSource
 	{
 	public:
 		~AudioSource();
@@ -39,7 +41,8 @@ namespace Rocket {
 
 		std::pair<uint32_t, uint32_t> GetLengthMinutesAndSeconds() const;
 
-		static AudioSource LoadFromFile(const std::string& file, bool spatial = false);
+		static AudioSource LoadFromFile(const std::string &file, bool spatial = false);
+
 	private:
 		AudioSource() = default;
 		AudioSource(uint32_t handle, bool loaded, float length);
@@ -50,13 +53,13 @@ namespace Rocket {
 		bool m_Spatial = false;
 
 		float m_TotalDuration = 0; // in seconds
-		
+
 		// Attributes
-		float m_Position[3] = { 0.0f, 0.0f, 0.0f };
+		float m_Position[3] = {0.0f, 0.0f, 0.0f};
 		float m_Gain = 1.0f;
 		float m_Pitch = 1.0f;
 		bool m_Loop = false;
 
 		friend class Audio;
 	};
-}
+} // namespace Rocket

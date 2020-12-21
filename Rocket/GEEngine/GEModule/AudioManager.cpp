@@ -5,8 +5,9 @@
 
 #include <thread>
 
-namespace Rocket {
-    AudioManager* g_AudioManager = new AudioManager();
+namespace Rocket
+{
+    AudioManager *g_AudioManager = new AudioManager();
 
     int AudioManager::Initialize()
     {
@@ -14,9 +15,9 @@ namespace Rocket {
         ALCdevice *device = nullptr;
         ALCcontext *ctx;
 
-        if(!device)
+        if (!device)
             device = alcOpenDevice(NULL);
-        if(!device)
+        if (!device)
         {
             fprintf(stderr, "Could not open a device!\n");
             return 1;
@@ -26,9 +27,9 @@ namespace Rocket {
         auto bEAX = alIsExtensionPresent("EAX2.0");
 
         ctx = alcCreateContext(device, NULL);
-        if(ctx == NULL || alcMakeContextCurrent(ctx) == ALC_FALSE)
+        if (ctx == NULL || alcMakeContextCurrent(ctx) == ALC_FALSE)
         {
-            if(ctx != NULL)
+            if (ctx != NULL)
                 alcDestroyContext(ctx);
             alcCloseDevice(device);
             fprintf(stderr, "Could not set a context!\n");
@@ -36,9 +37,9 @@ namespace Rocket {
         }
 
         name = NULL;
-        if(alcIsExtensionPresent(device, "ALC_ENUMERATE_ALL_EXT"))
+        if (alcIsExtensionPresent(device, "ALC_ENUMERATE_ALL_EXT"))
             name = alcGetString(device, ALC_ALL_DEVICES_SPECIFIER);
-        if(!name || alcGetError(device) != AL_NO_ERROR)
+        if (!name || alcGetError(device) != AL_NO_ERROR)
             name = alcGetString(device, ALC_DEVICE_SPECIFIER);
         printf("Opened \"%s\"\n", name);
 
@@ -47,7 +48,7 @@ namespace Rocket {
 
     void AudioManager::Finalize()
     {
-        for(auto it = m_AudioStore.begin(); it != m_AudioStore.end(); ++it)
+        for (auto it = m_AudioStore.begin(); it != m_AudioStore.end(); ++it)
         {
             alDeleteSources(1, &it->second.source);
             alDeleteBuffers(1, &it->second.buffer);
@@ -57,7 +58,7 @@ namespace Rocket {
         ALCcontext *ctx;
 
         ctx = alcGetCurrentContext();
-        if(ctx == NULL)
+        if (ctx == NULL)
             return;
 
         device = alcGetContextsDevice(ctx);
@@ -71,8 +72,8 @@ namespace Rocket {
     {
         return 0;
     }
-    
-    void AudioManager::LoadAudio(const std::string& filename)
+
+    void AudioManager::LoadAudio(const std::string &filename)
     {
         std::string name;
         ExtractName(filename, name);
@@ -84,17 +85,17 @@ namespace Rocket {
             RK_CORE_INFO("Audio Resource {0} is Loaded", name);
             return;
         }
-        
+
         // TODO : make a uniform asset loader
         ALuint buffer = Load(filename);
         ALuint source = 0;
 
-        RK_CORE_ASSERT(alGetError()==AL_NO_ERROR, "Failed to setup sound source");
+        RK_CORE_ASSERT(alGetError() == AL_NO_ERROR, "Failed to setup sound source");
 
         m_AudioStore[name] = {buffer, source};
     }
 
-    ALuint AudioManager::Load(const std::string& filename)
+    ALuint AudioManager::Load(const std::string &filename)
     {
         ALenum err, format;
         ALuint buffer;
@@ -106,12 +107,12 @@ namespace Rocket {
 
         // Open the audio file and check that it's usable.
         sndfile = sf_open(filename.c_str(), SFM_READ, &sfinfo);
-        if(!sndfile)
+        if (!sndfile)
         {
             RK_CORE_ERROR("Could not open audio in {0}: {1}", filename, sf_strerror(sndfile));
             return 0;
         }
-        if(sfinfo.frames < 1 || sfinfo.frames > (sf_count_t)(INT_MAX/sizeof(short))/sfinfo.channels)
+        if (sfinfo.frames < 1 || sfinfo.frames > (sf_count_t)(INT_MAX / sizeof(short)) / sfinfo.channels)
         {
             RK_CORE_ERROR("Bad sample count in {0}", filename);
             sf_close(sndfile);
@@ -120,21 +121,21 @@ namespace Rocket {
 
         // Get the sound format, and figure out the OpenAL format
         format = AL_NONE;
-        if(sfinfo.channels == 1)
+        if (sfinfo.channels == 1)
             format = AL_FORMAT_MONO16;
-        else if(sfinfo.channels == 2)
+        else if (sfinfo.channels == 2)
             format = AL_FORMAT_STEREO16;
-        else if(sfinfo.channels == 3)
+        else if (sfinfo.channels == 3)
         {
-            if(sf_command(sndfile, SFC_WAVEX_GET_AMBISONIC, NULL, 0) == SF_AMBISONIC_B_FORMAT)
+            if (sf_command(sndfile, SFC_WAVEX_GET_AMBISONIC, NULL, 0) == SF_AMBISONIC_B_FORMAT)
                 format = AL_FORMAT_BFORMAT2D_16;
         }
-        else if(sfinfo.channels == 4)
+        else if (sfinfo.channels == 4)
         {
-            if(sf_command(sndfile, SFC_WAVEX_GET_AMBISONIC, NULL, 0) == SF_AMBISONIC_B_FORMAT)
+            if (sf_command(sndfile, SFC_WAVEX_GET_AMBISONIC, NULL, 0) == SF_AMBISONIC_B_FORMAT)
                 format = AL_FORMAT_BFORMAT3D_16;
         }
-        if(!format)
+        if (!format)
         {
             RK_CORE_ERROR("Unsupported channel count: {0}", sfinfo.channels);
             sf_close(sndfile);
@@ -143,10 +144,10 @@ namespace Rocket {
 
         // Decode the whole audio file to a buffer.
         auto size = (size_t)(sfinfo.frames * sfinfo.channels) * sizeof(short);
-        membuf = (short*)malloc(size);
+        membuf = (short *)malloc(size);
 
         num_frames = sf_readf_short(sndfile, membuf, sfinfo.frames);
-        if(num_frames < 1)
+        if (num_frames < 1)
         {
             free(membuf);
             sf_close(sndfile);
@@ -166,10 +167,10 @@ namespace Rocket {
 
         // Check if an error occured, and clean up if so.
         err = alGetError();
-        if(err != AL_NO_ERROR)
+        if (err != AL_NO_ERROR)
         {
             RK_CORE_ERROR("OpenAL Error: {0}", alGetString(err));
-            if(buffer && alIsBuffer(buffer))
+            if (buffer && alIsBuffer(buffer))
                 alDeleteBuffers(1, &buffer);
             return 0;
         }
@@ -177,7 +178,7 @@ namespace Rocket {
         return buffer;
     }
 
-    void AudioManager::PlayAudio(const std::string& name)
+    void AudioManager::PlayAudio(const std::string &name)
     {
         // Check Resource Load
         auto it = m_AudioStore.find(name);
@@ -195,7 +196,7 @@ namespace Rocket {
         }
     }
 
-    void AudioManager::Play(AudioInfo& info)
+    void AudioManager::Play(AudioInfo &info)
     {
         ALenum state;
         ALuint source = 0;
@@ -204,11 +205,12 @@ namespace Rocket {
         alSourcei(source, AL_BUFFER, (ALint)info.buffer);
 
         alSourcePlay(source);
-        do {
+        do
+        {
             std::this_thread::sleep_for(std::chrono::microseconds(100));
             alGetSourcei(source, AL_SOURCE_STATE, &state);
-        } while(alGetError() == AL_NO_ERROR && state == AL_PLAYING);
+        } while (alGetError() == AL_NO_ERROR && state == AL_PLAYING);
 
         alDeleteSources(1, &source);
     }
-}
+} // namespace Rocket

@@ -3,8 +3,9 @@
 #include <stb_image.h>
 #include <glad/glad.h>
 
-namespace Rocket {
-    OpenGLTexture2D::OpenGLTexture2D(uint32_t width, uint32_t height)
+namespace Rocket
+{
+	OpenGLTexture2D::OpenGLTexture2D(uint32_t width, uint32_t height)
 		: m_Width(width), m_Height(height)
 	{
 		RK_PROFILE_FUNCTION();
@@ -24,7 +25,7 @@ namespace Rocket {
 		glBindTexture(GL_TEXTURE_2D, m_RendererID);
 
 		// set the texture wrapping parameters
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 		// set texture filtering parameters
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -32,14 +33,14 @@ namespace Rocket {
 #endif
 	}
 
-	OpenGLTexture2D::OpenGLTexture2D(const std::string& path)
+	OpenGLTexture2D::OpenGLTexture2D(const std::string &path)
 		: m_Path(path)
 	{
 		RK_PROFILE_FUNCTION();
 
 		int width, height, channels;
 		stbi_set_flip_vertically_on_load(1);
-		stbi_uc* data = nullptr;
+		stbi_uc *data = nullptr;
 		{
 			RK_PROFILE_SCOPE("OpenGLTexture2D::OpenGLTexture2D -- stbi_load");
 			data = stbi_load(path.c_str(), &width, &height, &channels, 0);
@@ -81,14 +82,14 @@ namespace Rocket {
 		glBindTexture(GL_TEXTURE_2D, m_RendererID);
 
 		// set the texture wrapping parameters
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 		// set texture filtering parameters
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
 		glTexImage2D(GL_TEXTURE_2D, 0, m_DataFormat, m_Width, m_Height, 0, m_DataFormat, GL_UNSIGNED_BYTE, data);
-        glGenerateMipmap(GL_TEXTURE_2D);
+		glGenerateMipmap(GL_TEXTURE_2D);
 #endif
 		stbi_image_free(data);
 	}
@@ -100,7 +101,7 @@ namespace Rocket {
 		glDeleteTextures(1, &m_RendererID);
 	}
 
-	void OpenGLTexture2D::SetData(void* data, uint32_t size)
+	void OpenGLTexture2D::SetData(void *data, uint32_t size)
 	{
 		RK_PROFILE_FUNCTION();
 
@@ -110,7 +111,7 @@ namespace Rocket {
 		glTextureSubImage2D(m_RendererID, 0, 0, 0, m_Width, m_Height, m_DataFormat, GL_UNSIGNED_BYTE, data);
 #else
 		glTexImage2D(GL_TEXTURE_2D, 0, m_DataFormat, m_Width, m_Height, 0, m_DataFormat, GL_UNSIGNED_BYTE, data);
-        glGenerateMipmap(GL_TEXTURE_2D);
+		glGenerateMipmap(GL_TEXTURE_2D);
 #endif
 	}
 
@@ -119,12 +120,12 @@ namespace Rocket {
 		//RK_PROFILE_FUNCTION();
 #if defined(HIGH_OPENGL_VERSION)
 		glBindTextureUnit(slot, m_RendererID);
-#else	
+#else
 		glActiveTexture(GL_TEXTURE0 + slot);
 		glBindTexture(GL_TEXTURE_2D, m_RendererID);
 #endif
 	}
-    void OpenGLTexture2D::Unbind(uint32_t slot) const
+	void OpenGLTexture2D::Unbind(uint32_t slot) const
 	{
 		//RK_PROFILE_FUNCTION();
 #if defined(HIGH_OPENGL_VERSION)
@@ -134,4 +135,4 @@ namespace Rocket {
 		glBindTexture(GL_TEXTURE_2D, 0);
 #endif
 	}
-}
+} // namespace Rocket

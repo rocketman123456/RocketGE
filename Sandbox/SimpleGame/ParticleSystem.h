@@ -16,10 +16,11 @@ class ParticleSystem
 public:
 	ParticleSystem();
 
-	void Emit(const ParticleProps& particleProps);
+	void Emit(const ParticleProps &particleProps);
 
 	void OnUpdate(Rocket::Timestep ts);
 	void OnRender();
+
 private:
 	struct Particle
 	{

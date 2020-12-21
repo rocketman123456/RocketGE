@@ -3,7 +3,8 @@
 
 #include <vector>
 
-struct Roll {
+struct Roll
+{
 	std::vector<Tile> Frames;
 	uint32_t CurrentFrame = 0;
 };

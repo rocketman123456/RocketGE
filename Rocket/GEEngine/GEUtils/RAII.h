@@ -24,14 +24,37 @@ private:
     val_type m_handle;
 };
 
-template <typename T> struct LockPolicy { static void Execute(T t) { t.lock(); } };
-template <typename T> struct UnlockPolicy { static void Execute(T t) { t.unlock(); } };
-template <typename T> using scope_lock = RAII<T &, LockPolicy, UnlockPolicy>;
+template <typename T>
+struct LockPolicy
+{
+    static void Execute(T t) { t.lock(); }
+};
+template <typename T>
+struct UnlockPolicy
+{
+    static void Execute(T t) { t.unlock(); }
+};
+template <typename T>
+using scope_lock = RAII<T &, LockPolicy, UnlockPolicy>;
 
-template <typename T> struct NoOpPolicy { static void Execute(T) {} };
+template <typename T>
+struct NoOpPolicy
+{
+    static void Execute(T) {}
+};
 
-template <typename T> struct PointerReleasePolicy { static void Execute(T ptr) { delete ptr; } };
-template <typename T> struct ArrayReleasePolicy { static void Execute(T ptr) { delete[] ptr; } };
+template <typename T>
+struct PointerReleasePolicy
+{
+    static void Execute(T ptr) { delete ptr; }
+};
+template <typename T>
+struct ArrayReleasePolicy
+{
+    static void Execute(T ptr) { delete[] ptr; }
+};
 
-template <typename T> using arr_ptr_handle_t = RAII<T *, NoOpPolicy, ArrayReleasePolicy>;
-template <typename T> using ptr_handle_t = RAII<T *, NoOpPolicy, PointerReleasePolicy>;
+template <typename T>
+using arr_ptr_handle_t = RAII<T *, NoOpPolicy, ArrayReleasePolicy>;
+template <typename T>
+using ptr_handle_t = RAII<T *, NoOpPolicy, PointerReleasePolicy>;

@@ -3,17 +3,19 @@
 
 struct GLFWwindow;
 
-namespace Rocket {
+namespace Rocket
+{
     class OpenGLContext : implements GraphicsContext
     {
     public:
-        OpenGLContext(GLFWwindow* windowHandle);
+        OpenGLContext(GLFWwindow *windowHandle);
         virtual ~OpenGLContext() = default;
 
         virtual void Init() override;
         virtual void Destory() override;
-		virtual void SwapBuffers() override;
+        virtual void SwapBuffers() override;
+
     private:
-        GLFWwindow* m_WindowHandle;
+        GLFWwindow *m_WindowHandle;
     };
-}
+} // namespace Rocket

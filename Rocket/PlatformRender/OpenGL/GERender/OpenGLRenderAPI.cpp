@@ -1,22 +1,31 @@
 #include "GERender/OpenGLRenderAPI.h"
 #include "glad/glad.h"
 
-namespace Rocket {
+namespace Rocket
+{
 	void OpenGLMessageCallback(
 		unsigned source,
 		unsigned type,
 		unsigned id,
 		unsigned severity,
 		int length,
-		const char* message,
-		const void* userParam)
+		const char *message,
+		const void *userParam)
 	{
 		switch (severity)
 		{
-		case GL_DEBUG_SEVERITY_HIGH:         RK_CORE_CRITICAL(message); return;
-		case GL_DEBUG_SEVERITY_MEDIUM:       RK_CORE_ERROR(message); return;
-		case GL_DEBUG_SEVERITY_LOW:          RK_CORE_WARN(message); return;
-		case GL_DEBUG_SEVERITY_NOTIFICATION: RK_CORE_TRACE(message); return;
+		case GL_DEBUG_SEVERITY_HIGH:
+			RK_CORE_CRITICAL(message);
+			return;
+		case GL_DEBUG_SEVERITY_MEDIUM:
+			RK_CORE_ERROR(message);
+			return;
+		case GL_DEBUG_SEVERITY_LOW:
+			RK_CORE_WARN(message);
+			return;
+		case GL_DEBUG_SEVERITY_NOTIFICATION:
+			RK_CORE_TRACE(message);
+			return;
 		}
 
 		RK_CORE_ASSERT(false, "Unknown severity level!");
@@ -26,7 +35,8 @@ namespace Rocket {
 	{
 		RK_PROFILE_FUNCTION();
 
-		int flags; glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
+		int flags;
+		glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
 		if (flags & GL_CONTEXT_FLAG_DEBUG_BIT)
 		{
 			glEnable(GL_DEBUG_OUTPUT);
@@ -47,7 +57,7 @@ namespace Rocket {
 		glViewport(x, y, width * xscale, height * yscale);
 	}
 
-	void OpenGLRenderAPI::SetClearColor(const glm::vec4& color)
+	void OpenGLRenderAPI::SetClearColor(const glm::vec4 &color)
 	{
 		glClearColor(color.r, color.g, color.b, color.a);
 	}
@@ -57,21 +67,21 @@ namespace Rocket {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
-	void OpenGLRenderAPI::DrawIndexed(const Ref<VertexArray>& vertexArray, uint32_t indexCount)
+	void OpenGLRenderAPI::DrawIndexed(const Ref<VertexArray> &vertexArray, uint32_t indexCount)
 	{
 		RK_PROFILE_FUNCTION();
-		
+
 		uint32_t count = indexCount ? indexCount : vertexArray->GetIndexBuffer()->GetCount();
 		glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr);
 		//glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
-	void OpenGLRenderAPI::DrawInstance(const Ref<VertexArray>& vertexArray, uint32_t indexCount, uint32_t numCount)
+	void OpenGLRenderAPI::DrawInstance(const Ref<VertexArray> &vertexArray, uint32_t indexCount, uint32_t numCount)
 	{
 		RK_PROFILE_FUNCTION();
-		
+
 		uint32_t count = indexCount ? indexCount : vertexArray->GetIndexBuffer()->GetCount();
 		glDrawArraysInstanced(GL_TRIANGLES, count, GL_UNSIGNED_INT, numCount);
 		//glBindTexture(GL_TEXTURE_2D, 0);
 	}
-}
+} // namespace Rocket
