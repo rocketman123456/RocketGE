@@ -9,7 +9,7 @@ namespace Rocket
 	{
 		Camera::UpdateProjectView();
 	}
-
+	
 	void OrthographicCamera::SetProjectionMatrix(float left, float right, float bottom, float top, float znear, float zfar)
 	{
 		Camera::SetProjectionMatrix(glm::ortho(left, right, bottom, top, znear, zfar));

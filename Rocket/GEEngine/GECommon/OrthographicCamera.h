@@ -14,6 +14,7 @@ namespace Rocket
             Camera::SetPosition(position);
             RecalculateViewMatrix();
         }
+
         void SetProjectionMatrix(float left, float right, float bottom, float top, float znear = -1.0f, float zfar = 100.0f);
 
         inline float GetRotation() const { return m_Rotation; }
