@@ -1,6 +1,7 @@
 #pragma once
 
-enum class PlayerState {
+enum class PlayerState
+{
 	Idle = 0,
 	Blink,
 	FootTap,
@@ -11,6 +12,7 @@ enum class PlayerState {
 	MovingDown
 };
 
-inline bool IsIdle(PlayerState state) {
+inline bool IsIdle(PlayerState state)
+{
 	return (state == PlayerState::Idle) || (state == PlayerState::Blink) || (state == PlayerState::FootTap) || (state == PlayerState::BlinkFootTap);
 }

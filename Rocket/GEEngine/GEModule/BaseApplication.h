@@ -1,7 +1,8 @@
 #pragma once
 #include "GEInterface/IApplication.h"
 
-namespace Rocket {
+namespace Rocket
+{
     class BaseApplication : implements IApplication
     {
     public:
@@ -16,4 +17,4 @@ namespace Rocket {
         // Flag if need quit the main loop of the application
         bool m_bQuit;
     };
-}
+} // namespace Rocket

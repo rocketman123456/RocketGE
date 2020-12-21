@@ -10,11 +10,12 @@
 #include "GELayer/LayerStack.h"
 #include "GEUtils/ThreadPool.h"
 
-namespace Rocket {
+namespace Rocket
+{
     Interface Application : implements IApplication
     {
     public:
-        Application(const std::string& name = "Application") : IApplication(name) {}
+        Application(const std::string &name = "Application") : IApplication(name) {}
         virtual ~Application() = default;
 
         virtual void PreInitialize() override {}
@@ -27,32 +28,34 @@ namespace Rocket {
         virtual void PostInitializeModule() override {}
         virtual void FinalizeModule() override;
 
-        virtual void OnEvent(Event& e) override;
+        virtual void OnEvent(Event & e) override;
         void Close();
 
-        void PushLayer(Layer* layer);
-		void PushOverlay(Layer* layer);
-        void PopLayer(Layer* layer);
-		void PopOverlay(Layer* layer);
+        void PushLayer(Layer * layer);
+        void PushOverlay(Layer * layer);
+        void PopLayer(Layer * layer);
+        void PopOverlay(Layer * layer);
 
-        void PushModule(IRuntimeModule* module);
+        void PushModule(IRuntimeModule * module);
 
         virtual void TickModule() override;
         virtual void Tick() override;
 
-        inline ImGuiLayer* GetGuiLayer() { return m_GuiLayer; }
-        inline Window& GetWindow() { return *m_Window; }
+        inline ImGuiLayer *GetGuiLayer() { return m_GuiLayer; }
+        inline Window &GetWindow() { return *m_Window; }
         inline bool GetIsRunning() override { return m_Running; }
-        static Application& Get() { return *s_Instance; }
+        static Application &Get() { return *s_Instance; }
+
     private:
-        bool OnWindowClose(WindowCloseEvent& e);
-		bool OnWindowResize(WindowResizeEvent& e);
+        bool OnWindowClose(WindowCloseEvent & e);
+        bool OnWindowResize(WindowResizeEvent & e);
+
     private:
         Ref<Window> m_Window;
-        ImGuiLayer* m_GuiLayer;
+        ImGuiLayer *m_GuiLayer;
         LayerStack m_LayerStack;
 
-        std::vector<IRuntimeModule*> m_Modules;
+        std::vector<IRuntimeModule *> m_Modules;
 
         thread_pool m_ThreadPool;
 
@@ -64,9 +67,10 @@ namespace Rocket {
         std::chrono::duration<double> m_Duration;
         std::chrono::time_point<std::chrono::steady_clock> m_CurrentTime;
         std::chrono::time_point<std::chrono::steady_clock> m_LastTime;
+
     private:
-        static Application* s_Instance;
+        static Application *s_Instance;
     };
 
-    Application* CreateApplication();
-}
+    Application *CreateApplication();
+} // namespace Rocket

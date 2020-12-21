@@ -10,32 +10,36 @@ template <typename T>
 class FrameParser
 {
 public:
-    FrameParser(const std::vector<T> &headTag, const std::vector<T> &tailTag, const bool discardTag=true)
-        : frameHeadTag(headTag), frameTailTag(tailTag), discardFrameTag{ discardTag }
-    {}
+    FrameParser(const std::vector<T> &headTag, const std::vector<T> &tailTag, const bool discardTag = true)
+        : frameHeadTag(headTag), frameTailTag(tailTag), discardFrameTag{discardTag}
+    {
+    }
 
-    bool isDiscardFrameTag() const {
+    bool isDiscardFrameTag() const
+    {
         return discardFrameTag;
     }
 
-    template<class It>
-    void append(It f, It l) {
+    template <class It>
+    void append(It f, It l)
+    {
         buffer.insert(buffer.end(), f, l);
     }
-    void append(const std::vector<T> &data) {
+    void append(const std::vector<T> &data)
+    {
         buffer.insert(buffer.end(), data.cbegin(), data.cend());
     }
 
-    void parse(std::vector<std::vector<T>>& frames)
+    void parse(std::vector<std::vector<T>> &frames)
     {
-        auto it_head{ buffer.cbegin() };
-        for (auto it_tail{ std::search(it_head, buffer.cend(), frameTailTag.cbegin(), frameTailTag.cend()) };
-            it_tail != buffer.cend(); it_tail = std::search(it_head, buffer.cend(), frameTailTag.cbegin(), frameTailTag.cend()))
+        auto it_head{buffer.cbegin()};
+        for (auto it_tail{std::search(it_head, buffer.cend(), frameTailTag.cbegin(), frameTailTag.cend())};
+             it_tail != buffer.cend(); it_tail = std::search(it_head, buffer.cend(), frameTailTag.cbegin(), frameTailTag.cend()))
         {
             it_head = std::search(it_head, it_tail, frameHeadTag.cbegin(), frameHeadTag.cend());
-            if (it_head != it_tail) {
-                frames.emplace_back(isDiscardFrameTag() ? it_head + frameHeadTag.size() : it_head
-                    , isDiscardFrameTag() ? it_tail : it_tail + frameTailTag.size());
+            if (it_head != it_tail)
+            {
+                frames.emplace_back(isDiscardFrameTag() ? it_head + frameHeadTag.size() : it_head, isDiscardFrameTag() ? it_tail : it_tail + frameTailTag.size());
             }
             it_head = std::next(it_tail, frameTailTag.size());
         }
@@ -46,7 +50,7 @@ public:
     }
 
 private:
-    bool discardFrameTag{ true };
+    bool discardFrameTag{true};
     const std::vector<T> frameHeadTag;
     const std::vector<T> frameTailTag;
     std::vector<T> buffer;

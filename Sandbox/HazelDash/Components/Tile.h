@@ -1,6 +1,7 @@
 #pragma once
 
-enum class Tile {
+enum class Tile
+{
 	ButterflyFirst,
 	Butterfly0 = ButterflyFirst,
 	Butterfly1,
@@ -93,17 +94,17 @@ enum class Tile {
 	BarrelSpare2,
 	BarrelSpare3,
 	BarrelLast = BarrelSpare3,
-	Metal2,        // not currently in use
-	Dirt2,         // not currently in use
-	Brick2,        // not currently in use
-	Background2,   // not currently in use
+	Metal2,		 // not currently in use
+	Dirt2,		 // not currently in use
+	Brick2,		 // not currently in use
+	Background2, // not currently in use
 	Spare0,
 	Spare1,
 	Spare2,
 	Spare3,
-	Metal3,      // not currently in use
-	Dirt3,       // not currently in use
-	Brick3,      // not currently in use
+	Metal3,		 // not currently in use
+	Dirt3,		 // not currently in use
+	Brick3,		 // not currently in use
 	Background3, // not currently in use
 	Spare4,
 	Spare5,
@@ -155,72 +156,89 @@ enum class Tile {
 	NumTiles
 };
 
-inline bool IsEmpty(Tile tile) {
+inline bool IsEmpty(Tile tile)
+{
 	return tile == Tile::Empty; // || (tile == Tile::Background2) || (tile == Tile::Background2) || (tile == Tile::Background3);
 }
 
-inline bool IsSolid(Tile tile) {
+inline bool IsSolid(Tile tile)
+{
 	return (!IsEmpty(tile));
 }
 
-inline bool IsPlayer(Tile tile) {
+inline bool IsPlayer(Tile tile)
+{
 	return ((tile >= Tile::PlayerFirst) && (tile <= Tile::PlayerLast));
 }
 
-inline bool IsAmoeba(Tile tile) {
+inline bool IsAmoeba(Tile tile)
+{
 	return ((tile >= Tile::AmoebaFirst) && (tile <= Tile::AmoebaLast));
 }
 
-inline bool IsBarrel(Tile tile) {
+inline bool IsBarrel(Tile tile)
+{
 	return ((tile >= Tile::BarrelFirst) && (tile <= Tile::BarrelLast));
 }
 
-inline bool IsBoulder(Tile tile) {
+inline bool IsBoulder(Tile tile)
+{
 	return ((tile >= Tile::BoulderFirst) && (tile <= Tile::BoulderLast));
 }
 
-inline bool IsButterfly(Tile tile) {
+inline bool IsButterfly(Tile tile)
+{
 	return ((tile >= Tile::ButterflyFirst) && (tile <= Tile::ButterflyLast));
 }
 
-inline bool IsDiamond(Tile tile) {
+inline bool IsDiamond(Tile tile)
+{
 	return ((tile >= Tile::DiamondFirst) && (tile <= Tile::DiamondLast));
 }
 
-inline bool IsDoor(Tile tile) {
+inline bool IsDoor(Tile tile)
+{
 	return ((tile >= Tile::DoorFirst) && (tile <= Tile::DoorLast));
 }
 
-inline bool IsExplosion(Tile tile) {
+inline bool IsExplosion(Tile tile)
+{
 	return (tile >= Tile::ExplosionFirst) && (tile <= Tile::ExplosionLast);
 }
 
-inline bool IsFirefly(Tile tile) {
+inline bool IsFirefly(Tile tile)
+{
 	return ((tile >= Tile::FireflyFirst) && (tile <= Tile::FireflyLast));
 }
 
-inline bool IsRounded(Tile tile) {
+inline bool IsRounded(Tile tile)
+{
 	return IsBoulder(tile) || IsBarrel(tile) || IsDiamond(tile) || (tile == Tile::Brick1);
 }
 
-inline bool IsPushable(Tile tile) {
+inline bool IsPushable(Tile tile)
+{
 	return IsBoulder(tile) || IsBarrel(tile);
 }
 
 // true if this tile will itself explode if caught in an explosion
 // (i.e. chain reaction)
-inline bool IsExplosive(Tile tile) {
+inline bool IsExplosive(Tile tile)
+{
 	return IsPlayer(tile) || IsButterfly(tile) || IsFirefly(tile) || IsBarrel(tile);
 }
 
-inline bool IsExplodable(Tile tile) {
+inline bool IsExplodable(Tile tile)
+{
 	return (tile != Tile::Metal1) && !IsDoor(tile) && !IsExplosion(tile); // && (tile != Tile::Metal2) && (tile != Tile::Metal3)
 }
 
-inline bool IsCollectable(Tile tile) {
+inline bool IsCollectable(Tile tile)
+{
 	return IsDiamond(tile);
 }
 
-inline bool CanBeOccupied(Tile tile) {
+inline bool CanBeOccupied(Tile tile)
+{
 	return IsEmpty(tile) || (tile == Tile::Dirt1) || (tile == Tile::DoorLast) || IsCollectable(tile); // || (tile == Tile::Dirt2) || (tile == Tile::Dirt3)
 }

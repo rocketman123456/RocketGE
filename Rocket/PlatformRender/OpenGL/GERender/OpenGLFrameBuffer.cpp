@@ -2,10 +2,11 @@
 
 #include <glad/glad.h>
 
-namespace Rocket {
-    static const uint32_t s_MaxFramebufferSize = 8192;
+namespace Rocket
+{
+	static const uint32_t s_MaxFramebufferSize = 8192;
 
-	OpenGLFrameBuffer::OpenGLFrameBuffer(const FramebufferSpecification& spec)
+	OpenGLFrameBuffer::OpenGLFrameBuffer(const FramebufferSpecification &spec)
 		: m_Specification(spec)
 	{
 		Invalidate();
@@ -19,7 +20,7 @@ namespace Rocket {
 #if defined(HIGH_OPENGL_VERSION)
 		glDeleteTextures(1, &m_DepthStencilAttachment);
 #else
-        glDeleteRenderbuffers(1, &m_DepthStencilAttachment);
+		glDeleteRenderbuffers(1, &m_DepthStencilAttachment);
 #endif
 	}
 
@@ -31,29 +32,29 @@ namespace Rocket {
 			glDeleteTextures(1, &m_ColorAttachment);
 			glDeleteTextures(1, &m_DepthAttachment);
 #if defined(HIGH_OPENGL_VERSION)
-		    glDeleteTextures(1, &m_DepthStencilAttachment);
+			glDeleteTextures(1, &m_DepthStencilAttachment);
 #else
-            glDeleteRenderbuffers(1, &m_DepthStencilAttachment);
+			glDeleteRenderbuffers(1, &m_DepthStencilAttachment);
 #endif
 		}
-        // Gen Frame Buffer
+		// Gen Frame Buffer
 #if defined(HIGH_OPENGL_VERSION)
 		glCreateFramebuffers(1, &m_RendererID);
 #else
-        glGenFramebuffers(1, &m_RendererID);
+		glGenFramebuffers(1, &m_RendererID);
 #endif
 		glBindFramebuffer(GL_FRAMEBUFFER, m_RendererID);
-        // Gen Color Buffer
+		// Gen Color Buffer
 #if defined(HIGH_OPENGL_VERSION)
 		glCreateTextures(GL_TEXTURE_2D, 1, &m_ColorAttachment);
 #else
-        glGenTextures(1, &m_ColorAttachment);
+		glGenTextures(1, &m_ColorAttachment);
 #endif
-        glBindTexture(GL_TEXTURE_2D, m_ColorAttachment);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_Specification.Width, m_Specification.Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_ColorAttachment, 0);
+		glBindTexture(GL_TEXTURE_2D, m_ColorAttachment);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_Specification.Width, m_Specification.Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_ColorAttachment, 0);
 		// Gen Depth Buffer
 #if defined(HIGH_OPENGL_VERSION)
 		glCreateTextures(GL_TEXTURE_2D, 1, &m_DepthAttachment);
@@ -61,21 +62,21 @@ namespace Rocket {
 		glGenTextures(1, &m_DepthAttachment);
 #endif
 		glBindTexture(GL_TEXTURE_2D, m_DepthAttachment);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, m_Specification.Width, m_Specification.Height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, nullptr);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, m_DepthAttachment, 0);
-        // Gen Depth Stencil Buffer
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, m_Specification.Width, m_Specification.Height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, nullptr);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, m_DepthAttachment, 0);
+		// Gen Depth Stencil Buffer
 #if defined(HIGH_OPENGL_VERSION)
-        glCreateTextures(GL_TEXTURE_2D, 1, &m_DepthStencilAttachment);
+		glCreateTextures(GL_TEXTURE_2D, 1, &m_DepthStencilAttachment);
 		glBindTexture(GL_TEXTURE_2D, m_DepthStencilAttachment);
 		glTexStorage2D(GL_TEXTURE_2D, 1, GL_DEPTH24_STENCIL8, m_Specification.Width, m_Specification.Height);
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_TEXTURE_2D, m_DepthStencilAttachment, 0);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_TEXTURE_2D, m_DepthStencilAttachment, 0);
 #else
-        glGenRenderbuffers(1, &m_DepthStencilAttachment);
-        glBindRenderbuffer(GL_RENDERBUFFER, m_DepthStencilAttachment);
-        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, m_Specification.Width, m_Specification.Height);
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_DepthStencilAttachment, 0);
+		glGenRenderbuffers(1, &m_DepthStencilAttachment);
+		glBindRenderbuffer(GL_RENDERBUFFER, m_DepthStencilAttachment);
+		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, m_Specification.Width, m_Specification.Height);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_DepthStencilAttachment, 0);
 #endif
 
 		RK_CORE_ASSERT(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, "Framebuffer is incomplete!");
@@ -102,7 +103,7 @@ namespace Rocket {
 		}
 		m_Specification.Width = width;
 		m_Specification.Height = height;
-		
+
 		Invalidate();
 	}
-}
+} // namespace Rocket

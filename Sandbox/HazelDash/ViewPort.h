@@ -5,7 +5,8 @@
 #include "GECommon/OrthographicCamera.h"
 #include "GEUtils/Timestep.h"
 
-class ViewPort {
+class ViewPort
+{
 public:
 	ViewPort(float left, float bottom, float width, float height);
 
@@ -15,15 +16,19 @@ public:
 	float GetTop() const { return m_Bottom + m_Height; }
 
 	void SetCameraSpeed(float speed) { m_CameraSpeed = speed; }
-	void SetLevelSize(float width, float height) { m_LevelWidth = width; m_LevelHeight = height; }
+	void SetLevelSize(float width, float height)
+	{
+		m_LevelWidth = width;
+		m_LevelHeight = height;
+	}
 	void SetPlayerPosition(float x, float y);
 
 	void Update(Rocket::Timestep ts);
 
-	Rocket::OrthographicCamera& GetCamera() { return m_Camera; }
-	const Rocket::OrthographicCamera& GetCamera() const { return m_Camera; }
+	Rocket::OrthographicCamera &GetCamera() { return m_Camera; }
+	const Rocket::OrthographicCamera &GetCamera() const { return m_Camera; }
 
-	bool Overlaps(const Position& pos);
+	bool Overlaps(const Position &pos);
 
 private:
 	Rocket::OrthographicCamera m_Camera;

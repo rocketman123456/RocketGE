@@ -4,7 +4,8 @@
 
 using namespace Rocket;
 
-static glm::vec4 HSVtoRGB(const glm::vec3& hsv) {
+static glm::vec4 HSVtoRGB(const glm::vec3 &hsv)
+{
 	int H = (int)(hsv.x * 360.0f);
 	double S = hsv.y;
 	double V = hsv.z;
@@ -14,41 +15,47 @@ static glm::vec4 HSVtoRGB(const glm::vec3& hsv) {
 	double m = V - C;
 	double Rs, Gs, Bs;
 
-	if (H >= 0 && H < 60) {
+	if (H >= 0 && H < 60)
+	{
 		Rs = C;
 		Gs = X;
 		Bs = 0;
 	}
-	else if (H >= 60 && H < 120) {
+	else if (H >= 60 && H < 120)
+	{
 		Rs = X;
 		Gs = C;
 		Bs = 0;
 	}
-	else if (H >= 120 && H < 180) {
+	else if (H >= 120 && H < 180)
+	{
 		Rs = 0;
 		Gs = C;
 		Bs = X;
 	}
-	else if (H >= 180 && H < 240) {
+	else if (H >= 180 && H < 240)
+	{
 		Rs = 0;
 		Gs = X;
 		Bs = C;
 	}
-	else if (H >= 240 && H < 300) {
+	else if (H >= 240 && H < 300)
+	{
 		Rs = X;
 		Gs = 0;
 		Bs = C;
 	}
-	else {
+	else
+	{
 		Rs = C;
 		Gs = 0;
 		Bs = X;
 	}
 
-	return { (Rs + m), (Gs + m), (Bs + m), 1.0f };
+	return {(Rs + m), (Gs + m), (Bs + m), 1.0f};
 }
 
-static bool PointInTri(const glm::vec2& p, glm::vec2& p0, const glm::vec2& p1, const glm::vec2& p2)
+static bool PointInTri(const glm::vec2 &p, glm::vec2 &p0, const glm::vec2 &p1, const glm::vec2 &p2)
 {
 	float s = p0.y * p2.x - p0.x * p2.y + (p2.y - p0.y) * p.x + (p0.x - p2.x) * p.y;
 	float t = p0.x * p1.y - p0.y * p1.x + (p0.y - p1.y) * p.x + (p1.x - p0.x) * p.y;
@@ -58,15 +65,12 @@ static bool PointInTri(const glm::vec2& p, glm::vec2& p0, const glm::vec2& p1, c
 
 	float A = -p1.y * p2.x + p0.y * (p2.x - p1.x) + p0.x * (p1.y - p2.y) + p1.x * p2.y;
 
-	return A < 0 ?
-		(s <= 0 && s + t >= A) :
-		(s >= 0 && s + t <= A);
+	return A < 0 ? (s <= 0 && s + t >= A) : (s >= 0 && s + t <= A);
 }
-
 
 void Level::Init()
 {
-    std::string path_texture = ProjectSourceDir + "/Assets/textures/Triangle.png";
+	std::string path_texture = ProjectSourceDir + "/Assets/textures/Triangle.png";
 	m_TriangleTexture = Texture2D::Create(path_texture);
 	m_Player.LoadAssets();
 
@@ -99,18 +103,18 @@ void Level::OnUpdate(Rocket::Timestep ts)
 
 void Level::OnRender()
 {
-	const auto& playerPos = m_Player.GetPosition();
+	const auto &playerPos = m_Player.GetPosition();
 
 	glm::vec4 color = HSVtoRGB(m_PillarHSV);
 
 	// Background
-	Renderer2D::DrawQuad({ playerPos.x, 0.0f, -0.8f }, { 50.0f, 50.0f }, { 0.3f, 0.3f, 0.3f, 1.0f });
+	Renderer2D::DrawQuad({playerPos.x, 0.0f, -0.8f}, {50.0f, 50.0f}, {0.3f, 0.3f, 0.3f, 1.0f});
 
 	// Floor and ceiling
-	Renderer2D::DrawQuad({ playerPos.x,  34.0f }, { 50.0f, 50.0f }, color);
-	Renderer2D::DrawQuad({ playerPos.x, -34.0f }, { 50.0f, 50.0f }, color);
+	Renderer2D::DrawQuad({playerPos.x, 34.0f}, {50.0f, 50.0f}, color);
+	Renderer2D::DrawQuad({playerPos.x, -34.0f}, {50.0f, 50.0f}, color);
 
-	for (auto& pillar : m_Pillars)
+	for (auto &pillar : m_Pillars)
 	{
 		Renderer2D::DrawRotatedQuad(pillar.TopPosition, pillar.TopScale, (180.0f), m_TriangleTexture, 1.0f, color);
 		Renderer2D::DrawRotatedQuad(pillar.BottomPosition, pillar.BottomScale, 0.0f, m_TriangleTexture, 1.0f, color);
@@ -126,7 +130,7 @@ void Level::OnGuiRender()
 
 void Level::CreatePillar(int index, float offset)
 {
-	Pillar& pillar = m_Pillars[index];
+	Pillar &pillar = m_Pillars[index];
 	pillar.TopPosition.x = offset;
 	pillar.BottomPosition.x = offset;
 	pillar.TopPosition.z = index * 0.1f - 0.5f;
@@ -145,62 +149,52 @@ bool Level::CollisionTest()
 		return true;
 
 	glm::vec4 playerVertices[4] = {
-		{ -0.4f, -0.4f, 0.0f, 1.0f },
-		{  0.4f, -0.4f, 0.0f, 1.0f },
-		{  0.4f,  0.4f, 0.0f, 1.0f },
-		{ -0.4f,  0.4f, 0.0f, 1.0f }
-	};
+		{-0.4f, -0.4f, 0.0f, 1.0f},
+		{0.4f, -0.4f, 0.0f, 1.0f},
+		{0.4f, 0.4f, 0.0f, 1.0f},
+		{-0.4f, 0.4f, 0.0f, 1.0f}};
 
-	const auto& pos = m_Player.GetPosition();
+	const auto &pos = m_Player.GetPosition();
 	glm::vec4 playerTransformedVerts[4];
 	for (int i = 0; i < 4; i++)
 	{
-		playerTransformedVerts[i] = glm::translate(glm::mat4(1.0f), { pos.x, pos.y, 0.0f })
-			* glm::rotate(glm::mat4(1.0f), glm::radians(m_Player.GetRotation()), { 0.0f, 0.0f, 1.0f })
-			* glm::scale(glm::mat4(1.0f), { 1.0f, 1.3f, 1.0f })
-			* playerVertices[i];
+		playerTransformedVerts[i] = glm::translate(glm::mat4(1.0f), {pos.x, pos.y, 0.0f}) * glm::rotate(glm::mat4(1.0f), glm::radians(m_Player.GetRotation()), {0.0f, 0.0f, 1.0f}) * glm::scale(glm::mat4(1.0f), {1.0f, 1.3f, 1.0f}) * playerVertices[i];
 	}
 
 	// To match Triangle.png (each corner is 10% from the texture edge)
 	glm::vec4 pillarVertices[3] = {
-		{ -0.5f + 0.1f, -0.5f + 0.1f, 0.0f, 1.0f },
-		{  0.5f - 0.1f, -0.5f + 0.1f, 0.0f, 1.0f },
-		{  0.0f + 0.0f,  0.5f - 0.1f, 0.0f, 1.0f },
+		{-0.5f + 0.1f, -0.5f + 0.1f, 0.0f, 1.0f},
+		{0.5f - 0.1f, -0.5f + 0.1f, 0.0f, 1.0f},
+		{0.0f + 0.0f, 0.5f - 0.1f, 0.0f, 1.0f},
 	};
 
-	for (auto& p : m_Pillars)
+	for (auto &p : m_Pillars)
 	{
 		glm::vec2 tri[3];
-		
+
 		// Top pillars
 		for (int i = 0; i < 3; i++)
 		{
-			tri[i] = glm::translate(glm::mat4(1.0f), { p.TopPosition.x, p.TopPosition.y, 0.0f })
-				* glm::rotate(glm::mat4(1.0f), glm::radians(180.0f), { 0.0f, 0.0f, 1.0f })
-				* glm::scale(glm::mat4(1.0f), { p.TopScale.x, p.TopScale.y, 1.0f })
-				* pillarVertices[i];
+			tri[i] = glm::translate(glm::mat4(1.0f), {p.TopPosition.x, p.TopPosition.y, 0.0f}) * glm::rotate(glm::mat4(1.0f), glm::radians(180.0f), {0.0f, 0.0f, 1.0f}) * glm::scale(glm::mat4(1.0f), {p.TopScale.x, p.TopScale.y, 1.0f}) * pillarVertices[i];
 		}
 
-		for (auto& vert : playerTransformedVerts)
+		for (auto &vert : playerTransformedVerts)
 		{
-			if (PointInTri({ vert.x, vert.y }, tri[0], tri[1], tri[2]))
+			if (PointInTri({vert.x, vert.y}, tri[0], tri[1], tri[2]))
 				return true;
 		}
 
 		// Bottom pillars
 		for (int i = 0; i < 3; i++)
 		{
-			tri[i] = glm::translate(glm::mat4(1.0f), { p.BottomPosition.x, p.BottomPosition.y, 0.0f })
-				* glm::scale(glm::mat4(1.0f), { p.BottomScale.x, p.BottomScale.y, 1.0f })
-				* pillarVertices[i];
+			tri[i] = glm::translate(glm::mat4(1.0f), {p.BottomPosition.x, p.BottomPosition.y, 0.0f}) * glm::scale(glm::mat4(1.0f), {p.BottomScale.x, p.BottomScale.y, 1.0f}) * pillarVertices[i];
 		}
 
-		for (auto& vert : playerTransformedVerts)
+		for (auto &vert : playerTransformedVerts)
 		{
-			if (PointInTri({ vert.x, vert.y }, tri[0], tri[1], tri[2]))
+			if (PointInTri({vert.x, vert.y}, tri[0], tri[1], tri[2]))
 				return true;
 		}
-
 	}
 	return false;
 }

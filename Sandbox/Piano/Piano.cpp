@@ -57,7 +57,8 @@ static std::string A5_7 = ProjectSourceDir + "/Assets/sounds/Piano.ff/Piano.ff.G
 static std::string A6_7 = ProjectSourceDir + "/Assets/sounds/Piano.ff/Piano.ff.A7.wav";
 static std::string A7_7 = ProjectSourceDir + "/Assets/sounds/Piano.ff/Piano.ff.B7.wav";
 
-namespace Rocket {
+namespace Rocket
+{
     void Piano::PreInitialize()
     {
         PushLayer(new PianoLayer());
@@ -65,7 +66,6 @@ namespace Rocket {
 
     void Piano::PostInitialize()
     {
-        
     }
 
     void Piano::PreInitializeModule()
@@ -137,8 +137,8 @@ namespace Rocket {
         g_AudioManager->LoadAudio(A7_7);
     }
 
-    Application* CreateApplication()
+    Application *CreateApplication()
     {
-        return static_cast<Application*>(new Piano);
+        return static_cast<Application *>(new Piano);
     }
-}
+} // namespace Rocket

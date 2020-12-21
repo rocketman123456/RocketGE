@@ -6,7 +6,8 @@
 #include "GEUtils/KeyCode.h"
 #include "GEUtils/MouseCode.h"
 
-namespace Rocket {
+namespace Rocket
+{
 	class Input
 	{
 	public:
@@ -17,4 +18,4 @@ namespace Rocket {
 		static float GetMouseX();
 		static float GetMouseY();
 	};
-}
+} // namespace Rocket

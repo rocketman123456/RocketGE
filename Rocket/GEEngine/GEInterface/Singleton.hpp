@@ -1,28 +1,30 @@
 #pragma once
 #include "GECore/Core.h"
 
-template<typename T>
+template <typename T>
 Interface singleton
 {
 public:
-	template<typename... Args>
-	static void Create(Args&&... args)
+	template <typename... Args>
+	static void Create(Args && ... args)
 	{
 		static std::mutex s_lock;
 		std::scoped_lock lock(s_lock);
 
-		if(!s_instance) s_instance.reset(new T(std::forward<Args>(args)...));
-		else throw std::logic_error("This singleton has already been created!");
+		if (!s_instance)
+			s_instance.reset(new T(std::forward<Args>(args)...));
+		else
+			throw std::logic_error("This singleton has already been created!");
 	}
 
-	static T* Instance() noexcept { return s_instance.get(); }
+	static T *Instance() noexcept { return s_instance.get(); }
 
 protected:
 	singleton() = default;
-	singleton(const singleton&) = delete;
-	singleton(singleton&&) = delete;
-	singleton& operator = (const singleton&) = delete;
-	singleton& operator = (singleton&&) = delete;
+	singleton(const singleton &) = delete;
+	singleton(singleton &&) = delete;
+	singleton &operator=(const singleton &) = delete;
+	singleton &operator=(singleton &&) = delete;
 	~singleton() = default;
 
 private:
@@ -30,17 +32,19 @@ private:
 	inline static storage_t s_instance = nullptr;
 };
 
-#define SINGLETON(T) final : implements singleton<T>
+#define SINGLETON(T) \
+	final:           \
+	implements singleton<T>
 #define SINGLETON_CLASS(C) class C SINGLETON(C)
 #define SINGLETON_STRUCT(S) struct S SINGLETON(S)
 #define SINGLETON_FRIEND(T) friend class singleton<T>
 
-template<typename T>
+template <typename T>
 Interface abstract_singleton
 {
 public:
-	template<typename... Args>
-	static void Create(Args&&... args)
+	template <typename... Args>
+	static void Create(Args && ... args)
 	{
 		static std::mutex s_lock;
 		std::scoped_lock lock(s_lock);
@@ -51,18 +55,20 @@ public:
 			void __abstract_singleton__() override {}
 		};
 
-		if(!s_instance) s_instance.reset(new Q(std::forward<Args>(args)...));
-		else throw std::logic_error("This abstract singleton has already been created!");
+		if (!s_instance)
+			s_instance.reset(new Q(std::forward<Args>(args)...));
+		else
+			throw std::logic_error("This abstract singleton has already been created!");
 	}
 
-	static T* Instance() noexcept { return s_instance.get(); }
+	static T *Instance() noexcept { return s_instance.get(); }
 
 protected:
 	abstract_singleton() = default;
-	abstract_singleton(const abstract_singleton&) = delete;
-	abstract_singleton(abstract_singleton&&) = delete;
-	abstract_singleton& operator = (const abstract_singleton&) = delete;
-	abstract_singleton& operator = (abstract_singleton&&) = delete;
+	abstract_singleton(const abstract_singleton &) = delete;
+	abstract_singleton(abstract_singleton &&) = delete;
+	abstract_singleton &operator=(const abstract_singleton &) = delete;
+	abstract_singleton &operator=(abstract_singleton &&) = delete;
 	virtual ~abstract_singleton() = default;
 
 private:

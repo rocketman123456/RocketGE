@@ -3,8 +3,9 @@
 #include "GEEvent/Event.h"
 #include "GEUtils/MouseCode.h"
 
-namespace Rocket {
-    class MouseMovedEvent : implements Event
+namespace Rocket
+{
+	class MouseMovedEvent : implements Event
 	{
 	public:
 		MouseMovedEvent(const float x, const float y)
@@ -92,4 +93,4 @@ namespace Rocket {
 
 		EVENT_CLASS_TYPE(MouseButtonReleased)
 	};
-}
+} // namespace Rocket

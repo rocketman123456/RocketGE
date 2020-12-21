@@ -14,7 +14,6 @@ public:
 
     virtual void PostInitialize() override
     {
-
     }
 
     virtual void PreInitializeModule() override
@@ -29,11 +28,10 @@ public:
 
     virtual void PostInitializeModule() override
     {
-
     }
 };
 
-Rocket::Application* Rocket::CreateApplication()
+Rocket::Application *Rocket::CreateApplication()
 {
-    return static_cast<Rocket::Application*>(new EditorApp);
+    return static_cast<Rocket::Application *>(new EditorApp);
 }

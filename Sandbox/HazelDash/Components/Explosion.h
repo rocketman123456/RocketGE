@@ -2,7 +2,8 @@
 
 #include "Components/Tile.h"
 
-enum class Explosion {
+enum class Explosion
+{
 	Ignite,
 	Burn
 };

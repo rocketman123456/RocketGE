@@ -1,5 +1,6 @@
 #include "GERender/RenderCommand.h"
 
-namespace Rocket {
+namespace Rocket
+{
 	Scope<RenderAPI> RenderCommand::s_RenderAPI = RenderAPI::Create();
 }

@@ -5,10 +5,11 @@
 #include "vec3.h"
 #include "color.h"
 
-int main() {
+int main()
+{
 
-    std::ofstream file( "image01.ppm" );
-    std::streambuf *x = std::cout.rdbuf( file.rdbuf() );
+    std::ofstream file("image01.ppm");
+    std::streambuf *x = std::cout.rdbuf(file.rdbuf());
 
     // Image
 
@@ -17,14 +18,17 @@ int main() {
 
     // Render
 
-    std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
+    std::cout << "P3\n"
+              << image_width << ' ' << image_height << "\n255\n";
 
-    for (int j = image_height-1; j >= 0; --j) {
-        for (int i = 0; i < image_width; ++i) {
+    for (int j = image_height - 1; j >= 0; --j)
+    {
+        for (int i = 0; i < image_width; ++i)
+        {
             std::cerr << "\rScanlines remaining: " << j << ' ' << std::flush;
-            
-            auto r = double(i) / (image_width-1);
-            auto g = double(j) / (image_height-1);
+
+            auto r = double(i) / (image_width - 1);
+            auto g = double(j) / (image_height - 1);
             auto b = 0.25;
 
             int ir = static_cast<int>(255.999 * r);

@@ -8,6 +8,7 @@
 
 #define MULTITHREADED
 
-namespace Rocket {
+namespace Rocket
+{
 
 }

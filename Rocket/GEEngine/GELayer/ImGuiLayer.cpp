@@ -25,19 +25,22 @@ namespace Rocket
 		// Setup Dear ImGui context
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
-		if (1) {
+		if (1)
+		{
 			ImGui::StyleColorsDark();
 		}
-		else {
+		else
+		{
 			ImGui::StyleColorsClassic();
 		}
 		//SetDarkThemeColors();
 
-		ImGuiIO &io = ImGui::GetIO(); (void)io;
+		ImGuiIO &io = ImGui::GetIO();
+		(void)io;
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;  // Enable Gamepad Controls
-		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
-		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
+		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;	  // Enable Docking
+		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;	  // Enable Multi-Viewport / Platform Windows
 		//io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoTaskBarIcons;
 		//io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoMerge;
 
@@ -74,9 +77,9 @@ namespace Rocket
 	}
 
 	void ImGuiLayer::OnUpdate(Timestep ts)
-	{	
-		ImGuiIO& io = ImGui::GetIO();
-		
+	{
+		ImGuiIO &io = ImGui::GetIO();
+
 		auto time = (float)glfwGetTime();
 		io.DeltaTime = m_Time > 0.0 ? (time - m_Time) : (1.0f / 60.0f);
 		m_Time = time;
@@ -95,7 +98,7 @@ namespace Rocket
 	void ImGuiLayer::Begin()
 	{
 		ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 	}
 
@@ -104,19 +107,19 @@ namespace Rocket
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-		ImGuiIO& io = ImGui::GetIO();
+		ImGuiIO &io = ImGui::GetIO();
 		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-        {
-            GLFWwindow* backup_current_context = glfwGetCurrentContext();
-            ImGui::UpdatePlatformWindows();
-            ImGui::RenderPlatformWindowsDefault();
-            glfwMakeContextCurrent(backup_current_context);
-        }
+		{
+			GLFWwindow *backup_current_context = glfwGetCurrentContext();
+			ImGui::UpdatePlatformWindows();
+			ImGui::RenderPlatformWindowsDefault();
+			glfwMakeContextCurrent(backup_current_context);
+		}
 	}
 
 	void ImGuiLayer::OnGuiRender()
 	{
-		if(m_ShowStatus)
+		if (m_ShowStatus)
 			RenderStatusTable();
 	}
 
@@ -125,36 +128,46 @@ namespace Rocket
 		ImGui::Begin("Profiler");
 		auto info_stack = ProfilerGetInfo();
 		ImGui::Columns(5, "Status");
-        ImGui::Separator();
-			ImGui::Text("Ave"); ImGui::SetColumnWidth(ImGui::GetColumnIndex(), 50); ImGui::NextColumn();
-			ImGui::Text("Min"); ImGui::SetColumnWidth(ImGui::GetColumnIndex(), 50); ImGui::NextColumn();
-			ImGui::Text("Max"); ImGui::SetColumnWidth(ImGui::GetColumnIndex(), 50); ImGui::NextColumn();
-			ImGui::Text(" # "); ImGui::SetColumnWidth(ImGui::GetColumnIndex(), 30); ImGui::NextColumn();
-			ImGui::Text("Profile Name"); ImGui::SetColumnWidth(ImGui::GetColumnIndex(), 400); ImGui::NextColumn();
 		ImGui::Separator();
-		for(auto info : info_stack)
+		ImGui::Text("Ave");
+		ImGui::SetColumnWidth(ImGui::GetColumnIndex(), 50);
+		ImGui::NextColumn();
+		ImGui::Text("Min");
+		ImGui::SetColumnWidth(ImGui::GetColumnIndex(), 50);
+		ImGui::NextColumn();
+		ImGui::Text("Max");
+		ImGui::SetColumnWidth(ImGui::GetColumnIndex(), 50);
+		ImGui::NextColumn();
+		ImGui::Text(" # ");
+		ImGui::SetColumnWidth(ImGui::GetColumnIndex(), 30);
+		ImGui::NextColumn();
+		ImGui::Text("Profile Name");
+		ImGui::SetColumnWidth(ImGui::GetColumnIndex(), 400);
+		ImGui::NextColumn();
+		ImGui::Separator();
+		for (auto info : info_stack)
 		{
 			char label[32];
 
-            sprintf(label, "%3.1f", info.fAve);
+			sprintf(label, "%3.1f", info.fAve);
 			ImGui::Text("%s", label);
-            ImGui::NextColumn();
+			ImGui::NextColumn();
 
 			sprintf(label, "%3.1f", info.fMin);
-            ImGui::Text("%s", label);
-            ImGui::NextColumn();
+			ImGui::Text("%s", label);
+			ImGui::NextColumn();
 
 			sprintf(label, "%3.1f", info.fMax);
-            ImGui::Text("%s", label);
-            ImGui::NextColumn();
+			ImGui::Text("%s", label);
+			ImGui::NextColumn();
 
 			sprintf(label, "%4d", info.iNum);
-            ImGui::Text("%s", label);
-            ImGui::NextColumn();
+			ImGui::Text("%s", label);
+			ImGui::NextColumn();
 
 			sprintf(label, "%s", info.szName.c_str());
-            ImGui::Text("%s", label);
-            ImGui::NextColumn();
+			ImGui::Text("%s", label);
+			ImGui::NextColumn();
 		}
 		ImGui::Separator();
 		ImGui::End();

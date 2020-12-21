@@ -26,10 +26,10 @@ public:
 	virtual void OnImGuiRender() override;
 #endif
 
-	void OnEvent(Hazel::Event& e) override;
+	void OnEvent(Hazel::Event &e) override;
 
 private:
-	bool OnKeyPressed(Hazel::KeyPressedEvent& e);
+	bool OnKeyPressed(Hazel::KeyPressedEvent &e);
 
 	void LoadScene(int level);
 
@@ -37,12 +37,12 @@ private:
 	void PhysicsFixedUpdate();
 	void PlayerControllerFixedUpdate();
 	void EnemiesFixedUpdate();
-	void OnExplode(const Position& pos);
+	void OnExplode(const Position &pos);
 	void AmoebaFixedUpdate();
 	void OnSolidify(const Tile solidfyTo);
 	void PlayerControllerUpdate(Hazel::Timestep ts);
-	bool TryMovePlayer(Position& pos, Position direction, const bool ctrlPressed);
-	void OnPlayerMoved(const Position& pos);
+	bool TryMovePlayer(Position &pos, Position direction, const bool ctrlPressed);
+	void OnPlayerMoved(const Position &pos);
 	void OnPlayerDied();
 	void OnLevelCompleted();
 	void OnIncreaseScore();
@@ -68,8 +68,8 @@ private:
 
 	Hazel::Timestep m_FixedTimestep;
 	Hazel::Timestep m_AnimationTimestep;
-	float m_FixedUpdateAccumulatedTs;  // Might be be better as a Hazel::Timestep, but that class doesnt support operator +=
-	float m_AnimatorAccumulatedTs;     // Might be be better as a Hazel::Timestep, but that class doesnt support operator +=
+	float m_FixedUpdateAccumulatedTs; // Might be be better as a Hazel::Timestep, but that class doesnt support operator +=
+	float m_AnimatorAccumulatedTs;	  // Might be be better as a Hazel::Timestep, but that class doesnt support operator +=
 
 	float m_PushProbability;
 
@@ -82,6 +82,6 @@ private:
 	int m_AmoebaPotential;
 
 	bool m_GamePaused;
-	bool m_PlayerIsAlive;   // if false, then pressing spacebar restarts.  Otherwise, pressing spacebar pauses
+	bool m_PlayerIsAlive; // if false, then pressing spacebar restarts.  Otherwise, pressing spacebar pauses
 	bool m_WonLevel;
 };

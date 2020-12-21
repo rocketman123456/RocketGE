@@ -15,26 +15,26 @@ int InitAL(char ***argv, int *argc)
 
     /* Open and initialize a device */
     device = NULL;
-    if(argc && argv && *argc > 1 && strcmp((*argv)[0], "-device") == 0)
+    if (argc && argv && *argc > 1 && strcmp((*argv)[0], "-device") == 0)
     {
         device = alcOpenDevice((*argv)[1]);
-        if(!device)
+        if (!device)
             fprintf(stderr, "Failed to open \"%s\", trying default\n", (*argv)[1]);
         (*argv) += 2;
         (*argc) -= 2;
     }
-    if(!device)
+    if (!device)
         device = alcOpenDevice(NULL);
-    if(!device)
+    if (!device)
     {
         fprintf(stderr, "Could not open a device!\n");
         return 1;
     }
 
     ctx = alcCreateContext(device, NULL);
-    if(ctx == NULL || alcMakeContextCurrent(ctx) == ALC_FALSE)
+    if (ctx == NULL || alcMakeContextCurrent(ctx) == ALC_FALSE)
     {
-        if(ctx != NULL)
+        if (ctx != NULL)
             alcDestroyContext(ctx);
         alcCloseDevice(device);
         fprintf(stderr, "Could not set a context!\n");
@@ -42,9 +42,9 @@ int InitAL(char ***argv, int *argc)
     }
 
     name = NULL;
-    if(alcIsExtensionPresent(device, "ALC_ENUMERATE_ALL_EXT"))
+    if (alcIsExtensionPresent(device, "ALC_ENUMERATE_ALL_EXT"))
         name = alcGetString(device, ALC_ALL_DEVICES_SPECIFIER);
-    if(!name || alcGetError(device) != AL_NO_ERROR)
+    if (!name || alcGetError(device) != AL_NO_ERROR)
         name = alcGetString(device, ALC_DEVICE_SPECIFIER);
     printf("Opened \"%s\"\n", name);
 
@@ -59,7 +59,7 @@ void CloseAL(void)
     ALCcontext *ctx;
 
     ctx = alcGetCurrentContext();
-    if(ctx == NULL)
+    if (ctx == NULL)
         return;
 
     device = alcGetContextsDevice(ctx);
@@ -84,12 +84,12 @@ static ALuint LoadSound(const char *filename)
 
     /* Open the audio file and check that it's usable. */
     sndfile = sf_open(filename, SFM_READ, &sfinfo);
-    if(!sndfile)
+    if (!sndfile)
     {
         fprintf(stderr, "Could not open audio in %s: %s\n", filename, sf_strerror(sndfile));
         return 0;
     }
-    if(sfinfo.frames < 1 || sfinfo.frames > (sf_count_t)(INT_MAX/sizeof(short))/sfinfo.channels)
+    if (sfinfo.frames < 1 || sfinfo.frames > (sf_count_t)(INT_MAX / sizeof(short)) / sfinfo.channels)
     {
         fprintf(stderr, "Bad sample count in %s (%" PRId64 ")\n", filename, sfinfo.frames);
         sf_close(sndfile);
@@ -98,21 +98,21 @@ static ALuint LoadSound(const char *filename)
 
     /* Get the sound format, and figure out the OpenAL format */
     format = AL_NONE;
-    if(sfinfo.channels == 1)
+    if (sfinfo.channels == 1)
         format = AL_FORMAT_MONO16;
-    else if(sfinfo.channels == 2)
+    else if (sfinfo.channels == 2)
         format = AL_FORMAT_STEREO16;
-    else if(sfinfo.channels == 3)
+    else if (sfinfo.channels == 3)
     {
-        if(sf_command(sndfile, SFC_WAVEX_GET_AMBISONIC, NULL, 0) == SF_AMBISONIC_B_FORMAT)
+        if (sf_command(sndfile, SFC_WAVEX_GET_AMBISONIC, NULL, 0) == SF_AMBISONIC_B_FORMAT)
             format = AL_FORMAT_BFORMAT2D_16;
     }
-    else if(sfinfo.channels == 4)
+    else if (sfinfo.channels == 4)
     {
-        if(sf_command(sndfile, SFC_WAVEX_GET_AMBISONIC, NULL, 0) == SF_AMBISONIC_B_FORMAT)
+        if (sf_command(sndfile, SFC_WAVEX_GET_AMBISONIC, NULL, 0) == SF_AMBISONIC_B_FORMAT)
             format = AL_FORMAT_BFORMAT3D_16;
     }
-    if(!format)
+    if (!format)
     {
         fprintf(stderr, "Unsupported channel count: %d\n", sfinfo.channels);
         sf_close(sndfile);
@@ -121,10 +121,10 @@ static ALuint LoadSound(const char *filename)
 
     /* Decode the whole audio file to a buffer. */
     auto size = (size_t)(sfinfo.frames * sfinfo.channels) * sizeof(short);
-    membuf = (short*)malloc(size);
+    membuf = (short *)malloc(size);
 
     num_frames = sf_readf_short(sndfile, membuf, sfinfo.frames);
-    if(num_frames < 1)
+    if (num_frames < 1)
     {
         free(membuf);
         sf_close(sndfile);
@@ -145,10 +145,10 @@ static ALuint LoadSound(const char *filename)
 
     /* Check if an error occured, and clean up if so. */
     err = alGetError();
-    if(err != AL_NO_ERROR)
+    if (err != AL_NO_ERROR)
     {
         fprintf(stderr, "OpenAL Error: %s\n", alGetString(err));
-        if(buffer && alIsBuffer(buffer))
+        if (buffer && alIsBuffer(buffer))
             alDeleteBuffers(1, &buffer);
         return 0;
     }
@@ -169,19 +169,20 @@ int main(int argc, char **argv)
     ALenum state;
 
     /* Print out usage if no arguments were specified */
-    if(argc < 2)
+    if (argc < 2)
     {
         fprintf(stderr, "Usage: %s [-device <name>] <filename>\n", argv[0]);
         return 1;
     }
 
-    argv++; argc--;
-    if(InitAL(&argv, &argc) != 0)
+    argv++;
+    argc--;
+    if (InitAL(&argv, &argc) != 0)
         return 1;
-    
+
     /* Load the sound into a buffer. */
     buffer = LoadSound(argv[0]);
-    if(!buffer)
+    if (!buffer)
     {
         CloseAL();
         return 1;
@@ -191,11 +192,12 @@ int main(int argc, char **argv)
     source = 0;
     alGenSources(1, &source);
     alSourcei(source, AL_BUFFER, (ALint)buffer);
-    assert(alGetError()==AL_NO_ERROR && "Failed to setup sound source");
+    assert(alGetError() == AL_NO_ERROR && "Failed to setup sound source");
 
     /* Play the sound until it finishes. */
     alSourcePlay(source);
-    do {
+    do
+    {
         al_nssleep(10000000);
         alGetSourcei(source, AL_SOURCE_STATE, &state);
 
@@ -203,13 +205,13 @@ int main(int argc, char **argv)
         alGetSourcef(source, AL_SEC_OFFSET, &offset);
         printf("\rOffset: %f  ", offset);
         fflush(stdout);
-    } while(alGetError() == AL_NO_ERROR && state == AL_PLAYING);
+    } while (alGetError() == AL_NO_ERROR && state == AL_PLAYING);
     printf("\n");
 
     /* All done. Delete resources, and close down OpenAL. */
     alDeleteSources(1, &source);
     alDeleteBuffers(1, &buffer);
-    
+
     CloseAL();
     return 0;
 }
@@ -226,16 +228,18 @@ int altime_get(void)
 #if _POSIX_TIMERS > 0
     struct timespec ts;
     int ret = clock_gettime(CLOCK_REALTIME, &ts);
-    if(ret != 0) return 0;
-    cur_time = (int)(ts.tv_sec*1000 + ts.tv_nsec/1000000);
+    if (ret != 0)
+        return 0;
+    cur_time = (int)(ts.tv_sec * 1000 + ts.tv_nsec / 1000000);
 #else /* _POSIX_TIMERS > 0 */
     struct timeval tv;
     int ret = gettimeofday(&tv, NULL);
-    if(ret != 0) return 0;
-    cur_time = (int)(tv.tv_sec*1000 + tv.tv_usec/1000);
+    if (ret != 0)
+        return 0;
+    cur_time = (int)(tv.tv_sec * 1000 + tv.tv_usec / 1000);
 #endif
 
-    if(!start_time)
+    if (!start_time)
         start_time = cur_time;
     return cur_time - start_time;
 }
@@ -245,6 +249,6 @@ void al_nssleep(unsigned long nsec)
     struct timespec ts, rem;
     ts.tv_sec = (time_t)(nsec / 1000000000ul);
     ts.tv_nsec = (long)(nsec % 1000000000ul);
-    while(nanosleep(&ts, &rem) == -1 && errno == EINTR)
+    while (nanosleep(&ts, &rem) == -1 && errno == EINTR)
         ts = rem;
 }

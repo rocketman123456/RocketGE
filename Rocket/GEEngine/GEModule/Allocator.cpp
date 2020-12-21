@@ -1,5 +1,6 @@
 #include "GEModule/Allocator.h"
 
-namespace Rocket {
+namespace Rocket
+{
 
 }

@@ -30,3 +30,6 @@ add_executable( MultiHashing
 add_executable( PragmaPack
     PragmaPack.cpp
 )
+add_executable( Async
+    Async.cpp
+)

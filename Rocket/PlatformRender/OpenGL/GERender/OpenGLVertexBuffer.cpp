@@ -1,7 +1,8 @@
 #include "GERender/OpenGLVertexBuffer.h"
 #include <glad/glad.h>
 
-namespace Rocket {
+namespace Rocket
+{
 	OpenGLVertexBuffer::OpenGLVertexBuffer(uint32_t size)
 	{
 		RK_PROFILE_FUNCTION();
@@ -14,7 +15,7 @@ namespace Rocket {
 		glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_DYNAMIC_DRAW);
 	}
 
-	OpenGLVertexBuffer::OpenGLVertexBuffer(float* vertices, uint32_t size)
+	OpenGLVertexBuffer::OpenGLVertexBuffer(float *vertices, uint32_t size)
 	{
 		RK_PROFILE_FUNCTION();
 #if defined(HIGH_OPENGL_VERSION)
@@ -29,7 +30,7 @@ namespace Rocket {
 	OpenGLVertexBuffer::~OpenGLVertexBuffer()
 	{
 		RK_PROFILE_FUNCTION();
-		
+
 		glDeleteBuffers(1, &m_RendererID);
 	}
 
@@ -45,11 +46,11 @@ namespace Rocket {
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
-	void Rocket::OpenGLVertexBuffer::SetData(const void* data, uint32_t size)
+	void Rocket::OpenGLVertexBuffer::SetData(const void *data, uint32_t size)
 	{
 		RK_PROFILE_FUNCTION();
 
 		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
 		glBufferSubData(GL_ARRAY_BUFFER, 0, size, data);
 	}
-}
+} // namespace Rocket

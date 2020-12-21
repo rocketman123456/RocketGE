@@ -22,8 +22,8 @@ namespace Rocket
         PushModule(Rocket::g_AudioManager);
     }
 
-    Application* CreateApplication()
+    Application *CreateApplication()
     {
-        return static_cast<Application*>(new SimpleSandbox);
+        return static_cast<Application *>(new SimpleSandbox);
     }
-}
+} // namespace Rocket

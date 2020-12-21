@@ -10,7 +10,7 @@ using namespace Rocket;
 GameLayer::GameLayer()
 	: Layer("GameLayer")
 {
-	auto& window = Application::Get().GetWindow();
+	auto &window = Application::Get().GetWindow();
 	CreateCamera(window.GetWidth(), window.GetHeight());
 
 	Random::Init();
@@ -23,7 +23,7 @@ void GameLayer::OnAttach()
 	m_Level.Init();
 
 	ImGuiIO io = ImGui::GetIO();
-    std::string path_front = ProjectSourceDir + "/Assets/fonts/opensans/OpenSans-Regular.ttf";
+	std::string path_front = ProjectSourceDir + "/Assets/fonts/opensans/OpenSans-Regular.ttf";
 	m_Font = io.Fonts->AddFontFromFileTTF(path_front.c_str(), 120.0f);
 
 	std::string A0_1 = "Piano.ff.C2";
@@ -95,20 +95,20 @@ void GameLayer::OnUpdate(Rocket::Timestep ts)
 	if (m_Level.IsGameOver())
 		m_State = GameState::GameOver;
 
-	const auto& playerPos = m_Level.GetPlayer().GetPosition();
-	m_Camera->SetPosition({ playerPos.x, playerPos.y, 0.0f });
+	const auto &playerPos = m_Level.GetPlayer().GetPosition();
+	m_Camera->SetPosition({playerPos.x, playerPos.y, 0.0f});
 
 	switch (m_State)
 	{
-		case GameState::Play:
-		{
-			m_Level.OnUpdate(ts);
-			break;
-		}
+	case GameState::Play:
+	{
+		m_Level.OnUpdate(ts);
+		break;
+	}
 	}
 
 	// Render
-	Rocket::RenderCommand::SetClearColor({ 0.0f, 0.0f, 0.0f, 1 });
+	Rocket::RenderCommand::SetClearColor({0.0f, 0.0f, 0.0f, 1});
 	Rocket::RenderCommand::Clear();
 
 	Rocket::Renderer2D::BeginScene(*m_Camera);
@@ -124,45 +124,45 @@ void GameLayer::OnGuiRender()
 
 	switch (m_State)
 	{
-		case GameState::Play:
-		{
-			uint32_t playerScore = m_Level.GetPlayer().GetScore();
-			std::string scoreStr = std::string("Score: ") + std::to_string(playerScore);
-			ImGui::GetForegroundDrawList()->AddText(m_Font, 48.0f, ImGui::GetWindowPos(), 0xffffffff, scoreStr.c_str());
-			break;
-		}
-		case GameState::MainMenu:
-		{
-			auto pos = ImGui::GetWindowPos();
-			auto width = Application::Get().GetWindow().GetWidth();
-			auto height = Application::Get().GetWindow().GetHeight();
-			pos.x += width * 0.5f - 300.0f;
-			pos.y += 50.0f;
-			if (m_Blink)
-				ImGui::GetForegroundDrawList()->AddText(m_Font, 120.0f, pos, 0xffffffff, "Click to Play!");
-			break;
-		}
-		case GameState::GameOver:
-		{
-			auto pos = ImGui::GetWindowPos();
-			auto width = Application::Get().GetWindow().GetWidth();
-			auto height = Application::Get().GetWindow().GetHeight();
-			pos.x += width * 0.5f - 300.0f;
-			pos.y += 50.0f;
-			if (m_Blink)
-				ImGui::GetForegroundDrawList()->AddText(m_Font, 120.0f, pos, 0xffffffff, "Click to Play!");
+	case GameState::Play:
+	{
+		uint32_t playerScore = m_Level.GetPlayer().GetScore();
+		std::string scoreStr = std::string("Score: ") + std::to_string(playerScore);
+		ImGui::GetForegroundDrawList()->AddText(m_Font, 48.0f, ImGui::GetWindowPos(), 0xffffffff, scoreStr.c_str());
+		break;
+	}
+	case GameState::MainMenu:
+	{
+		auto pos = ImGui::GetWindowPos();
+		auto width = Application::Get().GetWindow().GetWidth();
+		auto height = Application::Get().GetWindow().GetHeight();
+		pos.x += width * 0.5f - 300.0f;
+		pos.y += 50.0f;
+		if (m_Blink)
+			ImGui::GetForegroundDrawList()->AddText(m_Font, 120.0f, pos, 0xffffffff, "Click to Play!");
+		break;
+	}
+	case GameState::GameOver:
+	{
+		auto pos = ImGui::GetWindowPos();
+		auto width = Application::Get().GetWindow().GetWidth();
+		auto height = Application::Get().GetWindow().GetHeight();
+		pos.x += width * 0.5f - 300.0f;
+		pos.y += 50.0f;
+		if (m_Blink)
+			ImGui::GetForegroundDrawList()->AddText(m_Font, 120.0f, pos, 0xffffffff, "Click to Play!");
 
-			pos.x += 200.0f;
-			pos.y += 150.0f;
-			uint32_t playerScore = m_Level.GetPlayer().GetScore();
-			std::string scoreStr = std::string("Score: ") + std::to_string(playerScore);
-			ImGui::GetForegroundDrawList()->AddText(m_Font, 48.0f, pos, 0xffffffff, scoreStr.c_str());
-			break;
-		}
+		pos.x += 200.0f;
+		pos.y += 150.0f;
+		uint32_t playerScore = m_Level.GetPlayer().GetScore();
+		std::string scoreStr = std::string("Score: ") + std::to_string(playerScore);
+		ImGui::GetForegroundDrawList()->AddText(m_Font, 48.0f, pos, 0xffffffff, scoreStr.c_str());
+		break;
+	}
 	}
 }
 
-void GameLayer::OnEvent(Rocket::Event& e)
+void GameLayer::OnEvent(Rocket::Event &e)
 {
 	EventDispatcher dispatcher(e);
 	dispatcher.Dispatch<WindowResizeEvent>(RK_BIND_EVENT_FN(GameLayer::OnWindowResize));
@@ -170,13 +170,13 @@ void GameLayer::OnEvent(Rocket::Event& e)
 	dispatcher.Dispatch<KeyPressedEvent>(RK_BIND_EVENT_FN(GameLayer::OnKeyEvent));
 }
 
-bool GameLayer::OnKeyEvent(Rocket::KeyPressedEvent& e)
+bool GameLayer::OnKeyEvent(Rocket::KeyPressedEvent &e)
 {
-	if(m_State == GameState::Play)
+	if (m_State == GameState::Play)
 	{
 		int i = rand() % audio_names.size();
 
-		if(e.GetKeyCode() == Key::Space) 
+		if (e.GetKeyCode() == Key::Space)
 		{
 			g_AudioManager->PlayAudio(audio_names[i]);
 		}
@@ -184,7 +184,7 @@ bool GameLayer::OnKeyEvent(Rocket::KeyPressedEvent& e)
 	return false;
 }
 
-bool GameLayer::OnMouseButtonPressed(Rocket::MouseButtonPressedEvent& e)
+bool GameLayer::OnMouseButtonPressed(Rocket::MouseButtonPressedEvent &e)
 {
 	if (m_State == GameState::GameOver)
 		m_Level.Reset();
@@ -193,7 +193,7 @@ bool GameLayer::OnMouseButtonPressed(Rocket::MouseButtonPressedEvent& e)
 	return false;
 }
 
-bool GameLayer::OnWindowResize(Rocket::WindowResizeEvent& e)
+bool GameLayer::OnWindowResize(Rocket::WindowResizeEvent &e)
 {
 	CreateCamera(e.GetWidth(), e.GetHeight());
 	return false;
@@ -207,6 +207,6 @@ void GameLayer::CreateCamera(uint32_t width, uint32_t height)
 	float bottom = -camWidth;
 	float top = camWidth;
 	float left = bottom * aspectRatio;
-	float right = top *aspectRatio;
+	float right = top * aspectRatio;
 	m_Camera = CreateScope<OrthographicCamera>(left, right, bottom, top);
 }

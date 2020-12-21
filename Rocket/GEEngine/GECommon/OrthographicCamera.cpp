@@ -2,8 +2,9 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
-namespace Rocket {
-    OrthographicCamera::OrthographicCamera(float left, float right, float bottom, float top, float znear, float zfar)
+namespace Rocket
+{
+	OrthographicCamera::OrthographicCamera(float left, float right, float bottom, float top, float znear, float zfar)
 		: Camera(glm::ortho(left, right, bottom, top, znear, zfar))
 	{
 		Camera::UpdateProjectView();
@@ -20,4 +21,4 @@ namespace Rocket {
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_Position) * m_RotationMatrix;
 		Camera::SetView(glm::inverse(transform));
 	}
-}
+} // namespace Rocket

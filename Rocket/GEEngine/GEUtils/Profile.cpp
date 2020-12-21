@@ -12,7 +12,8 @@
 
 #define g_ProfilerTimer Rocket::ProfilerTimer::GetSingleton()
 
-namespace Rocket {
+namespace Rocket
+{
     void ProfilerTimer::InitTime()
     {
         m_StartTimepoint = std::chrono::high_resolution_clock::now();
@@ -35,7 +36,7 @@ namespace Rocket {
 
     float ProfilerTimer::GetElapsedTime(void)
     {
-        float duration = (m_TimeLastTick) * 0.001f;
+        float duration = (m_TimeLastTick)*0.001f;
         return duration;
     }
 
@@ -48,9 +49,10 @@ namespace Rocket {
         float duration = (end - start) * 0.001f;
         return duration;
     }
-}
+} // namespace Rocket
 
-namespace Rocket {
+namespace Rocket
+{
     void Profiler::ProfileInit(void)
     {
         g_ProfilerTimer.InitTime();
@@ -64,7 +66,7 @@ namespace Rocket {
         m_ProfileInfoVec.clear();
     }
 
-    void Profiler::ProfileBegin(const std::string& name)
+    void Profiler::ProfileBegin(const std::string &name)
     {
         uint32_t i = 0;
 
@@ -97,7 +99,7 @@ namespace Rocket {
         m_Samples[i].fChildrenSampleTime = 0.0f;
     }
 
-    void Profiler::ProfileEnd(const std::string& name)
+    void Profiler::ProfileEnd(const std::string &name)
     {
         uint32_t i = 0;
         uint32_t numParents = 0;
@@ -122,7 +124,7 @@ namespace Rocket {
                             parent = inner;
                         }
                         else if (m_Samples[inner].fStartTime >=
-                                m_Samples[parent].fStartTime)
+                                 m_Samples[parent].fStartTime)
                         { //Replace with more immediate parent
                             parent = inner;
                         }
@@ -185,13 +187,11 @@ namespace Rocket {
                 sprintf(name, "    %s", indentedName);
                 strcpy(indentedName, name);
             }
-            
-            m_ProfileInfoVec.push_back({
-                indentedName, 
-                aveTime, minTime, maxTime, 
-                m_Samples[i].iProfileInstances, 
-                m_Samples[i].iNumParents
-            });
+
+            m_ProfileInfoVec.push_back({indentedName,
+                                        aveTime, minTime, maxTime,
+                                        m_Samples[i].iProfileInstances,
+                                        m_Samples[i].iNumParents});
             i++;
         }
 
@@ -205,7 +205,7 @@ namespace Rocket {
         }
     }
 
-    void Profiler::StoreProfileInHistory(const std::string& name, float percent)
+    void Profiler::StoreProfileInHistory(const std::string &name, float percent)
     {
         uint32_t i = 0;
         float oldRatio;
@@ -260,7 +260,7 @@ namespace Rocket {
         }
     }
 
-    void Profiler::GetProfileFromHistory(const std::string& name, float *ave, float *min, float *max)
+    void Profiler::GetProfileFromHistory(const std::string &name, float *ave, float *min, float *max)
     {
         uint32_t i = 0;
         while (i < NUM_PROFILE_SAMPLES && m_History[i].bValid == true)
@@ -276,4 +276,4 @@ namespace Rocket {
         }
         *ave = *min = *max = 0.0f;
     }
-}
+} // namespace Rocket

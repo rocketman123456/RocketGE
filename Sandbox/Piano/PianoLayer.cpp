@@ -33,10 +33,11 @@ static std::string A5_5 = "Piano.ff.G5"; // 5
 static std::string A6_5 = "Piano.ff.A5"; // 6
 static std::string A7_5 = "Piano.ff.B5"; // 7
 
-namespace Rocket {
+namespace Rocket
+{
     void PianoLayer::OnUpdate(Timestep ts)
     {
-        RenderCommand::SetClearColor({ 0.2f, 0.3f, 0.3f, 1.0f });
+        RenderCommand::SetClearColor({0.2f, 0.3f, 0.3f, 1.0f});
         RenderCommand::Clear();
     }
 
@@ -57,52 +58,114 @@ namespace Rocket {
         m_PlayList = CreateRef<PlayList>(path, 0.5f);
     }
 
-    bool PianoLayer::OnPianoPlay(AudioEvent& e)
+    bool PianoLayer::OnPianoPlay(AudioEvent &e)
     {
         g_AudioManager->PlayAudio(e.GetAudioName());
         return true;
     }
 
-    bool PianoLayer::OnPianoPlay(KeyPressedEvent& e)
+    bool PianoLayer::OnPianoPlay(KeyPressedEvent &e)
     {
-        switch(e.GetKeyCode())
+        switch (e.GetKeyCode())
         {
-            case Key::Q: g_AudioManager->PlayAudio(A1_3); break;
-            case Key::W: g_AudioManager->PlayAudio(A2_3); break;
-            case Key::E: g_AudioManager->PlayAudio(A3_3); break;
-            case Key::R: g_AudioManager->PlayAudio(A4_3); break;
-            case Key::T: g_AudioManager->PlayAudio(A5_3); break;
-            case Key::Y: g_AudioManager->PlayAudio(A6_3); break;
-            case Key::U: g_AudioManager->PlayAudio(A7_3); break;
+        case Key::Q:
+            g_AudioManager->PlayAudio(A1_3);
+            break;
+        case Key::W:
+            g_AudioManager->PlayAudio(A2_3);
+            break;
+        case Key::E:
+            g_AudioManager->PlayAudio(A3_3);
+            break;
+        case Key::R:
+            g_AudioManager->PlayAudio(A4_3);
+            break;
+        case Key::T:
+            g_AudioManager->PlayAudio(A5_3);
+            break;
+        case Key::Y:
+            g_AudioManager->PlayAudio(A6_3);
+            break;
+        case Key::U:
+            g_AudioManager->PlayAudio(A7_3);
+            break;
 
-            case Key::D1: g_AudioManager->PlayAudio(A1_2); break;
-            case Key::D2: g_AudioManager->PlayAudio(A2_2); break;
-            case Key::D3: g_AudioManager->PlayAudio(A3_2); break;
-            case Key::D4: g_AudioManager->PlayAudio(A4_2); break;
-            case Key::D5: g_AudioManager->PlayAudio(A5_2); break;
-            case Key::D6: g_AudioManager->PlayAudio(A6_2); break;
-            case Key::D7: g_AudioManager->PlayAudio(A7_2); break;
+        case Key::D1:
+            g_AudioManager->PlayAudio(A1_2);
+            break;
+        case Key::D2:
+            g_AudioManager->PlayAudio(A2_2);
+            break;
+        case Key::D3:
+            g_AudioManager->PlayAudio(A3_2);
+            break;
+        case Key::D4:
+            g_AudioManager->PlayAudio(A4_2);
+            break;
+        case Key::D5:
+            g_AudioManager->PlayAudio(A5_2);
+            break;
+        case Key::D6:
+            g_AudioManager->PlayAudio(A6_2);
+            break;
+        case Key::D7:
+            g_AudioManager->PlayAudio(A7_2);
+            break;
 
-            case Key::A: g_AudioManager->PlayAudio(A1_4); break;
-            case Key::S: g_AudioManager->PlayAudio(A2_4); break;
-            case Key::D: g_AudioManager->PlayAudio(A3_4); break;
-            case Key::F: g_AudioManager->PlayAudio(A4_4); break;
-            case Key::G: g_AudioManager->PlayAudio(A5_4); break;
-            case Key::H: g_AudioManager->PlayAudio(A6_4); break;
-            case Key::J: g_AudioManager->PlayAudio(A7_4); break;
+        case Key::A:
+            g_AudioManager->PlayAudio(A1_4);
+            break;
+        case Key::S:
+            g_AudioManager->PlayAudio(A2_4);
+            break;
+        case Key::D:
+            g_AudioManager->PlayAudio(A3_4);
+            break;
+        case Key::F:
+            g_AudioManager->PlayAudio(A4_4);
+            break;
+        case Key::G:
+            g_AudioManager->PlayAudio(A5_4);
+            break;
+        case Key::H:
+            g_AudioManager->PlayAudio(A6_4);
+            break;
+        case Key::J:
+            g_AudioManager->PlayAudio(A7_4);
+            break;
 
-            case Key::Z: g_AudioManager->PlayAudio(A1_5); break;
-            case Key::X: g_AudioManager->PlayAudio(A2_5); break;
-            case Key::C: g_AudioManager->PlayAudio(A3_5); break;
-            case Key::V: g_AudioManager->PlayAudio(A4_5); break;
-            case Key::B: g_AudioManager->PlayAudio(A5_5); break;
-            case Key::N: g_AudioManager->PlayAudio(A6_5); break;
-            case Key::M: g_AudioManager->PlayAudio(A7_5); break;
+        case Key::Z:
+            g_AudioManager->PlayAudio(A1_5);
+            break;
+        case Key::X:
+            g_AudioManager->PlayAudio(A2_5);
+            break;
+        case Key::C:
+            g_AudioManager->PlayAudio(A3_5);
+            break;
+        case Key::V:
+            g_AudioManager->PlayAudio(A4_5);
+            break;
+        case Key::B:
+            g_AudioManager->PlayAudio(A5_5);
+            break;
+        case Key::N:
+            g_AudioManager->PlayAudio(A6_5);
+            break;
+        case Key::M:
+            g_AudioManager->PlayAudio(A7_5);
+            break;
 
-            case Key::Space: m_TP.enqueue_work(&PlayList::Play,m_PlayList, "tiger"); break;
-            case Key::LeftShift: m_TP.enqueue_work(&PlayList::Play,m_PlayList, "liang_zhu"); break;
-            case Key::LeftControl: m_TP.enqueue_work(&PlayList::Play,m_PlayList, "sky_city_1"); break;
+        case Key::Space:
+            m_TP.enqueue_work(&PlayList::Play, m_PlayList, "tiger");
+            break;
+        case Key::LeftShift:
+            m_TP.enqueue_work(&PlayList::Play, m_PlayList, "liang_zhu");
+            break;
+        case Key::LeftControl:
+            m_TP.enqueue_work(&PlayList::Play, m_PlayList, "sky_city_1");
+            break;
         }
         return false;
     }
-}
+} // namespace Rocket

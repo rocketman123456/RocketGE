@@ -3,7 +3,8 @@
 
 #include <vector>
 
-struct Animation {
+struct Animation
+{
 	std::vector<Tile> Frames;
 	uint32_t CurrentFrame = 0;
 	bool Repeat = true;

@@ -3,13 +3,17 @@
 
 using namespace std;
 
-SINGLETON_CLASS(A) {};
-SINGLETON_STRUCT(B) {};
-struct C final : public singleton<C> {};
+SINGLETON_CLASS(A){};
+SINGLETON_STRUCT(B){};
+struct C final : public singleton<C>
+{
+};
 
-ABSTRACT_SINGLETON_CLASS(AA) {};
-ABSTRACT_SINGLETON_STRUCT(AB) {};
-struct AC : public abstract_singleton<AC> {};
+ABSTRACT_SINGLETON_CLASS(AA){};
+ABSTRACT_SINGLETON_STRUCT(AB){};
+struct AC : public abstract_singleton<AC>
+{
+};
 
 class S SINGLETON(S)
 {
@@ -47,16 +51,28 @@ int main()
 {
 	S::Create(17);
 	//S s(17); // Compile-time error, can't create instances...
-	try { S::Create(17); }
-	catch(exception& e) { cout << e.what() << endl; }
+	try
+	{
+		S::Create(17);
+	}
+	catch (exception &e)
+	{
+		cout << e.what() << endl;
+	}
 	//*S::Instance() = *S::Instance(); // Compile-time error, can't copy/move singletons...
 	S::Instance()->foo();
 	S::Instance()->bar();
 
 	AS::Create(20);
 	//AS s(20); // Compile-time error, can't create instances...
-	try { AS::Create(20); }
-	catch(exception& e) { cout << e.what() << endl; }
+	try
+	{
+		AS::Create(20);
+	}
+	catch (exception &e)
+	{
+		cout << e.what() << endl;
+	}
 	//*AS::Instance() = *AS::Instance(); // Compile-time error, can't copy/move singletons...
 	AS::Instance()->foo();
 	AS::Instance()->bar();

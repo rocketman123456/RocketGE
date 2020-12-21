@@ -1,7 +1,8 @@
 #include "GEModule/ProcessManager.h"
 
-namespace Rocket {
-    ProcessManager* g_ProcessManager = new ProcessManager();
+namespace Rocket
+{
+    ProcessManager *g_ProcessManager = new ProcessManager();
 
     int ProcessManager::Initialize()
     {
@@ -25,7 +26,7 @@ namespace Rocket {
     }
 
     //---------------------------------------------------------------------------------------------------------------------
-    // The process update tick.  Called every logic tick.  This function returns the number of process chains that 
+    // The process update tick.  Called every logic tick.  This function returns the number of process chains that
     // succeeded in the upper 32 bits and the number of process chains that failed or were aborted in the lower 32 bits.
     //---------------------------------------------------------------------------------------------------------------------
     uint64_t ProcessManager::UpdateProcesses(unsigned long deltaMs)
@@ -57,32 +58,33 @@ namespace Rocket {
                 // run the appropriate exit function
                 switch (pCurrProcess->GetState())
                 {
-                    case Process::SUCCEEDED :
-                    {
-                        pCurrProcess->OnSuccess();
-                        StrongProcessPtr pChild = pCurrProcess->RemoveChild();
-                        if (pChild)
-                            AttachProcess(pChild);
-                        else
-                            ++successCount;  // only counts if the whole chain completed
-                        break;
-                    }
+                case Process::SUCCEEDED:
+                {
+                    pCurrProcess->OnSuccess();
+                    StrongProcessPtr pChild = pCurrProcess->RemoveChild();
+                    if (pChild)
+                        AttachProcess(pChild);
+                    else
+                        ++successCount; // only counts if the whole chain completed
+                    break;
+                }
 
-                    case Process::FAILED :
-                    {
-                        pCurrProcess->OnFail();
-                        ++failCount;
-                        break;
-                    }
+                case Process::FAILED:
+                {
+                    pCurrProcess->OnFail();
+                    ++failCount;
+                    break;
+                }
 
-                    case Process::ABORTED :
-                    {
-                        pCurrProcess->OnAbort();
-                        ++failCount;
-                        break;
-                    }
+                case Process::ABORTED:
+                {
+                    pCurrProcess->OnAbort();
+                    ++failCount;
+                    break;
+                }
 
-                    default: break;
+                default:
+                    break;
                 }
 
                 // remove the process and destroy it
@@ -103,7 +105,7 @@ namespace Rocket {
     }
 
     //---------------------------------------------------------------------------------------------------------------------
-    // Aborts all processes.  If immediate == true, it immediately calls each ones OnAbort() function and destroys all 
+    // Aborts all processes.  If immediate == true, it immediately calls each ones OnAbort() function and destroys all
     // the processes.
     //---------------------------------------------------------------------------------------------------------------------
     void ProcessManager::AbortAllProcesses(bool immediate)
@@ -126,4 +128,4 @@ namespace Rocket {
             }
         }
     }
-}
+} // namespace Rocket

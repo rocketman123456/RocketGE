@@ -5,7 +5,7 @@ class semaphore
 {
 public:
 	explicit semaphore(uint32_t count = 0)
-	: m_count(count) {}
+		: m_count(count) {}
 
 	void post()
 	{
@@ -32,21 +32,21 @@ public:
 		--m_count;
 	}
 
-	template<typename Rep, typename Period>
-	bool wait_for(const std::chrono::duration<Rep, Period>& t)
+	template <typename Rep, typename Period>
+	bool wait_for(const std::chrono::duration<Rep, Period> &t)
 	{
 		std::unique_lock lock(m_mutex);
-		if(!m_cv.wait_for(lock, t, [this]() { return m_count != 0; }))
+		if (!m_cv.wait_for(lock, t, [this]() { return m_count != 0; }))
 			return false;
 		--m_count;
 		return true;
 	}
 
-	template<typename Clock, typename Duration>
-	bool wait_until(const std::chrono::time_point<Clock, Duration>& t)
+	template <typename Clock, typename Duration>
+	bool wait_until(const std::chrono::time_point<Clock, Duration> &t)
 	{
 		std::unique_lock lock(m_mutex);
-		if(!m_cv.wait_until(lock, t, [this]() { return m_count != 0; }))
+		if (!m_cv.wait_until(lock, t, [this]() { return m_count != 0; }))
 			return false;
 		--m_count;
 		return true;
@@ -62,7 +62,7 @@ class fast_semaphore
 {
 public:
 	explicit fast_semaphore(uint32_t count = 0)
-	: m_count(count), m_semaphore(0) {}
+		: m_count(count), m_semaphore(0) {}
 
 	void post()
 	{

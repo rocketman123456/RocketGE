@@ -2,7 +2,8 @@
 #include "GERender/RenderAPI.h"
 #include "GERender/VertexArray.h"
 
-namespace Rocket {
+namespace Rocket
+{
 	class RenderCommand
 	{
 	public:
@@ -16,7 +17,7 @@ namespace Rocket {
 			s_RenderAPI->SetViewport(x, y, width, height, xscale, yscale);
 		}
 
-		static void SetClearColor(const glm::vec4& color)
+		static void SetClearColor(const glm::vec4 &color)
 		{
 			s_RenderAPI->SetClearColor(color);
 		}
@@ -26,11 +27,12 @@ namespace Rocket {
 			s_RenderAPI->Clear();
 		}
 
-		static void DrawIndexed(const Ref<VertexArray>& vertexArray, uint32_t count = 0)
+		static void DrawIndexed(const Ref<VertexArray> &vertexArray, uint32_t count = 0)
 		{
 			s_RenderAPI->DrawIndexed(vertexArray, count);
 		}
+
 	private:
 		static Scope<RenderAPI> s_RenderAPI;
 	};
-}
+} // namespace Rocket

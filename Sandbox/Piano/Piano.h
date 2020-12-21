@@ -1,7 +1,8 @@
 #pragma once
 #include "RKEngine.h"
 
-namespace Rocket {
+namespace Rocket
+{
     class Piano : implements Application
     {
     public:
@@ -10,4 +11,4 @@ namespace Rocket {
         virtual void PreInitializeModule() override;
         virtual void PostInitializeModule() override;
     };
-}
+} // namespace Rocket

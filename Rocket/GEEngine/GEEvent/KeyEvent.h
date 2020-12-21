@@ -3,8 +3,9 @@
 #include "GEEvent/Event.h"
 #include "GEUtils/KeyCode.h"
 
-namespace Rocket {
-    class KeyEvent : implements Event
+namespace Rocket
+{
+	class KeyEvent : implements Event
 	{
 	public:
 		KeyCode GetKeyCode() const { return m_KeyCode; }
@@ -68,4 +69,4 @@ namespace Rocket {
 
 		EVENT_CLASS_TYPE(KeyTyped)
 	};
-}
+} // namespace Rocket
