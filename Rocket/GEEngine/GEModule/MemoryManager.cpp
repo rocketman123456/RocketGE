@@ -28,7 +28,7 @@ void MemoryManager::Finalize()
     assert(m_mapMemoryAllocationInfo.empty());
 }
 
-void MemoryManager::Tick(Timestep ts)
+int MemoryManager::Tick(Timestep ts)
 {
 #if DEBUG
     static int count = 0;
@@ -43,6 +43,7 @@ void MemoryManager::Tick(Timestep ts)
         }
     }
 #endif
+    return 0;
 }
 
 void* MemoryManager::AllocatePage(size_t size)

@@ -17,6 +17,18 @@
             "MIMode": "lldb"
         },
         {
+            "name": "(lldb) Editor",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/Editor/EditorApp",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb"
+        },
+        {
             "name": "(lldb) SimpleGame",
             "type": "cppdbg",
             "request": "launch",
@@ -45,6 +57,18 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/Test/RayTrace/RayTrace01",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb"
+        },
+        {
+            "name": "(lldb) RayTrace 10",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/Test/RayTrace/RayTrace10",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

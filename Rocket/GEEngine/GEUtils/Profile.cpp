@@ -55,7 +55,7 @@ namespace Rocket {
     {
         g_ProfilerTimer.InitTime();
 
-        for (unsigned int i = 0; i < NUM_PROFILE_SAMPLES; i++)
+        for (uint32_t i = 0; i < NUM_PROFILE_SAMPLES; i++)
         {
             m_Samples[i].bValid = false;
             m_History[i].bValid = false;
@@ -66,7 +66,7 @@ namespace Rocket {
 
     void Profiler::ProfileBegin(const std::string& name)
     {
-        unsigned int i = 0;
+        uint32_t i = 0;
 
         while (i < NUM_PROFILE_SAMPLES && m_Samples[i].bValid == true)
         {
@@ -99,14 +99,14 @@ namespace Rocket {
 
     void Profiler::ProfileEnd(const std::string& name)
     {
-        unsigned int i = 0;
-        unsigned int numParents = 0;
+        uint32_t i = 0;
+        uint32_t numParents = 0;
 
         while (i < NUM_PROFILE_SAMPLES && m_Samples[i].bValid == true)
         {
             if (m_Samples[i].szName.compare(name) == 0)
             { //Found the sample
-                unsigned int inner = 0;
+                uint32_t inner = 0;
                 int parent = -1;
                 float fEndTime = g_ProfilerTimer.GetExactTime();
                 m_Samples[i].iOpenProfiles--;
@@ -150,7 +150,7 @@ namespace Rocket {
     {
         g_ProfilerTimer.MarkTimeThisTick();
 
-        unsigned int i = 0;
+        uint32_t i = 0;
 
         m_EndProfile = g_ProfilerTimer.GetExactTime();
         m_ProfileInfoVec.clear();
@@ -178,7 +178,7 @@ namespace Rocket {
             StoreProfileInHistory(m_Samples[i].szName, percentTime);
             GetProfileFromHistory(m_Samples[i].szName, &aveTime, &minTime, &maxTime);
 
-            unsigned int indent = 0;
+            uint32_t indent = 0;
             strcpy(indentedName, m_Samples[i].szName.c_str());
             for (indent = 0; indent < m_Samples[i].iNumParents; indent++)
             {
@@ -196,7 +196,7 @@ namespace Rocket {
         }
 
         { //Reset samples for next frame
-            unsigned int i;
+            uint32_t i;
             for (i = 0; i < NUM_PROFILE_SAMPLES; i++)
             {
                 m_Samples[i].bValid = false;
@@ -207,7 +207,7 @@ namespace Rocket {
 
     void Profiler::StoreProfileInHistory(const std::string& name, float percent)
     {
-        unsigned int i = 0;
+        uint32_t i = 0;
         float oldRatio;
         float newRatio = 0.8f * g_ProfilerTimer.GetElapsedTime();
         if (newRatio > 1.0f)
@@ -262,7 +262,7 @@ namespace Rocket {
 
     void Profiler::GetProfileFromHistory(const std::string& name, float *ave, float *min, float *max)
     {
-        unsigned int i = 0;
+        uint32_t i = 0;
         while (i < NUM_PROFILE_SAMPLES && m_History[i].bValid == true)
         {
             if (m_Samples[i].szName.compare(name) == 0)

@@ -13,7 +13,7 @@ namespace Rocket {
         virtual int Initialize() = 0;
         virtual void Finalize() = 0;
 
-        virtual void Tick(Timestep ts) = 0;
+        virtual int Tick(Timestep ts) = 0;
         virtual void OnEvent(Event& event) {}
 
         // For debug

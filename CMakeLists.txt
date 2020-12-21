@@ -102,6 +102,7 @@ include_directories(
     ${BULLET_INCLUDE_DIRS}
     ${OPENAL_INCLUDE_DIRS}
     ${SNDFILE_INCLUDE_DIRS}
+    ${OPENMP_INCLUDES}
 )
 
 include_directories(
@@ -109,22 +110,23 @@ include_directories(
 )
 
 if(OpenGL)
-    include_directories( ${PROJECT_SOURCE_DIR}/Rocket/PlatformRender/OpenGL/include )
+    include_directories( ${PROJECT_SOURCE_DIR}/Rocket/PlatformRender/OpenGL )
 elseif(Vulkan)
-    include_directories( ${PROJECT_SOURCE_DIR}/Rocket/PlatformRender/Vulkan/include )
+    include_directories( ${PROJECT_SOURCE_DIR}/Rocket/PlatformRender/Vulkan )
 elseif(Metal)
-    include_directories( ${PROJECT_SOURCE_DIR}/Rocket/PlatformRender/Metal/include )
+    include_directories( ${PROJECT_SOURCE_DIR}/Rocket/PlatformRender/Metal )
 endif()
 
 if(Apple)
-    include_directories( ${PROJECT_SOURCE_DIR}/Rocket/Platform/Apple/include )
+    include_directories( ${PROJECT_SOURCE_DIR}/Rocket/Platform/Apple )
 elseif(Linux)
-    include_directories( ${PROJECT_SOURCE_DIR}/Rocket/Platform/Linux/include )
+    include_directories( ${PROJECT_SOURCE_DIR}/Rocket/Platform/Linux )
 elseif(Windows)
-    include_directories( ${PROJECT_SOURCE_DIR}/Rocket/Platform/Windows/include )
+    include_directories( ${PROJECT_SOURCE_DIR}/Rocket/Platform/Windows )
 endif()
 
 add_subdirectory( Thirdparty )
 add_subdirectory( Rocket )
+add_subdirectory( Editor )
 add_subdirectory( Sandbox )
 add_subdirectory( Test )

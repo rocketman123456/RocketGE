@@ -6,10 +6,13 @@ namespace Rocket {
     class ProcessManager : implements IRuntimeModule
     {
     public:
+        ProcessManager() : IRuntimeModule("ProcessManager") {}
+        virtual ~ProcessManager() = default;
+
         virtual int Initialize() override;
         virtual void Finalize() override;
 
-        virtual void Tick(Timestep ts) override;
+        virtual int Tick(Timestep ts) override;
 
         // interface
         uint64_t UpdateProcesses(unsigned long deltaMs);  // updates all attached processes
@@ -17,7 +20,7 @@ namespace Rocket {
         void AbortAllProcesses(bool immediate);
 
         // accessors
-        unsigned int GetProcessCount(void) const { return m_ProcessList.size(); }
+        uint32_t GetProcessCount(void) const { return m_ProcessList.size(); }
     private:
         typedef std::list<StrongProcessPtr> ProcessList;
 	    ProcessList m_ProcessList;

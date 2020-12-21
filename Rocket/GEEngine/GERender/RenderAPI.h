@@ -21,6 +21,7 @@ namespace Rocket {
 		virtual void Clear() = 0;
 
 		virtual void DrawIndexed(const Ref<VertexArray>& vertexArray, uint32_t indexCount = 0) = 0;
+		virtual void DrawInstance(const Ref<VertexArray>& vertexArray, uint32_t indexCount = 0, uint32_t count = 0) = 0;
 
 		static Scope<RenderAPI> Create();
 	private:

@@ -127,7 +127,7 @@ public:
 		return m_queue.empty();
 	}
 
-	unsigned int size() const noexcept
+	uint32_t size() const noexcept
 	{
 		std::scoped_lock lock(m_mutex);
 		return m_queue.size();
@@ -144,7 +144,7 @@ template<typename T>
 class fixed_blocking_queue
 {
 public:
-	explicit fixed_blocking_queue(unsigned int size)
+	explicit fixed_blocking_queue(uint32_t size)
 	: m_size(size), m_pushIndex(0), m_popIndex(0), m_count(0),
 	m_data((T*)operator new(size * sizeof(T))),
 	m_openSlots(size), m_fullSlots(0)
@@ -527,22 +527,22 @@ public:
 		return m_count == m_size;
 	}
 
-	unsigned int size() const noexcept
+	uint32_t size() const noexcept
 	{
 		std::scoped_lock lock(m_cs);
 		return m_count;
 	}
 
-	unsigned int capacity() const noexcept
+	uint32_t capacity() const noexcept
 	{
 		return m_size;
 	}
 
 private:
-	const unsigned int m_size;
-	unsigned int m_pushIndex;
-	unsigned int m_popIndex;
-	unsigned int m_count;
+	const uint32_t m_size;
+	uint32_t m_pushIndex;
+	uint32_t m_popIndex;
+	uint32_t m_count;
 	T* m_data;
 
 	semaphore m_openSlots;
@@ -554,7 +554,7 @@ template<typename T>
 class atomic_blocking_queue
 {
 public:
-	explicit atomic_blocking_queue(unsigned int size)
+	explicit atomic_blocking_queue(uint32_t size)
 	: m_size(size), m_pushIndex(0), m_popIndex(0), m_count(0),
 	m_data((T*)operator new(size * sizeof(T))),
 	m_openSlots(size), m_fullSlots(0)
@@ -743,18 +743,18 @@ public:
 		return m_count == m_size;
 	}
 
-	unsigned int size() const noexcept
+	uint32_t size() const noexcept
 	{
 		return m_count;
 	}
 
-	unsigned int capacity() const noexcept
+	uint32_t capacity() const noexcept
 	{
 		return m_size;
 	}
 
 private:
-	const unsigned int m_size;
+	const uint32_t m_size;
 	std::atomic_uint m_pushIndex;
 	std::atomic_uint m_popIndex;
 	std::atomic_uint m_count;

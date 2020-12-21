@@ -66,22 +66,7 @@ void main()
 		case 13: texColor *= texture(u_Textures[13], v_TexCoord * v_TilingFactor); break;
 		case 14: texColor *= texture(u_Textures[14], v_TexCoord * v_TilingFactor); break;
 		case 15: texColor *= texture(u_Textures[15], v_TexCoord * v_TilingFactor); break;
-		//case 16: texColor *= texture(u_Textures[16], v_TexCoord * v_TilingFactor); break;
-		//case 17: texColor *= texture(u_Textures[17], v_TexCoord * v_TilingFactor); break;
-		//case 18: texColor *= texture(u_Textures[18], v_TexCoord * v_TilingFactor); break;
-		//case 19: texColor *= texture(u_Textures[19], v_TexCoord * v_TilingFactor); break;
-		//case 20: texColor *= texture(u_Textures[20], v_TexCoord * v_TilingFactor); break;
-		//case 21: texColor *= texture(u_Textures[21], v_TexCoord * v_TilingFactor); break;
-		//case 22: texColor *= texture(u_Textures[22], v_TexCoord * v_TilingFactor); break;
-		//case 23: texColor *= texture(u_Textures[23], v_TexCoord * v_TilingFactor); break;
-		//case 24: texColor *= texture(u_Textures[24], v_TexCoord * v_TilingFactor); break;
-		//case 25: texColor *= texture(u_Textures[25], v_TexCoord * v_TilingFactor); break;
-		//case 26: texColor *= texture(u_Textures[26], v_TexCoord * v_TilingFactor); break;
-		//case 27: texColor *= texture(u_Textures[27], v_TexCoord * v_TilingFactor); break;
-		//case 28: texColor *= texture(u_Textures[28], v_TexCoord * v_TilingFactor); break;
-		//case 29: texColor *= texture(u_Textures[29], v_TexCoord * v_TilingFactor); break;
-		//case 30: texColor *= texture(u_Textures[30], v_TexCoord * v_TilingFactor); break;
-		//case 31: texColor *= texture(u_Textures[31], v_TexCoord * v_TilingFactor); break;
 	}
-	color = texColor * dist;
+	//color = texColor * dist;
+	color = texColor;
 }

@@ -4,3 +4,4 @@
 #include "GEEvent/ApplicationEvent.h"
 #include "GEEvent/KeyEvent.h"
 #include "GEEvent/MouseEvent.h"
+#include "GEEvent/AudioEvent.h"

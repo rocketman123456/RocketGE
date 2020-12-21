@@ -6,6 +6,15 @@
 #include "color.h"
 #include "ray.h"
 
+bool hit_sphere(const point3& center, double radius, const ray& r) {
+    vec3 oc = r.origin() - center;
+    auto a = dot(r.direction(), r.direction());
+    auto b = 2.0 * dot(oc, r.direction());
+    auto c = dot(oc, oc) - radius*radius;
+    auto discriminant = b*b - 4*a*c;
+    return (discriminant > 0);
+}
+
 color ray_color(const ray& r) {
     vec3 unit_direction = unit_vector(r.direction());
     auto t = 0.5*(unit_direction.y() + 1.0);
@@ -14,7 +23,7 @@ color ray_color(const ray& r) {
 
 int main() {
 
-    std::ofstream file( "image03.ppm" );
+    std::ofstream file( "image04.ppm" );
     std::streambuf *x = std::cout.rdbuf( file.rdbuf() );
 
     // Image

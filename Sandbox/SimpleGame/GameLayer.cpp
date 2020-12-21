@@ -1,5 +1,6 @@
 #include "GameLayer.h"
 #include <imgui.h>
+#include "GEModule/AudioManager.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -15,6 +16,8 @@ GameLayer::GameLayer()
 	Random::Init();
 }
 
+static std::vector<std::string> audio_names;
+
 void GameLayer::OnAttach()
 {
 	m_Level.Init();
@@ -22,6 +25,61 @@ void GameLayer::OnAttach()
 	ImGuiIO io = ImGui::GetIO();
     std::string path_front = ProjectSourceDir + "/Assets/fonts/opensans/OpenSans-Regular.ttf";
 	m_Font = io.Fonts->AddFontFromFileTTF(path_front.c_str(), 120.0f);
+
+	std::string A0_1 = "Piano.ff.C2";
+	std::string A1_1 = "Piano.ff.D2";
+	std::string A2_1 = "Piano.ff.E2";
+	std::string A3_1 = "Piano.ff.F2";
+	std::string A4_1 = "Piano.ff.G2";
+	std::string A5_1 = "Piano.ff.A2";
+	std::string A6_1 = "Piano.ff.B2";
+	//std::string A7_1 = "Piano.ff.C3";
+
+	std::string A0 = "Piano.ff.C3";
+	std::string A1 = "Piano.ff.D3";
+	std::string A2 = "Piano.ff.E3";
+	std::string A3 = "Piano.ff.F3";
+	std::string A4 = "Piano.ff.G3";
+	std::string A5 = "Piano.ff.A3";
+	std::string A6 = "Piano.ff.B3";
+	std::string A7 = "Piano.ff.C4";
+
+	//std::string A0_2 = "Piano.ff.C4";
+	std::string A1_2 = "Piano.ff.D4";
+	std::string A2_2 = "Piano.ff.E4";
+	std::string A3_2 = "Piano.ff.F4";
+	std::string A4_2 = "Piano.ff.G4";
+	std::string A5_2 = "Piano.ff.A4";
+	std::string A6_2 = "Piano.ff.B4";
+	std::string A7_2 = "Piano.ff.C5";
+
+	audio_names.clear();
+	audio_names.push_back(A0_1);
+	audio_names.push_back(A1_1);
+	audio_names.push_back(A2_1);
+	audio_names.push_back(A3_1);
+	audio_names.push_back(A4_1);
+	audio_names.push_back(A5_1);
+	audio_names.push_back(A6_1);
+
+	audio_names.push_back(A0);
+	audio_names.push_back(A1);
+	audio_names.push_back(A2);
+	audio_names.push_back(A3);
+	audio_names.push_back(A4);
+	audio_names.push_back(A5);
+	audio_names.push_back(A6);
+	audio_names.push_back(A7);
+
+	audio_names.push_back(A1_2);
+	audio_names.push_back(A2_2);
+	audio_names.push_back(A3_2);
+	audio_names.push_back(A4_2);
+	audio_names.push_back(A5_2);
+	audio_names.push_back(A6_2);
+	audio_names.push_back(A7_2);
+
+	srand(rand());
 }
 
 void GameLayer::OnDetach()
@@ -109,6 +167,21 @@ void GameLayer::OnEvent(Rocket::Event& e)
 	EventDispatcher dispatcher(e);
 	dispatcher.Dispatch<WindowResizeEvent>(RK_BIND_EVENT_FN(GameLayer::OnWindowResize));
 	dispatcher.Dispatch<MouseButtonPressedEvent>(RK_BIND_EVENT_FN(GameLayer::OnMouseButtonPressed));
+	dispatcher.Dispatch<KeyPressedEvent>(RK_BIND_EVENT_FN(GameLayer::OnKeyEvent));
+}
+
+bool GameLayer::OnKeyEvent(Rocket::KeyPressedEvent& e)
+{
+	if(m_State == GameState::Play)
+	{
+		int i = rand() % audio_names.size();
+
+		if(e.GetKeyCode() == Key::Space) 
+		{
+			g_AudioManager->PlayAudio(audio_names[i]);
+		}
+	}
+	return false;
 }
 
 bool GameLayer::OnMouseButtonPressed(Rocket::MouseButtonPressedEvent& e)

@@ -67,6 +67,7 @@
         "cinttypes": "cpp",
         "typeinfo": "cpp",
         "future": "cpp",
-        "strstream": "cpp"
+        "strstream": "cpp",
+        "*.mm": "cpp"
     }
 }

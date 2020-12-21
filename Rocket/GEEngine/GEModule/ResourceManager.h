@@ -3,8 +3,8 @@
 
 namespace Rocket {
     // TODO : change all asset loading through this module
-    class ResourceManager() : implements IRuntimeModule
+    class ResourceManager : implements IRuntimeModule
     {
 
-    }
+    };
 }

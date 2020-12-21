@@ -8,7 +8,7 @@ namespace Rocket {
     public:
         int Initialize() override = 0;
         void Finalize() override = 0;
-        void Tick(Timestep ts) override = 0;
+        int Tick(Timestep ts) override = 0;
 
         virtual void* AllocatePage(size_t size) = 0;
         virtual void  FreePage(void* p) = 0;

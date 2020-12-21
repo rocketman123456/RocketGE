@@ -26,6 +26,7 @@ namespace Rocket {
 
 		virtual ~Window() = default;
 
+		virtual void PollEvent() = 0;
 		virtual void OnUpdate() = 0;
 
 		virtual uint32_t GetWidth() const = 0;
@@ -38,7 +39,7 @@ namespace Rocket {
 
 		virtual void* GetNativeWindow() const = 0;
 
-		static Scope<Window> Create(const WindowProps& props = WindowProps());
+		static Ref<Window> Create(const WindowProps& props = WindowProps());
 	};
 
 }

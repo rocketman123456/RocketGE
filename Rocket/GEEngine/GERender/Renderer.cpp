@@ -22,12 +22,12 @@ namespace Rocket
 		RenderCommand::SetViewport(0, 0, width, height, xscale, yscale);
 	}
 
-    void Renderer::BeginScene(Ref<Camera> camera)
+    void Renderer::BeginScene(const Ref<Camera> camera)
 	{
 		s_SceneData->ViewProjectionMatrix = camera->GetViewProjectionMatrix();
 	}
 
-	void Renderer::BeginScene(Camera& camera)
+	void Renderer::BeginScene(const Camera& camera)
 	{
 		s_SceneData->ViewProjectionMatrix = camera.GetViewProjectionMatrix();
 	}

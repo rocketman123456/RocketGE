@@ -18,8 +18,8 @@ namespace Rocket {
 		
 		static void OnWindowResize(uint32_t width, uint32_t height, float xscale = 1.0f, float yscale = 1.0f);
 
-        static void BeginScene(Ref<Camera> camera);
-		static void BeginScene(Camera& camera);
+        static void BeginScene(const Ref<Camera> camera);
+		static void BeginScene(const Camera& camera);
 		static void EndScene();
 
 		static void Submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray, const glm::mat4& transform = glm::mat4(1.0f));

@@ -19,7 +19,7 @@ namespace Rocket {
 
         int Initialize() override;
         void Finalize() override;
-        void Tick(Timestep ts) override;
+        int Tick(Timestep ts) override;
 
         void* AllocatePage(size_t size) override;
         void  FreePage(void* p) override;

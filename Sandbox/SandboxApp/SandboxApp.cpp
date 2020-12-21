@@ -9,9 +9,17 @@ namespace Rocket
 {
     void SimpleSandbox::PreInitialize()
     {
+        PushLayer(new ExampleLayer());
+    }
+
+    void SimpleSandbox::PreInitializeModule()
+    {
         RK_INFO("Build Type: {0}", BUILD_TYPE);
         RK_INFO("Source Dir: {0}", ProjectSourceDir);
-        PushLayer(new ExampleLayer());
+
+        PushModule(Rocket::g_ProcessManager);
+        PushModule(Rocket::g_WindowManager);
+        PushModule(Rocket::g_AudioManager);
     }
 
     Application* CreateApplication()
