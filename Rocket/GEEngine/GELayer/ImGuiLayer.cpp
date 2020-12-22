@@ -126,25 +126,15 @@ namespace Rocket
 	void ImGuiLayer::RenderStatusTable()
 	{
 		ImGui::Begin("Profiler");
+		ImGui::Columns(5, "Status"); ImGui::Separator();
+		ImGui::Text("Ave"); ImGui::SetColumnWidth(ImGui::GetColumnIndex(), 50); ImGui::NextColumn();
+		ImGui::Text("Min"); ImGui::SetColumnWidth(ImGui::GetColumnIndex(), 50); ImGui::NextColumn();
+		ImGui::Text("Max"); ImGui::SetColumnWidth(ImGui::GetColumnIndex(), 50); ImGui::NextColumn();
+		ImGui::Text(" # "); ImGui::SetColumnWidth(ImGui::GetColumnIndex(), 30); ImGui::NextColumn(); 
+		ImGui::Text("Profile Name"); ImGui::SetColumnWidth(ImGui::GetColumnIndex(), 400); ImGui::NextColumn();
+		ImGui::Separator();
+#ifdef RK_DEBUG
 		auto info_stack = ProfilerGetInfo();
-		ImGui::Columns(5, "Status");
-		ImGui::Separator();
-		ImGui::Text("Ave");
-		ImGui::SetColumnWidth(ImGui::GetColumnIndex(), 50);
-		ImGui::NextColumn();
-		ImGui::Text("Min");
-		ImGui::SetColumnWidth(ImGui::GetColumnIndex(), 50);
-		ImGui::NextColumn();
-		ImGui::Text("Max");
-		ImGui::SetColumnWidth(ImGui::GetColumnIndex(), 50);
-		ImGui::NextColumn();
-		ImGui::Text(" # ");
-		ImGui::SetColumnWidth(ImGui::GetColumnIndex(), 30);
-		ImGui::NextColumn();
-		ImGui::Text("Profile Name");
-		ImGui::SetColumnWidth(ImGui::GetColumnIndex(), 400);
-		ImGui::NextColumn();
-		ImGui::Separator();
 		for (auto info : info_stack)
 		{
 			char label[32];
@@ -169,6 +159,7 @@ namespace Rocket
 			ImGui::Text("%s", label);
 			ImGui::NextColumn();
 		}
+#endif
 		ImGui::Separator();
 		ImGui::End();
 	}

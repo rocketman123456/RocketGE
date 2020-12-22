@@ -1,8 +1,28 @@
 #pragma once
 #include "GECore/Core.h"
-#include "GEInterface/Singleton.h"
 
-#include "GEEvent/Event.h"
+#include "GEUtils/AutoEvent.h"
+#include "GEUtils/ManualEvent.h"
+
+namespace Rocket
+{
+    // this timer shoule only use for profile
+    class ProfilerTimer
+    {
+    public:
+        void InitTime(void);
+        void MarkTimeThisTick(void);
+        float GetElapsedTime(void);
+        float GetExactTime(void);
+        int64_t GetExactTimeCount(void);
+        inline int64_t GetTickRate() { return 1000; }
+
+    private:
+        std::chrono::time_point<std::chrono::steady_clock> m_StartTimepoint;
+        std::chrono::time_point<std::chrono::steady_clock> m_CurrentTimepoint;
+        long long m_TimeLastTick;
+    };
+}
 
 class timer
 {
@@ -104,41 +124,3 @@ private:
 	using set = std::set<event_ctx>;
 	set m_events;
 };
-
-namespace Rocket
-{
-	template <typename Fn>
-	class Timer
-	{
-	public:
-		Timer(const char *name, Fn &&func) : m_Name(name), m_Func(func), m_Stopped(false)
-		{
-			m_StartTimepoint = std::chrono::high_resolution_clock::now();
-		}
-
-		~Timer()
-		{
-			if (!m_Stopped)
-				Stop();
-		}
-
-		void Stop()
-		{
-			auto endTimepoint = std::chrono::high_resolution_clock::now();
-
-			long long start = std::chrono::time_point_cast<std::chrono::microseconds>(m_StartTimepoint).time_since_epoch().count();
-			long long end = std::chrono::time_point_cast<std::chrono::microseconds>(endTimepoint).time_since_epoch().count();
-
-			m_Stopped = true;
-
-			float duration = (end - start) * 0.001f;
-			m_Func({m_Name, duration});
-		}
-
-	private:
-		const char *m_Name;
-		Fn m_Func;
-		std::chrono::time_point<std::chrono::steady_clock> m_StartTimepoint;
-		bool m_Stopped;
-	};
-} // namespace Rocket

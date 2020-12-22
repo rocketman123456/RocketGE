@@ -1,7 +1,8 @@
 #include <iostream>
 #include <thread>
 #include <mutex>
-#include "GEEvent/Event.h"
+#include "GEUtils/AutoEvent.h"
+#include "GEUtils/ManualEvent.h"
 
 using namespace std;
 

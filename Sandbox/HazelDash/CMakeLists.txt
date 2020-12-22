@@ -3,11 +3,13 @@ add_executable( HazelDash
     HazelDashLayer.cpp
     ViewPort.cpp
     Random.cpp
+    #${PROJECT_SOURCE_DIR}/Rocket/GEEngine/GEScene/Entity.cpp
 )
 target_include_directories( HazelDash PRIVATE
     ${PROJECT_SOURCE_DIR}/Rocket/Interface
     ${PROJECT_SOURCE_DIR}/Sandbox/SandboxApp
     ${PROJECT_SOURCE_DIR}/Sandbox/Sandbox2D
+    ${PROJECT_SOURCE_DIR}/Sandbox/HazelDash
 )
 target_link_libraries( HazelDash PRIVATE
     GEEngine ${ENGINE_LIBRARY}

@@ -8,15 +8,16 @@
 #include "Components/Mass.h"
 #include "Components/PlayerState.h"
 #include "Components/Roll.h"
+#include "Components/Tile.h"
 
 #include "Random.h"
 
 #include "GEModule/Application.h"
-#include "GEUtils/KeyCodes.h"
+#include "GEUtils/KeyCode.h"
 #include "GEEvent/KeyEvent.h"
 #include "GERender/RenderCommand.h"
 #include "GERender2D/Renderer2D.h"
-#include "Hazel/Scene/Components.h"
+#include "GEScene/Components.h"
 
 #include <GLFW/glfw3.h>
 #include <glm/gtc/matrix_transform.hpp>
@@ -28,6 +29,36 @@
 #ifdef _DEBUG
 #include <imgui.h>
 #endif
+
+using namespace Rocket;
+
+template<> void Rocket::Scene::OnComponentAdded<PlayerState>(Rocket::Entity, PlayerState&)
+{
+}
+template<> void Rocket::Scene::OnComponentAdded<EnemyMovement>(Rocket::Entity, EnemyMovement&)
+{
+}
+template<> void Rocket::Scene::OnComponentAdded<Mass>(Rocket::Entity, Mass&)
+{
+}
+template<> void Rocket::Scene::OnComponentAdded<Roll>(Rocket::Entity, Roll&)
+{
+}
+template<> void Rocket::Scene::OnComponentAdded<Tile>(Rocket::Entity, Tile&)
+{
+}
+template<> void Rocket::Scene::OnComponentAdded<Amoeba>(Rocket::Entity, Amoeba&)
+{
+}
+template<> void Rocket::Scene::OnComponentAdded<Position>(Rocket::Entity, Position&)
+{
+}
+template<> void Rocket::Scene::OnComponentAdded<Animation>(Rocket::Entity, Animation&)
+{
+}
+template<> void Rocket::Scene::OnComponentAdded<Explosion>(Rocket::Entity, Explosion&)
+{
+}
 
 // If BATCHRENDER_TEST is non-zero, then starting level is always the
 // large one with hazel logo, and will use huge viewport.
@@ -278,7 +309,7 @@ Tile CharToTile(const char ch)
 		{'o', Tile::BarrelFirst},
 		{' ', Tile::Empty}};
 	std::unordered_map<char, Tile>::const_iterator tile = tileMap.find(ch);
-	RK_ASSERT(tile != tileMap.end(), "ERROR: Unknown character '{}' in level definition", ch);
+	//RK_ASSERT(tile != tileMap.end(), "ERROR: Unknown character '{0}' in level definition", ch);
 	return (tile != tileMap.end()) ? tile->second : Tile::Empty;
 }
 
@@ -409,7 +440,7 @@ HazelDashLayer::HazelDashLayer()
 
 void HazelDashLayer::OnAttach()
 {
-	std::string basePath = ProjectSourceDir + "/Assets/textures/dash";
+	std::string basePath = ProjectSourceDir + "/Assets/textures/dash/tile";
 	std::string extension = ".png";
 
 	for (size_t i = 0; i < m_Tiles.size(); ++i)
@@ -417,10 +448,10 @@ void HazelDashLayer::OnAttach()
 		std::ostringstream os;
 		os << std::setfill('0') << std::setw(3) << i;
 		std::string path = basePath + os.str() + extension;
-		m_Tiles[i] = Hazel::Texture2D::Create(path);
+		m_Tiles[i] = Rocket::Texture2D::Create(path);
 	}
 
-	Hazel::RenderCommand::SetClearColor({0.0f, 0.0f, 0.0f, 1});
+	Rocket::RenderCommand::SetClearColor({0.0f, 0.0f, 0.0f, 1});
 
 	LoadScene(m_CurrentLevel);
 }
@@ -429,7 +460,7 @@ void HazelDashLayer::OnDetach()
 {
 }
 
-void HazelDashLayer::OnUpdate(Hazel::Timestep ts)
+void HazelDashLayer::OnUpdate(Rocket::Timestep ts)
 {
 	RK_PROFILE_FUNCTION();
 	if (m_GamePaused)
@@ -442,8 +473,8 @@ void HazelDashLayer::OnUpdate(Hazel::Timestep ts)
 		LoadScene(++m_CurrentLevel);
 	}
 
-	Hazel::Renderer2D::ResetStats();
-	Hazel::Renderer2D::StatsBeginFrame();
+	Rocket::Renderer2D::ResetStats();
+	//Rocket::Renderer2D::StatsBeginFrame();
 
 	m_FixedUpdateAccumulatedTs += ts;
 	if (m_FixedUpdateAccumulatedTs > m_FixedTimestep)
@@ -467,27 +498,27 @@ void HazelDashLayer::OnUpdate(Hazel::Timestep ts)
 	CameraControllerUpdate(ts);
 	RendererUpdate(ts);
 
-	RK_PROFILE_FRAMEMARKER();
+	//RK_PROFILE_FRAMEMARKER();
 
-	Hazel::Renderer2D::StatsEndFrame();
+	//Rocket::Renderer2D::StatsEndFrame();
 
-	auto stats = Hazel::Renderer2D::GetStats();
-	float averageRenderTime = stats.TotalFrameRenderTime / stats.FrameRenderTime.size(); // nb: wont be accurate until we have gathered at least stats.FrameRenderTime().size() results
-	float averageFPS = 1.0f / averageRenderTime;
-	char buffer[64];
-	sprintf_s(buffer, 64, "Average frame render time: %8.5f (%5.0f fps)", averageRenderTime, averageFPS);
-	glfwSetWindowTitle((GLFWwindow *)Hazel::Application::Get().GetWindow().GetNativeWindow(), buffer);
+	auto stats = Rocket::Renderer2D::GetStats();
+	//float averageRenderTime = stats.TotalFrameRenderTime / stats.FrameRenderTime.size(); // nb: wont be accurate until we have gathered at least stats.FrameRenderTime().size() results
+	//float averageFPS = 1.0f / averageRenderTime;
+	//char buffer[64];
+	//sprintf_s(buffer, 64, "Average frame render time: %8.5f (%5.0f fps)", averageRenderTime, averageFPS);
+	//glfwSetWindowTitle((GLFWwindow *)Rocket::Application::Get().GetWindow().GetNativeWindow(), buffer);
 }
 
-void HazelDashLayer::OnEvent(Hazel::Event &e)
+void HazelDashLayer::OnEvent(Rocket::Event &e)
 {
-	Hazel::EventDispatcher dispatcher(e);
-	dispatcher.Dispatch<Hazel::KeyPressedEvent>(RK_BIND_EVENT_FN(HazelDashLayer::OnKeyPressed));
+	Rocket::EventDispatcher dispatcher(e);
+	dispatcher.Dispatch<Rocket::KeyPressedEvent>(RK_BIND_EVENT_FN(HazelDashLayer::OnKeyPressed));
 }
 
-bool HazelDashLayer::OnKeyPressed(Hazel::KeyPressedEvent &e)
+bool HazelDashLayer::OnKeyPressed(Rocket::KeyPressedEvent &e)
 {
-	if (e.GetKeyCode() == RK_KEY_SPACE)
+	if (e.GetKeyCode() == Key::Space)
 	{
 		if (m_PlayerIsAlive)
 		{
@@ -498,7 +529,7 @@ bool HazelDashLayer::OnKeyPressed(Hazel::KeyPressedEvent &e)
 			LoadScene(m_CurrentLevel);
 		}
 	}
-	else if (e.GetKeyCode() == RK_KEY_ESCAPE)
+	else if (e.GetKeyCode() == Key::Escape)
 	{
 		LoadScene(m_CurrentLevel);
 	}
@@ -525,7 +556,8 @@ void HazelDashLayer::LoadScene(int level)
 		for (int col = 0; col < m_Width; ++col)
 		{
 			int charIndex = (m_Width * (m_Height - (row + 1))) + col;
-			RK_ASSERT(charIndex < definition.LevelData.size(), "insufficient levelData supplied");
+			bool result = charIndex < definition.LevelData.size();
+			RK_ASSERT(result, "insufficient levelData supplied");
 			if (charIndex < definition.LevelData.size())
 			{
 				char ch = definition.LevelData[charIndex];
@@ -581,7 +613,9 @@ void HazelDashLayer::LoadScene(int level)
 			}
 		}
 	}
-	RK_ASSERT((playerPosition.Row > 0) && (playerPosition.Col >= 0), "ERROR: ({},{}) is not a legal starting position for player (check that level definition contains player start point)", playerPosition.Row, playerPosition.Col);
+	bool result = (playerPosition.Row > 0) && (playerPosition.Col >= 0);
+	if(!result)
+		RK_ERROR("ERROR: ({0},{1}) is not a legal starting position for player (check that level definition contains player start point)", playerPosition.Row, playerPosition.Col);
 
 	m_Score = 0;
 	m_ScoreRequired = definition.ScoreRequired;
@@ -611,8 +645,8 @@ void HazelDashLayer::PhysicsFixedUpdate()
 	static const Position BelowRight = {-1, 1};
 
 	m_Scene.m_Registry.group<Mass>(entt::get<Position>).each([this](const auto entityHandle, auto &mass, auto &pos) {
-		Hazel::Entity entity(entityHandle, &m_Scene);
-		Hazel::Entity entityBelow = GetEntity(pos + Below);
+		Rocket::Entity entity(entityHandle, &m_Scene);
+		Rocket::Entity entityBelow = GetEntity(pos + Below);
 		auto tileBelow = entityBelow.GetComponent<Tile>();
 		if (IsEmpty(tileBelow))
 		{
@@ -635,8 +669,8 @@ void HazelDashLayer::PhysicsFixedUpdate()
 			{
 				if (IsRounded(tileBelow))
 				{
-					Hazel::Entity entityLeft = GetEntity(pos + Left);
-					Hazel::Entity entityBelowLeft = GetEntity(pos + BelowLeft);
+					Rocket::Entity entityLeft = GetEntity(pos + Left);
+					Rocket::Entity entityBelowLeft = GetEntity(pos + BelowLeft);
 					auto tileLeft = entityLeft.GetComponent<Tile>();
 					auto tileBelowLeft = entityBelowLeft.GetComponent<Tile>();
 					if (IsEmpty(tileLeft) && IsEmpty(tileBelowLeft))
@@ -655,8 +689,8 @@ void HazelDashLayer::PhysicsFixedUpdate()
 					}
 					else
 					{
-						Hazel::Entity entityRight = GetEntity(pos + Right);
-						Hazel::Entity entityBelowRight = GetEntity(pos + BelowRight);
+						Rocket::Entity entityRight = GetEntity(pos + Right);
+						Rocket::Entity entityBelowRight = GetEntity(pos + BelowRight);
 						auto tileRight = entityRight.GetComponent<Tile>();
 						auto tileBelowRight = entityBelowRight.GetComponent<Tile>();
 						if (IsEmpty(tileRight) && IsEmpty(tileBelowRight))
@@ -705,23 +739,23 @@ void HazelDashLayer::PlayerControllerFixedUpdate()
 		PlayerState newState = PlayerState::Idle;
 		PlayerState secondaryState = PlayerState::Idle;
 
-		if (Hazel::Input::IsKeyPressed(RK_KEY_LEFT) || Hazel::Input::IsKeyPressed(RK_KEY_A))
+		if (Rocket::Input::IsKeyPressed(Key::Left) || Rocket::Input::IsKeyPressed(Key::A))
 		{
 			newState = PlayerState::MovingLeft;
 			lastWasLeft = true;
 		}
-		else if (Hazel::Input::IsKeyPressed(RK_KEY_RIGHT) || Hazel::Input::IsKeyPressed(RK_KEY_D))
+		else if (Rocket::Input::IsKeyPressed(Key::Right) || Rocket::Input::IsKeyPressed(Key::D))
 		{
 			newState = PlayerState::MovingRight;
 			lastWasLeft = false;
 		}
 
-		if (Hazel::Input::IsKeyPressed(RK_KEY_UP) || Hazel::Input::IsKeyPressed(RK_KEY_W))
+		if (Rocket::Input::IsKeyPressed(Key::Up) || Rocket::Input::IsKeyPressed(Key::W))
 		{
 			secondaryState = newState;
 			newState = PlayerState::MovingUp;
 		}
-		else if (Hazel::Input::IsKeyPressed(RK_KEY_DOWN) || Hazel::Input::IsKeyPressed(RK_KEY_S))
+		else if (Rocket::Input::IsKeyPressed(Key::Down) || Rocket::Input::IsKeyPressed(Key::S))
 		{
 			secondaryState = newState;
 			newState = PlayerState::MovingDown;
@@ -744,7 +778,7 @@ void HazelDashLayer::PlayerControllerFixedUpdate()
 			}
 		}
 
-		bool ctrlPressed = Hazel::Input::IsKeyPressed(RK_KEY_LEFT_CONTROL) || Hazel::Input::IsKeyPressed(RK_KEY_RIGHT_CONTROL);
+		bool ctrlPressed = Rocket::Input::IsKeyPressed(Key::LeftControl) || Rocket::Input::IsKeyPressed(Key::RightControl);
 		Position oldPos = pos;
 		switch (state)
 		{
@@ -783,7 +817,7 @@ void HazelDashLayer::PlayerControllerFixedUpdate()
 		}
 		if (oldPos != pos)
 		{
-			Hazel::Entity entityAtNewPos = GetEntity(pos);
+			Rocket::Entity entityAtNewPos = GetEntity(pos);
 			auto tile = entityAtNewPos.GetComponent<Tile>();
 			SwapEntities(oldPos, pos);
 			ClearEntity(oldPos);
@@ -800,7 +834,7 @@ void HazelDashLayer::PlayerControllerFixedUpdate()
 	});
 }
 
-void HazelDashLayer::PlayerControllerUpdate(Hazel::Timestep ts)
+void HazelDashLayer::PlayerControllerUpdate(Rocket::Timestep ts)
 {
 	RK_PROFILE_FUNCTION();
 	m_Scene.m_Registry.group<PlayerState>(entt::get<Position, Animation>).each([this](auto &state, auto &pos, auto &animation) {
@@ -834,7 +868,7 @@ void HazelDashLayer::PlayerControllerUpdate(Hazel::Timestep ts)
 bool HazelDashLayer::TryMovePlayer(Position &pos, Position direction, const bool ctrlPressed)
 {
 	bool retVal = false;
-	Hazel::Entity entity = GetEntity(pos + direction);
+	Rocket::Entity entity = GetEntity(pos + direction);
 	auto &tile = entity.GetComponent<Tile>();
 	if (CanBeOccupied(tile))
 	{
@@ -851,8 +885,8 @@ bool HazelDashLayer::TryMovePlayer(Position &pos, Position direction, const bool
 		{
 			Position posBelow = {pos.Row - 1, pos.Col + direction.Col};
 			Position posAcross = {pos.Row, pos.Col + (2 * direction.Col)};
-			Hazel::Entity entityBelow = GetEntity(posBelow);
-			Hazel::Entity entityAcross = GetEntity(posAcross);
+			Rocket::Entity entityBelow = GetEntity(posBelow);
+			Rocket::Entity entityAcross = GetEntity(posAcross);
 			const auto tileBelow = entityBelow.GetComponent<Tile>();
 			const auto tileAcross = entityAcross.GetComponent<Tile>();
 			if (!IsEmpty(tileBelow) && IsEmpty(tileAcross))
@@ -920,7 +954,8 @@ void HazelDashLayer::EnemiesFixedUpdate()
 		bool move = true;
 		for (auto direction : Directions)
 		{
-			if (IsPlayer(GetEntity(pos + direction).GetComponent<Tile>()))
+			Rocket::Entity temp = GetEntity(pos + direction);
+			if (IsPlayer(temp.GetComponent<Tile>()))
 			{
 				OnExplode(pos);
 				move = false;
@@ -995,7 +1030,7 @@ void HazelDashLayer::OnExplode(const Position &pos)
 		{
 			continue;
 		}
-		Hazel::Entity entity = m_Scene.CreateEntity();
+		Rocket::Entity entity = m_Scene.CreateEntity();
 		entity.AddComponent<Position>(pos + offset);
 		entity.AddComponent<Explosion>(Explosion::Ignite);
 		if (explodeToDiamond)
@@ -1035,7 +1070,7 @@ void HazelDashLayer::AmoebaFixedUpdate()
 	amoebas.each([&](auto &amoeba, auto &pos) {
 		for (auto direction : Directions)
 		{
-			Hazel::Entity entityOther = GetEntity(pos + direction);
+			Rocket::Entity entityOther = GetEntity(pos + direction);
 			auto tile = entityOther.GetComponent<Tile>();
 			if (IsEmpty(tile) || tile == Tile::Dirt1)
 			{
@@ -1061,7 +1096,7 @@ void HazelDashLayer::AmoebaFixedUpdate()
 	{
 		for (auto pos : growPositions)
 		{
-			Hazel::Entity entity = GetEntity(pos);
+			Rocket::Entity entity = GetEntity(pos);
 			auto &tileInitial = entity.GetComponent<Tile>();
 			if (IsEmpty(tileInitial))
 			{
@@ -1082,7 +1117,7 @@ void HazelDashLayer::AmoebaFixedUpdate()
 void HazelDashLayer::OnSolidify(const Tile solidifyTo)
 {
 	m_Scene.m_Registry.view<Amoeba, Tile>().each([&](const auto entityHandle, auto &amoeba, auto &tile) {
-		Hazel::Entity entity(entityHandle, &m_Scene);
+		Rocket::Entity entity(entityHandle, &m_Scene);
 		entity.RemoveComponent<Amoeba>();
 		tile = solidifyTo;
 		if (IsDiamond(tile))
@@ -1097,7 +1132,7 @@ void HazelDashLayer::OnSolidify(const Tile solidifyTo)
 	});
 }
 
-void HazelDashLayer::ExploderUpdate(Hazel::Timestep ts)
+void HazelDashLayer::ExploderUpdate(Rocket::Timestep ts)
 {
 	RK_PROFILE_FUNCTION();
 
@@ -1117,14 +1152,15 @@ void HazelDashLayer::ExploderUpdate(Hazel::Timestep ts)
 				if (IsDiamond(animation.Frames.back()))
 				{
 					// turn into a diamond
-					Hazel::Entity entity(entityHandle, &m_Scene);
+					Rocket::Entity entity(entityHandle, &m_Scene);
 					entity.RemoveComponent<Explosion>();
 					entity.AddComponent<Mass>();
 					animation = CharToAnimation('d');
 				}
 				else
 				{
-					//RK_ASSERT(Hazel::Entity(entityHandle, &m_Scene) == GetEntity(pos), "Something has misplaced an explosion - game logic error!");
+					bool result = Rocket::Entity(entityHandle, &m_Scene) == GetEntity(pos);
+					RK_ASSERT(result, "Something has misplaced an explosion - game logic error!");
 					ClearEntity(pos);
 				}
 			}
@@ -1132,7 +1168,7 @@ void HazelDashLayer::ExploderUpdate(Hazel::Timestep ts)
 	});
 }
 
-void HazelDashLayer::AnimatorUpdate(Hazel::Timestep ts)
+void HazelDashLayer::AnimatorUpdate(Rocket::Timestep ts)
 {
 	RK_PROFILE_FUNCTION();
 
@@ -1149,7 +1185,7 @@ void HazelDashLayer::AnimatorUpdate(Hazel::Timestep ts)
 				}
 				else
 				{
-					Hazel::Entity entity(entityHandle, &m_Scene);
+					Rocket::Entity entity(entityHandle, &m_Scene);
 					entity.RemoveComponent<Animation>();
 					return;
 				}
@@ -1159,21 +1195,21 @@ void HazelDashLayer::AnimatorUpdate(Hazel::Timestep ts)
 	}
 }
 
-void HazelDashLayer::CameraControllerUpdate(Hazel::Timestep ts)
+void HazelDashLayer::CameraControllerUpdate(Rocket::Timestep ts)
 {
 	RK_PROFILE_FUNCTION();
 	// TODO: placeholder code.  Camera and Viewport may become entities and components at some point
 	m_ViewPort.Update(ts);
 }
 
-void HazelDashLayer::RendererUpdate(Hazel::Timestep ts)
+void HazelDashLayer::RendererUpdate(Rocket::Timestep ts)
 {
 	RK_PROFILE_FUNCTION();
 
 	static glm::vec2 tileSize{1.0f, 1.0f};
 
-	Hazel::RenderCommand::Clear();
-	Hazel::Renderer2D::BeginScene(m_ViewPort.GetCamera());
+	Rocket::RenderCommand::Clear();
+	Rocket::Renderer2D::BeginScene(m_ViewPort.GetCamera());
 
 	// Theres a couple of options for how to render here.
 	// Ideally, we'd like to just say "for each entity that has a position and a tile, render it"
@@ -1193,18 +1229,18 @@ void HazelDashLayer::RendererUpdate(Hazel::Timestep ts)
 		if (m_ViewPort.Overlaps(pos))
 		{
 			glm::vec2 xy = {pos.Col, pos.Row};
-			Hazel::Renderer2D::DrawQuad(xy, tileSize, m_Tiles[(int)tile]);
+			Rocket::Renderer2D::DrawQuad(xy, tileSize, m_Tiles[(int)tile]);
 		}
 	});
-	Hazel::Renderer2D::EndScene();
+	Rocket::Renderer2D::EndScene();
 }
 
-Hazel::Entity HazelDashLayer::GetEntity(const Position pos)
+Rocket::Entity HazelDashLayer::GetEntity(const Position pos)
 {
 	return m_Entities[(m_Width * pos.Row) + pos.Col];
 }
 
-void HazelDashLayer::SetEntity(Position pos, Hazel::Entity entity)
+void HazelDashLayer::SetEntity(Position pos, Rocket::Entity entity)
 {
 	m_Entities[(m_Width * pos.Row) + pos.Col] = entity;
 }
@@ -1224,13 +1260,13 @@ void HazelDashLayer::SwapEntities(const Position posA, const Position posB)
 	size_t indexA = (m_Width * posA.Row) + posA.Col;
 	size_t indexB = (m_Width * posB.Row) + posB.Col;
 
-	Hazel::Entity entityA = m_Entities[indexA];
-	Hazel::Entity entityB = m_Entities[indexB];
+	Rocket::Entity entityA = m_Entities[indexA];
+	Rocket::Entity entityB = m_Entities[indexB];
 
 	std::swap(m_Entities[(m_Width * posA.Row) + posA.Col], m_Entities[(m_Width * posB.Row) + posB.Col]);
 
-	Hazel::Entity entityA2 = m_Entities[indexA];
-	Hazel::Entity entityB2 = m_Entities[indexB];
+	Rocket::Entity entityA2 = m_Entities[indexA];
+	Rocket::Entity entityB2 = m_Entities[indexB];
 }
 
 #ifdef _DEBUG
@@ -1251,16 +1287,16 @@ void HazelDashLayer::OnImGuiRender()
 	ImGui::Text("Growth Potential: %d", m_AmoebaPotential);
 
 	ImGui::Separator();
-	auto stats = Hazel::Renderer2D::GetStats();
+	auto stats = Rocket::Renderer2D::GetStats();
 	ImGui::Text("Renderer2D Stats:");
 	ImGui::Text("Draw Calls: %d", stats.DrawCalls);
 	ImGui::Text("Quads: %d", stats.QuadCount);
 	ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
 	ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
 	ImGui::Text("Textures: %d", stats.TextureCount);
-	float averageRenderTime = stats.TotalFrameRenderTime / stats.FrameRenderTime.size(); // nb: wont be accurate until we have gathered at least stats.FrameRenderTime().size() results
-	float averageFPS = 1.0f / averageRenderTime;
-	ImGui::Text("Average frame render time: %8.5f (%5.0f fps)", averageRenderTime, averageFPS);
+	//float averageRenderTime = stats.TotalFrameRenderTime / stats.FrameRenderTime.size(); // nb: wont be accurate until we have gathered at least stats.FrameRenderTime().size() results
+	//float averageFPS = 1.0f / averageRenderTime;
+	//ImGui::Text("Average frame render time: %8.5f (%5.0f fps)", averageRenderTime, averageFPS);
 
 	ImGui::End();
 }

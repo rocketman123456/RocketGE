@@ -14,6 +14,7 @@ namespace Rocket
 {
     struct TagComponent
 	{
+		// TODO : instead of string, using hashing funtion to improve performance
 		std::string Tag;
 
 		TagComponent() = default;

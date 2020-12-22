@@ -1,9 +1,9 @@
-#include "RocketDashLayer.h"
+#include "HazelDashLayer.h"
 #include "Random.h"
 
 #include "RKEngine.h"
-#include "GEModule/Application.h"
-#include "GECore/EntryPoint.h"
+
+using namespace Rocket;
 
 class RocketDashApp : public Rocket::Application
 {
@@ -13,7 +13,7 @@ public:
 	virtual void PreInitialize() override
 	{
 		Random::Init();
-		PushLayer(new RocketDashLayer());
+		PushLayer(new HazelDashLayer());
 	}
 
 	virtual void PostInitialize() override

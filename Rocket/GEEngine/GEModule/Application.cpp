@@ -16,7 +16,11 @@ namespace Rocket
 
         m_Window->SetEventCallback(RK_BIND_EVENT_FN(Application::OnEvent));
 
-        m_GuiLayer = new ImGuiLayer();
+#ifdef RK_DEBUG
+        m_GuiLayer = new ImGuiLayer(true);
+#else
+        m_GuiLayer = new ImGuiLayer(false);
+#endif
         PushOverlay(m_GuiLayer);
 
         m_CurrentTime = m_Clock.now();
@@ -31,11 +35,12 @@ namespace Rocket
     void Application::Finalize()
     {
         RK_PROFILE_FUNCTION();
-        RK_CORE_INFO("Exit Application");
     }
 
     int Application::InitializeModule()
     {
+        RK_PROFILE_FUNCTION();
+
         RK_CORE_ASSERT(!s_Instance, "Application already exists!");
         s_Instance = this;
 
@@ -57,13 +62,14 @@ namespace Rocket
 
     void Application::FinalizeModule()
     {
+        RK_PROFILE_FUNCTION();
+
+        Renderer::Shutdown();
         for (auto &module : m_Modules)
         {
             module->Finalize();
             delete module;
         }
-
-        Renderer::Shutdown();
     }
 
     void Application::OnEvent(Event &e)
@@ -108,6 +114,7 @@ namespace Rocket
 
     void Application::PushModule(IRuntimeModule *module)
     {
+        RK_PROFILE_FUNCTION();
         m_Modules.push_back(module);
     }
 
@@ -115,28 +122,29 @@ namespace Rocket
     {
         RK_PROFILE_FUNCTION();
 
-        // Calculate Delta Time
-        m_LastTime = m_CurrentTime;
-        m_CurrentTime = m_Clock.now();
-        m_Duration = m_CurrentTime - m_LastTime;
-
-        m_Window->PollEvent();
-
+        ProfilerBegin("Tick");
         {
-            RK_PROFILE_SCOPE("Profiler Start Loop");
-            ProfilerBegin("Layer Tick");
+            RK_PROFILE_SCOPE("Tick Begin");
+            ProfilerBegin("Tick Begin");
+            // Calculate Delta Time
+            m_LastTime = m_CurrentTime;
+            m_CurrentTime = m_Clock.now();
+            m_Duration = m_CurrentTime - m_LastTime;
+
+            m_Window->PollEvent();
+            ProfilerEnd("Tick Begin");
         }
         // Common Update
         {
-            ProfilerBegin("Layer Update");
+            ProfilerBegin("Tick Update");
             for (Layer *layer : m_LayerStack)
             {
-                RK_PROFILE_SCOPE("Layer Update");
+                RK_PROFILE_SCOPE(layer->GetName().c_str());
                 ProfilerBegin(layer->GetName());
                 layer->OnUpdate(Timestep(m_Duration.count()));
                 ProfilerEnd(layer->GetName());
             }
-            ProfilerEnd("Layer Update");
+            ProfilerEnd("Tick Update");
         }
         // GUI Update
         {
@@ -146,13 +154,14 @@ namespace Rocket
             ProfilerEnd("GuiLayer Begin");
         }
         {
+            RK_PROFILE_TICK("GuiLayer Update");
             ProfilerBegin("GuiLayer Update");
             for (Layer *layer : m_LayerStack)
             {
-                RK_PROFILE_SCOPE("GuiLayer Update");
-                ProfilerBegin(layer->GetName() + " GUI");
+                RK_PROFILE_SCOPE((layer->GetName() + "GUI").c_str());
+                ProfilerBegin(layer->GetName() + "GUI");
                 layer->OnGuiRender();
-                ProfilerEnd(layer->GetName() + " GUI");
+                ProfilerEnd(layer->GetName() + "GUI");
             }
             ProfilerEnd("GuiLayer Update");
         }
@@ -162,19 +171,18 @@ namespace Rocket
             m_GuiLayer->End();
             ProfilerEnd("GuiLayer End");
         }
-        {
-            RK_PROFILE_SCOPE("Profiler End Loop");
-            ProfilerEnd("Layer Tick");
-        }
+        ProfilerEnd("Tick");
     }
 
     void Application::TickModule()
     {
         RK_PROFILE_FUNCTION();
+        ProfilerBegin("Module Tick");
 
         if (m_Parallel)
         {
-            ProfilerBegin("Module Tick Parallel");
+            RK_PROFILE_SCOPE("Parallel Module Update");
+            ProfilerBegin("Parallel Module Update");
 
             std::vector<std::future<int>> futures;
 
@@ -189,25 +197,24 @@ namespace Rocket
 
             for (auto &f : futures)
                 f.get();
-
-            ProfilerEnd("Module Tick Parallel");
+            
+            ProfilerEnd("Parallel Module Update");
         }
         else
         {
-            ProfilerBegin("Module Tick");
+            RK_PROFILE_SCOPE("Module Update");
+            ProfilerBegin("Module Update");
             for (auto &module : m_Modules)
             {
-                RK_PROFILE_SCOPE(module->GetName());
+                RK_PROFILE_SCOPE(module->GetName().c_str());
                 ProfilerBegin(module->GetName());
                 module->Tick(Timestep(m_Duration.count()));
                 ProfilerEnd(module->GetName());
             }
-            ProfilerEnd("Module Tick");
+            ProfilerEnd("Module Update");
         }
-        {
-            RK_PROFILE_SCOPE("Profiler Dump");
-            ProfilerDump();
-        }
+        ProfilerEnd("Module Tick");
+        ProfilerDump();
     }
 
     void Application::Close()

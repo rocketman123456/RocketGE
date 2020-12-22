@@ -26,6 +26,11 @@ namespace Rocket
 		m_Registry.destroy(entity);
 	}
 
+	void Scene::DestroyAllEntities()
+	{
+		m_Registry.clear();
+	}
+
 	void Scene::OnUpdate(Timestep ts)
 	{
 		// Update scripts
@@ -43,7 +48,6 @@ namespace Rocket
 				nsc.Instance->OnUpdate(ts);
 			});
 		}
-
 		// Render 2D
 		Camera* mainCamera = nullptr;
 		glm::mat4 cameraTransform;
@@ -76,7 +80,6 @@ namespace Rocket
 
 			Renderer2D::EndScene();
 		}
-
 	}
 
 	void Scene::OnViewportResize(uint32_t width, uint32_t height)
