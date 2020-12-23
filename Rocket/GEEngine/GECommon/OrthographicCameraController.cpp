@@ -10,23 +10,23 @@ namespace Rocket {
 
 	void OrthographicCameraController::OnUpdate(Timestep ts)
 	{
-		if (Input::IsKeyPressed(Key::A))
+		if (Input::IsKeyPressed(Key::Left))
 		{
 			m_CameraPosition.x -= cos(glm::radians(m_CameraRotation)) * m_CameraTranslationSpeed * ts;
 			m_CameraPosition.y -= sin(glm::radians(m_CameraRotation)) * m_CameraTranslationSpeed * ts;
 		}
-		if (Input::IsKeyPressed(Key::D))
+		if (Input::IsKeyPressed(Key::Right))
 		{
 			m_CameraPosition.x += cos(glm::radians(m_CameraRotation)) * m_CameraTranslationSpeed * ts;
 			m_CameraPosition.y += sin(glm::radians(m_CameraRotation)) * m_CameraTranslationSpeed * ts;
 		}
 
-		if (Input::IsKeyPressed(Key::W))
+		if (Input::IsKeyPressed(Key::Up))
 		{
 			m_CameraPosition.x += -sin(glm::radians(m_CameraRotation)) * m_CameraTranslationSpeed * ts;
 			m_CameraPosition.y += cos(glm::radians(m_CameraRotation)) * m_CameraTranslationSpeed * ts;
 		}
-		if (Input::IsKeyPressed(Key::S))
+		if (Input::IsKeyPressed(Key::Down))
 		{
 			m_CameraPosition.x -= -sin(glm::radians(m_CameraRotation)) * m_CameraTranslationSpeed * ts;
 			m_CameraPosition.y -= cos(glm::radians(m_CameraRotation)) * m_CameraTranslationSpeed * ts;
@@ -34,9 +34,9 @@ namespace Rocket {
 
 		if (m_Rotation)
 		{
-			if (Input::IsKeyPressed(Key::Q))
+			if (Input::IsKeyPressed(Key::Minus))
 				m_CameraRotation += m_CameraRotationSpeed * ts;
-			if (Input::IsKeyPressed(Key::E))
+			if (Input::IsKeyPressed(Key::Equal))
 				m_CameraRotation -= m_CameraRotationSpeed * ts;
 
 			if (m_CameraRotation > 180.0f)

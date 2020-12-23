@@ -28,9 +28,11 @@ endif()
 add_executable( EditorApp
     EditorApp.cpp
     EditorLayer.cpp
+    Panel/SceneHierarchyPanel.cpp
 )
 target_include_directories( EditorApp PRIVATE
     ${PROJECT_SOURCE_DIR}/Rocket/Interface
+    ${PROJECT_SOURCE_DIR}/Editor
 )
 target_link_libraries( EditorApp
     GEEngine ${ENGINE_LIBRARY}

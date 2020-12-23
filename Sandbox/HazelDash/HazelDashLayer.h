@@ -19,8 +19,8 @@ public:
 
 	virtual void OnUpdate(Rocket::Timestep ts) override;
 
-#ifdef _DEBUG
-	virtual void OnImGuiRender() override;
+#ifdef RK_DEBUG
+	virtual void OnGuiRender() override;
 #endif
 
 	void OnEvent(Rocket::Event &e) override;

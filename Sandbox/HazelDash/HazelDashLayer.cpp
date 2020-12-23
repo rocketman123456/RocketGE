@@ -26,7 +26,7 @@
 #include <iomanip>
 #include <sstream>
 
-#ifdef _DEBUG
+#ifdef RK_DEBUG
 #include <imgui.h>
 #endif
 
@@ -1269,8 +1269,8 @@ void HazelDashLayer::SwapEntities(const Position posA, const Position posB)
 	Rocket::Entity entityB2 = m_Entities[indexB];
 }
 
-#ifdef _DEBUG
-void HazelDashLayer::OnImGuiRender()
+#ifdef RK_DEBUG
+void HazelDashLayer::OnGuiRender()
 {
 	ImGui::Begin("Game Stats");
 	ImGui::Text("Score: %d", m_Score);
@@ -1293,7 +1293,7 @@ void HazelDashLayer::OnImGuiRender()
 	ImGui::Text("Quads: %d", stats.QuadCount);
 	ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
 	ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
-	ImGui::Text("Textures: %d", stats.TextureCount);
+	//ImGui::Text("Textures: %d", stats.TextureCount);
 	//float averageRenderTime = stats.TotalFrameRenderTime / stats.FrameRenderTime.size(); // nb: wont be accurate until we have gathered at least stats.FrameRenderTime().size() results
 	//float averageFPS = 1.0f / averageRenderTime;
 	//ImGui::Text("Average frame render time: %8.5f (%5.0f fps)", averageRenderTime, averageFPS);
