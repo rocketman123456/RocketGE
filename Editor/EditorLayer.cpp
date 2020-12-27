@@ -6,6 +6,64 @@
 
 using namespace Rocket;
 
+class CameraControllerScript : implements ScriptableEntity
+{
+public:
+    virtual void OnCreate() override
+    {
+        auto& translation = GetComponent<TransformComponent>().Translation;
+        translation.x = rand() % 10 - 5.0f;
+    }
+
+    virtual void OnDestroy() override
+    {
+    }
+
+    virtual void OnUpdate(Timestep ts) override
+    {
+        auto& translation = GetComponent<TransformComponent>().Translation;
+        auto& camera = GetComponent<CameraComponent>().Primary;
+
+        float speed = 5.0f;
+
+        if(!camera)
+            return;
+
+        if (Input::IsKeyPressed(Key::Left))
+            translation.x -= speed * ts;
+        if (Input::IsKeyPressed(Key::Right))
+            translation.x += speed * ts;
+        if (Input::IsKeyPressed(Key::Up))
+            translation.y += speed * ts;
+        if (Input::IsKeyPressed(Key::Down))
+            translation.y -= speed * ts;
+    }
+};
+
+class MovementScript : implements ScriptableEntity
+{
+    glm::vec3 m_Translation;
+    float m_Time;
+public:
+    virtual void OnCreate() override
+    {
+        m_Translation = GetComponent<TransformComponent>().Translation;
+    }
+
+    virtual void OnDestroy() override
+    {
+    }
+
+    virtual void OnUpdate(Timestep ts) override
+    {
+        auto& translation = GetComponent<TransformComponent>().Translation;
+
+        translation.x = m_Translation.x + sinf(glm::radians(m_Time * 100.0f));
+        translation.y = m_Translation.y + cosf(glm::radians(m_Time * 100.0f));
+        m_Time = m_Time + ts;
+    }
+};
+
 void EditorLayer::OnAttach()
 {
     RK_PROFILE_FUNCTION();
@@ -18,7 +76,7 @@ void EditorLayer::OnAttach()
     fbSpec.Height = 720;
     m_Framebuffer = Framebuffer::Create(fbSpec);
 
-    m_Controller = new OrthographicCameraController(1280.0f / 720.0f);
+    //m_Controller = new OrthographicCameraController(1280.0f / 720.0f);
 
     std::string img_path_1 = ProjectSourceDir + "/Assets/textures/wall.jpg";
     std::string img_path_2 = ProjectSourceDir + "/Assets/textures/container.jpg";
@@ -50,38 +108,10 @@ void EditorLayer::OnAttach()
     auto& cc = m_SecondCamera.AddComponent<CameraComponent>();
     cc.Primary = false;
 
-    class CameraController : public ScriptableEntity
-    {
-    public:
-        virtual void OnCreate() override
-        {
-            auto& translation = GetComponent<TransformComponent>().Translation;
-            translation.x = rand() % 10 - 5.0f;
-        }
+    m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraControllerScript>();
+    m_SecondCamera.AddComponent<NativeScriptComponent>().Bind<CameraControllerScript>();
 
-        virtual void OnDestroy() override
-        {
-        }
-
-        virtual void OnUpdate(Timestep ts) override
-        {
-            auto& translation = GetComponent<TransformComponent>().Translation;
-
-            float speed = 5.0f;
-
-            if (Input::IsKeyPressed(Key::Left))
-                translation.x -= speed * ts;
-            if (Input::IsKeyPressed(Key::Right))
-                translation.x += speed * ts;
-            if (Input::IsKeyPressed(Key::Up))
-                translation.y += speed * ts;
-            if (Input::IsKeyPressed(Key::Down))
-                translation.y -= speed * ts;
-        }
-    };
-
-    m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
-    m_SecondCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
+    redSquare.AddComponent<NativeScriptComponent>().Bind<MovementScript>();
 #endif
 
     m_SceneHierarchyPanel.SetContext(m_ActiveScene);
@@ -91,7 +121,7 @@ void EditorLayer::OnDetach()
 {
     RK_PROFILE_FUNCTION();
 
-    delete m_Controller;
+    //delete m_Controller;
     m_Texture.clear();
     m_ActiveScene.reset();
 }
@@ -104,13 +134,13 @@ void EditorLayer::OnUpdate(Rocket::Timestep ts)
         (spec.Width != m_ViewportSize.x || spec.Height != m_ViewportSize.y))
     {
         m_Framebuffer->Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
-        m_Controller->OnResize(m_ViewportSize.x, m_ViewportSize.y);
+        //m_Controller->OnResize(m_ViewportSize.x, m_ViewportSize.y);
         m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
     }
 
     // Update
-    if (m_ViewportFocused && m_ViewportHovered)
-        m_Controller->OnUpdate(ts);
+    //if (m_ViewportFocused && m_ViewportHovered)
+    //    m_Controller->OnUpdate(ts);
 
     Renderer2D::ResetStats();
 
@@ -129,7 +159,7 @@ void EditorLayer::OnUpdate(Rocket::Timestep ts)
 
 void EditorLayer::OnEvent(Rocket::Event &event)
 {
-    m_Controller->OnEvent(event);
+    //m_Controller->OnEvent(event);
     EventDispatcher dispatcher(event);
     dispatcher.Dispatch<KeyPressedEvent>(RK_BIND_EVENT_FN(EditorLayer::OnKeyPressed));
 }
@@ -252,25 +282,27 @@ void EditorLayer::NewScene()
 
 void EditorLayer::OpenScene()
 {
-    //std::optional<std::string> filepath = FileDialogs::OpenFile("Hazel Scene (*.hazel)\0*.hazel\0");
-    //if (filepath)
-    //{
-    //    m_ActiveScene = CreateRef<Scene>();
-    //    m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
-    //    m_SceneHierarchyPanel.SetContext(m_ActiveScene);
-    //    SceneSerializer serializer(m_ActiveScene);
-    //    serializer.Deserialize(*filepath);
-    //}
+    std::string file_path = ProjectSourceDir + "/Assets/scenes/scene01.yaml";
+    std::optional<std::string> filepath = FileDialogs::OpenFile(file_path.c_str());
+    if (filepath)
+    {
+        m_ActiveScene = CreateRef<Scene>();
+        m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+        m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+        SceneSerializer serializer(m_ActiveScene);
+        serializer.Deserialize(*filepath);
+    }
 }
 
 void EditorLayer::SaveSceneAs()
 {
-    //std::optional<std::string> filepath = FileDialogs::SaveFile("Hazel Scene (*.hazel)\0*.hazel\0");
-    //if (filepath)
-    //{
-    //    SceneSerializer serializer(m_ActiveScene);
-    //    serializer.Serialize(*filepath);
-    //}
+    std::string file_path = ProjectSourceDir + "/Assets/scenes/scene01.yaml";
+    std::optional<std::string> filepath = FileDialogs::SaveFile(file_path.c_str());
+    if (filepath)
+    {
+        SceneSerializer serializer(m_ActiveScene);
+        serializer.Serialize(*filepath);
+    }
 }
 
 bool EditorLayer::OnKeyPressed(KeyPressedEvent& e)

@@ -6,7 +6,7 @@ struct H
 	std::string s1, s2;
 };
 
-std::ostream &operator<<(std::ostream &os, const H &h)
+inline std::ostream &operator<<(std::ostream &os, const H &h)
 {
 	os << h.s1 << "," << h.s2;
 	return os;

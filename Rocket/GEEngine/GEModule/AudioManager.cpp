@@ -19,7 +19,7 @@ namespace Rocket
             device = alcOpenDevice(NULL);
         if (!device)
         {
-            fprintf(stderr, "Could not open a device!\n");
+            RK_CORE_ERROR("Could not open a device!");
             return 1;
         }
 
@@ -32,7 +32,7 @@ namespace Rocket
             if (ctx != NULL)
                 alcDestroyContext(ctx);
             alcCloseDevice(device);
-            fprintf(stderr, "Could not set a context!\n");
+            RK_CORE_ERROR("Could not set a context!");
             return 1;
         }
 
@@ -41,7 +41,7 @@ namespace Rocket
             name = alcGetString(device, ALC_ALL_DEVICES_SPECIFIER);
         if (!name || alcGetError(device) != AL_NO_ERROR)
             name = alcGetString(device, ALC_DEVICE_SPECIFIER);
-        printf("Opened \"%s\"\n", name);
+        RK_CORE_INFO("Opened \"{0}\"", name);
 
         return 0;
     }

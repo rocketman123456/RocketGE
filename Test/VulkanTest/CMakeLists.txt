@@ -42,3 +42,15 @@ target_include_directories( VulkanPhysicsDevice PRIVATE
 target_link_libraries( VulkanPhysicsDevice
     ${Vulkan_LIBRARIES} glfw
 )
+
+add_executable( ImGuiVulkan
+    ImGuiVulkan.cpp
+)
+target_include_directories( ImGuiVulkan PRIVATE
+    ${Vulkan_INCLUDE_DIRS}
+)
+target_link_libraries( ImGuiVulkan
+    ${Vulkan_LIBRARIES} glfw imgui
+    #${PROJECT_SOURCE_DIR}/Thirdparty/imgui/examples/imgui_impl_glfw.cpp
+    #${PROJECT_SOURCE_DIR}/Thirdparty/imgui/examples/imgui_impl_vulkan.cpp
+)

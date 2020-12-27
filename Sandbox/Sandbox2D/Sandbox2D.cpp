@@ -191,7 +191,7 @@ namespace Rocket
     {
         RK_PROFILE_FUNCTION();
 
-        DockSpace();
+        //DockSpace();
 
         ImGui::Begin("Setting");
         ImGui::ColorEdit3("Square Color", glm::value_ptr(m_SquareColor));

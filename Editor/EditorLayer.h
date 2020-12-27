@@ -24,7 +24,7 @@ private:
     bool OnKeyPressed(Rocket::KeyPressedEvent& e);
 
 private:
-    Rocket::OrthographicCameraController *m_Controller;
+    //Rocket::OrthographicCameraController *m_Controller;
 
     Rocket::Ref<Rocket::Framebuffer> m_Framebuffer;
     Rocket::Ref<Rocket::VertexArray> m_SquareVA;

@@ -92,10 +92,11 @@ namespace Rocket
 		auto boldFont = io.Fonts->Fonts[0];
 
 		ImGui::PushID(label.c_str());
+		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{ 0, 0 });
 
 		ImGui::Columns(2);
 		//ImGui::SetColumnWidth(0, columnWidth);
-        ImGui::SetColumnWidth(0, ImGui::GetWindowWidth() * 0.2f);
+        ImGui::SetColumnWidth(0, ImGui::GetWindowWidth() * 0.18f);
 		ImGui::Text(label.c_str());
 		ImGui::NextColumn();
 
@@ -103,7 +104,7 @@ namespace Rocket
         //ImGui::PushItemWidth(ImGui::CalcItemWidth());
         //ImGui::PushItemWidth(ImGui::CalcItemWidth());
 		//ImGui::PushMultiItemsWidths(3, ImGui::CalcItemWidth());
-		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{ 0, 0 });
+		//ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{ 0, 0 });
 
 		float lineHeight = 22.0f;//GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.0f;
 		ImVec2 buttonSize = { ImGui::GetWindowWidth() * 0.05f, lineHeight };
@@ -113,6 +114,7 @@ namespace Rocket
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.8f, 0.1f, 0.15f, 1.0f });
 		ImGui::PushFont(boldFont);
         ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.05f);
+		//ImGui::SetNextItemWidth(ImGui::CalcItemWidth());
 		if (ImGui::Button("X", buttonSize))
 			values.x = resetValue;
 		ImGui::PopFont();
@@ -120,6 +122,7 @@ namespace Rocket
 
 		ImGui::SameLine();
         ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.20f);
+		//ImGui::SetNextItemWidth(ImGui::CalcItemWidth());
 		ImGui::DragFloat("##X", &values.x, 0.1f, 0.0f, 0.0f, "%.2f");
 		//ImGui::PopItemWidth();
 
@@ -129,6 +132,7 @@ namespace Rocket
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.2f, 0.7f, 0.2f, 1.0f });
 		ImGui::PushFont(boldFont);
         ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.05f);
+		//ImGui::SetNextItemWidth(ImGui::CalcItemWidth());
 		if (ImGui::Button("Y", buttonSize))
 			values.y = resetValue;
 		ImGui::PopFont();
@@ -136,6 +140,7 @@ namespace Rocket
 
 		ImGui::SameLine();
         ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.20f);
+		//ImGui::SetNextItemWidth(ImGui::CalcItemWidth());
 		ImGui::DragFloat("##Y", &values.y, 0.1f, 0.0f, 0.0f, "%.2f");
 		//ImGui::PopItemWidth();
 
@@ -145,6 +150,7 @@ namespace Rocket
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.1f, 0.25f, 0.8f, 1.0f });
 		ImGui::PushFont(boldFont);
         ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.05f);
+		//ImGui::SetNextItemWidth(ImGui::CalcItemWidth());
 		if (ImGui::Button("Z", buttonSize))
 			values.z = resetValue;
 		ImGui::PopFont();
@@ -152,6 +158,7 @@ namespace Rocket
 
 		ImGui::SameLine();
         ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.20f);
+		//ImGui::SetNextItemWidth(ImGui::CalcItemWidth());
 		ImGui::DragFloat("##Z", &values.z, 0.1f, 0.0f, 0.0f, "%.2f");
 		//ImGui::PopItemWidth();
 
@@ -321,6 +328,5 @@ namespace Rocket
 		{
 			ImGui::ColorEdit4("Color", glm::value_ptr(component.Color));
 		});
-
 	}
 }

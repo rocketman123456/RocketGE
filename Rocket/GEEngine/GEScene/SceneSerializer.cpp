@@ -81,10 +81,10 @@ namespace Rocket
 	{
 	}
 
-	static void SerializeEntity(YAML::Emitter& out, Entity entity)
+	static void SerializeEntity(YAML::Emitter& out, Entity entity, entt::entity ID)
 	{
 		out << YAML::BeginMap; // Entity
-		out << YAML::Key << "Entity" << YAML::Value << "12837192831273"; // TODO: Entity ID goes here
+		out << YAML::Key << "Entity" << YAML::Value << static_cast<int32_t>(ID);
 
 		if (entity.HasComponent<TagComponent>())
 		{
@@ -161,7 +161,7 @@ namespace Rocket
 			if (!entity)
 				return;
 
-			SerializeEntity(out, entity);
+			SerializeEntity(out, entity, entityID);
 		});
 		out << YAML::EndSeq;
 		out << YAML::EndMap;
