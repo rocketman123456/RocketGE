@@ -6,16 +6,14 @@ add_library( Render_Vulkan
 target_link_libraries( Render_Vulkan PRIVATE
     glfw Eigen3::Eigen
 )
-if(Apple)
-    find_package(Vulkan REQUIRED)
-elseif(Linux)
-    find_package(Vulkan REQUIRED)
-elseif(Windows)
-    find_package(Vulkan REQUIRED)
-endif()
+
+find_package(Vulkan REQUIRED)
+find_package(volk CONFIG REQUIRED)
+
 target_include_directories( Render_Vulkan
     ${Vulkan_INCLUDE_DIRS}
 )
 target_link_libraries( Render_Vulkan
     ${Vulkan_LIBRARIES}
+    volk::volk volk::volk_headers
 )

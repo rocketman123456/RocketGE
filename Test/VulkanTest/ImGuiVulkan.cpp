@@ -31,7 +31,7 @@
 #endif
 
 //#define IMGUI_UNLIMITED_FRAME_RATE
-#ifdef RK_DEBUG
+#ifdef _DEBUG_
 #define IMGUI_VULKAN_DEBUG_REPORT
 #endif
 
