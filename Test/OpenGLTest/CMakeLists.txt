@@ -2,27 +2,32 @@ message(STATUS "Add Module OpenGLTest")
 message(STATUS "###################################")
 #include_directories( . )
 
-add_executable( OpenGLTest3.3 OpenGLTest3.3.cpp )
-target_link_libraries( OpenGLTest3.3
+add_executable( triangle_01 triangle_01.cpp )
+target_link_libraries( triangle_01
     spdlog imgui glad glfw stb_image
 )
 
-add_executable( OpenGLTest2.2 OpenGLTest2.2.cpp )
-target_link_libraries( OpenGLTest2.2
+add_executable( simple_light simple_light.cpp )
+target_link_libraries( simple_light
     spdlog imgui glad glfw stb_image
 )
 
-add_executable( OpenGLTest3.1 OpenGLTest3.1.cpp )
-target_link_libraries( OpenGLTest3.1
+add_executable( simple_light_cube simple_light_cube.cpp )
+target_link_libraries( simple_light_cube
     spdlog imgui glad glfw stb_image
 )
 
-add_executable( OpenGLTest4.2 OpenGLTest4.2.cpp )
-target_link_libraries( OpenGLTest4.2
+add_executable( draw_cube draw_cube.cpp )
+target_link_libraries( draw_cube
     spdlog imgui glad glfw stb_image
 )
 
-add_executable( OpenGLTest10.1 OpenGLTest10.1.cpp )
-target_link_libraries( OpenGLTest10.1
+add_executable( instance_draw_fast instance_draw_fast.cpp )
+target_link_libraries( instance_draw_fast
+    spdlog imgui glad glfw stb_image
+)
+
+add_executable( stencil_testing stencil_testing.cpp )
+target_link_libraries( stencil_testing
     spdlog imgui glad glfw stb_image
 )
