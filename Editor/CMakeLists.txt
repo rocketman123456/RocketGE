@@ -1,9 +1,10 @@
 message(STATUS "Add Module Editor")
 message(STATUS "###################################")
+
 set( ENGINE_LIBRARY
-    ${Threads_LIBS} ${OPENAL_LIBRARY} 
-    ${ENGINE_PLATFORM} ${ENGINE_RENDER}
-    Eigen3::Eigen spdlog glfw yaml-cpp
+    ${Threads_LIBS}
+    Eigen3::Eigen glfw yaml-cpp
+    spdlog::spdlog spdlog::spdlog_header_only
     OpenAL::OpenAL SndFile::sndfile EnTT::EnTT
     imgui glad stb_image glm
     CACHE STRING ""

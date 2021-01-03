@@ -6,10 +6,12 @@ namespace Rocket
 {
 	Scene::Scene()
 	{
+		RK_CORE_TRACE("New Scene");
 	}
 
 	Scene::~Scene()
 	{
+		RK_CORE_TRACE("Delete Scene");
 	}
 
 	Entity Scene::CreateEntity(const std::string &name)
@@ -17,7 +19,7 @@ namespace Rocket
 		Entity entity = {m_Registry.create(), this};
 		entity.AddComponent<TransformComponent>();
 		auto &tag = entity.AddComponent<TagComponent>();
-		tag.Tag = name.empty() ? "Entity" : name;
+		tag.Tag = name.empty() ? std::to_string((uint32_t)entity) : name;
 		return entity;
 	}
 

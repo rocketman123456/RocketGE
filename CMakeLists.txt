@@ -72,6 +72,7 @@ find_package(SndFile CONFIG REQUIRED)
 find_package(EnTT CONFIG REQUIRED)
 find_package(glm CONFIG REQUIRED)
 find_package(tinyobjloader CONFIG REQUIRED)
+find_package(spdlog CONFIG REQUIRED)
 
 message(STATUS "Render API Set to ${RENDER_API}")
 if (RENDER_API MATCHES "OpenGL")
@@ -93,15 +94,16 @@ endif()
 message(STATUS "###################################")
 
 include_directories(
-    #${PROJECT_SOURCE_DIR}/Thirdparty/entt/include
     ${PROJECT_SOURCE_DIR}/Thirdparty/glad/include
     ${PROJECT_SOURCE_DIR}/Thirdparty/spdlog/include
+    ${PROJECT_SOURCE_DIR}/Thirdparty/crossguid/include
     ${PROJECT_SOURCE_DIR}/Thirdparty/stb_image
-    ${PROJECT_SOURCE_DIR}/Thirdparty/tinyobjloader
     ${PROJECT_SOURCE_DIR}/Thirdparty/imgui
-    ${PROJECT_SOURCE_DIR}/Thirdparty/glm
-    ${EIGEN3_INCLUDE_DIRS}/unsupported
+)
+
+include_directories(
     ${EIGEN3_INCLUDE_DIRS}
+    #${EIGEN3_INCLUDE_DIRS}/unsupported
     ${BULLET_INCLUDE_DIRS}
     ${OPENAL_INCLUDE_DIRS}
     ${SNDFILE_INCLUDE_DIRS}

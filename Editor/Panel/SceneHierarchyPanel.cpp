@@ -106,14 +106,17 @@ namespace Rocket
 		//ImGui::PushMultiItemsWidths(3, ImGui::CalcItemWidth());
 		//ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{ 0, 0 });
 
+		float botton_width = 0.05f;
+		float slider_width = 0.20f;
+
 		float lineHeight = 22.0f;//GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.0f;
-		ImVec2 buttonSize = { ImGui::GetWindowWidth() * 0.05f, lineHeight };
+		ImVec2 buttonSize = { ImGui::GetWindowWidth() * botton_width, lineHeight };
 
 		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.8f, 0.1f, 0.15f, 1.0f });
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.9f, 0.2f, 0.2f, 1.0f });
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.8f, 0.1f, 0.15f, 1.0f });
 		ImGui::PushFont(boldFont);
-        ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.05f);
+        ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * botton_width);
 		//ImGui::SetNextItemWidth(ImGui::CalcItemWidth());
 		if (ImGui::Button("X", buttonSize))
 			values.x = resetValue;
@@ -121,7 +124,7 @@ namespace Rocket
 		ImGui::PopStyleColor(3);
 
 		ImGui::SameLine();
-        ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.20f);
+        ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * slider_width);
 		//ImGui::SetNextItemWidth(ImGui::CalcItemWidth());
 		ImGui::DragFloat("##X", &values.x, 0.1f, 0.0f, 0.0f, "%.2f");
 		//ImGui::PopItemWidth();
@@ -131,7 +134,7 @@ namespace Rocket
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.3f, 0.8f, 0.3f, 1.0f });
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.2f, 0.7f, 0.2f, 1.0f });
 		ImGui::PushFont(boldFont);
-        ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.05f);
+        ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * botton_width);
 		//ImGui::SetNextItemWidth(ImGui::CalcItemWidth());
 		if (ImGui::Button("Y", buttonSize))
 			values.y = resetValue;
@@ -139,7 +142,7 @@ namespace Rocket
 		ImGui::PopStyleColor(3);
 
 		ImGui::SameLine();
-        ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.20f);
+        ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * slider_width);
 		//ImGui::SetNextItemWidth(ImGui::CalcItemWidth());
 		ImGui::DragFloat("##Y", &values.y, 0.1f, 0.0f, 0.0f, "%.2f");
 		//ImGui::PopItemWidth();
@@ -149,7 +152,7 @@ namespace Rocket
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.2f, 0.35f, 0.9f, 1.0f });
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.1f, 0.25f, 0.8f, 1.0f });
 		ImGui::PushFont(boldFont);
-        ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.05f);
+        ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * botton_width);
 		//ImGui::SetNextItemWidth(ImGui::CalcItemWidth());
 		if (ImGui::Button("Z", buttonSize))
 			values.z = resetValue;
@@ -157,7 +160,7 @@ namespace Rocket
 		ImGui::PopStyleColor(3);
 
 		ImGui::SameLine();
-        ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.20f);
+        ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * slider_width);
 		//ImGui::SetNextItemWidth(ImGui::CalcItemWidth());
 		ImGui::DragFloat("##Z", &values.z, 0.1f, 0.0f, 0.0f, "%.2f");
 		//ImGui::PopItemWidth();
@@ -175,6 +178,9 @@ namespace Rocket
 		const ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_FramePadding;
 		if (entity.HasComponent<T>())
 		{
+			float botton_width = 0.05f;
+			float slider_width = 0.20f;
+
 			auto& component = entity.GetComponent<T>();
 			ImVec2 contentRegionAvailable = ImGui::GetContentRegionAvail();
 
@@ -185,7 +191,7 @@ namespace Rocket
 			ImGui::PopStyleVar(
 			);
 			ImGui::SameLine(contentRegionAvailable.x - lineHeight * 0.5f);
-			if (ImGui::Button("+", ImVec2{ ImGui::GetWindowWidth() * 0.05f, lineHeight }))
+			if (ImGui::Button("+", ImVec2{ ImGui::GetWindowWidth() * botton_width, lineHeight }))
 			{
 				ImGui::OpenPopup("ComponentSettings");
 			}

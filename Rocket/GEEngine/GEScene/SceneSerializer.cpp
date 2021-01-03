@@ -63,14 +63,14 @@ namespace YAML
 
 namespace Rocket
 {
-	YAML::Emitter &operator<<(YAML::Emitter &out, const glm::vec3 &v)
+	YAML::Emitter& operator <<(YAML::Emitter &out, const glm::vec3 &v)
 	{
 		out << YAML::Flow;
 		out << YAML::BeginSeq << v.x << v.y << v.z << YAML::EndSeq;
 		return out;
 	}
 
-	YAML::Emitter &operator<<(YAML::Emitter &out, const glm::vec4 &v)
+	YAML::Emitter& operator <<(YAML::Emitter &out, const glm::vec4 &v)
 	{
 		out << YAML::Flow;
 		out << YAML::BeginSeq << v.x << v.y << v.z << v.w << YAML::EndSeq;
@@ -136,15 +136,14 @@ namespace Rocket
 			out << YAML::EndMap; // CameraComponent
 		}
 
-		if (entity.HasComponent<SpriteRendererComponent>())
+		if (entity.HasComponent<NativeScriptComponent>())
 		{
-			out << YAML::Key << "SpriteRendererComponent";
-			out << YAML::BeginMap; // SpriteRendererComponent
+			out << YAML::Key << "NativeScriptComponent";
+			out << YAML::BeginMap; // NativeScriptComponent
 
-			auto &spriteRendererComponent = entity.GetComponent<SpriteRendererComponent>();
-			out << YAML::Key << "Color" << YAML::Value << spriteRendererComponent.Color;
+			//auto &nativeScriptComponent = entity.GetComponent<NativeScriptComponent>();
 
-			out << YAML::EndMap; // SpriteRendererComponent
+			out << YAML::EndMap; // NativeScriptComponent
 		}
 
 		out << YAML::EndMap; // Entity
@@ -160,7 +159,6 @@ namespace Rocket
 			Entity entity = {entityID, m_Scene.get()};
 			if (!entity)
 				return;
-
 			SerializeEntity(out, entity, entityID);
 		});
 		out << YAML::EndSeq;
@@ -236,6 +234,12 @@ namespace Rocket
 				{
 					auto &src = deserializedEntity.AddComponent<SpriteRendererComponent>();
 					src.Color = spriteRendererComponent["Color"].as<glm::vec4>();
+				}
+
+				auto nativeScriptComponent = entity["NativeScriptComponent"];
+				if (nativeScriptComponent)
+				{
+					//auto &src = deserializedEntity.AddComponent<NativeScriptComponent>();
 				}
 			}
 		}

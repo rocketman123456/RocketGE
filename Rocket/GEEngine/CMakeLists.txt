@@ -46,6 +46,7 @@ add_library( GEEngine
     GERender/Buffer.cpp
     GERender/FrameBuffer.cpp
     GERender/GraphicsContext.cpp
+    GERender/Material.cpp
     GERender/RenderAPI.cpp
     GERender/Renderer.cpp
     GERender/RenderCommand.cpp
@@ -65,6 +66,8 @@ add_library( GEEngine
     GEUtils/FunctionUtils.cpp
     GEUtils/Profile.cpp
 )
+
 target_link_libraries( GEEngine PRIVATE
     glfw Eigen3::Eigen
+    spdlog::spdlog_header_only
 )

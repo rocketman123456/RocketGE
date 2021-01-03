@@ -3,7 +3,6 @@ add_executable( HazelDash
     HazelDashLayer.cpp
     ViewPort.cpp
     Random.cpp
-    #${PROJECT_SOURCE_DIR}/Rocket/GEEngine/GEScene/Entity.cpp
 )
 target_include_directories( HazelDash PRIVATE
     ${PROJECT_SOURCE_DIR}/Rocket/Interface

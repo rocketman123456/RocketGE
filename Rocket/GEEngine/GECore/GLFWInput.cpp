@@ -39,13 +39,11 @@ namespace Rocket
 
 	float Input::GetMouseX()
 	{
-		//return GetMousePositionEigen()[0];
 		return GetMousePosition().x;
 	}
 
 	float Input::GetMouseY()
 	{
-		//return GetMousePositionEigen()[1];
 		return GetMousePosition().y;
 	}
 } // namespace Rocket

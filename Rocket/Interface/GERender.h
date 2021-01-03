@@ -4,6 +4,7 @@
 #include "GERender/RenderAPI.h"
 #include "GERender/RenderCommand.h"
 #include "GERender/GraphicsContext.h"
+#include "GERender/Material.h"
 #include "GERender/Shader.h"
 #include "GERender/Buffer.h"
 #include "GERender/FrameBuffer.h"
