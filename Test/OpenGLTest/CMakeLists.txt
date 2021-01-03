@@ -22,8 +22,13 @@ target_link_libraries( draw_cube
     spdlog imgui glad glfw stb_image
 )
 
-add_executable( instance_draw_fast instance_draw_fast.cpp )
-target_link_libraries( instance_draw_fast
+add_executable( instance_draw_square instance_draw_square.cpp )
+target_link_libraries( instance_draw_square
+    spdlog imgui glad glfw stb_image
+)
+
+add_executable( framebuffers framebuffers.cpp )
+target_link_libraries( framebuffers
     spdlog imgui glad glfw stb_image
 )
 
