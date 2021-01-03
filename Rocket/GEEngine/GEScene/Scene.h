@@ -6,7 +6,7 @@
 
 namespace Rocket
 {
-    class Entity;
+	class Entity;
 
 	class Scene
 	{
@@ -24,9 +24,11 @@ namespace Rocket
 		Entity GetPrimaryCameraEntity();
 
 		entt::registry m_Registry;
+
 	private:
-		template<typename T>
-		void OnComponentAdded(Entity entity, T& component);
+		template <typename T>
+		void OnComponentAdded(Entity entity, T &component);
+
 	private:
 		//entt::registry m_Registry;
 		uint32_t m_ViewportWidth = 0, m_ViewportHeight = 0;
@@ -35,4 +37,4 @@ namespace Rocket
 		friend class SceneSerializer;
 		friend class SceneHierarchyPanel;
 	};
-}
+} // namespace Rocket

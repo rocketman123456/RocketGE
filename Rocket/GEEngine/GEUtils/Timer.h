@@ -6,23 +6,23 @@
 
 namespace Rocket
 {
-    // this timer shoule only use for profile
-    class ProfilerTimer
-    {
-    public:
-        void InitTime(void);
-        void MarkTimeThisTick(void);
-        float GetElapsedTime(void);
-        float GetExactTime(void);
-        int64_t GetExactTimeCount(void);
-        inline int64_t GetTickRate() { return 1000; }
+	// this timer shoule only use for profile
+	class ProfilerTimer
+	{
+	public:
+		void InitTime(void);
+		void MarkTimeThisTick(void);
+		float GetElapsedTime(void);
+		float GetExactTime(void);
+		int64_t GetExactTimeCount(void);
+		inline int64_t GetTickRate() { return 1000; }
 
-    private:
-        std::chrono::time_point<std::chrono::steady_clock> m_StartTimepoint;
-        std::chrono::time_point<std::chrono::steady_clock> m_CurrentTimepoint;
-        long long m_TimeLastTick;
-    };
-}
+	private:
+		std::chrono::time_point<std::chrono::steady_clock> m_StartTimepoint;
+		std::chrono::time_point<std::chrono::steady_clock> m_CurrentTimepoint;
+		long long m_TimeLastTick;
+	};
+} // namespace Rocket
 
 class timer
 {

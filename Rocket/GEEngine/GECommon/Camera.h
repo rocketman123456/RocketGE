@@ -48,7 +48,7 @@ namespace Rocket
             UpdateProjectView();
         }
         inline const glm::mat4 &GetViewMatrix() const { return m_ViewMatrix; }
-        
+
         inline virtual void UpdateProjectView() { m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix; }
         inline const glm::mat4 &GetViewProjectionMatrix() const { return m_ViewProjectionMatrix; }
 

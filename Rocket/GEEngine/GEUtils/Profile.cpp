@@ -304,7 +304,7 @@ namespace Rocket
      * The name is assumed to be a static pointer, only the pointer is stored and compared for     *
      * efficiency reasons.                                                                         *
      *=============================================================================================*/
-    CProfileNode::CProfileNode(const char *name, CProfileNode *parent) 
+    CProfileNode::CProfileNode(const char *name, CProfileNode *parent)
         : Name(name),
           TotalCalls(0),
           TotalTime(0),
@@ -491,9 +491,8 @@ namespace Rocket
     {
         //InfoList.clear();
         auto iter = CProfileManager::Get_Iterator();
-        while(!iter->Is_Done())
+        while (!iter->Is_Done())
         {
-
         }
         CProfileManager::Release_Iterator(iter);
     }

@@ -21,20 +21,20 @@ namespace Rocket
         bool bValid;                //Whether this data is valid
         uint32_t iProfileInstances; //# of times ProfileBegin called
         int iOpenProfiles;          //# of times ProfileBegin w/o ProfileEnd
-        std::string szName;        //Name of sample
-        float fStartTime;          //The current open profile start time
-        float fAccumulator;        //All samples this frame added together
-        float fChildrenSampleTime; //Time taken by all children
-        uint32_t iNumParents;      //Number of profile parents
+        std::string szName;         //Name of sample
+        float fStartTime;           //The current open profile start time
+        float fAccumulator;         //All samples this frame added together
+        float fChildrenSampleTime;  //Time taken by all children
+        uint32_t iNumParents;       //Number of profile parents
     } ProfileSample;
 
     typedef struct
     {
-        bool bValid; //Whether the data is valid
+        bool bValid;        //Whether the data is valid
         std::string szName; //Name of the sample
-        float fAve; //Average time per frame (percentage)
-        float fMin; //Minimum time per frame (percentage)
-        float fMax; //Maximum time per frame (percentage)
+        float fAve;         //Average time per frame (percentage)
+        float fMin;         //Minimum time per frame (percentage)
+        float fMax;         //Maximum time per frame (percentage)
     } ProfileSampleHistory;
 
     typedef struct
@@ -204,7 +204,7 @@ namespace Rocket
 
 #ifdef RK_DEBUG
 #define RK_PROFILE_TICK_2(name, line) CProfileSample __profile##line(name)
-#define RK_PROFILE_TICK(name)  RK_PROFILE_TICK_2(name, __LINE__)
+#define RK_PROFILE_TICK(name) RK_PROFILE_TICK_2(name, __LINE__)
 #else
 #define RK_PROFILE_TICK(name)
 #endif

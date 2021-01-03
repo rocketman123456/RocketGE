@@ -220,9 +220,9 @@ namespace Rocket
 
 #define RK_PROFILE_BEGIN_SESSION(name, filepath) ::Rocket::Instrumentor::Get().BeginSession(name, filepath)
 #define RK_PROFILE_END_SESSION() ::Rocket::Instrumentor::Get().EndSession()
-#define RK_PROFILE_SCOPE_LINE2(name, line) \
+#define RK_PROFILE_SCOPE_LINE2(name, line)                                                                   \
 	/*constexpr auto fixedName##line = ::Rocket::InstrumentorUtils::CleanupOutputString(name, "__cdecl ");*/ \
-	/*::Rocket::InstrumentationTimer timer##line(fixedName##line.Data)*/ \
+	/*::Rocket::InstrumentationTimer timer##line(fixedName##line.Data)*/                                     \
 	::Rocket::InstrumentationTimer timer##line(name)
 #define RK_PROFILE_SCOPE_LINE(name, line) RK_PROFILE_SCOPE_LINE2(name, line)
 #define RK_PROFILE_SCOPE(name) RK_PROFILE_SCOPE_LINE(name, __LINE__)

@@ -197,7 +197,7 @@ namespace Rocket
 
             for (auto &f : futures)
                 f.get();
-            
+
             ProfilerEnd("Parallel Module Update");
         }
         else
