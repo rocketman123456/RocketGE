@@ -25,12 +25,13 @@ add_library( GEEngine
     # GEModule
     GEModule/AudioManager.cpp
     GEModule/Application.cpp
+    GEModule/AssetLoader.cpp
     GEModule/BaseApplication.cpp
     GEModule/BlockAllocator.cpp
+    GEModule/EventManager.cpp
     GEModule/MemoryManager.cpp
     GEModule/ProcessManager.cpp
     GEModule/WindowManager.cpp
-    GEModule/EventManager.cpp
     # GEWindow
     GEWindow/Window.cpp
     # GELayer

@@ -57,6 +57,7 @@ namespace Rocket
 		}
 	private:
 		entt::entity m_EntityHandle{ entt::null };
+		// TODO: use weak ptr to replace this
 		Scene* m_Scene = nullptr;
 	};
 }

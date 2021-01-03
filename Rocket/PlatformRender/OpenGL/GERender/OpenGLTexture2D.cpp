@@ -37,7 +37,7 @@ namespace Rocket
 		: m_Path(path)
 	{
 		RK_PROFILE_FUNCTION();
-
+		// TODO: use uniform resource management
 		int width, height, channels;
 		stbi_set_flip_vertically_on_load(1);
 		stbi_uc *data = nullptr;
