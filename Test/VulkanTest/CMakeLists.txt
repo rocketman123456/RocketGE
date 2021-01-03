@@ -10,7 +10,7 @@ target_include_directories( VulkanTest PRIVATE
 )
 target_link_libraries( VulkanTest
     ${Vulkan_LIBRARIES} glfw stb_image
-    tinyobjloader
+    tinyobjloader::tinyobjloader
 )
 
 add_executable( VulkanLogicalDevice

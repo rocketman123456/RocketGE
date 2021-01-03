@@ -70,6 +70,8 @@ find_package(Bullet CONFIG REQUIRED)
 find_package(OpenAL CONFIG REQUIRED)
 find_package(SndFile CONFIG REQUIRED)
 find_package(EnTT CONFIG REQUIRED)
+find_package(glm CONFIG REQUIRED)
+find_package(tinyobjloader CONFIG REQUIRED)
 
 message(STATUS "Render API Set to ${RENDER_API}")
 if (RENDER_API MATCHES "OpenGL")
