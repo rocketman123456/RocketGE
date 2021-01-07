@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 2.8.12)
 
 if (CMAKE_SYSTEM_NAME MATCHES "Linux")
-    set(VCPKG_ROOT "/usr/local/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE PATH "")
+    set(VCPKG_ROOT "/home/developer/Program/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE PATH "")
 elseif (CMAKE_SYSTEM_NAME MATCHES "Windows")
     set(VCPKG_ROOT "D:/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE PATH "")
 elseif (CMAKE_SYSTEM_NAME MATCHES "Darwin")
@@ -102,11 +102,9 @@ include_directories(
 
 include_directories(
     ${EIGEN3_INCLUDE_DIRS}
-    #${EIGEN3_INCLUDE_DIRS}/unsupported
     ${BULLET_INCLUDE_DIRS}
     ${OPENAL_INCLUDE_DIRS}
     ${SNDFILE_INCLUDE_DIRS}
-    ${OPENMP_INCLUDES}
 )
 
 include_directories(
