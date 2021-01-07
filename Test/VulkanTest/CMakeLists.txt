@@ -11,6 +11,7 @@ target_include_directories( VulkanTest PRIVATE
 target_link_libraries( VulkanTest
     ${Vulkan_LIBRARIES} glfw stb_image
     tinyobjloader::tinyobjloader
+    spdlog::spdlog spdlog::spdlog_header_only 
 )
 
 add_executable( VulkanLogicalDevice
@@ -51,6 +52,5 @@ target_include_directories( ImGuiVulkan PRIVATE
 )
 target_link_libraries( ImGuiVulkan
     ${Vulkan_LIBRARIES} glfw imgui
-    #${PROJECT_SOURCE_DIR}/Thirdparty/imgui/examples/imgui_impl_glfw.cpp
-    #${PROJECT_SOURCE_DIR}/Thirdparty/imgui/examples/imgui_impl_vulkan.cpp
+    spdlog::spdlog spdlog::spdlog_header_only 
 )

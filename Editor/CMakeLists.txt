@@ -4,7 +4,7 @@ message(STATUS "###################################")
 set( ENGINE_LIBRARY
     ${Threads_LIBS}
     Eigen3::Eigen glfw yaml-cpp
-    spdlog::spdlog spdlog::spdlog_header_only
+    spdlog::spdlog spdlog::spdlog_header_only 
     OpenAL::OpenAL SndFile::sndfile EnTT::EnTT
     imgui glad stb_image glm
     CACHE STRING ""

@@ -55,7 +55,7 @@ namespace Rocket
 		{
 #if defined(RK_OPENGL)
 			glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-			glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+			glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
 			glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 #elif defined(RK_VULKAN)
 			glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);

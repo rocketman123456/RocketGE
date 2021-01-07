@@ -95,7 +95,6 @@ message(STATUS "###################################")
 
 include_directories(
     ${PROJECT_SOURCE_DIR}/Thirdparty/glad/include
-    ${PROJECT_SOURCE_DIR}/Thirdparty/spdlog/include
     ${PROJECT_SOURCE_DIR}/Thirdparty/crossguid/include
     ${PROJECT_SOURCE_DIR}/Thirdparty/stb_image
     ${PROJECT_SOURCE_DIR}/Thirdparty/imgui

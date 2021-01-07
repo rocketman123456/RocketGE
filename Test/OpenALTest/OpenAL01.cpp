@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cassert>
 
 #include <AL/al.h>
 #include <AL/alc.h>
@@ -91,7 +92,8 @@ static ALuint LoadSound(const char *filename)
     }
     if (sfinfo.frames < 1 || sfinfo.frames > (sf_count_t)(INT_MAX / sizeof(short)) / sfinfo.channels)
     {
-        fprintf(stderr, "Bad sample count in %s (%" PRId64 ")\n", filename, sfinfo.frames);
+        fprintf(stderr, "Bad sample count in %s (%d)\n", filename, sfinfo.frames);
+        //fprintf(stderr, "Bad sample count in %s (%" PRId64 ")\n", filename, sfinfo.frames);
         sf_close(sndfile);
         return 0;
     }
@@ -128,7 +130,8 @@ static ALuint LoadSound(const char *filename)
     {
         free(membuf);
         sf_close(sndfile);
-        fprintf(stderr, "Failed to read samples in %s (%" PRId64 ")\n", filename, num_frames);
+        fprintf(stderr, "Failed to read samples in %s (%d)\n", filename, num_frames);
+        //fprintf(stderr, "Failed to read samples in %s (%" PRId64 ")\n", filename, num_frames);
         return 0;
     }
     num_bytes = (ALsizei)(num_frames * sfinfo.channels) * (ALsizei)sizeof(short);
